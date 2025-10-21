@@ -32,7 +32,7 @@ export async function manageFailedTransactions({
   const { transactions: sessions } = getState();
   const session = sessions?.[sessionId];
 
-  const hasPendingTransactions = session.transactions?.some((tx) =>
+  const hasPendingTransactions = session?.transactions?.some((tx) =>
     getIsTransactionPending(tx.status)
   );
 
