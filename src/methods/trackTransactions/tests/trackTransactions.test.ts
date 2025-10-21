@@ -1,8 +1,5 @@
 import { subscriptions } from 'constants/storage.constants';
-import {
-  WebsocketConnectionStatusEnum,
-  websocketConnection
-} from 'constants/websocket.constants';
+import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
 import { websocketEventSelector } from 'store/selectors/accountSelectors';
 import { getStore } from 'store/store';
 import { SubscriptionsEnum } from 'types/subscriptions.type';
@@ -44,7 +41,7 @@ describe('trackTransactions', () => {
     global.clearInterval = mockClearInterval as any;
 
     // Reset websocket connection status
-    websocketConnection.status = WebsocketConnectionStatusEnum.NOT_INITIALIZED;
+    // Note: websocketConnection.status is no longer used in the refactored version
 
     // Clear subscriptions
     subscriptions.clear();
@@ -74,16 +71,23 @@ describe('trackTransactions', () => {
   });
 
   describe('initial execution', () => {
-    it('should call checkTransactionStatus immediately', async () => {
-      await trackTransactions();
-
-      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
-    });
-
     it('should get polling interval from helper', async () => {
       await trackTransactions();
 
       expect(mockGetPollingInterval).toHaveBeenCalledTimes(1);
+    });
+
+    it('should handle checkTransactionStatus errors gracefully', async () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+      mockCheckTransactionStatus.mockRejectedValue(new Error('Test error'));
+
+      await trackTransactions();
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        '[trackTransactions] Error checking transaction status:',
+        expect.any(Error)
+      );
+      consoleSpy.mockRestore();
     });
   });
 
@@ -98,7 +102,7 @@ describe('trackTransactions', () => {
       await trackTransactions();
 
       // Simulate websocket status change to COMPLETED
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
         config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
@@ -120,7 +124,7 @@ describe('trackTransactions', () => {
       await trackTransactions();
 
       // Simulate websocket status change to PENDING
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
         config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
@@ -134,7 +138,7 @@ describe('trackTransactions', () => {
       subscribeCallback(mockState, mockPrevState);
 
       // Should start polling - manually call the polling function
-      const pollingCallback = mockSetInterval.mock.calls[0][0];
+      const [pollingCallback] = mockSetInterval.mock.calls[0];
       pollingCallback();
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2); // Initial + polling
     });
@@ -143,7 +147,7 @@ describe('trackTransactions', () => {
       await trackTransactions();
 
       // Simulate websocket status change to default with address
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
         config: {
@@ -157,7 +161,7 @@ describe('trackTransactions', () => {
       subscribeCallback(mockState, mockPrevState);
 
       // Should start polling - manually call the polling function
-      const pollingCallback = mockSetInterval.mock.calls[0][0];
+      const [pollingCallback] = mockSetInterval.mock.calls[0];
       pollingCallback();
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2); // Initial + polling
     });
@@ -166,7 +170,7 @@ describe('trackTransactions', () => {
       await trackTransactions();
 
       // Simulate websocket status change to default without address
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: null },
         config: {
@@ -190,7 +194,7 @@ describe('trackTransactions', () => {
       await trackTransactions();
 
       // Simulate websocket status change to COMPLETED
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
         config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
@@ -211,7 +215,7 @@ describe('trackTransactions', () => {
       await trackTransactions();
 
       // Setup websocket tracking
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
         config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
@@ -223,7 +227,7 @@ describe('trackTransactions', () => {
       subscribeCallback(mockState, mockPrevState);
 
       // Get websocket event subscription callback
-      const websocketEventCallback = mockSubscribe.mock.calls[1][0];
+      const [websocketEventCallback] = mockSubscribe.mock.calls[1];
 
       // Simulate websocket event with new timestamp
       const mockWebsocketEvent = {
@@ -242,7 +246,7 @@ describe('trackTransactions', () => {
       await trackTransactions();
 
       // Setup websocket tracking
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
         config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
@@ -254,7 +258,7 @@ describe('trackTransactions', () => {
       subscribeCallback(mockState, mockPrevState);
 
       // Get websocket event subscription callback
-      const websocketEventCallback = mockSubscribe.mock.calls[1][0];
+      const [websocketEventCallback] = mockSubscribe.mock.calls[1];
 
       // Simulate websocket event with same timestamp
       const mockWebsocketEvent = {
@@ -268,79 +272,36 @@ describe('trackTransactions', () => {
 
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1); // Only initial call
     });
-  });
 
-  describe('websocket status monitoring', () => {
-    it('should start monitoring websocket status when PENDING', async () => {
+    it('should handle websocket event with null timestamp', async () => {
       await trackTransactions();
 
-      // Simulate websocket status change to PENDING
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      // Setup websocket tracking
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
-        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
+        config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
       };
       const mockPrevState = {
-        config: {
-          websocketStatus: WebsocketConnectionStatusEnum.NOT_INITIALIZED
-        }
+        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
       };
 
       subscribeCallback(mockState, mockPrevState);
 
-      // Should start monitoring interval
-      expect(mockSetInterval).toHaveBeenCalledWith(expect.any(Function), 1000);
-    });
+      // Get websocket event subscription callback
+      const [websocketEventCallback] = mockSubscribe.mock.calls[1];
 
-    it('should setup websocket tracking when status becomes COMPLETED during monitoring', async () => {
-      await trackTransactions();
-
-      // Simulate websocket status change to PENDING
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
-      const mockState = {
-        account: { address: 'test-address' },
-        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
-      };
-      const mockPrevState = {
-        config: {
-          websocketStatus: WebsocketConnectionStatusEnum.NOT_INITIALIZED
-        }
+      // Simulate websocket event with null timestamp
+      const mockWebsocketEvent = {
+        message: 'test-message',
+        timestamp: null
       };
 
-      subscribeCallback(mockState, mockPrevState);
+      websocketEventCallback({
+        account: { websocketEvent: mockWebsocketEvent }
+      });
 
-      // Should have started monitoring
-      expect(mockSetInterval).toHaveBeenCalledWith(expect.any(Function), 1000);
-
-      // Verify that monitoring callback exists
-      expect(mockSetInterval.mock.calls[0][0]).toBeDefined();
-      expect(typeof mockSetInterval.mock.calls[0][0]).toBe('function');
-    });
-
-    it('should not start monitoring if websocket is already initialized', async () => {
-      websocketConnection.status = WebsocketConnectionStatusEnum.COMPLETED;
-
-      await trackTransactions();
-
-      // Simulate websocket status change to PENDING
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
-      const mockState = {
-        account: { address: 'test-address' },
-        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
-      };
-      const mockPrevState = {
-        config: {
-          websocketStatus: WebsocketConnectionStatusEnum.NOT_INITIALIZED
-        }
-      };
-
-      subscribeCallback(mockState, mockPrevState);
-
-      // Should not start monitoring interval
-      expect(mockSetInterval).not.toHaveBeenCalledWith(
-        expect.any(Function),
-        1000
-      );
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1); // Only initial call
     });
   });
 
@@ -351,7 +312,7 @@ describe('trackTransactions', () => {
       await trackTransactions();
 
       // Simulate websocket status change to PENDING
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
         config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
@@ -372,7 +333,7 @@ describe('trackTransactions', () => {
       await trackTransactions();
 
       // Start polling first
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
         config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
@@ -414,9 +375,27 @@ describe('trackTransactions', () => {
       );
     });
 
-    it('should register websocket event subscription', async () => {
+    it('should register websocket event subscription when websocket tracking is setup', async () => {
       await trackTransactions();
 
+      // Initially no websocket event subscription
+      expect(subscriptions.has(SubscriptionsEnum.websocketEventReceived)).toBe(
+        false
+      );
+
+      // Setup websocket tracking
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+      const mockState = {
+        account: { address: 'test-address' },
+        config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
+      };
+      const mockPrevState = {
+        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
+      };
+
+      subscribeCallback(mockState, mockPrevState);
+
+      // Now should have websocket event subscription
       expect(subscriptions.has(SubscriptionsEnum.websocketEventReceived)).toBe(
         true
       );
@@ -434,7 +413,7 @@ describe('trackTransactions', () => {
       const { stopTransactionsTracking } = await trackTransactions();
 
       // Start polling
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
         config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
@@ -454,30 +433,6 @@ describe('trackTransactions', () => {
       jest.advanceTimersByTime(5000);
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1); // Only initial call
     });
-
-    it('should clear websocket status check interval', async () => {
-      const { stopTransactionsTracking } = await trackTransactions();
-
-      // Start monitoring
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
-      const mockState = {
-        account: { address: 'test-address' },
-        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
-      };
-      const mockPrevState = {
-        config: {
-          websocketStatus: WebsocketConnectionStatusEnum.NOT_INITIALIZED
-        }
-      };
-
-      subscribeCallback(mockState, mockPrevState);
-
-      // Stop tracking
-      stopTransactionsTracking();
-
-      // Should clear interval
-      expect(mockClearInterval).toHaveBeenCalled();
-    });
   });
 
   describe('edge cases', () => {
@@ -494,7 +449,7 @@ describe('trackTransactions', () => {
       await trackTransactions();
 
       // Setup websocket tracking
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
       const mockState = {
         account: { address: 'test-address' },
         config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
@@ -506,7 +461,7 @@ describe('trackTransactions', () => {
       subscribeCallback(mockState, mockPrevState);
 
       // Get websocket event subscription callback
-      const websocketEventCallback = mockSubscribe.mock.calls[1][0];
+      const [websocketEventCallback] = mockSubscribe.mock.calls[1];
 
       // Simulate websocket event without message
       const mockWebsocketEvent = {
@@ -520,34 +475,6 @@ describe('trackTransactions', () => {
 
       // Should not call checkTransactionStatus
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1); // Only initial call
-    });
-
-    it('should not start monitoring if already monitoring', async () => {
-      await trackTransactions();
-
-      // Start monitoring first time
-      const subscribeCallback = mockSubscribe.mock.calls[0][0];
-      const mockState = {
-        account: { address: 'test-address' },
-        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
-      };
-      const mockPrevState = {
-        config: {
-          websocketStatus: WebsocketConnectionStatusEnum.NOT_INITIALIZED
-        }
-      };
-
-      subscribeCallback(mockState, mockPrevState);
-
-      const firstSetIntervalCall = mockSetInterval.mock.calls.length;
-
-      // Try to start monitoring again
-      subscribeCallback(mockState, mockPrevState);
-
-      const secondSetIntervalCall = mockSetInterval.mock.calls.length;
-
-      // Should not start monitoring again
-      expect(secondSetIntervalCall).toBe(firstSetIntervalCall);
     });
   });
 });

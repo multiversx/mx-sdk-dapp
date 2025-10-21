@@ -1,8 +1,5 @@
 import { subscriptions } from 'constants/storage.constants';
-import {
-  WebsocketConnectionStatusEnum,
-  websocketConnection
-} from 'constants/websocket.constants';
+import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
 import { websocketEventSelector } from 'store/selectors/accountSelectors';
 import { getStore } from 'store/store';
 import { SubscriptionsEnum } from 'types/subscriptions.type';
@@ -13,34 +10,49 @@ import { getPollingInterval } from './helpers/getPollingInterval';
  * Tracks transactions using websocket or polling
  * @returns stopTransactionsTracking function
  */
-export async function trackTransactions() {
+export async function trackTransactions(): Promise<{
+  stopTransactionsTracking: () => void;
+}> {
   const store = getStore();
   const pollingInterval = getPollingInterval();
   let pollingIntervalRef: ReturnType<typeof setTimeout> | null = null;
-  let websocketStatusCheckIntervalRef: ReturnType<typeof setTimeout> | null =
-    null;
-  let timestamp = websocketEventSelector(store.getState())?.timestamp;
+  let timestamp = websocketEventSelector(store.getState())?.timestamp ?? null;
 
-  const recheckStatus = () => {
-    checkTransactionStatus();
+  const recheckStatus = async (): Promise<void> => {
+    try {
+      await checkTransactionStatus();
+    } catch (error) {
+      console.error(
+        '[trackTransactions] Error checking transaction status:',
+        error
+      );
+    }
   };
 
-  const startPolling = () => {
-    pollingIntervalRef ??= setInterval(recheckStatus, pollingInterval);
+  const startPolling = (): void => {
+    // Prevent multiple polling intervals
+    if (pollingIntervalRef) {
+      return;
+    }
+    pollingIntervalRef = setInterval(recheckStatus, pollingInterval);
   };
 
-  const stopPolling = () => {
+  const stopPolling = (): void => {
     if (pollingIntervalRef) {
       clearInterval(pollingIntervalRef);
       pollingIntervalRef = null;
     }
   };
 
-  const setupWebSocketTracking = () => {
+  const setupWebSocketTracking = (): void => {
     stopPolling();
     const unsubscribeWebsocketEvent = store.subscribe(
       ({ account: { websocketEvent } }) => {
-        if (websocketEvent?.message && timestamp !== websocketEvent.timestamp) {
+        if (
+          websocketEvent?.message &&
+          websocketEvent.timestamp != null &&
+          timestamp !== websocketEvent.timestamp
+        ) {
           timestamp = websocketEvent.timestamp;
           recheckStatus();
         }
@@ -53,35 +65,11 @@ export async function trackTransactions() {
     );
   };
 
-  const startWatchingWebsocketStatus = () => {
-    if (
-      websocketConnection.status !==
-        WebsocketConnectionStatusEnum.NOT_INITIALIZED ||
-      websocketStatusCheckIntervalRef
-    ) {
-      return;
-    }
-
-    websocketStatusCheckIntervalRef = setInterval(() => {
-      if (
-        websocketConnection.status === WebsocketConnectionStatusEnum.COMPLETED
-      ) {
-        clearInterval(websocketStatusCheckIntervalRef!);
-        websocketStatusCheckIntervalRef = null;
-        setupWebSocketTracking();
-      }
-    }, 1000);
-  };
-
   // Initial execution
   recheckStatus();
 
-  const stopTransactionsTracking = () => {
+  const stopTransactionsTracking = (): void => {
     stopPolling();
-    if (websocketStatusCheckIntervalRef) {
-      clearInterval(websocketStatusCheckIntervalRef);
-      websocketStatusCheckIntervalRef = null;
-    }
   };
 
   const unsubscribeWebsocketStatus = store.subscribe(
@@ -99,7 +87,6 @@ export async function trackTransactions() {
           break;
         case WebsocketConnectionStatusEnum.PENDING:
           startPolling();
-          startWatchingWebsocketStatus();
           break;
         default:
           address ? startPolling() : stopTransactionsTracking();
@@ -111,10 +98,6 @@ export async function trackTransactions() {
   subscriptions.set(
     SubscriptionsEnum.websocketStatusChanged,
     unsubscribeWebsocketStatus
-  );
-  subscriptions.set(
-    SubscriptionsEnum.websocketEventReceived,
-    stopTransactionsTracking
   );
   return { stopTransactionsTracking };
 }
