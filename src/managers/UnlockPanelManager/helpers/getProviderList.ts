@@ -7,7 +7,7 @@ import {
 } from 'providers/types/providerFactory.types';
 
 export function getProvidersList(
-  addedCustomProviders: ICustomProvider[],
+  addedCustomProviders: ICustomProvider[] = [],
   allowedProviders?: ProviderType[] | null
 ): IProviderBase[] {
   const defaultProviderTypes = (
