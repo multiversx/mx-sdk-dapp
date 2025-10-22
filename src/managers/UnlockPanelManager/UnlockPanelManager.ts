@@ -15,8 +15,8 @@ import {
   UnlockPanelManagerInitParamsType
 } from './UnlockPanelManager.types';
 import { SidePanelBaseManager } from '../internal/SidePanelBaseManager';
-import { getProvidersList } from './helpers/getProviderList';
 import { getIsSimpleLoginCallback } from './helpers/getIsSimpleLoginCallback';
+import { getProvidersList } from './helpers/getProviderList';
 
 interface IUnlockPanelManagerData {
   providers: IProviderBase[] | null;
