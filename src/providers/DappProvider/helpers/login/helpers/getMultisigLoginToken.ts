@@ -21,7 +21,11 @@ export async function getMultisigLoginToken({
 
   const extraInfo = Object.keys(loginResult).reduce(
     (acc, key) => {
-      const value = loginResult[key];
+      const value =
+        ['multisig', 'impersonate'].includes(key) && loginResult[key] != null
+          ? String(loginResult[key])
+          : null;
+
       if (value != null) {
         acc[key] = value.toString();
       }

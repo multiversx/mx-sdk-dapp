@@ -1,11 +1,9 @@
-import { providerLabels } from 'constants/providerFactory.constants';
 import { UITagsEnum } from 'constants/UITags.enum';
 import { MvxUnlockPanel } from 'lib/sdkDappUi';
 import { ProviderFactory } from 'providers/ProviderFactory';
 import {
   IProviderBase,
   IProviderFactory,
-  ProviderTypeEnum,
   ProviderType
 } from 'providers/types/providerFactory.types';
 import { networkSelector } from 'store/selectors';
@@ -17,6 +15,7 @@ import {
   UnlockPanelManagerInitParamsType
 } from './UnlockPanelManager.types';
 import { SidePanelBaseManager } from '../internal/SidePanelBaseManager';
+import { getProvidersList } from './helpers/getProviderList';
 
 interface IUnlockPanelManagerData {
   providers: IProviderBase[] | null;
@@ -68,8 +67,13 @@ export class UnlockPanelManager extends SidePanelBaseManager<
   public openUnlockPanel = async () => {
     const { walletAddress } = networkSelector(getState());
 
+    const providers = getProvidersList(
+      ProviderFactory.customProviders,
+      UnlockPanelManager.allowedProviders
+    );
+
     this.data = {
-      providers: this.getProvidersList(),
+      providers,
       walletAddress
     };
 
@@ -135,58 +139,4 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     const takesZeroArguments = login.length === 0;
     return takesZeroArguments;
   };
-
-  private getProvidersList(): IProviderBase[] {
-    const customProviders = ProviderFactory.customProviders;
-
-    const defaultProviderTypes = Object.values(ProviderTypeEnum).filter(
-      (type) => {
-        const excludedProviders: string[] = [
-          ProviderTypeEnum.none,
-          ProviderTypeEnum.webview
-        ];
-        return !excludedProviders.includes(type);
-      }
-    );
-
-    const allAvailableProviderTypes = [
-      ...defaultProviderTypes,
-      ...customProviders.map((p) => p.type)
-    ];
-
-    const customProviderLabels = customProviders.reduce(
-      (acc, provider) => {
-        acc[provider.type] = provider.name;
-        return acc;
-      },
-      {} as Record<ProviderType, string>
-    );
-
-    const allAvailableLabels = {
-      ...providerLabels,
-      ...customProviderLabels
-    };
-
-    const allowedProviderTypes = UnlockPanelManager.allowedProviders
-      ? UnlockPanelManager?.allowedProviders.filter((type) =>
-          allAvailableProviderTypes.includes(type)
-        )
-      : allAvailableProviderTypes;
-
-    const providerList = allowedProviderTypes.map((type) => {
-      const custom = customProviders.find(
-        (customProvider) => customProvider.type === type
-      );
-      if (custom) {
-        return custom;
-      }
-
-      return {
-        name: type in allAvailableLabels ? allAvailableLabels[type] : type,
-        type
-      };
-    });
-
-    return providerList;
-  }
 }
