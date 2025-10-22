@@ -1,5 +1,5 @@
-import { getIsSimpleLoginCallback } from '../getIsSimpleLoginCallback';
 import { LoginHandlerType } from '../../UnlockPanelManager.types';
+import { getIsSimpleLoginCallback } from '../getIsSimpleLoginCallback';
 
 describe('getIsSimpleLoginCallback tests', () => {
   it('should return true for a function with zero parameters', () => {
