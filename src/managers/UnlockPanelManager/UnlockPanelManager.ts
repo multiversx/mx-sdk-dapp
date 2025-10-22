@@ -16,6 +16,7 @@ import {
 } from './UnlockPanelManager.types';
 import { SidePanelBaseManager } from '../internal/SidePanelBaseManager';
 import { getProvidersList } from './helpers/getProviderList';
+import { getIsSimpleLoginCallback } from './helpers/getIsSimpleLoginCallback';
 
 interface IUnlockPanelManagerData {
   providers: IProviderBase[] | null;
@@ -112,7 +113,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     }
 
     try {
-      if (this.isSimpleLoginCallback(UnlockPanelManager.loginHandler)) {
+      if (getIsSimpleLoginCallback(UnlockPanelManager.loginHandler)) {
         const provider = await ProviderFactory.create({ type, anchor });
         await provider.login();
         UnlockPanelManager.loginHandler();
@@ -131,12 +132,5 @@ export class UnlockPanelManager extends SidePanelBaseManager<
 
   private readonly handleCancelLogin = async () => {
     await ProviderFactory.destroy();
-  };
-
-  private readonly isSimpleLoginCallback = (
-    login: LoginHandlerType
-  ): login is () => void => {
-    const takesZeroArguments = login.length === 0;
-    return takesZeroArguments;
   };
 }
