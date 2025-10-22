@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added UnlockPanelManager tests](https://github.com/multiversx/mx-sdk-dapp/pull/1636)
+
 ## [[5.2.12](https://github.com/multiversx/mx-sdk-dapp/pull/1635)] - 2025-10-22
 
 - [Fixed multisig login token](https://github.com/multiversx/mx-sdk-dapp/pull/1635)
