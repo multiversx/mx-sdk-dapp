@@ -23,7 +23,7 @@ export async function getMultisigLoginToken({
     (acc, key) => {
       const value =
         ['multisig', 'impersonate'].includes(key) && loginResult[key] != null
-          ? loginResult[key].toString()
+          ? String(loginResult[key])
           : null;
 
       if (value != null) {
