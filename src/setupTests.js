@@ -2,7 +2,13 @@
  * MSW config code
  ***************/
 import 'isomorphic-fetch';
+import { TextEncoder, TextDecoder } from 'util';
+
 import { server } from './__mocks__/server';
+
+// Polyfill TextEncoder/TextDecoder for Node.js environment
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
