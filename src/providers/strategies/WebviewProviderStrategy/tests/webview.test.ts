@@ -50,11 +50,15 @@ describe('WebviewProvider.init', () => {
       }
     });
 
-    // Call init method which should use ReactNativeWebView for initialization
+    mockSendPostMessage.mockResolvedValueOnce({
+      type: WindowProviderResponseEnums.finalizeHandshakeResponse,
+      payload: { data: Date.now().toString() }
+    });
+
     const isInitialized = await provider.init();
 
-    expect(isInitialized).toBe(false);
-    expect(provider.isInitialized()).toBe(false);
+    expect(isInitialized).toBe(true);
+    expect(provider.isInitialized()).toBe(true);
   });
 
   it('should initialize using handshake', async () => {
