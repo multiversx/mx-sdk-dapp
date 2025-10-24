@@ -97,6 +97,12 @@ export async function authenticateLedgerAccount({
               addressIndex: payload.addressIndex
             });
 
+        manager.unsubscribeFromAuthEvents({
+          handleCancel,
+          handleAccessWallet,
+          handleGoToPage
+        });
+
         resolve({
           address: loginInfo.address,
           signature: loginInfo.signature
