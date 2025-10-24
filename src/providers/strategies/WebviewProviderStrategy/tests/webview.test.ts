@@ -55,6 +55,7 @@ describe('WebviewProvider.init', () => {
       payload: { data: Date.now().toString() }
     });
 
+    // Call init method which should use ReactNativeWebView for initialization
     const isInitialized = await provider.init();
 
     expect(isInitialized).toBe(true);
