@@ -22,8 +22,6 @@ const mockSendPostMessage = jest.fn();
 
 describe('WebviewProvider.init', () => {
   let provider: WebviewProvider;
-  let handlers: Record<string, (event: MessageEvent) => void>;
-  let mockPostMessage: jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -37,67 +35,23 @@ describe('WebviewProvider.init', () => {
       value: false,
       writable: true
     });
-
-    // Reset handlers and fake window per test
-    handlers = {};
-    mockPostMessage = jest.fn();
   });
 
-  it('should pass initialize using ReactNativeWebView', async () => {
-    const {
-      getSafeWindow
-    } = require('@multiversx/sdk-webview-provider/out/helpers/getSafeWindow');
-
-    const fakeWindow = {
-      ReactNativeWebView: { postMessage: mockPostMessage },
-      parent: { postMessage: jest.fn() }
-    };
-
-    getSafeWindow.mockReturnValue(fakeWindow);
-
-    const initPromise = provider.init();
-
-    if (handlers['message']) {
-      handlers['message']({
-        data: {
-          type: WindowProviderResponseEnums.finalizeHandshakeResponse,
-          payload: { data: Date.now() }
-        },
-        origin: 'http://localhost'
-      } as MessageEvent);
-    }
-
-    const isInitialized = await initPromise;
-
-    //TODO: fix test
-    expect(isInitialized).toBe(false);
-    expect(provider.isInitialized()).toBe(false);
-  });
-
-  it('should fail initialize using ReactNativeWebView (timeout)', async () => {
-    const fakeWindow = {
-      ReactNativeWebView: { postMessage: mockPostMessage },
-      parent: { postMessage: jest.fn() }
-    };
-
+  it('should initialize using ReactNativeWebView', async () => {
+    // Mock the window object to simulate ReactNativeWebView
+    const mockPostMessage = jest.fn();
     const getSafeWindow =
       require('@multiversx/sdk-webview-provider/out/helpers/getSafeWindow').getSafeWindow;
-    getSafeWindow.mockReturnValue(fakeWindow);
 
-    const initPromise = provider.init();
+    // Mocking `ReactNativeWebView`
+    getSafeWindow.mockReturnValue({
+      ReactNativeWebView: {
+        postMessage: mockPostMessage
+      }
+    });
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    if (handlers['message']) {
-      handlers['message']({
-        data: {
-          type: WindowProviderResponseEnums.finalizeHandshakeResponse,
-          payload: { data: Date.now() }
-        },
-        origin: 'http://localhost'
-      } as MessageEvent);
-    }
-
-    const isInitialized = await initPromise;
+    // Call init method which should use ReactNativeWebView for initialization
+    const isInitialized = await provider.init();
 
     expect(isInitialized).toBe(false);
     expect(provider.isInitialized()).toBe(false);
@@ -147,8 +101,6 @@ describe('WebviewProvider.init', () => {
     const getSafeWindow =
       require('@multiversx/sdk-webview-provider/out/helpers/getSafeWindow').getSafeWindow;
     getSafeWindow.mockReturnValue({
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
       parent: {
         postMessage: jest.fn()
       }
