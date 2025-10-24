@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Update webview provider to LTS](https://github.com/multiversx/mx-sdk-dapp/pull/1640)
+
 ## [[5.2.13](https://github.com/multiversx/mx-sdk-dapp/pull/1638)] - 2025-10-24
 
 - [Fixed ledger connect clearing state](https://github.com/multiversx/mx-sdk-dapp/pull/1637)
