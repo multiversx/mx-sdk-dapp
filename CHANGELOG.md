@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.13](https://github.com/multiversx/mx-sdk-dapp/pull/1638)] - 2025-10-24
+
+- [Fixed ledger connect clearing state](https://github.com/multiversx/mx-sdk-dapp/pull/1637)
+- [Avoid multiple WalletConnect inits, Updated WalletConnect packages](https://github.com/multiversx/mx-sdk-dapp/pull/1636)
+- [Added UnlockPanelManager tests](https://github.com/multiversx/mx-sdk-dapp/pull/1634)
+
 ## [[5.2.12](https://github.com/multiversx/mx-sdk-dapp/pull/1635)] - 2025-10-22
 
 - [Fixed multisig login token](https://github.com/multiversx/mx-sdk-dapp/pull/1635)

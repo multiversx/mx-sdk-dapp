@@ -213,6 +213,8 @@ export class LedgerConnectStateManager extends UIBaseManager<
       LedgerConnectEventsEnum.GO_TO_PAGE,
       handleGoToPage
     );
+
+    this.resetData();
   }
 
   public handleClose() {
@@ -232,6 +234,7 @@ export class LedgerConnectStateManager extends UIBaseManager<
     this.accountScreenData = { ...this.initialAccountScreenData };
     this.confirmScreenData = { ...this.initialConfirmScreenData };
     this.connectScreenData = { ...this.initialConnectScreenData };
+    this.allAccounts = [];
     super.resetData();
   }
 

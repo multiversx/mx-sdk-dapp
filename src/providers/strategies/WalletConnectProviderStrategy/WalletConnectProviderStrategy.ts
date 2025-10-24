@@ -48,6 +48,10 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
 
   async init(): Promise<boolean> {
     try {
+      if (this.provider?.isInitialized()) {
+        return true;
+      }
+
       await this.initializeProvider();
     } catch {
       return false;
