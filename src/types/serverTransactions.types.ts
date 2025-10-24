@@ -1,5 +1,6 @@
 import { AssetType, ScamInfoType } from './account.types';
 import {
+  IconNamesEnum,
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from './enums.types';
@@ -278,7 +279,7 @@ export enum TransferTypeEnum {
 
 //#endregion
 
-//#region interpreted trasactions
+//#region interpreted transactions
 
 export enum TransactionDirectionEnum {
   SELF = 'Self',
@@ -298,7 +299,7 @@ export type TransactionMethodType = {
 };
 
 export type TransactionIconInfoType = {
-  icon?: string;
+  icon?: `${IconNamesEnum}`;
   tooltip: string;
 };
 

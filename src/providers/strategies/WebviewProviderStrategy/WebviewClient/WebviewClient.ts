@@ -123,7 +123,14 @@ export class WebviewClient {
       );
     } catch {
       if (this.isLoginInitiated) {
-        this.handleLoginCancelled();
+        await this.handleLoginCancelled();
+        event.source?.postMessage(
+          {
+            type: WindowProviderResponseEnums.cancelResponse,
+            payload: null
+          },
+          { targetOrigin: event.origin }
+        );
       }
     } finally {
       this.isLoginInitiated = false;

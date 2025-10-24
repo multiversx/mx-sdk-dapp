@@ -1,4 +1,4 @@
-import { testAddress } from '__mocks__';
+import { testAddress } from '__mocks__/accountConfig';
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import { TransactionServerStatusesEnum } from 'types';
 

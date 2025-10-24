@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.13](https://github.com/multiversx/mx-sdk-dapp/pull/1638)] - 2025-10-24
+
+- [Fixed ledger connect clearing state](https://github.com/multiversx/mx-sdk-dapp/pull/1637)
+- [Avoid multiple WalletConnect inits, Updated WalletConnect packages](https://github.com/multiversx/mx-sdk-dapp/pull/1636)
+- [Added UnlockPanelManager tests](https://github.com/multiversx/mx-sdk-dapp/pull/1634)
+
+## [[5.2.12](https://github.com/multiversx/mx-sdk-dapp/pull/1635)] - 2025-10-22
+
+- [Fixed multisig login token](https://github.com/multiversx/mx-sdk-dapp/pull/1635)
+- [Added `getProvidersList` tests](https://github.com/multiversx/mx-sdk-dapp/pull/1633)
+
+## [[5.2.11](https://github.com/multiversx/mx-sdk-dapp/pull/1632)] - 2025-10-21
+
+- [Fixed multisig login token](https://github.com/multiversx/mx-sdk-dapp/pull/1631)
+
+## [[5.2.10](https://github.com/multiversx/mx-sdk-dapp/pull/1630)] - 2025-10-21
+
+- [Added transaction tracker tests](https://github.com/multiversx/mx-sdk-dapp/pull/1629)
+- [Fixed jest breaks because of sdk-dapp-ui imports](https://github.com/multiversx/mx-sdk-dapp/pull/1628)
+- [Added transaction tracker helpers tests](https://github.com/multiversx/mx-sdk-dapp/pull/1627)
+- [Fixed explorer link console error](https://github.com/multiversx/mx-sdk-dapp/pull/1626)
+- [Added NotificationsFeedManager basic tests](https://github.com/multiversx/mx-sdk-dapp/pull/1625)
+- [Fixed NotificationsFeedManager hanging toasts](https://github.com/multiversx/mx-sdk-dapp/pull/1622)
+- [Added basic ToastManager test](https://github.com/multiversx/mx-sdk-dapp/pull/1619)
+
+## [[5.2.9](https://github.com/multiversx/mx-sdk-dapp/pull/1621)] - 2025-10-15
+
+- [Updated icons type](https://github.com/multiversx/mx-sdk-dapp/pull/1620)
+
+## [[5.2.8](https://github.com/multiversx/mx-sdk-dapp/pull/1618)] - 2025-10-14
+
+- [Fixed cancelling login in webview provider](https://github.com/multiversx/mx-sdk-dapp/pull/1617)
 - [Added action payload for redux inspector](https://github.com/multiversx/mx-sdk-dapp/pull/1611)
 
 ## [[5.2.7](https://github.com/multiversx/mx-sdk-dapp/pull/1616)] - 2025-10-13

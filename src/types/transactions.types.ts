@@ -6,6 +6,7 @@ import { ResultType, ServerTransactionType } from './serverTransactions.types';
 export interface SignedTransactionType extends IPlainTransactionObject {
   hash: string;
   status?: ServerTransactionType['status'];
+  results?: ResultType[];
   inTransit?: boolean;
 }
 

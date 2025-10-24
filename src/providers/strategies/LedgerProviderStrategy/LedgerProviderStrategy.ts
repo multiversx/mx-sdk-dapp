@@ -4,13 +4,13 @@ import { CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION } from 'constants/transaction
 import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
-import { ToastIconsEnum } from 'managers/ToastManager/helpers/getToastDataStateByStatus';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import {
   ProviderTypeEnum,
   ProviderType
 } from 'providers/types/providerFactory.types';
 import { createCustomToast } from 'store/actions/toasts/toastsActions';
+import { IconNamesEnum } from 'types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { getLedgerProvider } from './helpers';
 import { authenticateLedgerAccount } from './helpers/authenticateLedgerAccount';
@@ -197,7 +197,7 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
         createCustomToast({
           toastId: 'ledger-provider-rebuild-error',
           duration: CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
-          icon: ToastIconsEnum.times,
+          icon: IconNamesEnum.close,
           iconClassName: 'warning',
           message: 'Unlock your device & open the MultiversX App',
           title: 'Ledger unavailable'

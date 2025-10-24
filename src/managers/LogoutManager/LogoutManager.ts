@@ -1,6 +1,5 @@
 import BigNumber from 'bignumber.js';
 import { ToastManager } from 'managers/ToastManager';
-import { ToastIconsEnum } from 'managers/ToastManager/helpers/getToastDataStateByStatus';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { getTokenExpiration } from 'services/nativeAuth/methods/getTokenExpiration';
@@ -11,6 +10,7 @@ import {
 import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
 import { tokenLoginSelector } from 'store/selectors/loginInfoSelectors';
 import { getStore } from 'store/store';
+import { IconNamesEnum } from 'types';
 import { getHumanReadableTokenExpirationTime } from './helpers/getHumanReadableTokenExpirationTime';
 
 export class LogoutManager {
@@ -108,7 +108,7 @@ export class LogoutManager {
         toastId: 'native-auth-logout',
         iconClassName: 'warning',
         title: 'Logging out',
-        icon: ToastIconsEnum.times,
+        icon: IconNamesEnum.close,
         message: 'Your session has expired!'
       });
       this.actualLogoutTimeoutRef = null;
@@ -171,7 +171,7 @@ export class LogoutManager {
         toastId: 'native-auth-expired',
         iconClassName: 'warning',
         title: 'Session Expiration Warning',
-        icon: ToastIconsEnum.hourglass,
+        icon: IconNamesEnum.hourglass,
         message: `Your session will expire in ${readableMinutesUntilLogout}!`
       });
       this.warningLogoutTimeoutRef = null;

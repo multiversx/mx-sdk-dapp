@@ -8,8 +8,8 @@ import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { isLoggedInSelector, loginInfoSelector } from 'store/selectors';
 import { isSidePanelOpenSelector } from 'store/selectors/uiSelectors';
 import { getState, getStore } from 'store/store';
+import { IconNamesEnum } from 'types';
 import { ToastManager } from '../../ToastManager';
-import { ToastIconsEnum } from '../../ToastManager/helpers/getToastDataStateByStatus';
 
 const LEDGER_IDLE_STATE_CHECK_INTERVAL = 30_000;
 const LEDGER_IDLE_STATE_RECONNECT_INTERVAL = 5_000;
@@ -60,7 +60,7 @@ export class LedgerIdleStateManager {
       } catch (_error) {
         ToastManager.getInstance().createCustomToast({
           toastId: 'ledger-provider-idle-warning',
-          icon: ToastIconsEnum.times,
+          icon: IconNamesEnum.close,
           iconClassName: 'warning',
           message: 'Unlock your device to continue signing transactions',
           title: 'Ledger disconnected'
@@ -100,7 +100,7 @@ export class LedgerIdleStateManager {
       ToastManager.getInstance().createCustomToast({
         toastId: 'ledger-provider-idle-warning',
         duration: RECONNECT_SUCCESS_DURATION,
-        icon: ToastIconsEnum.check,
+        icon: IconNamesEnum.check,
         iconClassName: 'success',
         message: 'Your device is ready to sign transactions',
         title: 'Ledger reconnected'

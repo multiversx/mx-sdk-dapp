@@ -1,6 +1,6 @@
 import { UITagsEnum } from 'constants/UITags.enum';
 
-import { MvxLedgerConnect } from 'lib/sdkDappUi';
+import { MvxLedgerConnect } from 'lib/sdkDappUI.components';
 import { UnlockPanelEventsEnum } from 'managers/UnlockPanelManager/UnlockPanelManager.types';
 import {
   IAccountScreenData,
@@ -213,6 +213,8 @@ export class LedgerConnectStateManager extends UIBaseManager<
       LedgerConnectEventsEnum.GO_TO_PAGE,
       handleGoToPage
     );
+
+    this.resetData();
   }
 
   public handleClose() {
@@ -232,6 +234,7 @@ export class LedgerConnectStateManager extends UIBaseManager<
     this.accountScreenData = { ...this.initialAccountScreenData };
     this.confirmScreenData = { ...this.initialConfirmScreenData };
     this.connectScreenData = { ...this.initialConnectScreenData };
+    this.allAccounts = [];
     super.resetData();
   }
 
