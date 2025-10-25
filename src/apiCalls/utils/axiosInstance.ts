@@ -8,7 +8,7 @@ type RequestInit = {
   [key: string]: any;
 };
 
-// Needs to be used beacause an async call made after cross-window user interaction makes the dapp unresponsive
+// Needs to be used because an async call made after cross-window user interaction makes the dapp unresponsive
 
 const fetch = buildAxiosFetch(axios);
 
