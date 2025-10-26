@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.3.7](https://github.com/multiversx/mx-sdk-dapp/pull/1641)] - 2025-10-27
+## [[v4.3.9](https://github.com/multiversx/mx-sdk-dapp/pull/1641)] - 2025-10-27
 
 - [Fixed error with ppu being `undefined`](https://github.com/multiversx/mx-sdk-dapp/pull/1641)
 
