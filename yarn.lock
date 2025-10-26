@@ -2438,7 +2438,7 @@
 
 "@multiversx/sdk-metamask-provider@3.0.2":
   version "3.0.2"
-  resolved "https://registry.npmjs.org/@multiversx/sdk-metamask-provider/-/sdk-metamask-provider-3.0.2.tgz#302c525bd9363238a63b74ce4bbe681613568e18"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-provider/-/sdk-metamask-provider-3.0.2.tgz#302c525bd9363238a63b74ce4bbe681613568e18"
   integrity sha512-Oqnd56bg4GvXsjF10uuNf3JoDDF+F0y6z4gzt963GfPiD7IweRQpVM3E6cKntoNoraxFOg4X8nlnTB05i8JChA==
   dependencies:
     "@metamask/providers" "16.0.0"
