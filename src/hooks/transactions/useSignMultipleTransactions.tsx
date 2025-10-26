@@ -162,11 +162,12 @@ export const useSignMultipleTransactions = ({
     );
 
     const needsSigning = currentTx.needsSigning;
-    const nonce = transaction.getNonce().valueOf();
+    const nonce = transaction.nonce.valueOf();
+    const currentPpu = ppuMap[Number(nonce)];
 
     setCurrentTransaction({
       transaction,
-      ppu: ppuMap[Number(nonce)].ppu || EMPTY_PPU,
+      ppu: currentPpu?.ppu || EMPTY_PPU,
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,
@@ -180,10 +181,11 @@ export const useSignMultipleTransactions = ({
     const currentEditedTransaction =
       allEditedTransactions[currentStep].transaction;
 
-    const nonce = currentEditedTransaction.getNonce().valueOf();
+    const nonce = currentEditedTransaction.nonce.valueOf();
 
-    const currentMultiplier = ppuMap[Number(nonce)].ppu;
-    const initialGasPrice = ppuMap[Number(nonce)].initialGasPrice;
+    const currentPpu = ppuMap[Number(nonce)];
+    const currentMultiplier = currentPpu?.ppu || EMPTY_PPU;
+    const initialGasPrice = currentPpu?.initialGasPrice || 0;
 
     if (currentMultiplier === newPPU) {
       return;
