@@ -14,7 +14,7 @@ jest.mock('store/actions');
 jest.mock('store/actions/account');
 jest.mock('utils/account/fetchAccount');
 
-describe('accountLogin', () => {
+describe('accountLogin tests', () => {
   const mockProvider: IProvider = {
     getType: jest.fn(() => 'testProvider')
   } as unknown as IProvider;
