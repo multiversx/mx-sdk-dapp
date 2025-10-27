@@ -45,7 +45,7 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
     return null;
   }
 
-  const currentNonce = currentTransaction.transaction.getNonce().valueOf();
+  const currentNonce = currentTransaction.transaction.nonce.valueOf();
   const currentNonceData = `${currentNonce.toString()}_${
     currentTransaction.transactionTokenInfo.multiTxData
   }_${currentTransaction.transactionIndex}`;
