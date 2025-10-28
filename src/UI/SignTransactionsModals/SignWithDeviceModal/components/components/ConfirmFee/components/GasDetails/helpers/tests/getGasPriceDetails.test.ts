@@ -2,7 +2,7 @@ import { Transaction } from '@multiversx/sdk-core';
 import { testAddress } from '__mocks__';
 import { getGasPriceDetails } from '../getGasPriceDetails';
 
-const secondTx = Transaction.fromPlainObject({
+const secondTx = Transaction.newFromPlainObject({
   nonce: 0,
   value: '0',
   receiver: testAddress,

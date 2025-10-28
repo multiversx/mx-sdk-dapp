@@ -23,7 +23,7 @@ export const decodeByMethod = (
       return part !== '' ? new BigNumber(part, 16).toString(10) : '';
     case DecodeMethodEnum.smart:
       try {
-        const bech32Encoded = Address.fromHex(part).toString();
+        const bech32Encoded = Address.newFromHex(part).toBech32();
 
         if (addressIsValid(bech32Encoded)) {
           return bech32Encoded;

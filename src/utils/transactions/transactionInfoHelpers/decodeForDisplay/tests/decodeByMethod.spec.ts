@@ -6,7 +6,7 @@ import { decodeByMethod } from '../helpers';
 
 jest.mock('@multiversx/sdk-core', () => ({
   Address: {
-    fromHex: jest.fn()
+    newFromHex: jest.fn()
   }
 }));
 
@@ -49,8 +49,8 @@ describe('decodeByMethod', () => {
       const mockAddress =
         'erd1zwq3qaa3vk5suenlkj4cf0ullwefa6h3n2394k25pxv4sz0pwhhsj9u9vk';
 
-      (Address.fromHex as jest.Mock).mockReturnValue({
-        toString: () => mockAddress
+      (Address.newFromHex as jest.Mock).mockReturnValue({
+        toBech32: () => mockAddress
       });
 
       (addressIsValid as jest.Mock).mockReturnValue(true);
@@ -60,7 +60,7 @@ describe('decodeByMethod', () => {
     });
 
     it('should decode to utf8 when possible and valid', () => {
-      (Address.fromHex as jest.Mock).mockImplementation(() => {
+      (Address.newFromHex as jest.Mock).mockImplementation(() => {
         throw new Error();
       });
       (isUtf8 as jest.Mock).mockReturnValue(true);
@@ -76,7 +76,7 @@ describe('decodeByMethod', () => {
         nfts: ['nft1']
       };
 
-      (Address.fromHex as jest.Mock).mockImplementation(() => {
+      (Address.newFromHex as jest.Mock).mockImplementation(() => {
         throw new Error();
       });
 
@@ -92,7 +92,7 @@ describe('decodeByMethod', () => {
     });
 
     it('should convert to decimal when no other conditions met', () => {
-      (Address.fromHex as jest.Mock).mockImplementation(() => {
+      (Address.newFromHex as jest.Mock).mockImplementation(() => {
         throw new Error();
       });
       (isUtf8 as jest.Mock).mockReturnValue(false);
@@ -102,7 +102,7 @@ describe('decodeByMethod', () => {
     });
 
     it('should return original part when all decoding fails', () => {
-      (Address.fromHex as jest.Mock).mockImplementation(() => {
+      (Address.newFromHex as jest.Mock).mockImplementation(() => {
         throw new Error();
       });
 

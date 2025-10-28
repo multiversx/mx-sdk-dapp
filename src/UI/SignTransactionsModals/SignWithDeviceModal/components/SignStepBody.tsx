@@ -55,12 +55,12 @@ const SignStepBodyComponent = ({
     currentTransaction.transactionTokenInfo;
 
   const transactionReceiver = multiTxData
-    ? new Address(receiver).bech32()
-    : currentTransaction.transaction.getReceiver().toString();
+    ? new Address(receiver).toBech32()
+    : currentTransaction.transaction.receiver.toBech32();
 
   const scamReport = currentTransaction.receiverScamInfo;
   const classes = useSignStepsClasses(scamReport, globalStyles);
-  const data = currentTransaction.transaction.getData().toString();
+  const data = currentTransaction.transaction.data.toString();
 
   return (
     <div className={styles?.summary}>

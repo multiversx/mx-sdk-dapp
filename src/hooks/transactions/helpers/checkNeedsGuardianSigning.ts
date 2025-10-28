@@ -33,8 +33,8 @@ export const checkNeedsGuardianSigning = ({
     transactions
   });
 
-  const chainId = transactions[0].getChainID().valueOf();
-  const sender = transactions[0].getSender().bech32().toString();
+  const chainId = transactions[0].chainID.valueOf();
+  const sender = transactions[0].sender.toBech32();
   const environment = getEnvironmentForChainId(chainId);
   const walletProviderAddress =
     walletAddress ?? fallbackNetworkConfigurations[environment].walletAddress;

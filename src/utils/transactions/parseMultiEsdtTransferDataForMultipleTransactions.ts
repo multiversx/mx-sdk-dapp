@@ -39,7 +39,7 @@ export function parseMultiEsdtTransferDataForMultipleTransactions({
   }
 
   transactions.forEach((transaction, transactionIndex) => {
-    const txData = transaction.getData().toString();
+    const txData = transaction.data.toString();
     const multiTxs = parseMultiEsdtTransferData(txData);
 
     if (multiTxs.length > 0) {
@@ -68,7 +68,7 @@ export function parseMultiEsdtTransferDataForMultipleTransactions({
         allTransactions.push(newTx);
       });
     } else {
-      const transactionData = transaction.getData().toString();
+      const transactionData = transaction.data.toString();
 
       const { tokenId, amount } = getTokenFromData(transactionData);
 
@@ -79,7 +79,7 @@ export function parseMultiEsdtTransferDataForMultipleTransactions({
           txInfo: {
             tokenId,
             amount,
-            receiver: transaction.getReceiver().bech32()
+            receiver: transaction.receiver.toBech32()
           }
         });
       }

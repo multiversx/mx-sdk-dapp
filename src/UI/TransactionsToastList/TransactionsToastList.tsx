@@ -22,7 +22,7 @@ import {
   SignedTransactionsType,
   TransactionBatchStatusesEnum
 } from 'types';
-import { TransactionToastType } from 'types/toasts.types';
+import { CustomToastType, TransactionToastType } from 'types/toasts.types';
 
 import {
   deleteCustomToast,
@@ -113,7 +113,10 @@ export const TransactionsToastListComponent = ({
   const MemoizedTransactionsToastsList = useMemo(
     () =>
       transactionsToasts.map(
-        ({ toastId, type, startTimestamp }: TransactionToastType, i) => {
+        (
+          { toastId, type, startTimestamp }: TransactionToastType,
+          i: number
+        ) => {
           const transactionToastGuardProps: TransactionToastGuardPropsType = {
             signedTransactionsToRender,
             toastId,
@@ -140,7 +143,7 @@ export const TransactionsToastListComponent = ({
     ]
   );
 
-  const customToastsList = customToasts.map((props) => {
+  const customToastsList = customToasts.map((props: CustomToastType) => {
     const CustomComponent =
       getRegisteredCustomIconComponents(props.toastId) ?? null;
     const onCloseHandler = getRegisteredToastCloseHandler(props.toastId);

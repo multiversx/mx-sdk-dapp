@@ -76,7 +76,7 @@ export const accountInfoSlice = createSlice({
     ) => {
       const address = action.payload;
       state.address = address;
-      state.publicKey = address ? new Address(address).hex() : '';
+      state.publicKey = address ? new Address(address).toHex() : '';
     },
     setAccount: (
       state: AccountInfoSliceType,

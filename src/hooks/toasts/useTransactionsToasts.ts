@@ -5,6 +5,7 @@ import {
   transactionToastsSelector
 } from 'reduxStore/selectors';
 import { TransactionBatchStatusesEnum } from 'types';
+import { TransactionToastType } from 'types/toasts.types';
 import { useGetSignedTransactions } from '../transactions';
 
 export const useTransactionsToasts = () => {
@@ -13,7 +14,7 @@ export const useTransactionsToasts = () => {
   const { signedTransactions } = useGetSignedTransactions();
 
   const transactionsToastsInfo = useMemo(() => {
-    return transactionsToasts.map((toast) => {
+    return transactionsToasts.map((toast: TransactionToastType) => {
       const status = signedTransactions[toast.toastId]?.status;
 
       return {
@@ -32,7 +33,9 @@ export const useTransactionsToasts = () => {
   }, [transactionsToasts, signedTransactions, transactionsInfo]);
 
   const pendingTransactionsToastsInfo = useMemo(() => {
-    return transactionsToastsInfo.filter((toast) => toast.isPending);
+    return transactionsToastsInfo.filter(
+      (toast: TransactionToastType & { isPending: boolean }) => toast.isPending
+    );
   }, [transactionsToastsInfo]);
 
   return {

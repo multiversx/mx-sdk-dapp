@@ -11,10 +11,10 @@ export function calcTotalFee(transactions: Transaction[], minGasLimit: number) {
       gasPerDataByte: String(GAS_PER_DATA_BYTE),
       gasPriceModifier: String(GAS_PRICE_MODIFIER),
       minGasLimit: String(minGasLimit),
-      gasLimit: tx.getGasLimit().valueOf().toString(),
-      gasPrice: tx.getGasPrice().valueOf().toString(),
-      data: tx.getData().toString(),
-      chainId: tx.getChainID().valueOf()
+      gasLimit: tx.gasLimit.valueOf().toString(),
+      gasPrice: tx.gasPrice.valueOf().toString(),
+      data: tx.data.toString(),
+      chainId: tx.chainID.valueOf()
     });
     totalFee = totalFee.plus(new BigNumber(fee));
   });

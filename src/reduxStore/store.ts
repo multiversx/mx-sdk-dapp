@@ -1,11 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, Store } from '@reduxjs/toolkit';
 import { createSubscription } from 'react-redux/lib/utils/Subscription';
 import { setAccount, setAccountNonce } from 'reduxStore/slices';
 import { loginSessionMiddleware } from './middlewares/loginSessionMiddleware';
 import { persistIgnoredActions, persistStore, reducers } from './persistConfig';
-import rootReducer from './reducers';
 
-export const store = configureStore({
+export const store: Store = configureStore({
   reducer: reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -26,12 +25,9 @@ export const store = configureStore({
 });
 
 export const subscription = createSubscription(store);
-
 export const persistor = persistStore(store);
 
-// Used only to infer the store type
-const fakeStore = configureStore({ reducer: rootReducer });
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type StoreType = typeof fakeStore;
-export type RootState = ReturnType<ReturnType<typeof fakeStore.getState>>;
+export type StoreType = typeof store;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

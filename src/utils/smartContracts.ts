@@ -28,7 +28,7 @@ export function isContract(
     return false;
   }
 
-  const isContract = new Address(receiver).isContractAddress();
+  const isContract = new Address(receiver).isSmartContract();
 
   if (isContract) {
     return true;

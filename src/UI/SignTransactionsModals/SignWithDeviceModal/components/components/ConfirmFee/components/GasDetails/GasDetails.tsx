@@ -27,8 +27,8 @@ export const GasDetailsComponent = ({
   initialGasPrice,
   styles
 }: GasDetailsPropsType) => {
-  const gasPrice = transaction.getGasPrice().valueOf().toString();
-  const gasLimit = transaction.getGasLimit().valueOf().toString();
+  const gasPrice = transaction.gasPrice.valueOf().toString();
+  const gasLimit = transaction.gasLimit.valueOf().toString();
   const { shard } = useGetAccount();
 
   const {
