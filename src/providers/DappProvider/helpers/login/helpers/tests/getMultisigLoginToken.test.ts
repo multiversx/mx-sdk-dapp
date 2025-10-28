@@ -46,8 +46,6 @@ describe('getMultisigLoginToken tests', () => {
   });
 
   test('returns original loginToken when no multisig provided', async () => {
-    mockInitialize.mockResolvedValueOnce(modifiedLoginToken);
-
     const result = await getMultisigLoginToken({
       loginData: {
         address: loginData.address,

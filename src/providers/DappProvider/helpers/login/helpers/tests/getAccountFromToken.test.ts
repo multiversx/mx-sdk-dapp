@@ -43,7 +43,7 @@ describe('getAccountFromToken tests', () => {
     });
   });
 
-  it('should return original address when signed toke in invalid', async () => {
+  it('should return original address when signed token is invalid', async () => {
     (getModifiedLoginToken as jest.Mock).mockResolvedValue(null);
 
     const result = await getAccountFromToken({

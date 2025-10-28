@@ -36,6 +36,9 @@ describe('loginWithoutNativeToken tests', () => {
       apiAddress
     });
 
+    expect(provider.login).toHaveBeenCalledTimes(1);
+    expect(provider.getAddress).toHaveBeenCalledTimes(1);
+
     expect(result).toEqual({ address });
   });
 });
