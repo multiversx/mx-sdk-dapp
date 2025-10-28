@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.4.0](https://github.com/multiversx/mx-sdk-dapp/pull/1642)] - 2025-10-28
+## [[v4.4.0](https://github.com/multiversx/mx-sdk-dapp/pull/1643)] - 2025-10-28
 
-- [Removed deprecated `fungibleFromBigInteger` from `formatAmount` logic](https://github.com/multiversx/mx-sdk-dapp/pull/1642)
+- [Removed deprecated `fungibleFromBigInteger` from `formatAmount` logic](https://github.com/multiversx/mx-sdk-dapp/pull/1643)
 
 ## [[v4.3.9](https://github.com/multiversx/mx-sdk-dapp/pull/1641)] - 2025-10-27
 
