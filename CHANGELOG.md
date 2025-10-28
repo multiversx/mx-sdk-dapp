@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
 - [Added login and sign transactions computeNonces tests](https://github.com/multiversx/mx-sdk-dapp/pull/1642)
 - [Fixed cached ledger accounts not being cleared](https://github.com/multiversx/mx-sdk-dapp/pull/1637)
 - [Update webview provider to LTS](https://github.com/multiversx/mx-sdk-dapp/pull/1640)
