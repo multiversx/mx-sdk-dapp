@@ -208,7 +208,7 @@ export const useSignMultipleTransactions = ({
         })
       : initialGasPrice;
 
-    const transaction = Transaction.fromPlainObject({
+    const transaction = Transaction.newFromPlainObject({
       ...currentEditedTransaction.toPlainObject(),
       gasPrice: newGasPrice
     });
@@ -338,9 +338,9 @@ export const useSignMultipleTransactions = ({
         return;
       }
 
-      const signature = currentTransaction.transaction.getSignature();
+      const signature = currentTransaction.transaction.signature?.toString();
 
-      if (signature.toString('hex') && !isLastTransaction) {
+      if (signature && !isLastTransaction) {
         setCurrentStep((exising) => exising + 1);
         return;
       }

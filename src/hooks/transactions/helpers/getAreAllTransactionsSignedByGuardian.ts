@@ -15,7 +15,5 @@ export const getAreAllTransactionsSignedByGuardian = ({
     return false;
   }
 
-  return transactions.every((tx) =>
-    Boolean(tx.getGuardianSignature().toString('hex'))
-  );
+  return transactions.every((tx) => Boolean(tx.guardianSignature?.toString()));
 };

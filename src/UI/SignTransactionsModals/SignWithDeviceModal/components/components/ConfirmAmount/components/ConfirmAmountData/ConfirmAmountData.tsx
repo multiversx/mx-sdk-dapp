@@ -38,9 +38,7 @@ const ConfirmAmountDataComponent = ({
 
   const getFormattedAmount = ({ addCommas }: { addCommas: boolean }) =>
     formatAmount({
-      input: isEgld
-        ? currentTransaction.transaction.getValue().toString()
-        : amount,
+      input: isEgld ? currentTransaction.transaction.value.toString() : amount,
       decimals: isEgld ? Number(network.decimals) : tokenDecimals,
       digits: Number(network.digits),
       showLastNonZeroDecimal: false,

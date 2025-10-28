@@ -158,7 +158,7 @@ export const webviewProvider: any = {
               (window as any).transactionsSigned = null;
               return;
             }
-            resolve(txs.map((tx: any) => Transaction.fromPlainObject(tx)));
+            resolve(txs.map((tx: any) => Transaction.newFromPlainObject(tx)));
             (window as any).transactionsSigned = null;
           };
 
@@ -173,7 +173,7 @@ export const webviewProvider: any = {
                 if (!error) {
                   resolve(
                     transactions.map((tx: any) =>
-                      Transaction.fromPlainObject(tx)
+                      Transaction.newFromPlainObject(tx)
                     )
                   );
                 } else {

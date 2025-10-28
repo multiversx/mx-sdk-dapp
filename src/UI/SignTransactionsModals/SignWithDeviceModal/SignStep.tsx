@@ -68,7 +68,7 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
     });
   }, [currentNonceData, currentStep]);
 
-  const transactionData = currentTransaction.transaction.getData().toString();
+  const transactionData = currentTransaction.transaction.data.toString();
 
   const { buttonsWrapperClassName, buttonClassName } =
     signStepInnerClasses || {};

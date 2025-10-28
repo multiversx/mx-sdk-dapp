@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "4.4.0",
+  "version": "4.5.0",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -58,7 +58,7 @@
     "@babel/preset-react": "7.23.3",
     "@babel/preset-typescript": "7.23.3",
     "@ledgerhq/hw-transport-mocker": "6.27.17",
-    "@multiversx/sdk-core": "^14.x",
+    "@multiversx/sdk-core": "^15.x",
     "@octokit/rest": "19.0.5",
     "@storybook/addon-actions": "6.5.14",
     "@storybook/addon-essentials": "6.5.14",
@@ -146,7 +146,7 @@
     "transaction"
   ],
   "peerDependencies": {
-    "@multiversx/sdk-core": "^14.x",
+    "@multiversx/sdk-core": "^14.x || ^15.x",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "axios": ">=1.7.4",
