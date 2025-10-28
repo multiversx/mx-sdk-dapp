@@ -50,6 +50,11 @@ describe('WebviewProvider.init', () => {
       }
     });
 
+    mockSendPostMessage.mockResolvedValueOnce({
+      type: WindowProviderResponseEnums.finalizeHandshakeResponse,
+      payload: { data: Date.now().toString() }
+    });
+
     // Call init method which should use ReactNativeWebView for initialization
     const isInitialized = await provider.init();
 
