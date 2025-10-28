@@ -40,7 +40,7 @@ export async function signTransactions({
   const { allTransactions, parsedTransactionsByDataField } =
     getMultiEsdtTransferData(transactions);
 
-  let signedIndexes: number[] = [];
+  const signedIndexes: number[] = [];
 
   const manager = SignTransactionsStateManager.getInstance();
   await manager.openUI();
