@@ -1,4 +1,3 @@
-import { TokenTransfer } from '@multiversx/sdk-core';
 import BigNumber from 'bignumber.js';
 import { DECIMALS, DIGITS, ZERO } from 'constants/index';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
@@ -39,9 +38,7 @@ export function formatAmount({
     pipe(modInput as string)
       // format
       .then(() =>
-        TokenTransfer.fungibleFromBigInteger('', modInput as string, decimals)
-          .amountAsBigInteger.shiftedBy(-decimals)
-          .toFixed(decimals)
+        new BigNumber(modInput as string).shiftedBy(-decimals).toFixed(decimals)
       )
 
       // format
