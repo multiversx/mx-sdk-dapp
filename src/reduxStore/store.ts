@@ -4,7 +4,7 @@ import { setAccount, setAccountNonce } from 'reduxStore/slices';
 import { loginSessionMiddleware } from './middlewares/loginSessionMiddleware';
 import { persistIgnoredActions, persistStore, reducers } from './persistConfig';
 
-export const store: Store = configureStore({
+export const store = configureStore({
   reducer: reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

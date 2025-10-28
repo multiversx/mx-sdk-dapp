@@ -338,7 +338,8 @@ export const useSignMultipleTransactions = ({
         return;
       }
 
-      const signature = currentTransaction.transaction.signature?.toString();
+      const signature =
+        currentTransaction.transaction.signature?.toString('hex');
 
       if (signature && !isLastTransaction) {
         setCurrentStep((exising) => exising + 1);

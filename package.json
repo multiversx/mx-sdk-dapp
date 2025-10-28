@@ -146,7 +146,7 @@
     "transaction"
   ],
   "peerDependencies": {
-    "@multiversx/sdk-core": "^14.x",
+    "@multiversx/sdk-core": "^14.x || ^15.x",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "axios": ">=1.7.4",
