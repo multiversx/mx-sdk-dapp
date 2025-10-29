@@ -6,7 +6,7 @@ export function parseAmount(amount: string, numDecimals: number = DECIMALS) {
   return new TokenTransfer({
     token: new Token({ identifier: '' }),
     amount: BigInt(
-      new BigNumber(amount).shiftedBy(numDecimals).decimalPlaces(0).toString()
+      new BigNumber(amount).shiftedBy(numDecimals).decimalPlaces(0).toFixed(0)
     )
   }).toString();
 }
