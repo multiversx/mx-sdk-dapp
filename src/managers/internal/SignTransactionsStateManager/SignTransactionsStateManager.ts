@@ -1,4 +1,4 @@
-import { EMPTY_PPU } from 'constants/placeholders.constants';
+import { GAS_PRICE } from 'constants/mvx.constants';
 import { UITagsEnum } from 'constants/UITags.enum';
 import { Transaction } from 'lib/sdkCore';
 import { MvxSignTransactionsPanel } from 'lib/sdkDappUi';
@@ -20,11 +20,11 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
   private static instance: SignTransactionsStateManager;
   public readonly addressesPerPage = 10;
 
-  private _ppuMap: Record<
+  private _gasPriceOptionMap: Record<
     number, // nonce
     {
       initialGasPrice: number;
-      ppu: ISignTransactionsPanelCommonData['ppu'];
+      gasPriceOption: number;
     }
   > = {};
 
@@ -34,7 +34,8 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
       currentIndexToSign: 0,
       egldLabel: '',
       currentIndex: 0,
-      ppuOptions: [],
+      gasPriceOption: 0,
+      gasPriceOptions: [],
       address: '',
       origin: ''
     },
@@ -64,7 +65,7 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
   }
 
   public initializeGasPriceMap(transactions: Transaction[]) {
-    const ppu = EMPTY_PPU;
+    const gasPriceOption = GAS_PRICE;
 
     transactions
       .filter((tx) => tx != null)
@@ -73,33 +74,33 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
 
         this.updateGasPriceMap({
           nonce: Number(transaction.nonce),
-          ppu,
+          gasPriceOption,
           initialGasPrice
         });
       });
 
-    this.updateCommonData({ ppu });
+    this.updateCommonData({ gasPriceOption });
   }
 
   public updateGasPriceMap({
     nonce,
-    ppu,
+    gasPriceOption,
     initialGasPrice
   }: {
     nonce: number;
     initialGasPrice?: number;
-    ppu: ISignTransactionsPanelCommonData['ppu'];
+    gasPriceOption: number;
   }) {
-    this._ppuMap[nonce] = {
-      ...this._ppuMap[nonce],
-      ppu
+    this._gasPriceOptionMap[nonce] = {
+      ...this._gasPriceOptionMap[nonce],
+      gasPriceOption
     };
 
     if (!initialGasPrice) {
       return;
     }
 
-    this._ppuMap[nonce].initialGasPrice = initialGasPrice;
+    this._gasPriceOptionMap[nonce].initialGasPrice = initialGasPrice;
   }
 
   public updateCommonData(
@@ -154,8 +155,8 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
     return this.data.commonData.currentIndex;
   }
 
-  public get ppuMap() {
-    return this._ppuMap;
+  public get getGasPriceOptionMap() {
+    return this._gasPriceOptionMap;
   }
 
   protected async setupEventListeners() {

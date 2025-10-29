@@ -131,7 +131,7 @@ describe('when the gas limit is updated', () => {
       ...mockData,
       gasPriceData: {
         initialGasPrice: 1_000_000_000,
-        ppu: 19_287_760
+        gasPriceOption: 19_287_760
       },
       allTransactions: updatedTransactions,
       network: networkWithGasStationMetadata
@@ -212,7 +212,7 @@ describe('when the gas limit is updated', () => {
       currentScreenIndex: 3,
       gasPriceData: {
         initialGasPrice: 1000000000,
-        ppu: 11_760_000
+        gasPriceOption: 11_760_000
       },
       allTransactions: updatedTransactions,
       network: networkWithGasStationMetadata

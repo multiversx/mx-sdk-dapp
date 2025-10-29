@@ -1,12 +1,11 @@
 import { IPlainTransactionObject } from 'lib/sdkCore';
 import { recommendGasPrice } from 'lib/sdkDappUtils';
-import { ISignTransactionsPanelCommonData } from 'managers/internal/SignTransactionsStateManager/types/signTransactionsPanel.types';
 
 interface GetRecommendedGasPricePropsType {
   transaction: IPlainTransactionObject;
   gasPriceData?: {
     initialGasPrice: number;
-    ppu: ISignTransactionsPanelCommonData['ppu'];
+    ppu: number;
   };
 }
 

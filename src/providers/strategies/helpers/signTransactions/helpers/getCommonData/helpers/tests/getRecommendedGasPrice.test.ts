@@ -13,10 +13,13 @@ const transaction: IPlainTransactionObject = {
   version: 1
 };
 
-const getGasPriceData = (ppu: number) => {
+const getGasPriceData = (
+  ppu: number,
+  initialGasPrice = transaction.gasPrice
+) => {
   return {
     ppu,
-    initialGasPrice: transaction.gasPrice
+    initialGasPrice
   };
 };
 
@@ -56,5 +59,19 @@ describe('getRecommendedGasPrice test', () => {
     });
 
     expect(result).toBe(3248644383);
+  });
+
+  it('should return smaller gasPrice if gasLimit is smaller', () => {
+    const gasPriceData = getGasPriceData(29287760);
+
+    const result = getRecommendedGasPrice({
+      transaction: {
+        ...transaction,
+        gasLimit: 50000
+      },
+      gasPriceData
+    });
+
+    expect(result).toBe(1000000000);
   });
 });

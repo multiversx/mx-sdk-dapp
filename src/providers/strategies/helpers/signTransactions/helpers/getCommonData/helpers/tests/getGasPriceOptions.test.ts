@@ -1,6 +1,6 @@
 import { testAddress } from '__mocks__';
 import { IPlainTransactionObject } from 'lib/sdkCore';
-import { getPpuOptions } from '../getPpuOptions';
+import { getGasPriceOptions } from '../getGasPriceOptions';
 
 const secondTx: IPlainTransactionObject = {
   nonce: 0,
@@ -14,9 +14,9 @@ const secondTx: IPlainTransactionObject = {
   version: 1
 };
 
-describe('getPpuOptions', () => {
+describe('getGasPriceOptions test', () => {
   it('should return the correct gas price options', () => {
-    const ppuOptions = getPpuOptions({
+    const ppuOptions = getGasPriceOptions({
       shard: 1,
       gasStationMetadata: [
         {
