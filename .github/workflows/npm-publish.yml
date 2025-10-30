@@ -47,7 +47,7 @@ jobs:
         id: package
         uses: andreigiura/action-nodejs-package-info@v1.0.2
 
-      - name: Create GitHub Release for official releases
+      - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ steps.package.outputs.is-prerelease == 'false' }}
