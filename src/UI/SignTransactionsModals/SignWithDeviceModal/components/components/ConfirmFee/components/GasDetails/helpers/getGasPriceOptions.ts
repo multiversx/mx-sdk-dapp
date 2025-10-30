@@ -17,13 +17,15 @@ export const getGasPriceOptions = ({
   transaction,
   initialGasPrice = 0
 }: GetGasPriceOptionsParamsType) => {
-  const fastPpu = gasStationMetadata
-    ? gasStationMetadata[Number(shard)]?.fast
-    : EMPTY_PPU;
+  const fastPpu =
+    gasStationMetadata && shard != null
+      ? gasStationMetadata[Number(shard)]?.fast
+      : EMPTY_PPU;
 
-  const fasterPpu = gasStationMetadata
-    ? gasStationMetadata[Number(shard)]?.faster
-    : EMPTY_PPU;
+  const fasterPpu =
+    gasStationMetadata && shard != null
+      ? gasStationMetadata[Number(shard)]?.faster
+      : EMPTY_PPU;
 
   const standardGasPrice = getRecommendedGasPrice({
     transaction,

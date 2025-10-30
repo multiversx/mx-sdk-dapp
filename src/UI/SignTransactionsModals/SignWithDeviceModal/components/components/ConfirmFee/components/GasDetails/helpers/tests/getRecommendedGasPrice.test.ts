@@ -61,7 +61,7 @@ describe('getRecommendedGasPrice test', () => {
     expect(result).toBe(3248644383);
   });
 
-  it('should return smaller gasPrice if gasLimit is smaller', () => {
+  it('should return initialGasPrice when gasLimit is small', () => {
     const gasPriceData = getGasPriceData(29287760);
 
     const result = getRecommendedGasPrice({

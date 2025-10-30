@@ -19,13 +19,14 @@ export function getRecommendedGasPrice({
 
   const { initialGasPrice, ppu } = gasPriceData;
 
-  const newGasPrice = ppu
-    ? recommendGasPrice({
-        transactionDataLength: String(transaction?.data || '').length,
-        transactionGasLimit: transaction.gasLimit,
-        ppu
-      })
-    : initialGasPrice;
+  const newGasPrice =
+    ppu != null
+      ? recommendGasPrice({
+          transactionDataLength: String(transaction?.data || '').length,
+          transactionGasLimit: transaction.gasLimit,
+          ppu
+        })
+      : initialGasPrice;
 
   return newGasPrice;
 }
