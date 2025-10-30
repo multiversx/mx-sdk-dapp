@@ -1,4 +1,3 @@
-import { DecodeMethodEnum } from 'types/serverTransactions.types';
 import {
   unicodeText,
   textWithEmDash,
@@ -6,7 +5,8 @@ import {
   textWithBullet,
   unicodeParts,
   atSeparatedString
-} from 'utils/testConstants/unicodeSamples';
+} from '__mocks__/data/unicodeSamples';
+import { DecodeMethodEnum } from 'types/serverTransactions.types';
 import { decodeForDisplay } from '../decodeForDisplay';
 
 describe('decodeForDisplay with Unicode characters (integration)', () => {
