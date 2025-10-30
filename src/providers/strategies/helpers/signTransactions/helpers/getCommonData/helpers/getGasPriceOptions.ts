@@ -17,8 +17,6 @@ export const getGasPriceOptions = ({
   transaction,
   initialGasPrice = 0
 }: GetGasPriceOptionsParamsType) => {
-  console.log('gasStationMetadata', gasStationMetadata);
-
   const fastPpu = gasStationMetadata
     ? gasStationMetadata[Number(shard)]?.fast
     : EMPTY_PPU;
