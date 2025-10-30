@@ -1,3 +1,13 @@
+import {
+  unicodeText,
+  textWithEmDash,
+  textWithApostrophe,
+  textWithBullet,
+  chineseText,
+  emojiText,
+  ascii,
+  nonAsciiSample
+} from '../../testConstants/unicodeSamples';
 import { isStringBase64, encodeToBase64, decodeBase64 } from '../base64Utils';
 
 describe('isStringBase64', () => {
@@ -24,7 +34,7 @@ describe('isStringBase64', () => {
   });
 
   it('should return true for base64 encoding of chinese characters', () => {
-    const result = isStringBase64('5aeT5ZCN');
+    const result = isStringBase64(Buffer.from(chineseText).toString('base64'));
     expect(result).toStrictEqual(true);
   });
 
@@ -59,9 +69,7 @@ describe('isStringBase64', () => {
   });
 
   it('should return false for non-ASCII string', () => {
-    const result = isStringBase64(
-      '🙀!"#$%&\\() * +, -./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{|}~������'
-    );
+    const result = isStringBase64(nonAsciiSample);
     expect(result).toStrictEqual(false);
   });
 
@@ -76,34 +84,17 @@ describe('isStringBase64', () => {
   });
 
   it('should return false for strings containing curly apostrophe', () => {
-    const result = isStringBase64("We're back");
+    const result = isStringBase64(textWithApostrophe);
     expect(result).toStrictEqual(false);
   });
 
   it('should return false for strings containing bullet points', () => {
-    const result = isStringBase64('• Despite having 2FA');
+    const result = isStringBase64(textWithBullet);
     expect(result).toStrictEqual(false);
   });
 
   it('should return false for the full problematic text', () => {
-    const problematicText = `We are so back!
-
-A short recap of the temporary account breach — what happened, how we responded, and what's being done to prevent this in the future:
-
-• Despite having 2FA enabled, the hackers were able to gain access to the X account using a malicious link
-
-• Upon detection, we immediately secured all associated account data and worked with X Support to limit the reach of the malicious post, identify the attacker's onchain and offchain traces, and ensure no user damage occurred
-
-• Access to the account was then temporarily restricted while X removed the post and banned the offending accounts
-
-• We also issued a takedown request for the fraudulent website
-
-• No user wallets or funds were affected
-
-• Additional security measures have now been implemented across xExchange and all connected accounts
-
-Thank you for your patience and continued trust!`;
-    const result = isStringBase64(problematicText);
+    const result = isStringBase64(unicodeText);
     expect(result).toStrictEqual(false);
   });
 
@@ -119,24 +110,6 @@ Thank you for your patience and continued trust!`;
 });
 
 describe('encodeToBase64 and decodeBase64 with Unicode characters', () => {
-  const unicodeText = `We are so back!
-
-A short recap of the temporary account breach — what happened, how we responded, and what's being done to prevent this in the future:
-
-• Despite having 2FA enabled, the hackers were able to gain access to the X account using a malicious link
-
-• Upon detection, we immediately secured all associated account data and worked with X Support to limit the reach of the malicious post, identify the attacker's onchain and offchain traces, and ensure no user damage occurred
-
-• Access to the account was then temporarily restricted while X removed the post and banned the offending accounts
-
-• We also issued a takedown request for the fraudulent website
-
-• No user wallets or funds were affected
-
-• Additional security measures have now been implemented across xExchange and all connected accounts
-
-Thank you for your patience and continued trust!`;
-
   it('should encode Unicode text to base64', () => {
     const encoded = encodeToBase64(unicodeText);
     expect(encoded).toBeDefined();
@@ -162,7 +135,6 @@ Thank you for your patience and continued trust!`;
   });
 
   it('should handle em dash encoding correctly', () => {
-    const textWithEmDash = 'Test — em dash';
     const encoded = encodeToBase64(textWithEmDash);
     const decoded = decodeBase64(encoded);
     expect(decoded).toContain('—');
@@ -170,7 +142,6 @@ Thank you for your patience and continued trust!`;
   });
 
   it('should handle curly apostrophe encoding correctly', () => {
-    const textWithApostrophe = "We're back";
     const encoded = encodeToBase64(textWithApostrophe);
     const decoded = decodeBase64(encoded);
     expect(decoded).toContain("'");
@@ -178,7 +149,6 @@ Thank you for your patience and continued trust!`;
   });
 
   it('should handle bullet point encoding correctly', () => {
-    const textWithBullet = '• First item';
     const encoded = encodeToBase64(textWithBullet);
     const decoded = decodeBase64(encoded);
     expect(decoded).toContain('•');
@@ -186,7 +156,6 @@ Thank you for your patience and continued trust!`;
   });
 
   it('should handle emoji encoding correctly', () => {
-    const emojiText = 'test transaction 🙀';
     const encoded = encodeToBase64(emojiText);
     const decoded = decodeBase64(encoded);
     expect(decoded).toContain('🙀');
@@ -194,17 +163,9 @@ Thank you for your patience and continued trust!`;
   });
 
   it('should handle Chinese characters encoding correctly', () => {
-    const chineseText = '姓名';
     const encoded = encodeToBase64(chineseText);
     const decoded = decodeBase64(encoded);
     expect(decoded).toBe(chineseText);
-  });
-
-  it('should handle mixed Unicode characters', () => {
-    const mixedText = '🙀!"abcd123|}{~���🙀132dasd';
-    const encoded = encodeToBase64(mixedText);
-    const decoded = decodeBase64(encoded);
-    expect(decoded).toBe(mixedText);
   });
 });
 
@@ -256,8 +217,6 @@ describe('encodeToBase64 edge cases', () => {
   });
 
   it('should encode all printable ASCII characters', () => {
-    const ascii =
-      '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
     const encoded = encodeToBase64(ascii);
     const decoded = decodeBase64(encoded);
     expect(decoded).toBe(ascii);

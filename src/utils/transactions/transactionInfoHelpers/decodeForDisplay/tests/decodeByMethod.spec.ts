@@ -2,6 +2,12 @@ import { Address } from '@multiversx/sdk-core';
 import { DecodeMethodEnum } from 'types';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { isUtf8 } from 'utils/decoders';
+import {
+  unicodeText,
+  textWithEmDash,
+  textWithApostrophe,
+  textWithBullet
+} from 'utils/testConstants/unicodeSamples';
 import { decodeByMethod } from '../helpers';
 
 jest.mock('@multiversx/sdk-core', () => ({
@@ -121,27 +127,8 @@ describe('decodeByMethod', () => {
   });
 
   describe('Unicode character handling', () => {
-    const unicodeText = `We are so back!
-
-A short recap of the temporary account breach — what happened, how we responded, and what's being done to prevent this in the future:
-
-• Despite having 2FA enabled, the hackers were able to gain access to the X account using a malicious link
-
-• Upon detection, we immediately secured all associated account data and worked with X Support to limit the reach of the malicious post, identify the attacker's onchain and offchain traces, and ensure no user damage occurred
-
-• Access to the account was then temporarily restricted while X removed the post and banned the offending accounts
-
-• We also issued a takedown request for the fraudulent website
-
-• No user wallets or funds were affected
-
-• Additional security measures have now been implemented across xExchange and all connected accounts
-
-Thank you for your patience and continued trust!`;
-
     describe('text decode method with Unicode', () => {
       it('should decode hex to utf8 text with em dash', () => {
-        const textWithEmDash = 'Test — em dash';
         const hexString = Buffer.from(textWithEmDash).toString('hex');
         const result = decodeByMethod(hexString, DecodeMethodEnum.text);
         expect(result).toBe(textWithEmDash);
@@ -149,7 +136,6 @@ Thank you for your patience and continued trust!`;
       });
 
       it('should decode hex to utf8 text with curly apostrophe', () => {
-        const textWithApostrophe = "We're back";
         const hexString = Buffer.from(textWithApostrophe).toString('hex');
         const result = decodeByMethod(hexString, DecodeMethodEnum.text);
         expect(result).toBe(textWithApostrophe);
@@ -157,7 +143,6 @@ Thank you for your patience and continued trust!`;
       });
 
       it('should decode hex to utf8 text with bullet points', () => {
-        const textWithBullet = '• First item';
         const hexString = Buffer.from(textWithBullet).toString('hex');
         const result = decodeByMethod(hexString, DecodeMethodEnum.text);
         expect(result).toBe(textWithBullet);
@@ -196,7 +181,6 @@ Thank you for your patience and continued trust!`;
       });
 
       it('should decode hex to utf8 with em dash using smart method', () => {
-        const textWithEmDash = 'Test — em dash';
         const hexString = Buffer.from(textWithEmDash).toString('hex');
         const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
         expect(result).toBe(textWithEmDash);
@@ -204,7 +188,6 @@ Thank you for your patience and continued trust!`;
       });
 
       it('should decode hex to utf8 with curly apostrophe using smart method', () => {
-        const textWithApostrophe = "We're back";
         const hexString = Buffer.from(textWithApostrophe).toString('hex');
         const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
         expect(result).toBe(textWithApostrophe);
@@ -212,7 +195,6 @@ Thank you for your patience and continued trust!`;
       });
 
       it('should decode hex to utf8 with bullet points using smart method', () => {
-        const textWithBullet = '• First item';
         const hexString = Buffer.from(textWithBullet).toString('hex');
         const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
         expect(result).toBe(textWithBullet);
