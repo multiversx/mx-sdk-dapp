@@ -65,7 +65,6 @@ Thank you for your patience and continued trust!`;
 
   describe('newline-separated base64 encoding scenario', () => {
     it('should decode base64-encoded newline-separated parts with text method', () => {
-      // Simulate a transaction data field: base64-encoded parts separated by newlines
       const parts = unicodeText.split('\n\n');
       const base64Parts = parts.map((part) =>
         Buffer.from(part).toString('base64')
@@ -78,13 +77,11 @@ Thank you for your patience and continued trust!`;
         identifier: 'data'
       });
 
-      // Verify the result contains the special characters
       expect(result.displayValue).toContain('—');
       expect(result.displayValue).toContain("'");
       expect(result.displayValue).toContain('•');
       expect(result.displayValue).toContain("attacker's");
 
-      // Verify structure is preserved
       const resultParts = result.displayValue.split('\n');
       expect(resultParts.length).toBe(base64Parts.length);
     });
@@ -102,12 +99,9 @@ Thank you for your patience and continued trust!`;
         identifier: 'data'
       });
 
-      // Smart method may convert parts to decimal if they look like numbers
-      // So we verify it doesn't throw errors and produces output
       expect(result.displayValue).toBeDefined();
       expect(typeof result.displayValue).toBe('string');
 
-      // Verify no corruption artifacts
       expect(result.displayValue).not.toContain('b<0x14>');
       expect(result.displayValue).not.toContain('b<0x19>');
       expect(result.displayValue).not.toContain('b"');
@@ -163,12 +157,10 @@ Thank you for your patience and continued trust!`;
         identifier: 'test'
       });
 
-      // Verify no corruption artifacts
       expect(result.displayValue).not.toContain('b<0x14>');
       expect(result.displayValue).not.toContain('b<0x19>');
       expect(result.displayValue).not.toContain('b"');
 
-      // Verify correct characters
       expect(result.displayValue).toContain('—');
       expect(result.displayValue).toContain("'");
       expect(result.displayValue).toContain('•');

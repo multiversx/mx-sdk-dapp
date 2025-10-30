@@ -177,13 +177,10 @@ Thank you for your patience and continued trust!`;
       it('should preserve all special Unicode characters', () => {
         const hexString = Buffer.from(unicodeText).toString('hex');
         const result = decodeByMethod(hexString, DecodeMethodEnum.text);
-
-        // Count occurrences of special characters
         const emDashCount = (result.match(/—/g) || []).length;
         const apostropheCount = (result.match(/'/g) || []).length;
         const bulletCount = (result.match(/•/g) || []).length;
 
-        // The text has 1 em dash, 3 apostrophes (what's, attacker's, what's), and 6 bullets
         expect(emDashCount).toBeGreaterThan(0);
         expect(apostropheCount).toBeGreaterThan(0);
         expect(bulletCount).toBeGreaterThan(0);
