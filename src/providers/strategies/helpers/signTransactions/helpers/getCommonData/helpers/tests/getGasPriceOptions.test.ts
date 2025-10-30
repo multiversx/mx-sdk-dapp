@@ -16,7 +16,7 @@ const secondTx: IPlainTransactionObject = {
 
 describe('getGasPriceOptions test', () => {
   it('should return the correct gas price options', () => {
-    const ppuOptions = getGasPriceOptions({
+    const gasPriceOptions = getGasPriceOptions({
       shard: 1,
       gasStationMetadata: [
         {
@@ -36,10 +36,10 @@ describe('getGasPriceOptions test', () => {
       initialGasPrice: 1_000_000_000
     });
 
-    expect(ppuOptions).toEqual([
-      { label: 'Standard', value: 0 },
-      { label: 'Fast', value: 11760000 },
-      { label: 'Faster', value: 19287760 }
+    expect(gasPriceOptions).toEqual([
+      { label: 'Standard', value: 1000000000 },
+      { label: 'Fast', value: 1065456733 },
+      { label: 'Faster', value: 1747472258 }
     ]);
   });
 });
