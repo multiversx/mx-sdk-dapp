@@ -1,3 +1,4 @@
+import { encodeToBase64 } from 'utils/decoders';
 import { getDataPayloadForTransaction } from '../getDataPayloadForTransaction';
 
 describe('getDataPayloadForTransaction', () => {
@@ -59,5 +60,52 @@ describe('getDataPayloadForTransaction', () => {
     const data = '姓名';
     const result = getDataPayloadForTransaction(data);
     expect(result.toString()).toStrictEqual(data);
+  });
+
+  it('should properly decode base64 with em dash Unicode character', async () => {
+    const unicodeText = 'Test — em dash';
+    const base64Data = encodeToBase64(unicodeText);
+    const result = getDataPayloadForTransaction(base64Data);
+    expect(result.toString()).toContain('—');
+  });
+
+  it('should properly decode base64 with curly apostrophe Unicode character', async () => {
+    const unicodeText = "We're back";
+    const base64Data = encodeToBase64(unicodeText);
+    const result = getDataPayloadForTransaction(base64Data);
+    expect(result.toString()).toContain("'");
+  });
+
+  it('should properly decode base64 with bullet point Unicode character', async () => {
+    const unicodeText = '• First item';
+    const base64Data = encodeToBase64(unicodeText);
+    const result = getDataPayloadForTransaction(base64Data);
+    expect(result.toString()).toContain('•');
+  });
+
+  it('should properly decode full problematic text with Unicode characters', async () => {
+    const unicodeText = `We are so back!
+
+A short recap of the temporary account breach — what happened, how we responded, and what's being done to prevent this in the future:
+
+• Despite having 2FA enabled, the hackers were able to gain access to the X account using a malicious link
+
+• Upon detection, we immediately secured all associated account data and worked with X Support to limit the reach of the malicious post, identify the attacker's onchain and offchain traces, and ensure no user damage occurred
+
+• Access to the account was then temporarily restricted while X removed the post and banned the offending accounts
+
+• We also issued a takedown request for the fraudulent website
+
+• No user wallets or funds were affected
+
+• Additional security measures have now been implemented across xExchange and all connected accounts
+
+Thank you for your patience and continued trust!`;
+    const base64Data = encodeToBase64(unicodeText);
+    const result = getDataPayloadForTransaction(base64Data);
+    expect(result.toString()).toContain('—');
+    expect(result.toString()).toContain("'");
+    expect(result.toString()).toContain('•');
+    expect(result.toString()).toContain("attacker's");
   });
 });

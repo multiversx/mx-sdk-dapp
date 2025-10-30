@@ -119,4 +119,125 @@ describe('decodeByMethod', () => {
       expect(result).toBe(part);
     });
   });
+
+  describe('Unicode character handling', () => {
+    const unicodeText = `We are so back!
+
+A short recap of the temporary account breach — what happened, how we responded, and what's being done to prevent this in the future:
+
+• Despite having 2FA enabled, the hackers were able to gain access to the X account using a malicious link
+
+• Upon detection, we immediately secured all associated account data and worked with X Support to limit the reach of the malicious post, identify the attacker's onchain and offchain traces, and ensure no user damage occurred
+
+• Access to the account was then temporarily restricted while X removed the post and banned the offending accounts
+
+• We also issued a takedown request for the fraudulent website
+
+• No user wallets or funds were affected
+
+• Additional security measures have now been implemented across xExchange and all connected accounts
+
+Thank you for your patience and continued trust!`;
+
+    describe('text decode method with Unicode', () => {
+      it('should decode hex to utf8 text with em dash', () => {
+        const textWithEmDash = 'Test — em dash';
+        const hexString = Buffer.from(textWithEmDash).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.text);
+        expect(result).toBe(textWithEmDash);
+        expect(result).toContain('—');
+      });
+
+      it('should decode hex to utf8 text with curly apostrophe', () => {
+        const textWithApostrophe = "We're back";
+        const hexString = Buffer.from(textWithApostrophe).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.text);
+        expect(result).toBe(textWithApostrophe);
+        expect(result).toContain("'");
+      });
+
+      it('should decode hex to utf8 text with bullet points', () => {
+        const textWithBullet = '• First item';
+        const hexString = Buffer.from(textWithBullet).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.text);
+        expect(result).toBe(textWithBullet);
+        expect(result).toContain('•');
+      });
+
+      it('should decode full problematic text with Unicode characters', () => {
+        const hexString = Buffer.from(unicodeText).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.text);
+        expect(result).toBe(unicodeText);
+        expect(result).toContain('—');
+        expect(result).toContain("'");
+        expect(result).toContain('•');
+        expect(result).toContain("attacker's");
+      });
+
+      it('should preserve all special Unicode characters', () => {
+        const hexString = Buffer.from(unicodeText).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.text);
+
+        // Count occurrences of special characters
+        const emDashCount = (result.match(/—/g) || []).length;
+        const apostropheCount = (result.match(/'/g) || []).length;
+        const bulletCount = (result.match(/•/g) || []).length;
+
+        // The text has 1 em dash, 3 apostrophes (what's, attacker's, what's), and 6 bullets
+        expect(emDashCount).toBeGreaterThan(0);
+        expect(apostropheCount).toBeGreaterThan(0);
+        expect(bulletCount).toBeGreaterThan(0);
+      });
+    });
+
+    describe('smart decode method with Unicode', () => {
+      beforeEach(() => {
+        (Address.newFromHex as jest.Mock).mockImplementation(() => {
+          throw new Error();
+        });
+        (isUtf8 as jest.Mock).mockReturnValue(true);
+      });
+
+      it('should decode hex to utf8 with em dash using smart method', () => {
+        const textWithEmDash = 'Test — em dash';
+        const hexString = Buffer.from(textWithEmDash).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
+        expect(result).toBe(textWithEmDash);
+        expect(result).toContain('—');
+      });
+
+      it('should decode hex to utf8 with curly apostrophe using smart method', () => {
+        const textWithApostrophe = "We're back";
+        const hexString = Buffer.from(textWithApostrophe).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
+        expect(result).toBe(textWithApostrophe);
+        expect(result).toContain("'");
+      });
+
+      it('should decode hex to utf8 with bullet points using smart method', () => {
+        const textWithBullet = '• First item';
+        const hexString = Buffer.from(textWithBullet).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
+        expect(result).toBe(textWithBullet);
+        expect(result).toContain('•');
+      });
+
+      it('should decode full problematic text with smart method', () => {
+        const hexString = Buffer.from(unicodeText).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
+        expect(result).toBe(unicodeText);
+        expect(result).toContain('—');
+        expect(result).toContain("'");
+        expect(result).toContain('•');
+      });
+    });
+
+    describe('raw decode method with Unicode', () => {
+      it('should return original hex string with Unicode characters', () => {
+        const hexString = Buffer.from(unicodeText).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.raw);
+        expect(result).toBe(hexString);
+      });
+    });
+  });
 });

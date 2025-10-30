@@ -1,4 +1,4 @@
-import { isStringBase64 } from '../decoders';
+import { decodeBase64, isStringBase64 } from '../decoders';
 
 /**
  * @description We need to check if the data field was already encoded and to prevent additional encoding
@@ -12,6 +12,6 @@ export const getDataPayloadForTransaction = (data?: string) => {
   const defaultData = data ?? '';
 
   return isStringBase64(defaultData)
-    ? Buffer.from(Buffer.from(defaultData, 'base64').toString().trim())
+    ? decodeBase64(defaultData)
     : Buffer.from(defaultData.trim());
 };
