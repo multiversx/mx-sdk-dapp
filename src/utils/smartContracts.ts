@@ -1,7 +1,7 @@
 import { Address } from '@multiversx/sdk-core';
 import { TypesOfSmartContractCallsEnum } from 'types';
 import { addressIsValid } from './account/addressIsValid';
-import { isStringBase64 } from './decoders/base64Utils';
+import { decodeBase64, isStringBase64 } from './decoders/base64Utils';
 
 export const ESDTTransferTypes = [
   'ESDTNFTTransfer',
@@ -86,9 +86,7 @@ export function getAddressFromDataField({
     if (!data) {
       return receiver;
     }
-    const parsedData = isStringBase64(data)
-      ? Buffer.from(data, 'base64').toString()
-      : data;
+    const parsedData = isStringBase64(data) ? decodeBase64(data) : data;
 
     const addressIndex = getAddressIndex(parsedData);
 

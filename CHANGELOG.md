@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v4.5.2](https://github.com/multiversx/mx-sdk-dapp/pull/1647)] - 2025-10-30
+
+- [Fixed encoding and decoding of base64 strings](https://github.com/multiversx/mx-sdk-dapp/pull/1647)
+
 ## [[v4.5.1](https://github.com/multiversx/mx-sdk-dapp/pull/1646)] - 2025-10-29
 
 - [Fixed `parseAmount` with large numbers](https://github.com/multiversx/mx-sdk-dapp/pull/1646)

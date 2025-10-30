@@ -1,4 +1,10 @@
 import { Address } from '@multiversx/sdk-core';
+import {
+  unicodeText,
+  textWithEmDash,
+  textWithApostrophe,
+  textWithBullet
+} from '__mocks__/data/unicodeSamples';
 import { DecodeMethodEnum } from 'types';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { isUtf8 } from 'utils/decoders';
@@ -117,6 +123,100 @@ describe('decodeByMethod', () => {
       const part = 'rawData';
       const result = decodeByMethod(part, DecodeMethodEnum.raw);
       expect(result).toBe(part);
+    });
+  });
+
+  describe('Unicode character handling', () => {
+    describe('text decode method with Unicode', () => {
+      it('should decode hex to utf8 text with em dash', () => {
+        const hexString = Buffer.from(textWithEmDash).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.text);
+        expect(result).toBe(textWithEmDash);
+        expect(result).toContain('—');
+      });
+
+      it('should decode hex to utf8 text with curly apostrophe', () => {
+        const hexString = Buffer.from(textWithApostrophe).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.text);
+        expect(result).toBe(textWithApostrophe);
+        expect(result).toContain("'");
+      });
+
+      it('should decode hex to utf8 text with bullet points', () => {
+        const hexString = Buffer.from(textWithBullet).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.text);
+        expect(result).toBe(textWithBullet);
+        expect(result).toContain('•');
+      });
+
+      it('should decode full problematic text with Unicode characters', () => {
+        const hexString = Buffer.from(unicodeText).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.text);
+        expect(result).toBe(unicodeText);
+        expect(result).toContain('—');
+        expect(result).toContain("'");
+        expect(result).toContain('•');
+        expect(result).toContain("orci'e");
+      });
+
+      it('should preserve all special Unicode characters', () => {
+        const hexString = Buffer.from(unicodeText).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.text);
+        const emDashCount = (result.match(/—/g) || []).length;
+        const apostropheCount = (result.match(/'/g) || []).length;
+        const bulletCount = (result.match(/•/g) || []).length;
+
+        expect(emDashCount).toBeGreaterThan(0);
+        expect(apostropheCount).toBeGreaterThan(0);
+        expect(bulletCount).toBeGreaterThan(0);
+      });
+    });
+
+    describe('smart decode method with Unicode', () => {
+      beforeEach(() => {
+        (Address.newFromHex as jest.Mock).mockImplementation(() => {
+          throw new Error();
+        });
+        (isUtf8 as jest.Mock).mockReturnValue(true);
+      });
+
+      it('should decode hex to utf8 with em dash using smart method', () => {
+        const hexString = Buffer.from(textWithEmDash).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
+        expect(result).toBe(textWithEmDash);
+        expect(result).toContain('—');
+      });
+
+      it('should decode hex to utf8 with curly apostrophe using smart method', () => {
+        const hexString = Buffer.from(textWithApostrophe).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
+        expect(result).toBe(textWithApostrophe);
+        expect(result).toContain("'");
+      });
+
+      it('should decode hex to utf8 with bullet points using smart method', () => {
+        const hexString = Buffer.from(textWithBullet).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
+        expect(result).toBe(textWithBullet);
+        expect(result).toContain('•');
+      });
+
+      it('should decode full problematic text with smart method', () => {
+        const hexString = Buffer.from(unicodeText).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.smart);
+        expect(result).toBe(unicodeText);
+        expect(result).toContain('—');
+        expect(result).toContain("'");
+        expect(result).toContain('•');
+      });
+    });
+
+    describe('raw decode method with Unicode', () => {
+      it('should return original hex string with Unicode characters', () => {
+        const hexString = Buffer.from(unicodeText).toString('hex');
+        const result = decodeByMethod(hexString, DecodeMethodEnum.raw);
+        expect(result).toBe(hexString);
+      });
     });
   });
 });

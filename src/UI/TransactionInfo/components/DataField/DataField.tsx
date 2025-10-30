@@ -4,6 +4,7 @@ import { N_A } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ScamInfoType } from 'types/account.types';
 import { DataDecode } from 'UI/TransactionInfo/components/DataDecode/DataDecode';
+import { decodeBase64 } from 'utils/decoders';
 import { truncate } from 'utils/operations/truncate';
 import { getScamFlag } from 'utils/transactions/transactionInfoHelpers/getScamFlag';
 import { useDataDecodeMethod } from 'utils/transactions/transactionInfoHelpers/useDataDecodeMethod';
@@ -30,7 +31,7 @@ const DataFieldComponent = ({
     setShowData((existing) => !existing);
   };
 
-  const dataString = data ? Buffer.from(data, 'base64').toString() : N_A;
+  const dataString = data ? decodeBase64(data) : N_A;
   const { textWithLinks, message, isSuspicious } = getScamFlag({
     message: dataString,
     scamInfo

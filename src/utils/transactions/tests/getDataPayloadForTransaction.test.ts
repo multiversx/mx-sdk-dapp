@@ -1,3 +1,13 @@
+import {
+  textWithEmDash,
+  textWithApostrophe,
+  textWithBullet,
+  chineseText,
+  esdtPayload,
+  ascii,
+  nonAsciiSample
+} from '__mocks__/data/unicodeSamples';
+import { encodeToBase64 } from 'utils/decoders';
 import { getDataPayloadForTransaction } from '../getDataPayloadForTransaction';
 
 describe('getDataPayloadForTransaction', () => {
@@ -14,50 +24,66 @@ describe('getDataPayloadForTransaction', () => {
   });
 
   it('should return the decoded base64 string with emoji', async () => {
-    const data = 'dGVzdCB0cmFuc2FjdGlvbiDwn5mA';
+    const data = encodeToBase64('test transaction 🙀');
     const decoded = 'test transaction 🙀';
     const result = getDataPayloadForTransaction(data);
     expect(result.toString()).toStrictEqual(decoded);
   });
 
   it('should return the decoded base64 string of another base64 string', async () => {
-    const data = 'ZEdWemRDQjBjbUZ1YzJGamRHbHZiaUR3bjVtQQ==';
-    const decoded = 'dGVzdCB0cmFuc2FjdGlvbiDwn5mA';
+    const inner = encodeToBase64('test transaction 🙀');
+    const data = encodeToBase64(inner);
     const result = getDataPayloadForTransaction(data);
-    expect(result.toString()).toStrictEqual(decoded);
+    expect(result.toString()).toStrictEqual(inner);
   });
 
   it('should return the decoded base64 string of transaction sign data', async () => {
-    const data = 'bGVuZGVnYXRlQDAx';
+    const data = encodeToBase64('lendegate@01');
     const decoded = 'lendegate@01';
     const result = getDataPayloadForTransaction(data);
     expect(result.toString()).toStrictEqual(decoded);
   });
 
   it('should return the decoded base64 string with chinese characters', async () => {
-    const data = '5aeT5ZCN';
-    const decoded = '姓名';
+    const data = encodeToBase64(chineseText);
+    const decoded = chineseText;
     const result = getDataPayloadForTransaction(data);
     expect(result.toString()).toStrictEqual(decoded);
   });
 
   it('should return the data unmodified when ESDT data is provided', async () => {
-    const data =
-      'ESDTNFTTransfer@524f424f54532d316365303334@01@01@0000000000000000050006bdc61ebbec719b07b4a7ebfd1fb215c0706e3c7ceb';
+    const data = esdtPayload;
     const result = getDataPayloadForTransaction(data);
     expect(result.toString()).toStrictEqual(data);
   });
 
   it('should return the data unmodified when non-ASCII string is provided', async () => {
-    const data =
-      '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~��������������������������������������������������������������������������������������������������������������������������������';
+    const data = ascii + nonAsciiSample;
     const result = getDataPayloadForTransaction(data);
     expect(result.toString()).toStrictEqual(data);
   });
 
   it('should return the data unmodified when chinese string is provided', async () => {
-    const data = '姓名';
+    const data = chineseText;
     const result = getDataPayloadForTransaction(data);
     expect(result.toString()).toStrictEqual(data);
+  });
+
+  it('should properly decode base64 with em dash Unicode character', async () => {
+    const base64Data = encodeToBase64(textWithEmDash);
+    const result = getDataPayloadForTransaction(base64Data);
+    expect(result.toString()).toContain('—');
+  });
+
+  it('should properly decode base64 with curly apostrophe Unicode character', async () => {
+    const base64Data = encodeToBase64(textWithApostrophe);
+    const result = getDataPayloadForTransaction(base64Data);
+    expect(result.toString()).toContain("'");
+  });
+
+  it('should properly decode base64 with bullet point Unicode character', async () => {
+    const base64Data = encodeToBase64(textWithBullet);
+    const result = getDataPayloadForTransaction(base64Data);
+    expect(result.toString()).toContain('•');
   });
 });
