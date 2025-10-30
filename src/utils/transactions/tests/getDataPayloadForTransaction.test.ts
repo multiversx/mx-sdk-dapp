@@ -1,6 +1,4 @@
-import { encodeToBase64 } from 'utils/decoders';
 import {
-  unicodeText,
   textWithEmDash,
   textWithApostrophe,
   textWithBullet,
@@ -8,7 +6,8 @@ import {
   esdtPayload,
   ascii,
   nonAsciiSample
-} from '../../testConstants/unicodeSamples';
+} from '__mocks__/data/unicodeSamples';
+import { encodeToBase64 } from 'utils/decoders';
 import { getDataPayloadForTransaction } from '../getDataPayloadForTransaction';
 
 describe('getDataPayloadForTransaction', () => {
@@ -86,14 +85,5 @@ describe('getDataPayloadForTransaction', () => {
     const base64Data = encodeToBase64(textWithBullet);
     const result = getDataPayloadForTransaction(base64Data);
     expect(result.toString()).toContain('•');
-  });
-
-  it('should properly decode full problematic text with Unicode characters', async () => {
-    const base64Data = encodeToBase64(unicodeText);
-    const result = getDataPayloadForTransaction(base64Data);
-    expect(result.toString()).toContain('—');
-    expect(result.toString()).toContain("'");
-    expect(result.toString()).toContain('•');
-    expect(result.toString()).toContain("attacker's");
   });
 });

@@ -6,8 +6,10 @@ import {
   chineseText,
   emojiText,
   ascii,
-  nonAsciiSample
-} from '../../testConstants/unicodeSamples';
+  nonAsciiSample,
+  textWithHangulFiller,
+  textWithZeroWidthSpace
+} from '__mocks__/data/unicodeSamples';
 import { isStringBase64, encodeToBase64, decodeBase64 } from '../base64Utils';
 
 describe('isStringBase64', () => {
@@ -34,7 +36,7 @@ describe('isStringBase64', () => {
   });
 
   it('should return true for base64 encoding of chinese characters', () => {
-    const result = isStringBase64(Buffer.from(chineseText).toString('base64'));
+    const result = isStringBase64('5aeT5ZCN');
     expect(result).toStrictEqual(true);
   });
 
@@ -130,8 +132,8 @@ describe('encodeToBase64 and decodeBase64 with Unicode characters', () => {
     expect(decoded).toContain('—');
     expect(decoded).toContain("'");
     expect(decoded).toContain('•');
-    expect(decoded).toContain('temporary account breach');
-    expect(decoded).toContain("attacker's");
+    expect(decoded).toContain('regressu');
+    expect(decoded).toContain("orci'e");
   });
 
   it('should handle em dash encoding correctly', () => {
@@ -167,6 +169,13 @@ describe('encodeToBase64 and decodeBase64 with Unicode characters', () => {
     const decoded = decodeBase64(encoded);
     expect(decoded).toBe(chineseText);
   });
+
+  it('should handle mixed Unicode characters', () => {
+    const mixedText = '🙀!"abcd123|}{~���🙀132dasd';
+    const encoded = encodeToBase64(mixedText);
+    const decoded = decodeBase64(encoded);
+    expect(decoded).toBe(mixedText);
+  });
 });
 
 describe('decodeBase64 with non-base64 strings', () => {
@@ -183,7 +192,6 @@ describe('decodeBase64 with non-base64 strings', () => {
   });
 
   it('should return original string for Unicode text', () => {
-    const unicodeText = "We're back — with features!";
     const result = decodeBase64(unicodeText);
     expect(result).toBe(unicodeText);
   });
@@ -220,5 +228,21 @@ describe('encodeToBase64 edge cases', () => {
     const encoded = encodeToBase64(ascii);
     const decoded = decodeBase64(encoded);
     expect(decoded).toBe(ascii);
+  });
+});
+
+describe('encodeToBase64 and decodeBase64 with invisible Unicode characters', () => {
+  it('should handle HANGUL FILLER (U+3164) encoding correctly - invisible character used for empty names', () => {
+    const encoded = encodeToBase64(textWithHangulFiller);
+    const decoded = decodeBase64(encoded);
+    expect(decoded).toBe(textWithHangulFiller);
+    expect(decoded.length).toBe(1);
+  });
+
+  it('should handle ZERO WIDTH SPACE (U+200B) encoding correctly - invisible character used for empty messages', () => {
+    const encoded = encodeToBase64(textWithZeroWidthSpace);
+    const decoded = decodeBase64(encoded);
+    expect(decoded).toBe(textWithZeroWidthSpace);
+    expect(decoded.length).toBe(9); // 'test' (4) + '\u200B' (1) + 'text' (4)
   });
 });

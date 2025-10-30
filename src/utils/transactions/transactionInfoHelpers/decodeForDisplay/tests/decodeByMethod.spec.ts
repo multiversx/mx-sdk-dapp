@@ -1,13 +1,13 @@
 import { Address } from '@multiversx/sdk-core';
-import { DecodeMethodEnum } from 'types';
-import { addressIsValid } from 'utils/account/addressIsValid';
-import { isUtf8 } from 'utils/decoders';
 import {
   unicodeText,
   textWithEmDash,
   textWithApostrophe,
   textWithBullet
-} from 'utils/testConstants/unicodeSamples';
+} from '__mocks__/data/unicodeSamples';
+import { DecodeMethodEnum } from 'types';
+import { addressIsValid } from 'utils/account/addressIsValid';
+import { isUtf8 } from 'utils/decoders';
 import { decodeByMethod } from '../helpers';
 
 jest.mock('@multiversx/sdk-core', () => ({
@@ -156,7 +156,7 @@ describe('decodeByMethod', () => {
         expect(result).toContain('—');
         expect(result).toContain("'");
         expect(result).toContain('•');
-        expect(result).toContain("attacker's");
+        expect(result).toContain("orci'e");
       });
 
       it('should preserve all special Unicode characters', () => {

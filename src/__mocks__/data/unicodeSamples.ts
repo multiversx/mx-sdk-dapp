@@ -1,12 +1,11 @@
 // Constants shared across tests to avoid duplication and ensure DRY principle
 
-export const unicodeText = `We are so back!
+export const unicodeText = `Me sem ea vero!
+A mazim donec si est perpetuum iucunda moreae — eius regressu, hac se regnandum, eum orci'e facer nunc si conjuso wisi id est pungit:
 
-A short recap of the temporary account breach — what happened, how we responded, and what's being done to prevent this in the future:
+• Futurum mutuum EOS servire, est avocare arcu ante in eget caescs et est M maneant natus d anteriori nisi
 
-• Despite having 2FA enabled, the hackers were able to gain access to the X account using a malicious link
-
-• Upon detection, we immediately secured all associated account data and worked with X Support to limit the reach of the malicious post, identify the attacker's onchain and offchain traces, and ensure no user damage occurred`;
+• Quod dignissim, ad vicissitudo noverca sit proditorem regulam nibh sem mppono wisi M Servata in falli dui harum id qui substitam modi, irritari qui consulta'a quisque non concilia pugnat, cum poenam ea quos renovo reducere`;
 
 export const textWithEmDash = 'Test — em dash';
 export const textWithApostrophe = "We're back";
@@ -27,3 +26,7 @@ export const unicodeParts = [
   "A short recap — what's being done",
   '• Despite having 2FA'
 ];
+
+// Invisible Unicode characters from https://invisible-characters.com/
+export const textWithHangulFiller = '\u3164'; // U+3164 HANGUL FILLER - commonly used for invisible names
+export const textWithZeroWidthSpace = 'test\u200Btext'; // U+200B ZERO WIDTH SPACE - can be used for empty messages
