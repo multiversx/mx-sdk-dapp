@@ -1,46 +1,45 @@
+import { IPlainTransactionObject } from '@multiversx/sdk-core';
 import { testAddress } from '__mocks__';
 import { getGasPriceOptions } from '../getGasPriceOptions';
 
-const secondTx = {
+const secondTx: IPlainTransactionObject = {
   nonce: 0,
   value: '0',
   receiver: testAddress,
   sender: testAddress,
   gasPrice: 1_000_000_000,
-  gasLimit: 50_000_000,
+  gasLimit: 500_000_000,
   data: 'TXVsdGlFU0RUTkZUVHJhbnNmZXJAMDAwMDAwMDAwMDAwMDAwMDA1MDAxMzllZDdhZTRhYTAzNzkyZTZiY2IzMzIzOTRhNDBmZTc0NmVlZmE0N2NlYkAwMkA1NzQ1NDc0YzQ0MmQ2MTMyMzg2MzM1MzlAQDBkZTBiNmIzYTc2NDAwMDBANGQ0NTU4MmQ2MTM2MzUzOTY0MzBAQGUxNzc3MDRiYzQzZjliZWUzMTA2QDYxNjQ2NDRjNjk3MTc1Njk2NDY5NzQ3OUAwZGJkMmZjMTM3YTMwMDAwQGRmMzYzZTg4NzJlZDBkOTIzNWE3',
   chainID: 'D',
   version: 1
 };
 
-describe('getGasPriceDetails', () => {
-  it('should return the correct gas price details', () => {
-    const gasPriceDetails = getGasPriceOptions({
+describe('getGasPriceOptions test', () => {
+  it('should return the correct gas price options', () => {
+    const gasPriceOptions = getGasPriceOptions({
       shard: 1,
-      gasStationMetadata: {
-        0: {
+      gasStationMetadata: [
+        {
           fast: 11_760_000,
           faster: 19_287_760
         },
-        1: {
+        {
           fast: 11_760_000,
           faster: 19_287_760
         },
-        2: {
+        {
           fast: 11_760_000,
           faster: 19_287_760
         }
-      },
+      ],
       transaction: secondTx,
       initialGasPrice: 1_000_000_000
     });
 
-    expect(gasPriceDetails).toEqual({
-      fastGasPrice: 1_000_000_000,
-      fasterGasPrice: 1_069_824_559,
-      isFastGasPrice: false,
-      isFasterGasPrice: true,
-      areRadiosEditable: true
-    });
+    expect(gasPriceOptions).toEqual([
+      { label: 'Standard', value: 1000000000 },
+      { label: 'Fast', value: 1065456733 },
+      { label: 'Faster', value: 1747472258 }
+    ]);
   });
 });
