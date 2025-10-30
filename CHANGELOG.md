@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v4.6.0](https://github.com/multiversx/mx-sdk-dapp/pull/1651)] - 2025-10-30
+
+- [Added defaults for gas price options calculation](https://github.com/multiversx/mx-sdk-dapp/pull/1651)
+
 ## [[v4.5.2](https://github.com/multiversx/mx-sdk-dapp/pull/1649)] - 2025-10-30
 
 - [Fixed encoding and decoding of base64 strings](https://github.com/multiversx/mx-sdk-dapp/pull/1647)
