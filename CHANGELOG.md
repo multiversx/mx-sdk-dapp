@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed encoding and decoding of base64 strings](https://github.com/multiversx/mx-sdk-dapp/pull/1648)
 - [Added getRecommendedGasPrice tests](https://github.com/multiversx/mx-sdk-dapp/pull/1645)
 - [Added login and sign transactions computeNonces tests](https://github.com/multiversx/mx-sdk-dapp/pull/1642)
 - [Fixed cached ledger accounts not being cleared](https://github.com/multiversx/mx-sdk-dapp/pull/1637)

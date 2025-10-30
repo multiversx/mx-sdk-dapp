@@ -1,6 +1,6 @@
 import { Address } from 'lib/sdkCore';
 import { ESDTTransferTypesEnum, TypesOfSmartContractCallsEnum } from 'types';
-import { isStringBase64 } from 'utils/decoders/base64Utils';
+import { decodeBase64, isStringBase64 } from 'utils/decoders/base64Utils';
 import { addressIsValid } from './addressIsValid';
 import { isHexValidCharacters, isHexValidLength } from './hex';
 
@@ -68,9 +68,7 @@ export function getAddressFromDataField({
     if (!data) {
       return receiver;
     }
-    const parsedData = isStringBase64(data)
-      ? Buffer.from(data, 'base64').toString()
-      : data;
+    const parsedData = isStringBase64(data) ? decodeBase64(data) : data;
 
     const addressIndex = getAddressIndex(parsedData);
 
