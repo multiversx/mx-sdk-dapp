@@ -41,23 +41,7 @@ export const getGasPriceOptions = ({
     }
   });
 
-  console.log({
-    transaction,
-    gasPriceData: {
-      initialGasPrice,
-      ppu: fastPpu
-    }
-  });
-
   const fasterGasPrice = getRecommendedGasPrice({
-    transaction,
-    gasPriceData: {
-      initialGasPrice,
-      ppu: fasterPpu
-    }
-  });
-
-  console.log({
     transaction,
     gasPriceData: {
       initialGasPrice,
