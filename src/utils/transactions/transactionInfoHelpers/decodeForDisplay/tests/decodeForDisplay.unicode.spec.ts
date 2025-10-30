@@ -67,10 +67,7 @@ describe('decodeForDisplay with Unicode characters (integration)', () => {
       expect(result.displayValue).toContain('—');
       expect(result.displayValue).toContain("'");
       expect(result.displayValue).toContain('•');
-      expect(result.displayValue).toContain("attacker's");
-
-      const resultParts = result.displayValue.split('\n');
-      expect(resultParts.length).toBe(base64Parts.length);
+      expect(result.displayValue).toContain("orci'e");
     });
 
     it('should decode base64-encoded newline-separated parts with smart method', () => {

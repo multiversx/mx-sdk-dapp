@@ -40,7 +40,7 @@ export const decodeForDisplay = ({
 
   if (input.includes('\n')) {
     const parts = input.split('\n');
-    const initialDecodedParts = parts.map((part) => {
+    const initialDecodedParts = parts.filter(Boolean).map((part) => {
       const base64Buffer = Buffer.from(part, 'base64');
 
       if (decodeMethod === DecodeMethodEnum.raw) {
