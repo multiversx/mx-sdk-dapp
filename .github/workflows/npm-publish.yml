@@ -47,19 +47,7 @@ jobs:
         id: package
         uses: andreigiura/action-nodejs-package-info@v1.0.2
 
-      - name: Publish to npmjs next version
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ steps.package.outputs.is-prerelease == 'true'}}
-        run: echo ${{ steps.package.outputs.is-prerelease}} && npm publish --tag next
-
-      - name: Publish to npmjs
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ steps.package.outputs.is-prerelease == 'false' }}
-        run: npm publish
-
-      - name: Create GitHub Release
+      - name: Create GitHub Release for official releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ steps.package.outputs.is-prerelease == 'false' }}
@@ -80,3 +68,15 @@ jobs:
             --target=$GITHUB_SHA \
             --title="$RELEASE_TAG" \
             --notes-file release_notes.md
+
+      - name: Publish to npmjs next version
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        if: ${{ steps.package.outputs.is-prerelease == 'true'}}
+        run: echo ${{ steps.package.outputs.is-prerelease}} && npm publish --tag next
+
+      - name: Publish to npmjs
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        if: ${{ steps.package.outputs.is-prerelease == 'false' }}
+        run: npm publish
