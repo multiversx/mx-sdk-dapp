@@ -177,7 +177,7 @@ export interface ActiveLedgerTransactionType {
   isTokenTransaction: boolean;
   receiverScamInfo: string | null;
   transaction: Transaction;
-  gasPriceOption: number;
+  initialGasPrice: number;
   needsSigning: boolean;
   transactionIndex: number;
   transactionTokenInfo: TransactionDataTokenType;

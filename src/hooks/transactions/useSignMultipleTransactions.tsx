@@ -166,7 +166,7 @@ export const useSignMultipleTransactions = ({
 
     setCurrentTransaction({
       transaction,
-      gasPriceOption: gasPriceOptionValue?.gasPriceOption || GAS_PRICE,
+      initialGasPrice: gasPriceOptionValue?.initialGasPrice || GAS_PRICE,
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,

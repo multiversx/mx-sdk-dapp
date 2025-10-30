@@ -26,7 +26,7 @@ export type ConfirmFeePropsType = GasDetailsPropsType & WithStylesImportType;
 
 const ConfirmFeeComponent = ({
   transaction,
-  gasPriceOption,
+  initialGasPrice,
   needsSigning,
   updateGasPriceOption,
   styles
@@ -116,7 +116,7 @@ const ConfirmFeeComponent = ({
         transaction={transaction}
         isVisible={showGasDetails}
         needsSigning={needsSigning}
-        gasPriceOption={gasPriceOption}
+        initialGasPrice={initialGasPrice}
         updateGasPriceOption={updateGasPriceOption}
       />
     </>

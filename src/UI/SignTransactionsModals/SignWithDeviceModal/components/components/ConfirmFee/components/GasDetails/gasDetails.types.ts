@@ -6,9 +6,8 @@ import { UseSignTransactionsWithDeviceReturnType } from 'hooks';
 export interface GasDetailsPropsType extends WithStylesImportType {
   isVisible?: boolean;
   needsSigning: boolean;
-  initialGasPrice?: number;
+  initialGasPrice: number;
   transaction: Transaction;
-  gasPriceOption: number;
   updateGasPriceOption: UseSignTransactionsWithDeviceReturnType['updateGasPriceOption'];
 }
 

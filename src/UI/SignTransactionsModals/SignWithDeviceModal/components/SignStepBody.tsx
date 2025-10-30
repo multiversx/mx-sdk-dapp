@@ -75,7 +75,7 @@ const SignStepBodyComponent = ({
 
         <ConfirmFee
           needsSigning={currentTransaction.needsSigning}
-          gasPriceOption={currentTransaction.gasPriceOption}
+          initialGasPrice={currentTransaction.initialGasPrice}
           transaction={currentTransaction.transaction}
           updateGasPriceOption={updateGasPriceOption}
         />

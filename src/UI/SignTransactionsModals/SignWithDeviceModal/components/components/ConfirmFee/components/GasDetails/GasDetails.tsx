@@ -15,7 +15,6 @@ const GAS_PRICE_MODIFIER_FIELD = 'gasPriceMultiplier';
 
 export const GasDetailsComponent = ({
   transaction,
-  gasPriceOption,
   isVisible,
   needsSigning,
   updateGasPriceOption,
@@ -71,7 +70,9 @@ export const GasDetailsComponent = ({
                 <div
                   key={option.label}
                   className={classNames(styles?.gasDetailsPriceMultiplier, {
-                    [styles?.checked]: gasPriceOption === option.value,
+                    [styles?.checked]:
+                      transaction.gasPrice.toString() ===
+                      option.value.toString(),
                     [styles?.disabled]: !needsSigning
                   })}
                 >
@@ -82,7 +83,10 @@ export const GasDetailsComponent = ({
                     value={option.value}
                     onChange={handleGasPriceOptionChange}
                     className={styles?.gasDetailsPriceMultiplierInput}
-                    checked={gasPriceOption === option.value}
+                    checked={
+                      transaction.gasPrice.toString() ===
+                      option.value.toString()
+                    }
                     id={`${GAS_PRICE_MODIFIER_FIELD}-${option.value}`}
                   />
 
