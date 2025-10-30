@@ -51,8 +51,6 @@ export const getGasPriceOptions = ({
     }
   });
 
-  console.log('fastGasPrice result', fastGasPrice);
-
   const fasterGasPrice = getRecommendedGasPrice({
     transaction,
     gasPriceData: {
@@ -68,8 +66,6 @@ export const getGasPriceOptions = ({
       ppu: fasterPpu
     }
   });
-
-  console.log('fasterGasPrice result', fasterGasPrice);
 
   const gasPriceOptions = [
     {
@@ -87,15 +83,9 @@ export const getGasPriceOptions = ({
     value: BigNumber.max(fastGasPrice, defaultFastGasPrice).toNumber()
   });
 
-  console.log('fastGasPrice', fastGasPrice);
-  console.log('defaultFastGasPrice', defaultFastGasPrice);
-
   const defaultFasterGasPrice = new BigNumber(standardGasPrice)
     .times(1.1)
     .toNumber();
-
-  console.log('fasterGasPrice', fasterGasPrice);
-  console.log('defaultFasterGasPrice', defaultFasterGasPrice);
 
   gasPriceOptions.push({
     label: 'Faster',
