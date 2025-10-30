@@ -8,7 +8,7 @@ import {
 
 import { useGetAccountFromApi } from 'apiCalls/accounts/useGetAccountFromApi';
 import {
-  EMPTY_PPU,
+  GAS_PRICE,
   SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS
 } from 'constants/index';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
@@ -24,7 +24,6 @@ import {
   checkIsValidSender,
   getAreAllTransactionsSignedByGuardian
 } from './helpers';
-import { recommendGasPrice } from './helpers/recommendGasPrice';
 import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWithDevice';
 
 export interface UseSignMultipleTransactionsPropsType {
@@ -54,7 +53,7 @@ let verifiedAddresses: VerifiedAddressesType = {};
 export interface UseSignMultipleTransactionsReturnType
   extends Omit<UseSignTransactionsWithDeviceReturnType, 'callbackRoute'> {
   shouldContinueWithoutSigning: boolean;
-  updatePPU: UseSignTransactionsWithDeviceReturnType['updatePPU'];
+  updateGasPriceOption: UseSignTransactionsWithDeviceReturnType['updateGasPriceOption'];
   currentTransaction: ActiveLedgerTransactionType | null;
   isFirstTransaction: boolean;
   hasMultipleTransactions: boolean;
@@ -79,12 +78,12 @@ export const useSignMultipleTransactions = ({
     useState<DeviceSignedTransactions>();
   const [currentTransaction, setCurrentTransaction] =
     useState<ActiveLedgerTransactionType | null>(null);
-  const [ppuMap, setPpuMap] = useState<
+  const [gasPriceOptionMap, setGasPriceOptionMap] = useState<
     Record<
       number,
       {
         initialGasPrice: number;
-        ppu: ActiveLedgerTransactionType['ppu'];
+        gasPriceOption: number;
       }
     >
   >({});
@@ -163,11 +162,11 @@ export const useSignMultipleTransactions = ({
 
     const needsSigning = currentTx.needsSigning;
     const nonce = transaction.nonce.valueOf();
-    const currentPpu = ppuMap[Number(nonce)];
+    const gasPriceOptionValue = gasPriceOptionMap[Number(nonce)];
 
     setCurrentTransaction({
       transaction,
-      ppu: currentPpu?.ppu || EMPTY_PPU,
+      gasPriceOption: gasPriceOptionValue?.gasPriceOption || GAS_PRICE,
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,
@@ -177,40 +176,24 @@ export const useSignMultipleTransactions = ({
     });
   };
 
-  const updatePPU = (newPPU: ActiveLedgerTransactionType['ppu']) => {
+  const updateGasPriceOption = (newGasPriceOption: number) => {
     const currentEditedTransaction =
       allEditedTransactions[currentStep].transaction;
 
     const nonce = currentEditedTransaction.nonce.valueOf();
 
-    const currentPpu = ppuMap[Number(nonce)];
-    const currentMultiplier = currentPpu?.ppu || EMPTY_PPU;
-    const initialGasPrice = currentPpu?.initialGasPrice || 0;
-
-    if (currentMultiplier === newPPU) {
-      return;
-    }
-
-    setPpuMap((existing) => {
-      const newPpuMap = { ...existing };
-      newPpuMap[Number(nonce)] = {
-        ...newPpuMap[Number(nonce)],
-        ppu: newPPU
+    setGasPriceOptionMap((existing) => {
+      const newGasPriceOptionMap = { ...existing };
+      newGasPriceOptionMap[Number(nonce)] = {
+        ...newGasPriceOptionMap[Number(nonce)],
+        gasPriceOption: newGasPriceOption
       };
-      return newPpuMap;
+      return newGasPriceOptionMap;
     });
-
-    const newGasPrice = newPPU
-      ? recommendGasPrice({
-          transactionDataLength: currentEditedTransaction.data.length,
-          transactionGasLimit: Number(currentEditedTransaction.gasLimit),
-          ppu: newPPU
-        })
-      : initialGasPrice;
 
     const transaction = Transaction.newFromPlainObject({
       ...currentEditedTransaction.toPlainObject(),
-      gasPrice: newGasPrice
+      gasPrice: newGasPriceOption
     });
 
     const newEditedTransaction = {
@@ -232,21 +215,21 @@ export const useSignMultipleTransactions = ({
       return {
         ...existing,
         transaction,
-        ppu: newPPU
+        gasPriceOption: newGasPriceOption
       };
     });
   };
 
   useEffect(() => {
-    const newPpuMap: typeof ppuMap = {};
-    allTransactions.forEach((transaction) => {
-      const nonce = transaction.transaction.nonce;
-      newPpuMap[Number(nonce)] = {
-        initialGasPrice: Number(transaction.transaction.gasPrice),
-        ppu: EMPTY_PPU
+    const newGasPriceOptionMap: typeof gasPriceOptionMap = {};
+    allTransactions.forEach(({ transaction }) => {
+      const nonce = transaction.nonce;
+      newGasPriceOptionMap[Number(nonce)] = {
+        initialGasPrice: Number(transaction.gasPrice),
+        gasPriceOption: Number(transaction.gasPrice) || GAS_PRICE
       };
     });
-    setPpuMap(newPpuMap);
+    setGasPriceOptionMap(newGasPriceOptionMap);
     setAllEditedTransactions(allTransactions);
   }, [allTransactions]);
 
@@ -418,7 +401,7 @@ export const useSignMultipleTransactions = ({
     currentStep,
     signedTransactions,
     setSignedTransactions,
-    updatePPU,
+    updateGasPriceOption,
     currentTransaction
   };
 };

@@ -2,24 +2,18 @@ import { Transaction } from '@multiversx/sdk-core';
 
 import { WithStylesImportType } from 'hocs/useStyles';
 import { UseSignTransactionsWithDeviceReturnType } from 'hooks';
-import { ActiveLedgerTransactionType } from 'types';
 
 export interface GasDetailsPropsType extends WithStylesImportType {
   isVisible?: boolean;
   needsSigning: boolean;
   initialGasPrice?: number;
   transaction: Transaction;
-  ppu: ActiveLedgerTransactionType['ppu'];
-  updatePPU: UseSignTransactionsWithDeviceReturnType['updatePPU'];
+  gasPriceOption: number;
+  updateGasPriceOption: UseSignTransactionsWithDeviceReturnType['updateGasPriceOption'];
 }
 
 export enum GasMultiplierOptionLabelEnum {
   Standard = 'Standard',
   Fast = 'Fast',
   Faster = 'Faster'
-}
-
-export interface GasMultiplerOptionType {
-  value: number;
-  label: `${GasMultiplierOptionLabelEnum}`;
 }
