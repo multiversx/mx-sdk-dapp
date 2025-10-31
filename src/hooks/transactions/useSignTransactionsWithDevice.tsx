@@ -48,7 +48,7 @@ export interface UseSignTransactionsWithDeviceReturnType {
     React.SetStateAction<DeviceSignedTransactions | undefined>
   >;
   currentTransaction: ActiveLedgerTransactionType | null;
-  updatePPU: (ppu: ActiveLedgerTransactionType['ppu']) => void;
+  updateGasPriceOption: (gasPriceOption: number) => void;
   callbackRoute?: string;
 }
 

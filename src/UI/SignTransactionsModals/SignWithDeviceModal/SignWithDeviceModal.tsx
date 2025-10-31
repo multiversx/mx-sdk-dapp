@@ -33,7 +33,7 @@ const SignWithDeviceModalComponent = ({
     currentStep,
     callbackRoute,
     currentTransaction,
-    updatePPU
+    updateGasPriceOption
   } = useSignTransactionsWithDevice({
     onCancel: handleClose,
     verifyReceiverScam,
@@ -70,7 +70,7 @@ const SignWithDeviceModalComponent = ({
             callbackRoute={callbackRoute}
             currentStep={currentStep}
             currentTransaction={currentTransaction}
-            updatePPU={updatePPU}
+            updateGasPriceOption={updateGasPriceOption}
             error={error}
             GuardianScreen={GuardianScreen}
             handleClose={onAbort}

@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -9,7 +9,7 @@ import {
   GAS_PRICE_MODIFIER
 } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
-import { useGetAccount, useGetEgldPrice } from 'hooks';
+import { useGetEgldPrice } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { networkConfigSelector } from 'reduxStore/selectors';
 import { Balance } from 'UI/Balance';
@@ -22,35 +22,20 @@ import {
 
 import { GasDetails } from './components';
 import { GasDetailsPropsType } from './components/GasDetails/gasDetails.types';
-import { getGasPriceDetails } from './components/GasDetails/helpers/getGasPriceDetails';
 export type ConfirmFeePropsType = GasDetailsPropsType & WithStylesImportType;
 
 const ConfirmFeeComponent = ({
   transaction,
-  ppu,
+  initialGasPrice,
   needsSigning,
-  updatePPU,
+  updateGasPriceOption,
   styles
 }: ConfirmFeePropsType) => {
   const { price } = useGetEgldPrice();
   const [showGasDetails, setShowGasDetails] = useState(false);
-  const { shard } = useGetAccount();
-
-  const nonce = Number(transaction.nonce);
-
-  const [initialGasPriceInfo, setInitialGasPriceInfo] = useState({
-    [nonce]: Number(transaction.gasPrice)
-  });
-
-  useEffect(() => {
-    setInitialGasPriceInfo((existing) => ({
-      ...existing,
-      [nonce]: Number(transaction.gasPrice)
-    }));
-  }, [nonce]);
 
   const {
-    network: { egldLabel, gasStationMetadata }
+    network: { egldLabel }
   } = useSelector(networkConfigSelector);
 
   const feeLimit = calculateFeeLimit({
@@ -75,15 +60,6 @@ const ConfirmFeeComponent = ({
       })
     : null;
 
-  const initialGasPrice = initialGasPriceInfo[nonce];
-
-  const { areRadiosEditable } = getGasPriceDetails({
-    shard,
-    gasStationMetadata,
-    transaction,
-    initialGasPrice
-  });
-
   const handleToggleGasDetails = (event: MouseEvent<SVGSVGElement>) => {
     event.preventDefault();
     setShowGasDetails((isDetailsVisible) => !isDetailsVisible);
@@ -95,7 +71,7 @@ const ConfirmFeeComponent = ({
         <div className={styles?.confirmFeeLabel}>
           <span className={styles?.confirmFeeLabelText}>Transaction Fee</span>
 
-          {needsSigning && areRadiosEditable && (
+          {needsSigning && (
             <FontAwesomeIcon
               icon={faGear}
               onClick={handleToggleGasDetails}
@@ -135,15 +111,14 @@ const ConfirmFeeComponent = ({
           )}
         </div>
       </div>
-      {areRadiosEditable && (
-        <GasDetails
-          transaction={transaction}
-          isVisible={showGasDetails}
-          needsSigning={needsSigning}
-          ppu={ppu}
-          updatePPU={updatePPU}
-        />
-      )}
+
+      <GasDetails
+        transaction={transaction}
+        isVisible={showGasDetails}
+        needsSigning={needsSigning}
+        initialGasPrice={initialGasPrice}
+        updateGasPriceOption={updateGasPriceOption}
+      />
     </>
   );
 };

@@ -26,7 +26,7 @@ export interface SignStepBodyPropsType {
   callbackRoute?: string;
   currentStep: number;
   currentTransaction: ActiveLedgerTransactionType | null;
-  updatePPU: UseSignTransactionsWithDeviceReturnType['updatePPU'];
+  updateGasPriceOption: UseSignTransactionsWithDeviceReturnType['updateGasPriceOption'];
   allTransactions: MultiSignTransactionType[];
   signStepInnerClasses?: SignStepInnerClassesType;
   isGuarded?: boolean;
@@ -36,7 +36,7 @@ const SignStepBodyComponent = ({
   currentTransaction,
   error,
   signStepInnerClasses,
-  updatePPU,
+  updateGasPriceOption,
   globalStyles,
   styles
 }: SignStepBodyPropsType & WithStylesImportType) => {
@@ -75,9 +75,9 @@ const SignStepBodyComponent = ({
 
         <ConfirmFee
           needsSigning={currentTransaction.needsSigning}
-          ppu={currentTransaction.ppu}
+          initialGasPrice={currentTransaction.initialGasPrice}
           transaction={currentTransaction.transaction}
-          updatePPU={updatePPU}
+          updateGasPriceOption={updateGasPriceOption}
         />
 
         {data && (

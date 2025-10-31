@@ -1,29 +1,23 @@
 import React from 'react';
 import classNames from 'classnames';
-import { EMPTY_PPU } from 'constants/network';
 import { withStyles } from 'hocs/withStyles';
 import { useGetAccount } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { networkConfigSelector } from 'reduxStore/selectors';
 
-import { ActiveLedgerTransactionType } from 'types/transactions.types';
 import { Balance } from 'UI/Balance';
 import { formatAmount } from 'utils';
 
-import {
-  GasDetailsPropsType,
-  GasMultiplerOptionType
-} from './gasDetails.types';
-import { getGasPriceDetails } from './helpers/getGasPriceDetails';
+import { GasDetailsPropsType } from './gasDetails.types';
+import { getGasPriceOptions } from './helpers/getGasPriceOptions';
 
 const GAS_PRICE_MODIFIER_FIELD = 'gasPriceMultiplier';
 
 export const GasDetailsComponent = ({
   transaction,
-  ppu,
   isVisible,
   needsSigning,
-  updatePPU,
+  updateGasPriceOption,
   initialGasPrice,
   styles
 }: GasDetailsPropsType) => {
@@ -40,41 +34,23 @@ export const GasDetailsComponent = ({
     showLastNonZeroDecimal: true
   });
 
-  const handleMultiplierChange = (
+  const handleGasPriceOptionChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    updatePPU(Number(event.target.value) as ActiveLedgerTransactionType['ppu']);
+    const selectedOption = Number(event.target.value);
+    updateGasPriceOption(selectedOption);
   };
 
   if (!gasStationMetadata) {
     return null;
   }
 
-  const { isFastGasPrice, isFasterGasPrice } = getGasPriceDetails({
+  const gasPriceOptions = getGasPriceOptions({
     shard,
     gasStationMetadata,
-    transaction,
-    initialGasPrice
+    initialGasPrice,
+    transaction: transaction.toPlainObject()
   });
-
-  const fastGasPriceRadio: GasMultiplerOptionType = {
-    label: 'Fast',
-    value: gasStationMetadata[Number(shard)].fast
-  };
-
-  const fasterGasPriceRadio: GasMultiplerOptionType = {
-    label: 'Faster',
-    value: gasStationMetadata[Number(shard)].faster
-  };
-
-  const gasMultiplierOptions: GasMultiplerOptionType[] = [
-    {
-      label: 'Standard',
-      value: EMPTY_PPU
-    },
-    ...(isFastGasPrice ? [fastGasPriceRadio] : []),
-    ...(isFasterGasPrice ? [fasterGasPriceRadio] : [])
-  ];
 
   return (
     <div
@@ -90,11 +66,13 @@ export const GasDetailsComponent = ({
             </span>
 
             <div className={styles?.gasDetailsPriceMultipliers}>
-              {gasMultiplierOptions.map((gasMultiplierOption) => (
+              {gasPriceOptions.map((option) => (
                 <div
-                  key={gasMultiplierOption.label}
+                  key={option.label}
                   className={classNames(styles?.gasDetailsPriceMultiplier, {
-                    [styles?.checked]: ppu === gasMultiplierOption.value,
+                    [styles?.checked]:
+                      transaction.gasPrice.toString() ===
+                      option.value.toString(),
                     [styles?.disabled]: !needsSigning
                   })}
                 >
@@ -102,18 +80,21 @@ export const GasDetailsComponent = ({
                     type='radio'
                     disabled={!needsSigning}
                     name={GAS_PRICE_MODIFIER_FIELD}
-                    value={gasMultiplierOption.value}
-                    onChange={handleMultiplierChange}
+                    value={option.value}
+                    onChange={handleGasPriceOptionChange}
                     className={styles?.gasDetailsPriceMultiplierInput}
-                    checked={ppu === gasMultiplierOption.value}
-                    id={`${GAS_PRICE_MODIFIER_FIELD}-${gasMultiplierOption.value}`}
+                    checked={
+                      transaction.gasPrice.toString() ===
+                      option.value.toString()
+                    }
+                    id={`${GAS_PRICE_MODIFIER_FIELD}-${option.value}`}
                   />
 
                   <label
                     className={styles?.gasDetailsPriceMultiplierLabel}
-                    htmlFor={`${GAS_PRICE_MODIFIER_FIELD}-${gasMultiplierOption.value}`}
+                    htmlFor={`${GAS_PRICE_MODIFIER_FIELD}-${option.value}`}
                   >
-                    {gasMultiplierOption.label}
+                    {option.label}
                   </label>
                 </div>
               ))}

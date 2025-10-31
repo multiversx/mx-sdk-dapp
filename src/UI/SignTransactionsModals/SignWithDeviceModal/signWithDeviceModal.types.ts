@@ -28,7 +28,7 @@ export interface SignStepPropsType
   callbackRoute?: string;
   currentStep: number;
   currentTransaction: ActiveLedgerTransactionType | null;
-  updatePPU: UseSignTransactionsWithDeviceReturnType['updatePPU'];
+  updateGasPriceOption: UseSignTransactionsWithDeviceReturnType['updateGasPriceOption'];
   GuardianScreen?: SignPropsType['GuardianScreen'];
   error: string | null;
   handleClose: () => void;
