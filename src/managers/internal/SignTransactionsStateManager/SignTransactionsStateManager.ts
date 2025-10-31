@@ -65,19 +65,23 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
   }
 
   public initializeGasPriceMap(transactions: Transaction[]) {
-    const gasPriceOption = GAS_PRICE;
-
     transactions
       .filter((tx) => tx != null)
       .forEach((transaction) => {
-        const initialGasPrice = transaction ? Number(transaction.gasPrice) : 0;
+        const initialGasPrice = transaction
+          ? Number(transaction.gasPrice)
+          : GAS_PRICE;
 
+        // creates a snapshot of the initialgas prices for each transaction
+        // so user can revert to the initial gas price if they modify it
         this.updateGasPriceMap({
           nonce: Number(transaction.nonce),
-          gasPriceOption,
+          gasPriceOption: initialGasPrice,
           initialGasPrice
         });
       });
+
+    const gasPriceOption = Number(transactions[0]?.gasPrice) || GAS_PRICE;
 
     this.updateCommonData({ gasPriceOption });
   }
