@@ -23,14 +23,10 @@ export interface ISignTransactionsPanelCommonData {
   receiver?: string;
   receiverIcon?: string;
   data?: string;
-  gasPrice?: string;
   decodedData?: Partial<Record<DecodeMethodEnum, DecodedDisplayType>>;
-  /**
-   * ppu - Price Per Unit
-   * a constant that is used to calculate the gas price inside `recommendGasPrice`
-   */
-  ppu?: number;
-  ppuOptions: {
+  gasPrice?: string; // formatted gas price
+  gasPriceOption?: number;
+  gasPriceOptions: {
     label: string;
     value: number;
   }[];
@@ -72,6 +68,6 @@ export enum SignEventsEnum {
   NEXT = 'NEXT_SIGN_TRANSACTIONS',
   BACK = 'BACK_SIGN_TRANSACTIONS',
   DATA_UPDATE = 'DATA_UPDATE_SIGN_TRANSACTIONS',
-  SET_PPU = 'SET_PPU_SIGN_TRANSACTIONS',
+  SET_GAS_PRICE_OPTION = 'SET_GAS_PRICE_OPTION_SIGN_TRANSACTIONS',
   CLOSE = 'CLOSE_SIGN_TRANSACTIONS'
 }

@@ -1,22 +1,23 @@
 import BigNumber from 'bignumber.js';
+import { GAS_PRICE } from 'constants/mvx.constants';
 import { EMPTY_PPU } from 'constants/placeholders.constants';
 import { IPlainTransactionObject } from 'lib/sdkCore';
 import { NetworkType } from 'types/network.types';
 import { getRecommendedGasPrice } from './getRecommendedGasPrice';
 
-type GetGasPriceDetailsParamsType = {
+type GetGasPriceOptionsParamsType = {
   shard?: number;
   gasStationMetadata: NetworkType['gasStationMetadata'];
   transaction: IPlainTransactionObject;
   initialGasPrice?: number;
 };
 
-export const getPpuOptions = ({
+export const getGasPriceOptions = ({
   shard,
   gasStationMetadata,
   transaction,
-  initialGasPrice = 0
-}: GetGasPriceDetailsParamsType) => {
+  initialGasPrice = GAS_PRICE
+}: GetGasPriceOptionsParamsType) => {
   const fastPpu = gasStationMetadata
     ? gasStationMetadata[Number(shard)]?.fast
     : EMPTY_PPU;
@@ -24,6 +25,14 @@ export const getPpuOptions = ({
   const fasterPpu = gasStationMetadata
     ? gasStationMetadata[Number(shard)]?.faster
     : EMPTY_PPU;
+
+  const standardGasPrice = getRecommendedGasPrice({
+    transaction,
+    gasPriceData: {
+      initialGasPrice,
+      ppu: EMPTY_PPU
+    }
+  });
 
   const fastGasPrice = getRecommendedGasPrice({
     transaction,
@@ -41,39 +50,30 @@ export const getPpuOptions = ({
     }
   });
 
-  const isFastGasPrice = new BigNumber(fastGasPrice).isGreaterThan(
-    initialGasPrice || 0
-  );
-
-  const isFasterGasPrice = new BigNumber(fasterGasPrice).isGreaterThan(
-    initialGasPrice || 0
-  );
-  const isEditingGasPriceEnabled = isFastGasPrice || isFasterGasPrice;
-
-  if (!isEditingGasPriceEnabled) {
-    return [];
-  }
-
-  const ppuOptions = [
+  const gasPriceOptions = [
     {
       label: 'Standard',
-      value: EMPTY_PPU
+      value: standardGasPrice
     }
   ];
 
-  if (isFastGasPrice) {
-    ppuOptions.push({
-      label: 'Fast',
-      value: fastPpu
-    });
-  }
+  const defaultFastGasPrice = new BigNumber(standardGasPrice)
+    .times(1.05)
+    .toNumber();
 
-  if (isFasterGasPrice) {
-    ppuOptions.push({
-      label: 'Faster',
-      value: fasterPpu
-    });
-  }
+  gasPriceOptions.push({
+    label: 'Fast',
+    value: BigNumber.max(fastGasPrice, defaultFastGasPrice).toNumber()
+  });
 
-  return ppuOptions;
+  const defaultFasterGasPrice = new BigNumber(standardGasPrice)
+    .times(1.1)
+    .toNumber();
+
+  gasPriceOptions.push({
+    label: 'Faster',
+    value: BigNumber.max(fasterGasPrice, defaultFasterGasPrice).toNumber()
+  });
+
+  return gasPriceOptions;
 };

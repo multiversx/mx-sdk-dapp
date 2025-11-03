@@ -8,7 +8,7 @@ export type ToastsSliceType = {
 interface ISharedCustomToast {
   toastId: string;
   /**
-   * Duration in miliseconds
+   * Duration in milliseconds
    */
   duration?: number;
   hasCloseButton?: boolean;

@@ -23,9 +23,8 @@ import { getExplorerLink } from 'utils/transactions/getExplorerLink';
 import { getFeeData } from '../getFeeData';
 import { getAllDecodedFormats } from './helpers/decodeDataField';
 import { getExtractTransactionsInfo } from './helpers/getExtractTransactionsInfo';
+import { getGasPriceOptions } from './helpers/getGasPriceOptions';
 import { getHighlight } from './helpers/getHighlight';
-import { getPpuOptions } from './helpers/getPpuOptions';
-import { getRecommendedGasPrice } from './helpers/getRecommendedGasPrice';
 import { getScCall } from './helpers/getScCall';
 import { getTokenType } from './helpers/getTokenType';
 
@@ -42,7 +41,7 @@ export type GetCommonDataPropsType = {
   parsedTransactionsByDataField: Record<string, TransactionDataTokenType>;
   gasPriceData: {
     initialGasPrice: number;
-    ppu: ISignTransactionsPanelCommonData['ppu'];
+    gasPriceOption: number;
   };
 };
 
@@ -143,18 +142,14 @@ export async function getCommonData({
     price
   });
 
-  const ppuOptions = getPpuOptions({
+  const gasPriceOptions = getGasPriceOptions({
     shard,
     initialGasPrice: gasPriceData.initialGasPrice,
     transaction: plainTransaction,
     gasStationMetadata: network.gasStationMetadata
   });
 
-  const gasPrice = getRecommendedGasPrice({
-    transaction: plainTransaction,
-    gasPriceData
-  });
-
+  const { gasPriceOption } = gasPriceData;
   const provider = getAccountProvider();
   const providerType = provider.getType();
   const providerName = capitalize(providerType as string);
@@ -177,15 +172,15 @@ export async function getCommonData({
     (txInfo?.needsSigning && !signedIndexes.includes(currentScreenIndex));
 
   const formattedGasPrice = formatAmount({
-    input: gasPrice.toString(),
+    input: gasPriceOption.toString(),
     decimals: DECIMALS,
     addCommas: true,
     digits: DIGITS
   });
 
   const formattedGasLimit = new BigNumber(plainTransaction.gasLimit).toFormat({
-    decimalSeparator: ',',
-    groupSeparator: '.',
+    decimalSeparator: '.',
+    groupSeparator: ',',
     groupSize: 3
   });
 
@@ -196,8 +191,8 @@ export async function getCommonData({
     gasPrice: formattedGasPrice,
     gasLimit: formattedGasLimit,
     explorerLink,
-    ppu: gasPriceData.ppu,
-    ppuOptions,
+    gasPriceOption,
+    gasPriceOptions,
     egldLabel,
     tokenType: getTokenType(type),
     feeLimit: feeLimitFormatted,

@@ -18,12 +18,18 @@
  * @param str
  */
 export function isStringBase64(str: string) {
+  if (!str.length) {
+    return false;
+  }
+
   try {
     // Try to decode the string and encode it back using base64 functions
     const atobDecoded = atob(str);
     const btoaEncoded = btoa(atobDecoded);
-    const bufferFromDecoded = Buffer.from(str, 'base64').toString();
-    const bufferFromEncoded = Buffer.from(bufferFromDecoded).toString('base64');
+    const bufferFromDecoded = Buffer.from(str, 'base64').toString('utf8');
+    const bufferFromEncoded = Buffer.from(bufferFromDecoded, 'utf8').toString(
+      'base64'
+    );
 
     // If the result is equal to the initial string
     const isBtoaEqual = str === btoaEncoded || btoaEncoded.startsWith(str);
@@ -35,7 +41,7 @@ export function isStringBase64(str: string) {
       // it is a regular base64 string
       return true;
     }
-  } catch (_e) {
+  } catch (_) {
     return false;
   }
 
@@ -43,13 +49,21 @@ export function isStringBase64(str: string) {
 }
 
 export function encodeToBase64(string: string) {
-  return btoa(string);
+  try {
+    return Buffer.from(string, 'utf8').toString('base64');
+  } catch (_) {
+    return '';
+  }
 }
 
-export function decodeBase64(string: string) {
-  if (!isStringBase64(string)) {
-    return string;
+export function decodeBase64(str: string) {
+  if (!isStringBase64(str)) {
+    return str;
   }
 
-  return atob(string);
+  try {
+    return Buffer.from(str, 'base64').toString('utf8');
+  } catch (_) {
+    return str;
+  }
 }

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.3.0](https://github.com/multiversx/mx-sdk-dapp/pull/1653)] - 2025-11-03
+
+- [Added default options for gas price](https://github.com/multiversx/mx-sdk-dapp/pull/1650)
+- [Fixed encoding and decoding of base64 strings](https://github.com/multiversx/mx-sdk-dapp/pull/1648)
+- [Added getRecommendedGasPrice tests](https://github.com/multiversx/mx-sdk-dapp/pull/1645)
+- [Added getRecommendedGasPrice tests](https://github.com/multiversx/mx-sdk-dapp/pull/1643)
+- [Added github release tag](https://github.com/multiversx/mx-sdk-dapp/pull/1652)
+- [Added login and sign transactions computeNonces tests](https://github.com/multiversx/mx-sdk-dapp/pull/1642)
+- [Fixed cached ledger accounts not being cleared](https://github.com/multiversx/mx-sdk-dapp/pull/1637)
+- [Update webview provider to LTS](https://github.com/multiversx/mx-sdk-dapp/pull/1640)
+
 ## [[5.2.13](https://github.com/multiversx/mx-sdk-dapp/pull/1638)] - 2025-10-24
 
 - [Fixed ledger connect clearing state](https://github.com/multiversx/mx-sdk-dapp/pull/1637)

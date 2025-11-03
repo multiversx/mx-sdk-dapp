@@ -1,12 +1,9 @@
 import { getEconomics } from 'apiCalls/economics/getEconomics';
-import { EMPTY_PPU } from 'constants/placeholders.constants';
+import { GAS_PRICE } from 'constants/mvx.constants';
 import { Transaction } from 'lib/sdkCore';
 import { DECIMALS, DIGITS, formatAmount } from 'lib/sdkDappUtils';
 import { SignTransactionsStateManager } from 'managers/internal/SignTransactionsStateManager/SignTransactionsStateManager';
-import {
-  ISignTransactionsPanelCommonData,
-  SignEventsEnum
-} from 'managers/internal/SignTransactionsStateManager/types';
+import { SignEventsEnum } from 'managers/internal/SignTransactionsStateManager/types';
 import { getAccountInfo } from 'methods/account/getAccountInfo';
 import { getEgldLabel } from 'methods/network/getEgldLabel';
 import { cancelCrossWindowAction } from 'providers/helpers/cancelCrossWindowAction';
@@ -14,7 +11,6 @@ import { IProvider } from 'providers/types/providerFactory.types';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { getCommonData } from './helpers/getCommonData/getCommonData';
-import { getRecommendedGasPrice } from './helpers/getCommonData/helpers/getRecommendedGasPrice';
 import { getFeeData } from './helpers/getFeeData';
 import { getMultiEsdtTransferData } from './helpers/getMultiEsdtTransferData/getMultiEsdtTransferData';
 import { guardTransactions as getGuardedTransactions } from './helpers/guardTransactions/guardTransactions';
@@ -40,7 +36,7 @@ export async function signTransactions({
   const { allTransactions, parsedTransactionsByDataField } =
     getMultiEsdtTransferData(transactions);
 
-  let signedIndexes: number[] = [];
+  const signedIndexes: number[] = [];
 
   const manager = SignTransactionsStateManager.getInstance();
   await manager.openUI();
@@ -82,7 +78,7 @@ export async function signTransactions({
             currentScreenIndex,
             egldLabel,
             network,
-            gasPriceData: manager.ppuMap[currentNonce],
+            gasPriceData: manager.getGasPriceOptionMap[currentNonce],
             price,
             address,
             username,
@@ -122,29 +118,21 @@ export async function signTransactions({
       }
     };
 
-    const onSetPpu = (
-      ppu: ISignTransactionsPanelCommonData['ppu'] = EMPTY_PPU
-    ) => {
+    const onSetGasPriceOption = (gasPriceOption: number = GAS_PRICE) => {
       const currentTransaction = allTransactions[currentScreenIndex];
       const transaction = currentTransaction.transaction;
       const currentNonce = Number(transaction.nonce);
 
       manager.updateGasPriceMap({
         nonce: currentNonce,
-        ppu
+        gasPriceOption
       });
-
-      manager.updateCommonData({ ppu });
 
       const plainTransaction = transaction.toPlainObject();
-      const newGasPrice = getRecommendedGasPrice({
-        transaction: plainTransaction,
-        gasPriceData: manager.ppuMap[currentNonce]
-      });
 
       const newTransaction = Transaction.newFromPlainObject({
         ...plainTransaction,
-        gasPrice: newGasPrice
+        gasPrice: gasPriceOption
       });
 
       const feeData = getFeeData({
@@ -153,7 +141,7 @@ export async function signTransactions({
       });
 
       const formattedGasPrice = formatAmount({
-        input: newGasPrice.toString(),
+        input: gasPriceOption.toString(),
         decimals: DECIMALS,
         addCommas: true,
         digits: DIGITS
@@ -163,7 +151,7 @@ export async function signTransactions({
         feeLimit: feeData.feeLimitFormatted,
         feeInFiatLimit: feeData.feeInFiatLimit,
         gasPrice: formattedGasPrice,
-        ppu
+        gasPriceOption
       });
     };
 
@@ -190,7 +178,7 @@ export async function signTransactions({
         currentScreenIndex,
         egldLabel,
         network,
-        gasPriceData: manager.ppuMap[currentNonce],
+        gasPriceData: manager.getGasPriceOptionMap[currentNonce],
         price,
         address,
         username,
@@ -207,14 +195,11 @@ export async function signTransactions({
       const plainTransaction = transaction.toPlainObject();
       const txNonce = plainTransaction.nonce;
 
-      const newGasPrice = getRecommendedGasPrice({
-        transaction: plainTransaction,
-        gasPriceData: manager.ppuMap[txNonce]
-      });
+      const { gasPriceOption } = manager.getGasPriceOptionMap[txNonce];
 
       const transactionToSign = Transaction.newFromPlainObject({
         ...plainTransaction,
-        gasPrice: newGasPrice
+        gasPrice: gasPriceOption
       });
 
       try {
@@ -251,7 +236,7 @@ export async function signTransactions({
       [SignEventsEnum.CONFIRM, onSign],
       [SignEventsEnum.CLOSE, onCancel],
       [SignEventsEnum.BACK, onBack],
-      [SignEventsEnum.SET_PPU, onSetPpu]
+      [SignEventsEnum.SET_GAS_PRICE_OPTION, onSetGasPriceOption]
     ]);
 
     function setupEventListeners() {
