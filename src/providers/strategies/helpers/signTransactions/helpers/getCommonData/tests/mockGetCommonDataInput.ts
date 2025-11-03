@@ -87,9 +87,12 @@ export const mockGetCommonDataInput = {
     iframeWalletAddress: 'https://devnet-iframe-wallet.multiversx.com',
     xAliasAddress: 'https://devnet.xalias.com'
   },
-  gasPriceData: {
-    ppu: 0,
-    initialGasPrice: 1000000000
+  gasStationMetadata: {
+    '0': {
+      lastBlock: 11286880,
+      fast: 0,
+      faster: 0
+    }
   },
   price: 17.82,
   address: testAddress,

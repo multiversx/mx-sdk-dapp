@@ -208,8 +208,8 @@ importers:
         version: 8.15.0(eslint@9.15.0)(typescript@5.4.5)
     optionalDependencies:
       '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.0.36'
-        version: 0.0.36(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)
+        specifier: '>=0.1.0 <0.2.0'
+        version: 0.1.0(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)
 
 packages:
 
@@ -789,8 +789,8 @@ packages:
       bignumber.js: ^9.0.1
       protobufjs: ^7.2.6
 
-  '@multiversx/sdk-dapp-ui@0.0.36':
-    resolution: {integrity: sha512-AMvcmacFNxoNooohvERuD6x0+JkqwAewF4YwhaZt1w8rbN3yP/N4h4f/qU6bAScu/R819d9HQBo7WRkQfDYp/Q==}
+  '@multiversx/sdk-dapp-ui@0.1.0':
+    resolution: {integrity: sha512-30J4AZttkw+4MjUaty/WnQTnN0OnUcrZQnAQ4w2IkWbNWdhLzkvTYrpJy9whh7e5qR+lf8v+8FRohNqMXHdmUA==}
     engines: {node: '>=20.19.0'}
 
   '@multiversx/sdk-dapp-utils@3.0.2':
@@ -1010,8 +1010,8 @@ packages:
   '@socket.io/component-emitter@3.1.2':
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
 
-  '@stencil/core@4.38.0':
-    resolution: {integrity: sha512-oC3QFKO0X1yXVvETgc8OLY525MNKhn9vISBrbtKnGoPlokJ6rI8Vk1RK22TevnNrHLI4SExNLbcDnqilKR35JQ==}
+  '@stencil/core@4.38.2':
+    resolution: {integrity: sha512-opyjA+DYAtaKmaSnuC8Bb/PH7nuO+1GhVn6amsN8XT+TlT9biptlcpz4YWETwYZ+XxtX+nLdxWbW0TVafrqsvQ==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
@@ -2604,8 +2604,8 @@ packages:
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
 
-  html-react-parser@5.2.6:
-    resolution: {integrity: sha512-qcpPWLaSvqXi+TndiHbCa+z8qt0tVzjMwFGFBAa41ggC+ZA5BHaMIeMJla9g3VSp4SmiZb9qyQbmbpHYpIfPOg==}
+  html-react-parser@5.2.7:
+    resolution: {integrity: sha512-WzIAcqQoZoF49J9aev8NBDLz9TJvt2RmipeYA+/5+5x0sWCwFxqKiq0lysieiSA/G6dbUZ6KGGy65Cx2fjie5Q==}
     peerDependencies:
       '@types/react': 0.14 || 15 || 16 || 17 || 18 || 19
       react: 0.14 || 15 || 16 || 17 || 18 || 19
@@ -3914,11 +3914,11 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
-  style-to-js@1.1.17:
-    resolution: {integrity: sha512-xQcBGDxJb6jjFCTzvQtfiPn6YvvP2O8U1MDIPNfJQlWMYfktPy+iGsHE7cssjs7y84d9fQaK4UF3RIJaAHSoYA==}
+  style-to-js@1.1.18:
+    resolution: {integrity: sha512-JFPn62D4kJaPTnhFUI244MThx+FEGbi+9dw1b9yBBQ+1CZpV7QAT8kUtJ7b7EUNdHajjF/0x8fT+16oLJoojLg==}
 
-  style-to-object@1.0.9:
-    resolution: {integrity: sha512-G4qppLgKu/k6FwRpHiGiKPaPTFcG3g4wNVX/Qsfu+RqQM30E7Tyu/TEgxcL9PNLF5pdRLwQdE3YKKf+KF2Dzlw==}
+  style-to-object@1.0.11:
+    resolution: {integrity: sha512-5A560JmXr7wDyGLK12Nq/EYS38VkGlglVzkis1JEdbGWSnbQIEhZzTJhzURXN5/8WwwFCs/f/VVcmkTppbXLow==}
 
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
@@ -5100,10 +5100,10 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@multiversx/sdk-dapp-ui@0.0.36(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)':
+  '@multiversx/sdk-dapp-ui@0.1.0(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@stencil/core': 4.38.0
-      '@stencil/react-output-target': 1.2.0(@stencil/core@4.38.0)(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)
+      '@stencil/core': 4.38.2
+      '@stencil/react-output-target': 1.2.0(@stencil/core@4.38.2)(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)
       classnames: 2.5.1
       lodash.capitalize: 4.2.1
       lodash.inrange: 3.3.6
@@ -5330,7 +5330,7 @@ snapshots:
 
   '@socket.io/component-emitter@3.1.2': {}
 
-  '@stencil/core@4.38.0':
+  '@stencil/core@4.38.2':
     optionalDependencies:
       '@rollup/rollup-darwin-arm64': 4.34.9
       '@rollup/rollup-darwin-x64': 4.34.9
@@ -5342,11 +5342,11 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.34.9
     optional: true
 
-  '@stencil/react-output-target@1.2.0(@stencil/core@4.38.0)(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)':
+  '@stencil/react-output-target@1.2.0(@stencil/core@4.38.2)(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@lit/react': 1.0.8(@types/react@18.2.0)
-      '@stencil/core': 4.38.0
-      html-react-parser: 5.2.6(@types/react@18.2.0)(react@18.2.0)
+      '@stencil/core': 4.38.2
+      html-react-parser: 5.2.7(@types/react@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 19.2.0(react@18.2.0)
       react-style-stringify: 1.2.0
@@ -7366,13 +7366,13 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
-  html-react-parser@5.2.6(@types/react@18.2.0)(react@18.2.0):
+  html-react-parser@5.2.7(@types/react@18.2.0)(react@18.2.0):
     dependencies:
       domhandler: 5.0.3
       html-dom-parser: 5.1.1
       react: 18.2.0
       react-property: 2.0.2
-      style-to-js: 1.1.17
+      style-to-js: 1.1.18
     optionalDependencies:
       '@types/react': 18.2.0
     optional: true
@@ -9000,12 +9000,12 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  style-to-js@1.1.17:
+  style-to-js@1.1.18:
     dependencies:
-      style-to-object: 1.0.9
+      style-to-object: 1.0.11
     optional: true
 
-  style-to-object@1.0.9:
+  style-to-object@1.0.11:
     dependencies:
       inline-style-parser: 0.2.4
     optional: true

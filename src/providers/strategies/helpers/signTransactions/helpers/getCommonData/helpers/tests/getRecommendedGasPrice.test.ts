@@ -1,4 +1,4 @@
-import { account } from '__mocks__';
+import { account } from '__mocks__/data/account';
 import { IPlainTransactionObject } from 'lib/sdkCore';
 import { getRecommendedGasPrice } from '../getRecommendedGasPrice';
 
@@ -56,5 +56,19 @@ describe('getRecommendedGasPrice test', () => {
     });
 
     expect(result).toBe(3248644383);
+  });
+
+  it('should return smaller gasPrice if gasLimit is smaller', () => {
+    const gasPriceData = getGasPriceData(29287760);
+
+    const result = getRecommendedGasPrice({
+      transaction: {
+        ...transaction,
+        gasLimit: 50000
+      },
+      gasPriceData
+    });
+
+    expect(result).toBe(1000000000);
   });
 });

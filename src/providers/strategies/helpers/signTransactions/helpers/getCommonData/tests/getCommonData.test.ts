@@ -20,6 +20,10 @@ const parsedTransactionsByDataField =
 
 const mockData: GetCommonDataPropsType = {
   ...mockGetCommonDataInput,
+  gasPriceData: {
+    gasPriceOption: 0,
+    initialGasPrice: 0
+  },
   allTransactions,
   parsedTransactionsByDataField
 };
@@ -30,7 +34,10 @@ jest.mock('methods/network/getExplorerAddress', () => ({
 
 describe('getCommonData', () => {
   it('should return the common data without ppu', async () => {
-    const commonData = await getCommonData(mockData);
+    const commonData = await getCommonData({
+      ...mockData,
+      gasPriceData: { gasPriceOption: 1000000000, initialGasPrice: 1000000000 }
+    });
 
     expect(commonData).toStrictEqual({
       commonData: {
@@ -40,8 +47,23 @@ describe('getCommonData', () => {
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0018',
         feeLimit: '0.00010338',
-        gasLimit: '4.200.000',
+        gasLimit: '4,200,000',
         gasPrice: '0.000000001',
+        gasPriceOption: 1000000000,
+        gasPriceOptions: [
+          {
+            label: 'Standard',
+            value: 1000000000
+          },
+          {
+            label: 'Fast',
+            value: 1050000000
+          },
+          {
+            label: 'Faster',
+            value: 1100000000
+          }
+        ],
         decodedData: {
           decimal: {
             displayValue: 'NaN',
@@ -67,8 +89,6 @@ describe('getCommonData', () => {
         highlight: null,
         isEditable: true,
         needsSigning: true,
-        ppu: 0,
-        ppuOptions: [],
         providerName: '',
         receiver:
           'erd1qqqqqqqqqqqqqpgqpv09kfzry5y4sj05udcngesat07umyj70n4sa2c0rp',
@@ -130,8 +150,8 @@ describe('when the gas limit is updated', () => {
     const commonData = await getCommonData({
       ...mockData,
       gasPriceData: {
-        initialGasPrice: 1_000_000_000,
-        ppu: 19_287_760
+        initialGasPrice: 20_700_000,
+        gasPriceOption: 20_700_000
       },
       allTransactions: updatedTransactions,
       network: networkWithGasStationMetadata
@@ -167,20 +187,24 @@ describe('when the gas limit is updated', () => {
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0048',
         feeLimit: '0.00026838',
-        gasLimit: '20.700.000',
-        gasPrice: '0.000000001455441207',
+        gasLimit: '20,700,000',
+        gasPrice: '0.0000000000207',
         highlight: null,
         isEditable: true,
         needsSigning: true,
-        ppu: 19287760,
-        ppuOptions: [
+        gasPriceOption: 20700000,
+        gasPriceOptions: [
           {
             label: 'Standard',
-            value: 0
+            value: 20700000
+          },
+          {
+            label: 'Fast',
+            value: 1000000000
           },
           {
             label: 'Faster',
-            value: 19287760
+            value: 1455441207
           }
         ],
         providerName: '',
@@ -212,7 +236,7 @@ describe('when the gas limit is updated', () => {
       currentScreenIndex: 3,
       gasPriceData: {
         initialGasPrice: 1000000000,
-        ppu: 11_760_000
+        gasPriceOption: 1000000000
       },
       allTransactions: updatedTransactions,
       network: networkWithGasStationMetadata
@@ -226,7 +250,7 @@ describe('when the gas limit is updated', () => {
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0998',
         feeLimit: '0.005601445',
-        gasLimit: '520.000.000',
+        gasLimit: '520,000,000',
         decodedData: {
           raw: {
             displayValue:
@@ -256,24 +280,24 @@ describe('when the gas limit is updated', () => {
               'addLiquidity@990000000000000000@1054088355837700843124135'
           }
         },
-        gasPrice: '0.00000000106932272',
+        gasPrice: '0.000000001',
         highlight:
           '6164644c6971756964697479@0dbd2fc137a30000@df363e8872ed0d9235a7',
         isEditable: true,
         needsSigning: true,
-        ppu: 11760000,
-        ppuOptions: [
+        gasPriceOption: 1000000000,
+        gasPriceOptions: [
           {
             label: 'Standard',
-            value: 0
+            value: 1000000000
           },
           {
             label: 'Fast',
-            value: 11760000
+            value: 1069322720
           },
           {
             label: 'Faster',
-            value: 19287760
+            value: 1753812924
           }
         ],
         providerName: '',
