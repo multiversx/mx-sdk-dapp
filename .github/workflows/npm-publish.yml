@@ -47,6 +47,28 @@ jobs:
         id: package
         uses: andreigiura/action-nodejs-package-info@v1.0.2
 
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ steps.package.outputs.is-prerelease == 'false' }}
+        run: |
+          RELEASE_TAG=v$(node -p "require('./package.json').version")
+          echo "Creating release for version: $RELEASE_TAG"
+
+          changelog_content=$(awk "/^## \[\[?${RELEASE_TAG#v}[^\]]*\]/{flag=1; next} /^## \[/{flag=0} flag" CHANGELOG.md)
+
+          cat > release_notes.md << EOF
+          ## What's Changed
+
+          $changelog_content
+          EOF
+
+          # Create the release
+          gh release create "$RELEASE_TAG" \
+            --target=$GITHUB_SHA \
+            --title="$RELEASE_TAG" \
+            --notes-file release_notes.md
+
       - name: Publish to npmjs next version
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -1,6 +1,6 @@
-import { account } from '__mocks__';
 import { IPlainTransactionObject } from 'lib/sdkCore';
 import { getRecommendedGasPrice } from '../getRecommendedGasPrice';
+import { account } from '__mocks__/data/account';
 
 const transaction: IPlainTransactionObject = {
   nonce: 1329,
@@ -13,13 +13,10 @@ const transaction: IPlainTransactionObject = {
   version: 1
 };
 
-const getGasPriceData = (
-  ppu: number,
-  initialGasPrice = transaction.gasPrice
-) => {
+const getGasPriceData = (ppu: number) => {
   return {
     ppu,
-    initialGasPrice
+    initialGasPrice: transaction.gasPrice
   };
 };
 
