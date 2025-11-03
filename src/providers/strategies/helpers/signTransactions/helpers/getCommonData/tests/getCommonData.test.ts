@@ -47,7 +47,7 @@ describe('getCommonData', () => {
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0018',
         feeLimit: '0.00010338',
-        gasLimit: '4.200.000',
+        gasLimit: '4,200,000',
         gasPrice: '0.000000001',
         gasPriceOption: 1000000000,
         gasPriceOptions: [
@@ -187,7 +187,7 @@ describe('when the gas limit is updated', () => {
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0048',
         feeLimit: '0.00026838',
-        gasLimit: '20.700.000',
+        gasLimit: '20,700,000',
         gasPrice: '0.0000000000207',
         highlight: null,
         isEditable: true,
@@ -250,7 +250,7 @@ describe('when the gas limit is updated', () => {
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0998',
         feeLimit: '0.005601445',
-        gasLimit: '520.000.000',
+        gasLimit: '520,000,000',
         decodedData: {
           raw: {
             displayValue:

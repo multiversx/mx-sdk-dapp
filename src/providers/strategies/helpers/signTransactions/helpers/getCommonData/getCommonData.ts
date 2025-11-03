@@ -179,8 +179,8 @@ export async function getCommonData({
   });
 
   const formattedGasLimit = new BigNumber(plainTransaction.gasLimit).toFormat({
-    decimalSeparator: ',',
-    groupSeparator: '.',
+    decimalSeparator: '.',
+    groupSeparator: ',',
     groupSize: 3
   });
 
