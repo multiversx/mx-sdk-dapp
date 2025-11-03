@@ -8,6 +8,7 @@ A mazim donec si est perpetuum iucunda moreae — eius regressu, hac se regnandu
 • Quod dignissim, ad vicissitudo noverca sit proditorem regulam nibh sem mppono wisi M Servata in falli dui harum id qui substitam modi, irritari qui consulta'a quisque non concilia pugnat, cum poenam ea quos renovo reducere`;
 
 export const textWithEmDash = 'Test — em dash';
+// eslint-disable-next-line quotes
 export const textWithApostrophe = "We're back";
 export const textWithBullet = '• First item';
 export const chineseText = '姓名';
@@ -23,6 +24,7 @@ export const esdtPayload =
 
 export const unicodeParts = [
   'We are so back!',
+  // eslint-disable-next-line quotes
   "A short recap — what's being done",
   '• Despite having 2FA'
 ];

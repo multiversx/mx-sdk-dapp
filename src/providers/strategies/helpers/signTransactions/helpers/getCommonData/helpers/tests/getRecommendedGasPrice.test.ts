@@ -1,6 +1,6 @@
+import { account } from '__mocks__/data/account';
 import { IPlainTransactionObject } from 'lib/sdkCore';
 import { getRecommendedGasPrice } from '../getRecommendedGasPrice';
-import { account } from '__mocks__/data/account';
 
 const transaction: IPlainTransactionObject = {
   nonce: 1329,
