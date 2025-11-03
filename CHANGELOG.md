@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v4.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/1654)] - 2025-11-03
 
-- [Update wallet connect provider to latest version](https://github.com/multiversx/mx-sdk-dapp/pull/1654)
+- [Update wallet connect provider to v6.1.3](https://github.com/multiversx/mx-sdk-dapp/pull/1654)
 
 ## [[v4.6.0](https://github.com/multiversx/mx-sdk-dapp/pull/1651)] - 2025-10-30
 
