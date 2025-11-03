@@ -3,8 +3,7 @@ import {
   textWithEmDash,
   textWithApostrophe,
   textWithBullet,
-  unicodeParts,
-  atSeparatedString
+  unicodeParts
 } from '__mocks__/data/unicodeSamples';
 import { DecodeMethodEnum } from 'types/serverTransactions.types';
 import { decodeForDisplay } from '../decodeForDisplay';
@@ -110,7 +109,7 @@ describe('decodeForDisplay with Unicode characters (integration)', () => {
 
   describe('input with @ symbols and Unicode', () => {
     it('should handle @-separated inputs with Unicode text', () => {
-      const part1 = atSeparatedString;
+      const part1 = 'short';
       const part2 = Buffer.from(textWithApostrophe).toString('hex');
       const input = `${part1}@${part2}`;
 
