@@ -70,6 +70,10 @@ importers:
       zustand:
         specifier: 4.4.7
         version: 4.4.7(@types/react@18.2.0)(immer@10.1.1)(react@18.2.0)
+    optionalDependencies:
+      '@multiversx/sdk-dapp-ui':
+        specifier: '>=0.1.0 <0.2.0'
+        version: 0.1.1(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@eslint/js':
         specifier: 9.15.0
@@ -206,10 +210,6 @@ importers:
       typescript-eslint:
         specifier: 8.15.0
         version: 8.15.0(eslint@9.15.0)(typescript@5.4.5)
-    optionalDependencies:
-      '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.1.0 <0.2.0'
-        version: 0.1.0(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)
 
 packages:
 
@@ -789,8 +789,8 @@ packages:
       bignumber.js: ^9.0.1
       protobufjs: ^7.2.6
 
-  '@multiversx/sdk-dapp-ui@0.1.0':
-    resolution: {integrity: sha512-30J4AZttkw+4MjUaty/WnQTnN0OnUcrZQnAQ4w2IkWbNWdhLzkvTYrpJy9whh7e5qR+lf8v+8FRohNqMXHdmUA==}
+  '@multiversx/sdk-dapp-ui@0.1.1':
+    resolution: {integrity: sha512-LaZqqfeD/ojcjm2Z2XYcfThoM4B9HoNEMJ5TN5F3yU7sblS85scA5Aa4xkRf5ZrQAfOBp8JUvSIisloKMO8k7g==}
     engines: {node: '>=20.19.0'}
 
   '@multiversx/sdk-dapp-utils@3.0.2':
@@ -5100,7 +5100,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@multiversx/sdk-dapp-ui@0.1.0(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)':
+  '@multiversx/sdk-dapp-ui@0.1.1(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@stencil/core': 4.38.2
       '@stencil/react-output-target': 1.2.0(@stencil/core@4.38.2)(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)
