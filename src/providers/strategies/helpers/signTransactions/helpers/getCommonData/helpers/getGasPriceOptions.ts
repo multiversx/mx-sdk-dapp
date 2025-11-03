@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { GAS_PRICE } from 'constants/mvx.constants';
 import { EMPTY_PPU } from 'constants/placeholders.constants';
 import { IPlainTransactionObject } from 'lib/sdkCore';
 import { NetworkType } from 'types/network.types';
@@ -15,7 +16,7 @@ export const getGasPriceOptions = ({
   shard,
   gasStationMetadata,
   transaction,
-  initialGasPrice = 0
+  initialGasPrice = GAS_PRICE
 }: GetGasPriceOptionsParamsType) => {
   const fastPpu = gasStationMetadata
     ? gasStationMetadata[Number(shard)]?.fast
