@@ -72,7 +72,7 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
           ? Number(transaction.gasPrice)
           : GAS_PRICE;
 
-        // creates a snapshot of the initialgas prices for each transaction
+        // creates a snapshot of the initial gas prices for each transaction
         // so user can revert to the initial gas price if they modify it
         this.updateGasPriceMap({
           nonce: Number(transaction.nonce),

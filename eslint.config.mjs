@@ -100,7 +100,11 @@ export default [
       '@typescript-eslint/no-var-requires': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
       'linebreak-style': ['error', 'unix'],
-      quotes: ['error', 'single'],
+      quotes: [
+        'error',
+        'single',
+        { avoidEscape: true, allowTemplateLiterals: true }
+      ],
       semi: ['error', 'always'],
       'no-unused-vars': ['off'],
       'no-prototype-builtins': 'off',
