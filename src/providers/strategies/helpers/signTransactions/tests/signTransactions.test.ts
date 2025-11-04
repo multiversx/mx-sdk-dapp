@@ -40,7 +40,16 @@ jest.mock(
       notifyDataUpdate: jest.fn(() => {}),
       initializeGasPriceMap: jest.fn(() => {}),
       updateIsLoading: jest.fn(() => {}),
-      updateGasPriceMap: jest.fn(() => {}),
+      updateGasPriceMap: jest.fn(({ nonce, gasPriceOption }) => {
+        if (instance.getGasPriceOptionMap[nonce]) {
+          instance.getGasPriceOptionMap[nonce].gasPriceOption = gasPriceOption;
+        } else {
+          instance.getGasPriceOptionMap[nonce] = {
+            gasPriceOption,
+            initialGasPrice: gasPriceOption
+          };
+        }
+      }),
       getGasPriceOptionMap: {
         [1345]: {
           gasPriceOption: 1000000000,
@@ -66,7 +75,7 @@ describe('signTransactions tests', () => {
     callbacks.clear();
   });
 
-  it('should sign a single transaction', async () => {
+  const startAndGetSubscribed = async () => {
     const signPromise = signTransactions({
       ...mockSignTransactionsInputData,
       handleSign: mockHandleSign
@@ -74,14 +83,20 @@ describe('signTransactions tests', () => {
     const {
       SignTransactionsStateManager
     } = require('managers/internal/SignTransactionsStateManager/SignTransactionsStateManager');
-    const subscribed = SignTransactionsStateManager.getInstance()
+    const subscriptions = SignTransactionsStateManager.getInstance()
       .subscribeToEventBus as jest.Mock;
 
     // allow async setup to register subscriptions
     await new Promise((resolve) => setTimeout(resolve));
 
-    expect(subscribed).toHaveBeenCalled();
-    const [_confirmAction, confirmHandler] = subscribed.mock.calls.find(
+    return { signPromise, subscriptions };
+  };
+
+  it('should sign a single transaction', async () => {
+    const { signPromise, subscriptions } = await startAndGetSubscribed();
+
+    expect(subscriptions).toHaveBeenCalled();
+    const [_confirmAction, confirmHandler] = subscriptions.mock.calls.find(
       ([call]) => call.includes('CONFIRM_SIGN_TRANSACTIONS')
     );
 
@@ -96,30 +111,18 @@ describe('signTransactions tests', () => {
     );
   });
   it('should sign a single transaction with a faster gas price', async () => {
-    const signPromise = signTransactions({
-      ...mockSignTransactionsInputData,
-      handleSign: mockHandleSign
-    });
-    const {
-      SignTransactionsStateManager
-    } = require('managers/internal/SignTransactionsStateManager/SignTransactionsStateManager');
+    const { signPromise, subscriptions } = await startAndGetSubscribed();
 
-    const subscribed = SignTransactionsStateManager.getInstance()
-      .subscribeToEventBus as jest.Mock;
-
-    // allow async setup to register subscriptions
-    await new Promise((resolve) => setTimeout(resolve));
-
-    expect(subscribed).toHaveBeenCalled();
+    const fastGasPrice = 1050000000;
 
     const [_setGasPriceOptionAction, setGasPriceOptionHandler] =
-      subscribed.mock.calls.find(([call]) =>
+      subscriptions.mock.calls.find(([call]) =>
         call.includes('SET_GAS_PRICE_OPTION_SIGN_TRANSACTIONS')
       );
 
-    await setGasPriceOptionHandler(1050000000);
+    await setGasPriceOptionHandler(fastGasPrice);
 
-    const [_confirmAction, confirmHandler] = subscribed.mock.calls.find(
+    const [_confirmAction, confirmHandler] = subscriptions.mock.calls.find(
       ([call]) => call.includes('CONFIRM_SIGN_TRANSACTIONS')
     );
 
@@ -127,9 +130,16 @@ describe('signTransactions tests', () => {
 
     const signedTransactions = await signPromise;
 
-    expect(signedTransactions.map((el) => el.toPlainObject())).toEqual(
+    const plainSignedTransactions = signedTransactions.map((el) =>
+      el.toPlainObject()
+    );
+
+    expect(plainSignedTransactions).toEqual(
       expect.arrayContaining([
-        expect.objectContaining(mockPlainTransactionObject)
+        expect.objectContaining({
+          ...mockPlainTransactionObject,
+          gasPrice: fastGasPrice
+        })
       ])
     );
   });
