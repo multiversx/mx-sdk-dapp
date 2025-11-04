@@ -18,6 +18,10 @@ jest.mock('methods/network/getEgldLabel', () => ({
   getEgldLabel: () => testNetwork.egldLabel
 }));
 
+jest.mock('methods/account/getAccount', () => ({
+  getAccount: () => account
+}));
+
 jest.mock('store/selectors/networkSelectors', () => ({
   networkSelector: () => testNetwork
 }));
@@ -57,6 +61,11 @@ jest.mock(
 const mockHandleSign = jest.fn((txs) => Promise.resolve(txs));
 
 describe('signTransactions tests', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    callbacks.clear();
+  });
+
   it('should sign a single transaction', async () => {
     const signPromise = signTransactions({
       ...mockSignTransactionsInputData,
