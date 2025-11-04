@@ -56,8 +56,8 @@ jest.mock(
 const mockHandleSign = jest.fn((txs) => Promise.resolve(txs));
 
 describe('signTransactions tests', () => {
-  it('should sign transactions', async () => {
-    const transactionsPromise = signTransactions({
+  it('should sign a single transaction', async () => {
+    const signPromise = signTransactions({
       ...mockSignTransactionsInputData,
       handleSign: mockHandleSign
     });
@@ -66,20 +66,19 @@ describe('signTransactions tests', () => {
     } = require('managers/internal/SignTransactionsStateManager/SignTransactionsStateManager');
     const subscribed = SignTransactionsStateManager.getInstance()
       .subscribeToEventBus as jest.Mock;
+
     // allow async setup to register subscriptions
     await new Promise((resolve) => setTimeout(resolve));
 
     expect(subscribed).toHaveBeenCalled();
-    const confirmCall = subscribed.mock.calls.find(([call]) =>
-      call.includes('CONFIRM_SIGN_TRANSACTION')
+    const [_confirmAction, confirmHandler] = subscribed.mock.calls.find(
+      ([call]) => call.includes('CONFIRM_SIGN_TRANSACTIONS')
     );
 
-    console.log('confirmCall', confirmCall);
-
-    const confirmHandler = confirmCall[1];
     await confirmHandler();
 
-    const signedTransactions = await transactionsPromise;
+    const signedTransactions = await signPromise;
+
     expect(signedTransactions.map((el) => el.toPlainObject())).toEqual(
       expect.arrayContaining([
         expect.objectContaining(mockPlainTransactionObject)
