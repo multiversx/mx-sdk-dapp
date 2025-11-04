@@ -5,15 +5,6 @@ import {
   mockSignTransactionsInputData
 } from './mocks';
 
-jest.mock('methods/account/getAccountInfo', () => ({
-  getAccountInfo: () => ({
-    account: {
-      address: account.address,
-      shard: account.shard
-    }
-  })
-}));
-
 jest.mock('methods/network/getEgldLabel', () => ({
   getEgldLabel: () => testNetwork.egldLabel
 }));

@@ -4,7 +4,7 @@ import { Transaction } from 'lib/sdkCore';
 import { DECIMALS, DIGITS, formatAmount } from 'lib/sdkDappUtils';
 import { SignTransactionsStateManager } from 'managers/internal/SignTransactionsStateManager/SignTransactionsStateManager';
 import { SignEventsEnum } from 'managers/internal/SignTransactionsStateManager/types';
-import { getAccountInfo } from 'methods/account/getAccountInfo';
+import { getAccount } from 'methods/account/getAccount';
 import { getEgldLabel } from 'methods/network/getEgldLabel';
 import { cancelCrossWindowAction } from 'providers/helpers/cancelCrossWindowAction';
 import { IProvider } from 'providers/types/providerFactory.types';
@@ -26,9 +26,7 @@ export async function signTransactions({
   handleSign,
   guardTransactions = getGuardedTransactions
 }: SignTransactionsParamsType): Promise<Transaction[]> {
-  const {
-    account: { address, shard, username }
-  } = getAccountInfo();
+  const { address, shard, username } = getAccount();
   const network = networkSelector(getState());
 
   const egldLabel = getEgldLabel();
