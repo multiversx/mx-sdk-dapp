@@ -1,7 +1,9 @@
 import { account, testNetwork } from '__mocks__';
-import { SignTransactionsStateManager } from 'managers/internal/SignTransactionsStateManager';
 import { signTransactions } from '../signTransactions';
-import { mockSignTransactionsInputData } from './mocks';
+import {
+  mockPlainTransactionObject,
+  mockSignTransactionsInputData
+} from './mocks';
 
 jest.mock('methods/account/getAccountInfo', () => ({
   getAccountInfo: () => ({
@@ -27,7 +29,7 @@ jest.mock(
     const subscribeToEventBus = jest.fn((event, handler) => {
       callbacks.set(event, handler);
     });
-    const instance = {
+    const instance: any = {
       openUI: jest.fn(async () => {}),
       closeUI: jest.fn(() => {}),
       subscribeToEventBus,
@@ -36,14 +38,13 @@ jest.mock(
       updateIsLoading: jest.fn(() => {}),
       getGasPriceOptionMap: {
         [1345]: {
-          gasPriceOption: 1000000000
+          gasPriceOption: 1000000000,
+          initialGasPrice: 1000000000
         }
       },
       updateTokenTransaction: jest.fn(() => {}),
       updateNonFungibleTransaction: jest.fn(() => {}),
       updateCommonData: jest.fn(() => {})
-      // updateGasPriceMap: jest.fn(() => {}),
-      // updateData: jest.fn(() => {}),
     };
 
     return {
@@ -52,7 +53,7 @@ jest.mock(
   }
 );
 
-const mockHandleSign = jest.fn(() => Promise.resolve([]));
+const mockHandleSign = jest.fn((txs) => Promise.resolve(txs));
 
 describe('signTransactions tests', () => {
   it('should sign transactions', async () => {
@@ -60,18 +61,29 @@ describe('signTransactions tests', () => {
       ...mockSignTransactionsInputData,
       handleSign: mockHandleSign
     });
+    const {
+      SignTransactionsStateManager
+    } = require('managers/internal/SignTransactionsStateManager/SignTransactionsStateManager');
     const subscribed = SignTransactionsStateManager.getInstance()
       .subscribeToEventBus as jest.Mock;
     // allow async setup to register subscriptions
-    await new Promise((r) => setTimeout(r, 0));
+    await new Promise((resolve) => setTimeout(resolve));
+
     expect(subscribed).toHaveBeenCalled();
-    const confirmCall =
-      subscribed.mock.calls.find((c) => String(c[0]).includes('CONFIRM')) ||
-      subscribed.mock.calls[1];
+    const confirmCall = subscribed.mock.calls.find(([call]) =>
+      call.includes('CONFIRM_SIGN_TRANSACTION')
+    );
+
+    console.log('confirmCall', confirmCall);
+
     const confirmHandler = confirmCall[1];
     await confirmHandler();
 
-    const result = await transactionsPromise;
-    expect(Array.isArray(result)).toBe([1]);
+    const signedTransactions = await transactionsPromise;
+    expect(signedTransactions.map((el) => el.toPlainObject())).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining(mockPlainTransactionObject)
+      ])
+    );
   });
 });
