@@ -27,14 +27,6 @@ jest.mock('store/selectors/networkSelectors', () => ({
 }));
 
 const callbacks = new Map();
-jest.mock(
-  'managers/internal/SignTransactionsStateManager/SignTransactionsStateManager',
-  () => {
-    return jest.requireActual(
-      'managers/internal/SignTransactionsStateManager/SignTransactionsStateManager'
-    );
-  }
-);
 
 const mockHandleSign = jest.fn((txs) => Promise.resolve(txs));
 
@@ -55,34 +47,12 @@ describe('signTransactions tests', () => {
         callbacks.set(event, handler);
       });
 
-    // ensure gas price map default (mutate getter value, do not reassign)
-    const gasMap = instance.getGasPriceOptionMap;
-    gasMap[1345] = gasMap[1345] || {
-      gasPriceOption: 1000000000,
-      initialGasPrice: 1000000000
-    };
-
-    // mutate gas price map on update
-    jest
-      .spyOn(instance, 'updateGasPriceMap')
-      .mockImplementation((...args: unknown[]) => {
-        const [{ nonce, gasPriceOption }] = args as [
-          { nonce: number; gasPriceOption: number }
-        ];
-        const map = instance.getGasPriceOptionMap;
-        map[nonce] = map[nonce] || {
-          initialGasPrice: gasPriceOption,
-          gasPriceOption
-        };
-        map[nonce].gasPriceOption = gasPriceOption;
-      });
-
     // avoid UI side-effects
     jest.spyOn(instance, 'openUI').mockResolvedValue(undefined);
     jest.spyOn(instance, 'closeUI').mockImplementation(() => {});
   });
 
-  const startAndGetSubscribed = async () => {
+  const startSigning = async () => {
     const signPromise = signTransactions({
       ...mockSignTransactionsInputData,
       handleSign: mockHandleSign
@@ -90,17 +60,16 @@ describe('signTransactions tests', () => {
     const {
       SignTransactionsStateManager
     } = require('managers/internal/SignTransactionsStateManager/SignTransactionsStateManager');
-    const subscriptions = SignTransactionsStateManager.getInstance()
-      .subscribeToEventBus as jest.Mock;
+    const manager = SignTransactionsStateManager.getInstance();
+    const subscriptions = manager.subscribeToEventBus as jest.Mock;
 
-    // allow async setup to register subscriptions
-    await new Promise((resolve) => setTimeout(resolve));
+    await new Promise((r) => setTimeout(r, 10));
 
     return { signPromise, subscriptions };
   };
 
   it('should sign a single transaction', async () => {
-    const { signPromise, subscriptions } = await startAndGetSubscribed();
+    const { signPromise, subscriptions } = await startSigning();
 
     expect(subscriptions).toHaveBeenCalled();
     const [_confirmAction, confirmHandler] = subscriptions.mock.calls.find(
@@ -118,7 +87,7 @@ describe('signTransactions tests', () => {
     );
   });
   it('should sign a single transaction with a faster gas price', async () => {
-    const { signPromise, subscriptions } = await startAndGetSubscribed();
+    const { signPromise, subscriptions } = await startSigning();
 
     const fastGasPrice = 1050000000;
 
