@@ -30,40 +30,9 @@ const callbacks = new Map();
 jest.mock(
   'managers/internal/SignTransactionsStateManager/SignTransactionsStateManager',
   () => {
-    const subscribeToEventBus = jest.fn((event, handler) => {
-      callbacks.set(event, handler);
-    });
-    const instance: any = {
-      openUI: jest.fn(async () => {}),
-      closeUI: jest.fn(() => {}),
-      subscribeToEventBus,
-      notifyDataUpdate: jest.fn(() => {}),
-      initializeGasPriceMap: jest.fn(() => {}),
-      updateIsLoading: jest.fn(() => {}),
-      updateGasPriceMap: jest.fn(({ nonce, gasPriceOption }) => {
-        if (instance.getGasPriceOptionMap[nonce]) {
-          instance.getGasPriceOptionMap[nonce].gasPriceOption = gasPriceOption;
-        } else {
-          instance.getGasPriceOptionMap[nonce] = {
-            gasPriceOption,
-            initialGasPrice: gasPriceOption
-          };
-        }
-      }),
-      getGasPriceOptionMap: {
-        [1345]: {
-          gasPriceOption: 1000000000,
-          initialGasPrice: 1000000000
-        }
-      },
-      updateTokenTransaction: jest.fn(() => {}),
-      updateNonFungibleTransaction: jest.fn(() => {}),
-      updateCommonData: jest.fn(() => {})
-    };
-
-    return {
-      SignTransactionsStateManager: { getInstance: () => instance }
-    };
+    return jest.requireActual(
+      'managers/internal/SignTransactionsStateManager/SignTransactionsStateManager'
+    );
   }
 );
 
@@ -73,6 +42,44 @@ describe('signTransactions tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     callbacks.clear();
+    const {
+      SignTransactionsStateManager
+    } = require('managers/internal/SignTransactionsStateManager/SignTransactionsStateManager');
+    const instance = SignTransactionsStateManager.getInstance();
+
+    // capture subscriptions
+    jest
+      .spyOn(instance, 'subscribeToEventBus')
+      .mockImplementation((...args: unknown[]) => {
+        const [event, handler] = args as [string, any];
+        callbacks.set(event, handler);
+      });
+
+    // ensure gas price map default (mutate getter value, do not reassign)
+    const gasMap = instance.getGasPriceOptionMap;
+    gasMap[1345] = gasMap[1345] || {
+      gasPriceOption: 1000000000,
+      initialGasPrice: 1000000000
+    };
+
+    // mutate gas price map on update
+    jest
+      .spyOn(instance, 'updateGasPriceMap')
+      .mockImplementation((...args: unknown[]) => {
+        const [{ nonce, gasPriceOption }] = args as [
+          { nonce: number; gasPriceOption: number }
+        ];
+        const map = instance.getGasPriceOptionMap;
+        map[nonce] = map[nonce] || {
+          initialGasPrice: gasPriceOption,
+          gasPriceOption
+        };
+        map[nonce].gasPriceOption = gasPriceOption;
+      });
+
+    // avoid UI side-effects
+    jest.spyOn(instance, 'openUI').mockResolvedValue(undefined);
+    jest.spyOn(instance, 'closeUI').mockImplementation(() => {});
   });
 
   const startAndGetSubscribed = async () => {
