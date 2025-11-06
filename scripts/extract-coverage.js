@@ -26,7 +26,7 @@ try {
   // shields.io endpoint badge format
   const output = {
     schemaVersion: 1,
-    label: 'coverage',
+    label: 'Coverage',
     message: `${totalCoverage.toFixed(2)}%`,
     color: color
   };
