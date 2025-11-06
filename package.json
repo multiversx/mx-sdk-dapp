@@ -88,7 +88,7 @@
     "protobufjs": "^7.2.6"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.1.0 <0.2.0"
+    "@multiversx/sdk-dapp-ui": ">=0.1.2 <0.2.0"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",
