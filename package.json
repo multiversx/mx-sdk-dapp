@@ -33,6 +33,7 @@
     "build-esbuild": "npm run clean-out && node esbuild.js",
     "build": "npm run build-esbuild && npm run compile",
     "test": "jest",
+    "test:coverage": "jest --coverage && node scripts/extract-coverage.js",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
   },
