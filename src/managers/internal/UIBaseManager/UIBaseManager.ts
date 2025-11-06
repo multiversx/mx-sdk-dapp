@@ -93,9 +93,6 @@ export abstract class UIBaseManager<
     return this.initialData;
   }
 
-  /**
-   * Get registered handlers for a specific event (useful for testing)
-   */
   public getEventHandlers(event: TEventEnum): Function[] {
     return this.eventHandlers.get(event) || [];
   }
