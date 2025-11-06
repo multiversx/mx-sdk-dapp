@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed coverage badge](https://github.com/multiversx/mx-sdk-dapp/pull/1660)
+
 ## [[5.3.1](https://github.com/multiversx/mx-sdk-dapp/pull/1658)] - 2025-11-06
 
 - [Fixed coverage badge and workflow](https://github.com/multiversx/mx-sdk-dapp/pull/1659)
