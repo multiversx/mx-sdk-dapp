@@ -2,6 +2,8 @@ module.exports = {
   verbose: true,
   testEnvironment: 'jsdom',
   testTimeout: 10000,
+  coverageProvider: 'v8',
+  coverageReporters: ['json-summary', 'lcov', 'text'],
   moduleDirectories: ['node_modules', 'src'],
   modulePaths: ['<rootDir>/src'],
   roots: ['<rootDir>/src'],
