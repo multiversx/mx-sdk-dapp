@@ -2,6 +2,7 @@ module.exports = {
   verbose: true,
   testEnvironment: 'jsdom',
   testTimeout: 10000,
+  coverageProvider: 'v8',
   moduleDirectories: ['node_modules', 'src'],
   modulePaths: ['<rootDir>/src'],
   roots: ['<rootDir>/src'],
