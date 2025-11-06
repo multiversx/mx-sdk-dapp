@@ -67,11 +67,10 @@ export abstract class UIBaseManager<
     this.eventBus?.publish(this.uiDataUpdateEvent, this.data);
   }
 
-  public clearEventHandlers(events?: TEventEnum[]) {
-    const allSubscribedEvents = Array.from(this.unsubscribeFunctions.keys());
-    const eventsToClear = events ?? allSubscribedEvents;
-
-    eventsToClear.forEach((event) => {
+  public clearEventHandlers(
+    events: TEventEnum[] = Array.from(this.unsubscribeFunctions.keys())
+  ) {
+    events.forEach((event) => {
       const unsubList = this.unsubscribeFunctions.get(event) || [];
       unsubList.forEach((unsubscribe) => unsubscribe());
       this.unsubscribeFunctions.delete(event);
