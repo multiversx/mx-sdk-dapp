@@ -17,6 +17,7 @@ export abstract class UIBaseManager<
   protected anchor?: HTMLElement;
   protected uiTag: UITagsEnum;
   protected uiDataUpdateEvent: TEventEnum;
+  protected eventHandlers: Map<TEventEnum, Function[]> = new Map();
   protected unsubscribeFunctions: Map<TEventEnum, (() => void)[]> = new Map();
   protected abstract initialData: TData;
   protected data: TData;
@@ -54,6 +55,11 @@ export abstract class UIBaseManager<
       const existing = this.unsubscribeFunctions.get(event) || [];
       existing.push(unsubscribe);
       this.unsubscribeFunctions.set(event, existing);
+
+      // Store handler programatic access (e.g. for testing)
+      const existingHandlers = this.eventHandlers.get(event) || [];
+      existingHandlers.push(callback);
+      this.eventHandlers.set(event, existingHandlers);
     }
   }
 
@@ -61,11 +67,23 @@ export abstract class UIBaseManager<
     this.eventBus?.publish(this.uiDataUpdateEvent, this.data);
   }
 
+  public clearEventHandlers(
+    events: TEventEnum[] = Array.from(this.unsubscribeFunctions.keys())
+  ) {
+    events.forEach((event) => {
+      const unsubList = this.unsubscribeFunctions.get(event) || [];
+      unsubList.forEach((unsubscribe) => unsubscribe());
+      this.unsubscribeFunctions.delete(event);
+      this.eventHandlers.delete(event);
+    });
+  }
+
   public destroy() {
     this.unsubscribeFunctions.forEach((unsubList) =>
       unsubList.forEach((unsubscribe) => unsubscribe())
     );
     this.unsubscribeFunctions.clear();
+    this.eventHandlers.clear();
     this.eventBus = null;
     this.uiElement?.remove?.();
     this.uiElement = null;
@@ -73,6 +91,10 @@ export abstract class UIBaseManager<
 
   protected getInitialData(): TData {
     return this.initialData;
+  }
+
+  public getEventHandlers(event: TEventEnum): Function[] {
+    return this.eventHandlers.get(event) || [];
   }
 
   protected resetData() {

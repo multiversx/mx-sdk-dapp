@@ -12,6 +12,7 @@ import {
   account,
   blocks,
   dappConfig,
+  economics,
   networkConfig,
   socketResponse,
   websocketConfig
@@ -43,6 +44,7 @@ const handlers = [
     `${testNetwork.apiAddress}/websocket/config`,
     mockResponse(websocketConfig)
   ),
+  rest.get(`${testNetwork.apiAddress}/economics`, mockResponse(economics)),
   rest.get(
     `${testNetwork.apiAddress}/accounts/${testAddress}`,
     mockResponse(account)

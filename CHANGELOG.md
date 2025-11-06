@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.3.1](https://github.com/multiversx/mx-sdk-dapp/pull/1658)] - 2025-11-06
+
+- [Fixed coverage badge and workflow](https://github.com/multiversx/mx-sdk-dapp/pull/1659)
+- [Added coverage badge and workflow](https://github.com/multiversx/mx-sdk-dapp/pull/1657)
+- [Added clearEventHandlers method to `UIBaseManager`](https://github.com/multiversx/mx-sdk-dapp/pull/1656)
+
 ## [[5.3.0](https://github.com/multiversx/mx-sdk-dapp/pull/1653)] - 2025-11-03
 
 - [Added default options for gas price](https://github.com/multiversx/mx-sdk-dapp/pull/1650)
