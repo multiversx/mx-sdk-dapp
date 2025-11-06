@@ -15,8 +15,20 @@ try {
   );
   const totalCoverage = coverageSummary.total?.lines?.pct ?? 0;
 
+  // Determine color based on coverage percentage
+  let color = 'red';
+  if (totalCoverage >= 80) {
+    color = 'green';
+  } else if (totalCoverage >= 60) {
+    color = 'yellow';
+  }
+
+  // shields.io endpoint badge format
   const output = {
-    coverage: totalCoverage
+    schemaVersion: 1,
+    label: 'coverage',
+    message: `${totalCoverage.toFixed(2)}%`,
+    color: color
   };
 
   fs.writeFileSync(outputPath, JSON.stringify(output, null, 2) + '\n');
