@@ -17,11 +17,3 @@ export const mockSignTransactionsInputData = {
   address: account.address,
   shard: 1
 };
-
-export const mockOptionallyGuardedTransactions = [
-  {
-    ...mockPlainTransactionObject,
-    signature:
-      '342ff7cadbfe9d24746b17569b2c8a32c218f057efb8273c8cd0ce0fa0c86e4337378bb65d3819f9556109483c0d600c7e5907f5525ab3b4c53f4e9d3f0ca600'
-  }
-];

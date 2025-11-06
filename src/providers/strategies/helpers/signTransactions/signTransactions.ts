@@ -243,6 +243,14 @@ export async function signTransactions({
       }
     }
 
+    manager.clearEventHandlers([
+      SignEventsEnum.NEXT,
+      SignEventsEnum.CONFIRM,
+      SignEventsEnum.CLOSE,
+      SignEventsEnum.BACK,
+      SignEventsEnum.SET_GAS_PRICE_OPTION
+    ]);
+
     setupEventListeners();
     await updateScreen();
   });
