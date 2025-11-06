@@ -2,7 +2,7 @@
 
 [![Unit tests](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/pre-merge-unit-tests.yml/badge.svg)](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/pre-merge-unit-tests.yml)
 [![Integration tests](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/run-template-dapps-integration.yml/badge.svg)](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/run-template-dapps-integration.yml)
-[![Coverage](./badges/coverage-total.svg)](./badges/coverage-total.svg)
+[![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/multiversx/mx-sdk-dapp/main/coverage-total.json&label=coverage)](https://raw.githubusercontent.com/multiversx/mx-sdk-dapp/main/coverage-total.json)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/multiversx/mx-sdk-dapp)
 
 
