@@ -1,4 +1,8 @@
+import { EventBus } from '@multiversx/sdk-dapp-ui/utils/EventBus';
 import { account, testNetwork } from '__mocks__';
+import { SignTransactionsStateManager } from 'managers/internal/SignTransactionsStateManager';
+import { SignEventsEnum } from 'managers/internal/SignTransactionsStateManager/types';
+import { ComponentFactory } from 'utils/ComponentFactory';
 import { signTransactions } from '../signTransactions';
 import {
   mockPlainTransactionObject,
@@ -17,55 +21,31 @@ jest.mock('store/selectors/networkSelectors', () => ({
   networkSelector: () => testNetwork
 }));
 
-const callbacks = new Map();
+jest.spyOn(ComponentFactory, 'create').mockResolvedValue({
+  getEventBus: async () => new EventBus()
+});
 
 const mockHandleSign = jest.fn((txs) => Promise.resolve(txs));
 
+const manager = SignTransactionsStateManager.getInstance();
+
 describe('signTransactions tests', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    callbacks.clear();
-    const {
-      SignTransactionsStateManager
-    } = require('managers/internal/SignTransactionsStateManager/SignTransactionsStateManager');
-    const instance = SignTransactionsStateManager.getInstance();
-
-    // capture subscriptions
-    jest
-      .spyOn(instance, 'subscribeToEventBus')
-      .mockImplementation((...args: unknown[]) => {
-        const [event, handler] = args as [string, any];
-        callbacks.set(event, handler);
-      });
-
-    // avoid UI side-effects
-    jest.spyOn(instance, 'openUI').mockResolvedValue(undefined);
-    jest.spyOn(instance, 'closeUI').mockImplementation(() => {});
-  });
-
   const startSigning = async () => {
     const signPromise = signTransactions({
       ...mockSignTransactionsInputData,
       handleSign: mockHandleSign
     });
-    const {
-      SignTransactionsStateManager
-    } = require('managers/internal/SignTransactionsStateManager/SignTransactionsStateManager');
-    const manager = SignTransactionsStateManager.getInstance();
-    const subscriptions = manager.subscribeToEventBus as jest.Mock;
 
-    await new Promise((r) => setTimeout(r, 10));
+    // wait for the manager to be initialized
+    await new Promise((resolve) => setTimeout(resolve));
 
-    return { signPromise, subscriptions };
+    return { signPromise };
   };
 
   it('should sign a single transaction', async () => {
-    const { signPromise, subscriptions } = await startSigning();
+    const { signPromise } = await startSigning();
 
-    expect(subscriptions).toHaveBeenCalled();
-    const [_confirmAction, confirmHandler] = subscriptions.mock.calls.find(
-      ([call]) => call.includes('CONFIRM_SIGN_TRANSACTIONS')
-    );
+    const [confirmHandler] = manager.getEventHandlers(SignEventsEnum.CONFIRM);
 
     await confirmHandler();
 
@@ -78,21 +58,16 @@ describe('signTransactions tests', () => {
     );
   });
   it('should sign a single transaction with a faster gas price', async () => {
-    const { signPromise, subscriptions } = await startSigning();
+    const { signPromise } = await startSigning();
 
     const fastGasPrice = 1050000000;
 
-    const [_setGasPriceOptionAction, setGasPriceOptionHandler] =
-      subscriptions.mock.calls.find(([call]) =>
-        call.includes('SET_GAS_PRICE_OPTION_SIGN_TRANSACTIONS')
-      );
-
+    const [setGasPriceOptionHandler] = manager.getEventHandlers(
+      SignEventsEnum.SET_GAS_PRICE_OPTION
+    );
     await setGasPriceOptionHandler(fastGasPrice);
 
-    const [_confirmAction, confirmHandler] = subscriptions.mock.calls.find(
-      ([call]) => call.includes('CONFIRM_SIGN_TRANSACTIONS')
-    );
-
+    const [confirmHandler] = manager.getEventHandlers(SignEventsEnum.CONFIRM);
     await confirmHandler();
 
     const signedTransactions = await signPromise;
