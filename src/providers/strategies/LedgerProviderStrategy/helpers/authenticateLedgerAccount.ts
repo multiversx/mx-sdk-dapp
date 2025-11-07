@@ -1,7 +1,7 @@
 import { HWProvider } from '@multiversx/sdk-hw-provider/out';
 import { BigNumber } from 'bignumber.js';
 
-import { ACCOUNTS_ENDPOINT } from 'apiCalls';
+import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
 import { IEventBus } from 'lib/sdkDappUi';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { getExplorerAddress } from 'methods/network/getExplorerAddress';
