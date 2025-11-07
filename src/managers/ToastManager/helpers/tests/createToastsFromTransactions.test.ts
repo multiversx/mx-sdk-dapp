@@ -59,6 +59,7 @@ describe('createToastsFromTransactions', () => {
 
   afterEach(() => {
     jest.spyOn(Date, 'now').mockRestore();
+    server.resetHandlers();
   });
 
   const mockTransactionsEndpoint = (

@@ -3,6 +3,9 @@ import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
 import { getAccountFromApi } from '../getAccountFromApi';
 
 describe('getAccountFromApi tests', () => {
+  afterEach(() => {
+    server.resetHandlers();
+  });
   it('should return null when address is empty', async () => {
     const account = await getAccountFromApi({
       address: '',

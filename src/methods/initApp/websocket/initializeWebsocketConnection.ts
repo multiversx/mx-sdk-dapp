@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-import { getWebsocketUrl } from 'apiCalls/websocket';
+import { getWebsocketUrl } from 'apiCalls/websocket/getWebsocketUrl';
 import {
   WebsocketConnectionStatusEnum,
   websocketConnection

@@ -39,6 +39,10 @@ jest.mock('methods/network/getExplorerAddress', () => ({
 }));
 
 describe('getCommonData tests', () => {
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   it('should return the common data without ppu', async () => {
     const commonData = await getCommonData({
       ...mockData,
