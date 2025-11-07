@@ -1,3 +1,9 @@
+import { account, mockResponse, rest, server } from '__mocks__';
+import {
+  testAddress,
+  testNetwork,
+  testReceiver
+} from '__mocks__/accountConfig';
 import { Transaction } from 'lib/sdkCore';
 import {
   MultiSignTransactionType,
@@ -32,7 +38,7 @@ jest.mock('methods/network/getExplorerAddress', () => ({
   getExplorerAddress: jest.fn(() => 'http://devnet-explorer.multiversx.com')
 }));
 
-describe('getCommonData', () => {
+describe('getCommonData tests', () => {
   it('should return the common data without ppu', async () => {
     const commonData = await getCommonData({
       ...mockData,
@@ -109,6 +115,35 @@ describe('getCommonData', () => {
         usdValue: '≈ $17.82'
       }
     });
+  });
+  it('should return the common data with ppu', async () => {
+    // Use MSW to intercept the request to testNetwork.apiAddress
+    server.use(
+      rest.get(
+        `${testNetwork.apiAddress}/accounts/${testAddress}`, // fetching the account of the sender
+        mockResponse({
+          ...account,
+          activeGuardianAddress: testReceiver,
+          activeGuardianActivationEpoch: 351,
+          activeGuardianServiceUid: 'MultiversXSafeguard'
+        })
+      )
+    );
+    const customMockData = {
+      ...mockData,
+      allTransactions: [
+        // keep one transaction
+        {
+          ...mockGetCommonDataInput.allTransactions[0],
+          transaction: Transaction.newFromPlainObject(
+            mockGetCommonDataInput.allTransactions[0].transaction
+          )
+        }
+      ],
+      address: testReceiver // we are logged in as the guardinanAddress
+    };
+    const commonData = await getCommonData(customMockData);
+    expect(commonData.commonData.address).toBe(testReceiver);
   });
 });
 
