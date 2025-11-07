@@ -3,7 +3,7 @@ import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
 import { getAccountFromApi } from '../getAccountFromApi';
 
 describe('getAccountFromApi tests', () => {
-  it('should return the account data', async () => {
+  it('should return null when address is empty', async () => {
     const account = await getAccountFromApi({
       address: '',
       baseURL: testNetwork.apiAddress

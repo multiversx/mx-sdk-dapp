@@ -116,7 +116,7 @@ describe('getCommonData tests', () => {
       }
     });
   });
-  it('should return the common data with ppu', async () => {
+  it('should work for transactions signed by guardian', async () => {
     // Use MSW to intercept the request to testNetwork.apiAddress
     server.use(
       rest.get(
@@ -140,7 +140,7 @@ describe('getCommonData tests', () => {
           )
         }
       ],
-      address: testReceiver // we are logged in as the guardinanAddress
+      address: testReceiver // we are logged in as the guardianAddress
     };
     const commonData = await getCommonData(customMockData);
     expect(commonData.commonData.address).toBe(testReceiver);
