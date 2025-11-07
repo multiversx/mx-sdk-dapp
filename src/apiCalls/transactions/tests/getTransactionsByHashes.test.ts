@@ -20,6 +20,9 @@ describe('getTransactionsByHashes test', () => {
       }
     });
   });
+  afterEach(() => {
+    server.resetHandlers();
+  });
 
   it('maps server transactions to tracked results for provided pending hashes', async () => {
     const pending = { ...mockPendingTransaction };
