@@ -1,4 +1,5 @@
 export * from './account';
+export * from './testToken';
 export * from './networkConfig';
 export * from './dappConfig';
 export * from './socketResponse';

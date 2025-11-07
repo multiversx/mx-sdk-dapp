@@ -96,6 +96,8 @@ export async function getPersistedTokenDetails({
       name: selectedToken?.name
     };
   } catch (error) {
+    console.log('\x1b[42m%s\x1b[0m', 'token details error', error);
+
     return {
       ...noData,
       error: `${error}`

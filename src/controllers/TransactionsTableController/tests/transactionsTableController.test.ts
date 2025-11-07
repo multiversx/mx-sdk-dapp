@@ -1,5 +1,5 @@
 import { testAddress } from '__mocks__';
-import { account } from '__mocks__/data';
+import { account, testToken } from '__mocks__/data';
 import { getPersistedTokenDetails } from 'apiCalls/tokens/getPersistedTokenDetails';
 import { AssetType } from 'types/account.types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
@@ -27,7 +27,7 @@ jest.mock('utils/operations/timeRemaining', () => ({
 
 const mockTransactionBase: ServerTransactionType = {
   txHash: 'tx1',
-  tokenIdentifier: 'TEST-123',
+  tokenIdentifier: testToken.identifier, // testToken.identifier
   sender: testAddress,
   receiver: account.address,
   senderShard: 0,
@@ -85,6 +85,14 @@ const mockParams = {
 };
 
 describe('TransactionsTableController', () => {
+  beforeEach(() => {
+    (getPersistedTokenDetails as jest.Mock).mockResolvedValue({
+      assets: {
+        lockedAccounts: {}
+      }
+    });
+  });
+
   it('should handle locked accounts', async () => {
     (getPersistedTokenDetails as jest.Mock).mockResolvedValue({
       assets: {

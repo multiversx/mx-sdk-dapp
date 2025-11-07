@@ -17,6 +17,7 @@ import {
   socketResponse,
   websocketConfig
 } from './data';
+import { testToken } from './data/testToken';
 import { wrapEgldContract } from './data/wrapEgldContract';
 
 export const mockResponse =
@@ -48,6 +49,10 @@ const handlers = [
   rest.get(
     `${testNetwork.apiAddress}/accounts/${testAddress}`,
     mockResponse(account)
+  ),
+  rest.get(
+    `${testNetwork.apiAddress}/tokens/${testToken.identifier}`,
+    mockResponse(testToken)
   ),
   rest.get(
     `${testNetwork.apiAddress}/accounts/${wrapEgldContract.address}`,
