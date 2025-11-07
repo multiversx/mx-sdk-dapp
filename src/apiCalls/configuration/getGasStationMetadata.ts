@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getCleanApiAddress } from 'apiCalls/configuration/getCleanApiAddress';
+import { GAS_STATION_ENDPOINT } from 'apiCalls/endpoints';
 import { NetworkType } from 'types/network.types';
 
 interface IGasStationApiResponse {
@@ -7,8 +8,6 @@ interface IGasStationApiResponse {
   fast: number;
   faster: number;
 }
-
-const GAS_STATION_ENDPOINT = 'transactions/ppu';
 
 export async function getGasStationMetadataFromApi(
   shard: number,

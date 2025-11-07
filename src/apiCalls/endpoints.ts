@@ -19,6 +19,7 @@ export const ROLES_ENDPOINT = 'roles';
 export const SC_RESULTS_ENDPOINT = 'sc-results';
 export const STAKE_ENDPOINT = 'stake';
 export const TOKENS_ENDPOINT = 'tokens';
+export const GAS_STATION_ENDPOINT = 'transactions/ppu';
 export const TRANSACTIONS_COUNT_ENDPOINT = 'transactions/count';
 export const TRANSACTIONS_BATCH = 'batch';
 export const TRANSACTIONS_ENDPOINT = 'transactions';
