@@ -23,6 +23,9 @@ describe('ToastManager subscription reacts to transaction completion', () => {
       )
     );
   });
+  afterEach(() => {
+    server.resetHandlers();
+  });
 
   it('moves toast from pending to completed when status changes to success and starts lifetime', async () => {
     const startTime = 1_700_000_000_000; // arbitrary

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCleanApiAddress } from 'apiCalls/utils';
+import { getCleanApiAddress } from 'apiCalls/utils/getCleanApiAddress';
 import { TIMEOUT } from 'constants/index';
 import { ScamInfoType } from 'types/account.types';
 import { ACCOUNTS_ENDPOINT } from '../endpoints';

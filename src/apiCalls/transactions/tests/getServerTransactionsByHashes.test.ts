@@ -18,6 +18,10 @@ const tx = {
 };
 
 describe('getServerTransactionsByHashes', () => {
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   it('returns transactions for provided hashes', async () => {
     const hash = tx.txHash;
 

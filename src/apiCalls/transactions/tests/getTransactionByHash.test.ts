@@ -34,6 +34,9 @@ describe('getTransactionByHash', () => {
     jest.resetAllMocks();
     (networkSelector as jest.Mock).mockReturnValue(testNetwork);
   });
+  afterEach(() => {
+    server.resetHandlers();
+  });
 
   it('returns a transaction for the provided hash', async () => {
     // Use MSW to intercept the request to testNetwork.apiAddress

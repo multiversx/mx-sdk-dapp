@@ -13,6 +13,7 @@ export interface GetActiveTransactionsStatusReturnType {
   pending: boolean;
 }
 
+// This helper function is used in some projects like NextJS to check the active transaction status
 export function getActiveTransactionsStatus(): GetActiveTransactionsStatusReturnType {
   const state = getState();
   const timedOutTransactions = timedOutTransactionsSelector(state);

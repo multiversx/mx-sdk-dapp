@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import { ACCOUNTS_ENDPOINT } from 'apiCalls';
+import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
 import { getPersistedTokenDetails } from 'apiCalls/tokens/getPersistedTokenDetails';
 import { MULTI_TRANSFER_EGLD_TOKEN } from 'constants/mvx.constants';
 import { safeWindow } from 'constants/window.constants';

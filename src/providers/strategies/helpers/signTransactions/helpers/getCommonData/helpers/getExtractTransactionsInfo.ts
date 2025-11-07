@@ -1,4 +1,4 @@
-import { getAccountFromApi } from 'apiCalls/account';
+import { getAccountFromApi } from 'apiCalls/account/getAccountFromApi';
 import { getScamAddressData } from 'apiCalls/account/getScamAddressData';
 import { SigningErrorsEnum } from 'types/enums.types';
 

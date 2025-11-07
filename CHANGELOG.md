@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Removed index file from apiCalls folder](https://github.com/multiversx/mx-sdk-dapp/pull/1663)
+- [~~Removed unused~~ Added comment togetActiveTransactionsStatus method](https://github.com/multiversx/mx-sdk-dapp/pull/1662)
 - [Fixed coverage badge title](https://github.com/multiversx/mx-sdk-dapp/pull/1661)
 - [Fixed coverage badge](https://github.com/multiversx/mx-sdk-dapp/pull/1660)
 
