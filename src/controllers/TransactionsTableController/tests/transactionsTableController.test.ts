@@ -27,7 +27,7 @@ jest.mock('utils/operations/timeRemaining', () => ({
 
 const mockTransactionBase: ServerTransactionType = {
   txHash: 'tx1',
-  tokenIdentifier: testToken.identifier, // testToken.identifier
+  tokenIdentifier: testToken.identifier,
   sender: testAddress,
   receiver: account.address,
   senderShard: 0,
