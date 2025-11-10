@@ -31,7 +31,7 @@ export async function waitForStoreRehydration({
     } catch (error: any) {
       console.warn(
         `Store rehydration timed out after ${REHYDRATE_TIMEOUT_SECONDS} seconds. Continuing initialization...`,
-        error.message
+        error?.message
       );
     }
   }
