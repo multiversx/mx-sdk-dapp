@@ -1,6 +1,6 @@
 import { account as mockAccount } from '__mocks__';
 import { getLatestNonce } from 'methods/account/getLatestNonce';
-import { setGasStationMetadata } from 'methods/initApp/setGasStationMetadata/setGasStationMetadata';
+import { setGasStationMetadata } from 'methods/initApp/gasStationMetadata/setGasStationMetadata';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { setAccount } from 'store/actions/account';
 import { fetchAccount } from 'utils/account/fetchAccount';
