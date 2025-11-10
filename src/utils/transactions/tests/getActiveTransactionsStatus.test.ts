@@ -10,25 +10,29 @@ import { getActiveTransactionsStatus } from '../getActiveTransactionsStatus';
 jest.mock('store/store');
 jest.mock('store/selectors/transactionsSelector');
 
-const state = {};
-const pendingTransactions = { tx1: { hash: 'hash1' } };
-const timedOutTransactions = {};
-const failedTransactions = {};
-const successfulTransactions = {};
-
-(getState as jest.Mock).mockReturnValue(state);
-(pendingTransactionsSelector as jest.Mock).mockReturnValue(pendingTransactions);
-(timedOutTransactionsSelector as jest.Mock).mockReturnValue(
-  timedOutTransactions
-);
-(failedTransactionsSelector as jest.Mock).mockReturnValue(failedTransactions);
-(successfulTransactionsSelector as jest.Mock).mockReturnValue(
-  successfulTransactions
-);
-
 describe('getActiveTransactionsStatus tests', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+
+    const state = {};
+    const pendingTransactions = { tx1: { hash: 'hash1' } };
+    const timedOutTransactions = {};
+    const failedTransactions = {};
+    const successfulTransactions = {};
+
+    (getState as jest.Mock).mockReturnValue(state);
+    (pendingTransactionsSelector as jest.Mock).mockReturnValue(
+      pendingTransactions
+    );
+    (timedOutTransactionsSelector as jest.Mock).mockReturnValue(
+      timedOutTransactions
+    );
+    (failedTransactionsSelector as jest.Mock).mockReturnValue(
+      failedTransactions
+    );
+    (successfulTransactionsSelector as jest.Mock).mockReturnValue(
+      successfulTransactions
+    );
   });
 
   it('should return pending true when there are pending transactions', () => {
