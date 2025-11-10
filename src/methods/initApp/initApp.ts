@@ -21,10 +21,10 @@ import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { waitForStoreRehydration } from './helpers/waitForStoreRehydration';
-import { registerWebsocketListener } from './websocket/registerWebsocket';
-import { trackTransactions } from '../trackTransactions/trackTransactions';
-import { setGasStationMetadata } from './gastStationMetadata/setGasStationMetadata';
 import { getAccount } from '../account/getAccount';
+import { trackTransactions } from '../trackTransactions/trackTransactions';
+import { registerWebsocketListener } from './helpers/registerWebsocket';
+import { setGasStationMetadata } from './helpers/setGasStationMetadata';
 
 const defaultInitAppProps = {
   storage: {

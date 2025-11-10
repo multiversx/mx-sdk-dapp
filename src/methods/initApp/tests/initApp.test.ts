@@ -1,12 +1,13 @@
 import { account as mockAccount } from '__mocks__/data/account';
+import { network } from '__mocks__/data/storeData/network';
 import { defineCustomElements } from 'lib/sdkDappUi';
 import { registerCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { getAccount } from 'methods/account/getAccount';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import { setGasStationMetadata } from 'methods/initApp/gastStationMetadata/setGasStationMetadata';
+import { registerWebsocketListener } from 'methods/initApp/helpers/registerWebsocket';
+import { setGasStationMetadata } from 'methods/initApp/helpers/setGasStationMetadata';
 import { waitForStoreRehydration } from 'methods/initApp/helpers/waitForStoreRehydration';
 import { initApp, resetInitAppState } from 'methods/initApp/initApp';
-import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
@@ -16,50 +17,6 @@ import { EnvironmentsEnum } from 'types/enums.types';
 import { ThemesEnum } from 'types/theme.types';
 import { refreshAccount } from 'utils';
 import { switchTheme } from 'utils/visual/switchTheme';
-
-/*
-Execution flow:
-  1. defineCustomElements
-  2. switchTheme
-  3. initStore
-  4. waitForStoreRehydration
-  5. initializeNetwork
-  6. setNativeAuthConfig
-  7. setWalletConnectConfig
-  8. getIsLoggedIn
-  9. getAccount
-  10. ToastManager.getInstance().init()
-  11. usedProviders
-  12. ProviderFactory.customProviders = usedProviders.filter((provider, index, arr) => index === arr.findIndex((item) => item.type === provider.type)) || [];
-  13. restoreProvider
-  14. refreshAccount
-  15. registerWebsocketListener
-  16. trackTransactions
-  17. LogoutManager.getInstance().init();
-  18. registerCallbacks
-  19. setGasStationMetadata
-
-  Scenario 1.
-    - isInitializing is true
-    - return early
-    - end of test
-
-  Scenario 2:
-    - isInitializing is false
-    - dAppConfig?.nativeAuth is false
-    - dAppConfig?.providers?.walletConnect is false
-    - isAppInitialized is false
-    - isLoggedIn is false 
-    - end of test
-
-  Scenario 3:
-    - isInitializing is false
-    - dAppConfig?.nativeAuth is false
-    - dAppConfig?.providers?.walletConnect is false
-    - isAppInitialized is false
-    - isLoggedIn is true 
-    - end of test
-*/
 
 jest.mock('constants/window.constants', () => ({
   safeWindow: {
@@ -95,7 +52,7 @@ jest.mock('methods/initApp/helpers/waitForStoreRehydration', () => ({
 
 jest.mock('store/actions', () => ({
   initializeNetwork: jest.fn().mockResolvedValue({
-    apiAddress: 'https://devnet-api.multiversx.com'
+    apiAddress: network.apiAddress
   })
 }));
 
@@ -106,8 +63,8 @@ jest.mock('store/actions/config/configActions', () => ({
 
 jest.mock('services/nativeAuth/methods/getDefaultNativeAuthConfig', () => ({
   getDefaultNativeAuthConfig: jest.fn().mockReturnValue({
-    apiAddress: 'https://devnet-api.multiversx.com',
-    origin: 'https://devnet.multiversx.com',
+    apiAddress: network.apiAddress,
+    origin: network.walletAddress,
     expirySeconds: 86400
   })
 }));
@@ -137,11 +94,11 @@ jest.mock('methods/account/getIsLoggedIn', () => ({
   getIsLoggedIn: jest.fn()
 }));
 
-jest.mock('methods/initApp/gastStationMetadata/setGasStationMetadata', () => ({
+jest.mock('methods/initApp/helpers/setGasStationMetadata', () => ({
   setGasStationMetadata: jest.fn().mockResolvedValue(undefined)
 }));
 
-jest.mock('methods/initApp/websocket/registerWebsocket', () => ({
+jest.mock('methods/initApp/helpers/registerWebsocket', () => ({
   registerWebsocketListener: jest.fn().mockResolvedValue(undefined)
 }));
 
@@ -271,7 +228,7 @@ describe('initApp tests', () => {
       // Verify gas station metadata was set when account has shard
       expect(setGasStationMetadata).toHaveBeenCalledWith({
         shard: 0,
-        apiAddress: 'https://devnet-api.multiversx.com'
+        apiAddress: network.apiAddress
       });
     });
   });
@@ -290,13 +247,13 @@ describe('initApp tests', () => {
 
       // Verify getDefaultNativeAuthConfig was called with apiAddress
       expect(getDefaultNativeAuthConfig).toHaveBeenCalledWith({
-        apiAddress: 'https://devnet-api.multiversx.com'
+        apiAddress: network.apiAddress
       });
 
       // Verify setNativeAuthConfig was called with the config
       expect(setNativeAuthConfig).toHaveBeenCalledWith({
-        apiAddress: 'https://devnet-api.multiversx.com',
-        origin: 'https://devnet.multiversx.com',
+        apiAddress: network.apiAddress,
+        origin: network.walletAddress,
         expirySeconds: 86400
       });
     });
@@ -306,8 +263,8 @@ describe('initApp tests', () => {
       (getIsLoggedIn as jest.Mock).mockReturnValue(false);
 
       const customNativeAuthConfig = {
-        apiAddress: 'https://api.multiversx.com',
-        origin: 'https://wallet.multiversx.com',
+        apiAddress: network.apiAddress,
+        origin: network.walletAddress,
         expirySeconds: 3600
       };
 

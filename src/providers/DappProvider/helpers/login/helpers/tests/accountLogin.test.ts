@@ -1,14 +1,14 @@
 import { account as mockAccount } from '__mocks__';
 import { getLatestNonce } from 'methods/account/getLatestNonce';
-import { setGasStationMetadata } from 'methods/initApp/gastStationMetadata/setGasStationMetadata';
+import { setGasStationMetadata } from 'methods/initApp/helpers/setGasStationMetadata';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { setAccount } from 'store/actions/account';
 import { fetchAccount } from 'utils/account/fetchAccount';
 import { accountLogin } from '../accountLogin';
 
 jest.mock('methods/account/getLatestNonce');
-jest.mock('methods/initApp/gastStationMetadata/setGasStationMetadata');
-jest.mock('methods/initApp/websocket/registerWebsocket');
+jest.mock('methods/initApp/helpers/setGasStationMetadata');
+jest.mock('methods/initApp/helpers/registerWebsocket');
 jest.mock('methods/trackTransactions/trackTransactions');
 jest.mock('store/actions/account');
 jest.mock('utils/account/fetchAccount');
