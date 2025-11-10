@@ -46,6 +46,15 @@ let isAppInitialized = false;
 let isInitializing = false;
 
 /**
+ * Reset the initialization state. Used primarily for testing.
+ * @internal
+ */
+export function resetInitAppState() {
+  isAppInitialized = false;
+  isInitializing = false;
+}
+
+/**
  * Initializes the dApp with the given configuration.
  * @param props - The configuration for the dApp initialization.
  *

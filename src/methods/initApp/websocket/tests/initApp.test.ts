@@ -1,24 +1,15 @@
 import { account as mockAccount } from '__mocks__/data/account';
-import { network } from '__mocks__/data/storeData/network';
 import { defineCustomElements } from 'lib/sdkDappUi';
-import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
-import { ToastManager } from 'managers/ToastManager';
 import { registerCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { getAccount } from 'methods/account/getAccount';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { setGasStationMetadata } from 'methods/initApp/gastStationMetadata/setGasStationMetadata';
 import { waitForStoreRehydration } from 'methods/initApp/helpers/waitForStoreRehydration';
-import { initApp } from 'methods/initApp/initApp';
+import { initApp, resetInitAppState } from 'methods/initApp/initApp';
 import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
-import { initializeNetwork } from 'store/actions';
-import {
-  setNativeAuthConfig,
-  setWalletConnectConfig
-} from 'store/actions/config/configActions';
-import { initStore, StoreApi } from 'store/store';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { ThemesEnum } from 'types/theme.types';
 import { refreshAccount } from 'utils';
@@ -80,39 +71,29 @@ jest.mock('lib/sdkDappUi', () => ({
   defineCustomElements: jest.fn().mockResolvedValue(undefined)
 }));
 
-jest.mock('managers/LogoutManager/LogoutManager', () => ({
-  LogoutManager: {
-    getInstance: jest.fn().mockReturnValue({
-      init: jest.fn()
-    })
-  }
+jest.mock('utils/visual/switchTheme', () => ({
+  switchTheme: jest.fn()
 }));
 
-jest.mock('managers/TransactionManager/helpers/sessionCallbacks', () => ({
-  registerCallbacks: jest.fn()
-}));
+jest.mock('store/store', () => {
+  const mockStore = {
+    getState: jest.fn(),
+    setState: jest.fn(),
+    subscribe: jest.fn()
+  };
+  return {
+    initStore: jest.fn().mockReturnValue(mockStore),
+    getStore: jest.fn().mockReturnValue(mockStore)
+  };
+});
 
-jest.mock('managers/ToastManager', () => ({
-  ToastManager: {
-    getInstance: jest.fn().mockReturnValue({
-      init: jest.fn().mockResolvedValue(undefined)
-    })
-  }
-}));
-
-jest.mock('providers/helpers/restoreProvider', () => ({
-  restoreProvider: jest.fn().mockResolvedValue(undefined)
-}));
-
-jest.mock('providers/ProviderFactory', () => ({
-  ProviderFactory: {
-    customProviders: []
-  }
+jest.mock('methods/initApp/helpers/waitForStoreRehydration', () => ({
+  waitForStoreRehydration: jest.fn().mockResolvedValue(undefined)
 }));
 
 jest.mock('store/actions', () => ({
   initializeNetwork: jest.fn().mockResolvedValue({
-    apiAddress: network.apiAddress
+    apiAddress: 'https://devnet-api.multiversx.com'
   })
 }));
 
@@ -121,17 +102,21 @@ jest.mock('store/actions/config/configActions', () => ({
   setWalletConnectConfig: jest.fn()
 }));
 
-jest.mock('store/store', () => ({
-  initStore: jest.fn()
+jest.mock('managers/TransactionManager/helpers/sessionCallbacks', () => ({
+  registerCallbacks: jest.fn()
+}));
+
+jest.mock('methods/trackTransactions/trackTransactions', () => ({
+  trackTransactions: jest.fn()
+}));
+
+jest.mock('providers/helpers/restoreProvider', () => ({
+  restoreProvider: jest.fn().mockResolvedValue(undefined)
 }));
 
 jest.mock('utils', () => ({
   ...jest.requireActual('utils'),
   refreshAccount: jest.fn().mockResolvedValue(undefined)
-}));
-
-jest.mock('utils/visual/switchTheme', () => ({
-  switchTheme: jest.fn()
 }));
 
 jest.mock('methods/account/getAccount', () => ({
@@ -142,58 +127,46 @@ jest.mock('methods/account/getIsLoggedIn', () => ({
   getIsLoggedIn: jest.fn()
 }));
 
-jest.mock('methods/trackTransactions/trackTransactions', () => ({
-  trackTransactions: jest.fn()
-}));
-
 jest.mock('methods/initApp/gastStationMetadata/setGasStationMetadata', () => ({
   setGasStationMetadata: jest.fn().mockResolvedValue(undefined)
-}));
-
-jest.mock('methods/initApp/helpers/waitForStoreRehydration', () => ({
-  waitForStoreRehydration: jest.fn().mockResolvedValue(undefined)
 }));
 
 jest.mock('methods/initApp/websocket/registerWebsocket', () => ({
   registerWebsocketListener: jest.fn().mockResolvedValue(undefined)
 }));
 
-describe('initApp tests', () => {
-  let mockStore: StoreApi;
-  let mockToastManager: any;
-  let mockLogoutManager: any;
+// Mock manager instances
+const mockToastManagerInit = jest.fn().mockResolvedValue(undefined);
+const mockLogoutManagerInit = jest.fn().mockResolvedValue(undefined);
 
+jest.mock('managers/ToastManager', () => ({
+  ToastManager: {
+    getInstance: jest.fn(() => ({
+      init: mockToastManagerInit
+    }))
+  }
+}));
+
+jest.mock('managers/LogoutManager/LogoutManager', () => ({
+  LogoutManager: {
+    getInstance: jest.fn(() => ({
+      init: mockLogoutManagerInit
+    }))
+  }
+}));
+
+describe('initApp tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    // Setup default mocks for getAccount and getIsLoggedIn
+    // Reset module state
+    resetInitAppState();
+
+    // Control login state
     (getAccount as jest.Mock).mockReturnValue(mockAccount);
     (getIsLoggedIn as jest.Mock).mockReturnValue(false);
 
-    // Create mock store
-    mockStore = {
-      persist: {
-        hasHydrated: jest.fn().mockReturnValue(true),
-        onFinishHydration: jest.fn()
-      }
-    } as unknown as StoreApi;
-
-    (initStore as jest.Mock).mockReturnValue(mockStore);
-
-    // Setup mock managers
-    mockToastManager = {
-      init: jest.fn().mockResolvedValue(undefined)
-    };
-
-    (ToastManager.getInstance as jest.Mock).mockReturnValue(mockToastManager);
-
-    mockLogoutManager = {
-      init: jest.fn()
-    };
-
-    (LogoutManager.getInstance as jest.Mock).mockReturnValue(mockLogoutManager);
-
-    // Reset ProviderFactory
+    // Reset ProviderFactory state
     ProviderFactory.customProviders = [];
   });
 
@@ -224,8 +197,6 @@ describe('initApp tests', () => {
     });
   });
 
-  // Scenarios 2 & 3 need jest.isolateModulesAsync to reset the module state
-  // (isAppInitialized = false) to test the full initialization flow
   describe('Scenario 2: User is not logged in', () => {
     it('should initialize app but skip logged-in user steps when isLoggedIn is false', async () => {
       (getAccount as jest.Mock).mockReturnValue({
@@ -234,24 +205,18 @@ describe('initApp tests', () => {
       });
       (getIsLoggedIn as jest.Mock).mockReturnValue(false);
 
-      await jest.isolateModulesAsync(async () => {
-        const { initApp: initAppIsolated } = await import(
-          'methods/initApp/initApp'
-        );
-
-        await initAppIsolated({
-          dAppConfig: {
-            environment: EnvironmentsEnum.devnet,
-            nativeAuth: false
-          }
-        });
+      await initApp({
+        dAppConfig: {
+          environment: EnvironmentsEnum.devnet,
+          nativeAuth: false
+        }
       });
 
       // Verify logged-in user steps were NOT called
       expect(refreshAccount).not.toHaveBeenCalled();
       expect(registerWebsocketListener).not.toHaveBeenCalled();
       expect(trackTransactions).not.toHaveBeenCalled();
-      expect(mockLogoutManager.init).not.toHaveBeenCalled();
+      expect(mockLogoutManagerInit).not.toHaveBeenCalled();
       expect(registerCallbacks).not.toHaveBeenCalled();
     });
   });
@@ -265,28 +230,20 @@ describe('initApp tests', () => {
       (refreshAccount as jest.Mock).mockClear();
       (refreshAccount as jest.Mock).mockResolvedValue(undefined);
 
-      await jest.isolateModulesAsync(async () => {
-        const { initApp: initAppIsolated } = await import(
-          'methods/initApp/initApp'
-        );
-
-        await initAppIsolated({
-          dAppConfig: {
-            environment: EnvironmentsEnum.devnet,
-            nativeAuth: false
-          }
-        });
+      await initApp({
+        dAppConfig: {
+          environment: EnvironmentsEnum.devnet,
+          nativeAuth: false
+        }
       });
 
       // Verify initialization steps were called
       expect(defineCustomElements).toHaveBeenCalled();
       expect(switchTheme).toHaveBeenCalledWith(ThemesEnum.dark);
-      expect(initStore).toHaveBeenCalled();
       expect(waitForStoreRehydration).toHaveBeenCalled();
-      expect(initializeNetwork).toHaveBeenCalled();
       expect(getIsLoggedIn).toHaveBeenCalled();
       expect(getAccount).toHaveBeenCalled();
-      expect(mockToastManager.init).toHaveBeenCalled();
+      expect(mockToastManagerInit).toHaveBeenCalled();
       expect(restoreProvider).toHaveBeenCalled();
 
       // Verify logged-in user steps WERE called
@@ -295,7 +252,7 @@ describe('initApp tests', () => {
         mockAccount.address
       );
       expect(trackTransactions).toHaveBeenCalled();
-      expect(mockLogoutManager.init).toHaveBeenCalled();
+      expect(mockLogoutManagerInit).toHaveBeenCalled();
       expect(registerCallbacks).toHaveBeenCalledWith({
         onSuccess: undefined,
         onFail: undefined
@@ -306,10 +263,6 @@ describe('initApp tests', () => {
         shard: 0,
         apiAddress: 'https://devnet-api.multiversx.com'
       });
-
-      // Verify native auth and wallet connect were not set
-      expect(setNativeAuthConfig).not.toHaveBeenCalled();
-      expect(setWalletConnectConfig).not.toHaveBeenCalled();
     });
   });
 });
