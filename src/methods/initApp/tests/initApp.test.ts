@@ -94,9 +94,12 @@ jest.mock('methods/account/getIsLoggedIn', () => ({
   getIsLoggedIn: jest.fn()
 }));
 
-jest.mock('methods/initApp/helpers/setGasStationMetadata', () => ({
-  setGasStationMetadata: jest.fn().mockResolvedValue(undefined)
-}));
+jest.mock(
+  'methods/initApp/setGasStationMetadata/setGasStationMetadata',
+  () => ({
+    setGasStationMetadata: jest.fn().mockResolvedValue(undefined)
+  })
+);
 
 jest.mock('methods/initApp/websocket/registerWebsocket', () => ({
   registerWebsocketListener: jest.fn().mockResolvedValue(undefined)

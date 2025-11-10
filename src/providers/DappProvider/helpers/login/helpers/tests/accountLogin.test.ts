@@ -7,7 +7,7 @@ import { fetchAccount } from 'utils/account/fetchAccount';
 import { accountLogin } from '../accountLogin';
 
 jest.mock('methods/account/getLatestNonce');
-jest.mock('methods/initApp/helpers/setGasStationMetadata');
+jest.mock('methods/initApp/setGasStationMetadata/setGasStationMetadata');
 jest.mock('methods/initApp/websocket/registerWebsocket');
 jest.mock('methods/trackTransactions/trackTransactions');
 jest.mock('store/actions/account');
