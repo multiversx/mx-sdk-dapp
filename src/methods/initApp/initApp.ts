@@ -136,7 +136,7 @@ export async function initApp({
     }
   }
 
-  if (account.shard != null) {
+  if (account?.shard != null) {
     await setGasStationMetadata({
       shard: Number(account.shard),
       apiAddress
