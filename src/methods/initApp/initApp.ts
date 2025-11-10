@@ -19,14 +19,12 @@ import { ThemesEnum } from 'types';
 import { refreshAccount } from 'utils';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
-import { REHYDRATE_STORE_TIMEOUT } from '../../constants';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
+import { waitForStoreRehydration } from './helpers/waitForStoreRehydration';
 import { registerWebsocketListener } from './websocket/registerWebsocket';
 import { trackTransactions } from '../trackTransactions/trackTransactions';
 import { setGasStationMetadata } from './gastStationMetadata/setGasStationMetadata';
 import { getAccount } from '../account/getAccount';
-
-const REHYDRATE_TIMEOUT_SECONDS = REHYDRATE_STORE_TIMEOUT / 1000;
 
 const defaultInitAppProps = {
   storage: {
@@ -75,32 +73,14 @@ export async function initApp({
 
   switchTheme(defaultTheme);
 
-  const store = initStore(storage.getStorageCallback);
+  const { getStorageCallback } = storage;
 
-  // Wait for store rehydration when using async storage (like React Native AsyncStorage)
-  // This ensures the store is fully populated before restoreProvider() executes
-  if (storage.getStorageCallback !== defaultStorageCallback) {
-    try {
-      await new Promise<void>((resolve, reject) => {
-        if (store.persist.hasHydrated()) {
-          resolve();
-        }
+  const store = initStore(getStorageCallback);
 
-        store.persist.onFinishHydration(() => {
-          resolve();
-        });
-
-        setTimeout(() => {
-          reject();
-        }, REHYDRATE_STORE_TIMEOUT);
-      });
-    } catch (error: any) {
-      console.warn(
-        `Store rehydration timed out after ${REHYDRATE_TIMEOUT_SECONDS} seconds. Continuing initialization...`,
-        error.message
-      );
-    }
-  }
+  await waitForStoreRehydration({
+    store,
+    getStorageCallback
+  });
 
   const { apiAddress } = await initializeNetwork({
     customNetworkConfig: dAppConfig.network,
