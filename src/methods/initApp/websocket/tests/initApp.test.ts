@@ -8,6 +8,7 @@ import { getAccount } from 'methods/account/getAccount';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { setGasStationMetadata } from 'methods/initApp/gastStationMetadata/setGasStationMetadata';
 import { waitForStoreRehydration } from 'methods/initApp/helpers/waitForStoreRehydration';
+import { initApp } from 'methods/initApp/initApp';
 import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
@@ -198,34 +199,28 @@ describe('initApp tests', () => {
 
   describe('Scenario 1: isInitializing is true', () => {
     it('should return early when isInitializing is true', async () => {
-      await jest.isolateModulesAsync(async () => {
-        (getIsLoggedIn as jest.Mock).mockReturnValue(false);
-        (getAccount as jest.Mock).mockReturnValue(mockAccount);
+      (getIsLoggedIn as jest.Mock).mockReturnValue(false);
+      (getAccount as jest.Mock).mockReturnValue(mockAccount);
 
-        const { initApp: initAppIsolated } = await import(
-          'methods/initApp/initApp'
-        );
-
-        // First call sets isInitializing to true
-        const firstCall = initAppIsolated({
-          dAppConfig: {
-            environment: EnvironmentsEnum.devnet
-          }
-        });
-
-        // Second call should return early because isInitializing is true
-        const secondCall = initAppIsolated({
-          dAppConfig: {
-            environment: EnvironmentsEnum.devnet
-          }
-        });
-
-        await Promise.all([firstCall, secondCall]);
-
-        // The second call should not have executed any initialization steps
-        // We can verify this by checking that defineCustomElements was only called once
-        expect(defineCustomElements).toHaveBeenCalledTimes(1);
+      // First call sets isInitializing to true
+      const firstCall = initApp({
+        dAppConfig: {
+          environment: EnvironmentsEnum.devnet
+        }
       });
+
+      // Second call should return early because isInitializing is true
+      const secondCall = initApp({
+        dAppConfig: {
+          environment: EnvironmentsEnum.devnet
+        }
+      });
+
+      await Promise.all([firstCall, secondCall]);
+
+      // The second call should not have executed any initialization steps
+      // We can verify this by checking that defineCustomElements was only called once
+      expect(defineCustomElements).toHaveBeenCalledTimes(1);
     });
   });
 
