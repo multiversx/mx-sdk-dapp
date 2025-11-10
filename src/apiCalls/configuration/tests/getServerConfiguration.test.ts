@@ -5,8 +5,6 @@ describe('getServerConfiguration tests', () => {
   it('should return transformed server configuration', async () => {
     const config = await getServerConfiguration(testNetwork.apiAddress);
 
-    expect(config).not.toBeNull();
-
     expect(config).toEqual(
       expect.objectContaining({
         id: 'devnet',
