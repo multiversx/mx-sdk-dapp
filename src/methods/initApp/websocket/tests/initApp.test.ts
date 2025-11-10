@@ -10,6 +10,8 @@ import { registerWebsocketListener } from 'methods/initApp/websocket/registerWeb
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
+import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
+import { setNativeAuthConfig } from 'store/actions/config/configActions';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { ThemesEnum } from 'types/theme.types';
 import { refreshAccount } from 'utils';
@@ -100,6 +102,14 @@ jest.mock('store/actions', () => ({
 jest.mock('store/actions/config/configActions', () => ({
   setNativeAuthConfig: jest.fn(),
   setWalletConnectConfig: jest.fn()
+}));
+
+jest.mock('services/nativeAuth/methods/getDefaultNativeAuthConfig', () => ({
+  getDefaultNativeAuthConfig: jest.fn().mockReturnValue({
+    apiAddress: 'https://devnet-api.multiversx.com',
+    origin: 'https://devnet.multiversx.com',
+    expirySeconds: 86400
+  })
 }));
 
 jest.mock('managers/TransactionManager/helpers/sessionCallbacks', () => ({
@@ -263,6 +273,58 @@ describe('initApp tests', () => {
         shard: 0,
         apiAddress: 'https://devnet-api.multiversx.com'
       });
+    });
+  });
+
+  describe('Scenario 4: NativeAuth is enabled', () => {
+    it('should configure nativeAuth when nativeAuth is set to true', async () => {
+      (getAccount as jest.Mock).mockReturnValue(mockAccount);
+      (getIsLoggedIn as jest.Mock).mockReturnValue(false);
+
+      await initApp({
+        dAppConfig: {
+          environment: EnvironmentsEnum.devnet,
+          nativeAuth: true
+        }
+      });
+
+      // Verify getDefaultNativeAuthConfig was called with apiAddress
+      expect(getDefaultNativeAuthConfig).toHaveBeenCalledWith({
+        apiAddress: 'https://devnet-api.multiversx.com'
+      });
+
+      // Verify setNativeAuthConfig was called with the config
+      expect(setNativeAuthConfig).toHaveBeenCalledWith({
+        apiAddress: 'https://devnet-api.multiversx.com',
+        origin: 'https://devnet.multiversx.com',
+        expirySeconds: 86400
+      });
+    });
+
+    it('should configure nativeAuth when nativeAuth is an object with config', async () => {
+      (getAccount as jest.Mock).mockReturnValue(mockAccount);
+      (getIsLoggedIn as jest.Mock).mockReturnValue(false);
+
+      const customNativeAuthConfig = {
+        apiAddress: 'https://api.multiversx.com',
+        origin: 'https://wallet.multiversx.com',
+        expirySeconds: 3600
+      };
+
+      await initApp({
+        dAppConfig: {
+          environment: EnvironmentsEnum.mainnet,
+          nativeAuth: customNativeAuthConfig
+        }
+      });
+
+      // Verify getDefaultNativeAuthConfig was called with the custom config
+      expect(getDefaultNativeAuthConfig).toHaveBeenCalledWith(
+        customNativeAuthConfig
+      );
+
+      // Verify setNativeAuthConfig was called
+      expect(setNativeAuthConfig).toHaveBeenCalled();
     });
   });
 });
