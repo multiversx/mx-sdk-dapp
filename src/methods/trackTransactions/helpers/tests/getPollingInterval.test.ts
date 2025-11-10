@@ -1,3 +1,4 @@
+import { TRANSACTIONS_STATUS_POLLING_INTERVAL_MS } from 'constants/transactions.constants';
 import { roundDurationSelectorSelector } from 'store/selectors';
 import { getState } from 'store/store';
 import { getPollingInterval } from '../getPollingInterval';
@@ -26,5 +27,15 @@ describe('getPollingInterval tests', () => {
 
     expect(roundDurationSelectorSelector).toHaveBeenCalledWith({});
     expect(result).toBe(3000);
+  });
+
+  it('should return default polling interval when round duration is not available', () => {
+    (getState as jest.Mock).mockReturnValue({});
+    (roundDurationSelectorSelector as jest.Mock).mockReturnValue(null);
+
+    const result = getPollingInterval();
+
+    expect(roundDurationSelectorSelector).toHaveBeenCalledWith({});
+    expect(result).toBe(TRANSACTIONS_STATUS_POLLING_INTERVAL_MS);
   });
 });
