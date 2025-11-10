@@ -21,9 +21,9 @@ import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { waitForStoreRehydration } from './helpers/waitForStoreRehydration';
+import { setGasStationMetadata } from './setGasStationMetadata/setGasStationMetadata';
 import { getAccount } from '../account/getAccount';
 import { trackTransactions } from '../trackTransactions/trackTransactions';
-import { setGasStationMetadata } from './helpers/setGasStationMetadata';
 import { registerWebsocketListener } from './websocket/registerWebsocket';
 
 const defaultInitAppProps = {

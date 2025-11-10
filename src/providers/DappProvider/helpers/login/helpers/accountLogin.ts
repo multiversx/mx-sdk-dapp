@@ -1,5 +1,5 @@
 import { getLatestNonce } from 'methods/account/getLatestNonce';
-import { setGasStationMetadata } from 'methods/initApp/helpers/setGasStationMetadata';
+import { setGasStationMetadata } from 'methods/initApp/setGasStationMetadata/setGasStationMetadata';
 import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { IProvider } from 'providers/types/providerFactory.types';
