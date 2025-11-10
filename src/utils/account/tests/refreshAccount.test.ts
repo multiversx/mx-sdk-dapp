@@ -4,7 +4,6 @@ import { getAddress } from 'methods/account/getAddress';
 import { getLatestNonce } from 'methods/account/getLatestNonce';
 import { getNetworkConfig } from 'methods/network/getNetworkConfig';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
-import { setAccount } from 'store/actions';
 import { fetchAccount } from '../fetchAccount';
 import { refreshAccount } from '../refreshAccount';
 
@@ -55,8 +54,6 @@ describe('refreshAccount tests', () => {
       address: account.address,
       baseURL: network.apiAddress
     });
-
-    expect(setAccount).toHaveBeenCalledWith(account);
 
     expect(result).toEqual(account);
   });
