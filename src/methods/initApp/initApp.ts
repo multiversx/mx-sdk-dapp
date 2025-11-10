@@ -20,11 +20,11 @@ import { refreshAccount } from 'utils';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
+import { setGasStationMetadata } from './gasStationMetadata/setGasStationMetadata';
 import { waitForStoreRehydration } from './helpers/waitForStoreRehydration';
-import { registerWebsocketListener } from './websocket/registerWebsocket';
-import { trackTransactions } from '../trackTransactions/trackTransactions';
-import { setGasStationMetadata } from './gastStationMetadata/setGasStationMetadata';
 import { getAccount } from '../account/getAccount';
+import { trackTransactions } from '../trackTransactions/trackTransactions';
+import { registerWebsocketListener } from './websocket/registerWebsocket';
 
 const defaultInitAppProps = {
   storage: {
@@ -44,6 +44,15 @@ const defaultInitAppProps = {
  */
 let isAppInitialized = false;
 let isInitializing = false;
+
+/**
+ * Reset the initialization state. Used primarily for testing.
+ * @internal
+ */
+export function resetInitAppState() {
+  isAppInitialized = false;
+  isInitializing = false;
+}
 
 /**
  * Initializes the dApp with the given configuration.
@@ -136,7 +145,7 @@ export async function initApp({
     }
   }
 
-  if (account.shard != null) {
+  if (account?.shard != null) {
     await setGasStationMetadata({
       shard: Number(account.shard),
       apiAddress
