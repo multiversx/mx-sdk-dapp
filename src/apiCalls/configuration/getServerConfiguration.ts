@@ -7,6 +7,7 @@ export async function getServerConfiguration(apiAddress: string) {
 
   try {
     const { data } = await axios.get<NetworkType>(configUrl);
+    console.log('data', data);
     if (data != null) {
       // egldDenomination will be removed from API when dapp-core v1 will be discontinued
       const egldDenomination = 'egldDenomination';
