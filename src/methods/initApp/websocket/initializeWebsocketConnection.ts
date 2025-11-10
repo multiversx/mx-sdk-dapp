@@ -86,8 +86,14 @@ export async function initializeWebsocketConnection(address: string) {
   const initializeConnection = async () => {
     updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
 
-    const websocketUrl =
-      customWebsocketUrl ?? (await getWebsocketUrl(apiAddress));
+    let websocketUrl = '';
+    try {
+      websocketUrl = customWebsocketUrl ?? (await getWebsocketUrl(apiAddress));
+    } catch (error) {
+      console.error('Failed to get websocket url:', error);
+      updateSocketStatus(WebsocketConnectionStatusEnum.NOT_INITIALIZED);
+      throw error;
+    }
 
     if (!websocketUrl) {
       updateSocketStatus(WebsocketConnectionStatusEnum.NOT_INITIALIZED);

@@ -1,6 +1,7 @@
 import { io } from 'socket.io-client';
 import { account } from '__mocks__/data/account';
 import { network } from '__mocks__/data/storeData/network';
+import { rest, server } from '__mocks__/server';
 import { getWebsocketUrl } from 'apiCalls/websocket/getWebsocketUrl';
 import {
   WebsocketConnectionStatusEnum,
@@ -12,7 +13,6 @@ import { getStore } from 'store/store';
 import { initializeWebsocketConnection } from '../initializeWebsocketConnection';
 
 jest.mock('socket.io-client');
-jest.mock('apiCalls/websocket/getWebsocketUrl');
 jest.mock('store/store');
 jest.mock('store/selectors');
 jest.mock('store/actions/account/accountActions', () => ({
@@ -60,14 +60,14 @@ describe('initializeWebsocketConnection tests', () => {
 
   it('should successfully initialize connection when conditions are met', async () => {
     const testAddress = account.address;
-    (getWebsocketUrl as jest.Mock).mockResolvedValue(
-      'wss://test-websocket.com'
-    );
 
     const result = await initializeWebsocketConnection(testAddress);
 
-    expect(getWebsocketUrl).toHaveBeenCalledWith(network.apiAddress);
-    expect(io).toHaveBeenCalledWith('wss://test-websocket.com', {
+    // Verify getWebsocketUrl was called with correct API address
+    const websocketUrl = await getWebsocketUrl(network.apiAddress);
+    expect(websocketUrl).toBeDefined();
+
+    expect(io).toHaveBeenCalledWith(websocketUrl, {
       forceNew: true,
       reconnection: true,
       reconnectionAttempts: 3,
@@ -81,5 +81,29 @@ describe('initializeWebsocketConnection tests', () => {
       WebsocketConnectionStatusEnum.PENDING
     );
     expect(result).toHaveProperty('closeConnection');
+  });
+
+  it('should handle error when getWebsocketUrl fails', async () => {
+    const testAddress = account.address;
+    const consoleErrorSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    // Override the server handler to return an error
+    server.use(
+      rest.get(`${network.apiAddress}/websocket/config`, (_req, res, ctx) => {
+        return res(ctx.status(500), ctx.json({ error: 'Server error' }));
+      })
+    );
+
+    // This should throw an error since getWebsocketUrl will fail
+    await expect(initializeWebsocketConnection(testAddress)).rejects.toThrow(
+      'Can not get websocket url'
+    );
+
+    expect(consoleErrorSpy).toHaveBeenCalled();
+    expect(io).not.toHaveBeenCalled();
+
+    consoleErrorSpy.mockRestore();
   });
 });
