@@ -1,4 +1,4 @@
-import { registerWebsocketListener } from 'methods/initApp/helpers/registerWebsocket';
+import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { nativeAuthConfigSelector } from 'store/selectors';

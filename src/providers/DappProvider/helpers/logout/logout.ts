@@ -1,7 +1,7 @@
 import { subscriptions } from 'constants/storage.constants';
 import { safeWindow } from 'constants/window.constants';
 import { getAddress } from 'methods/account/getAddress';
-import { websocketManager } from 'methods/initApp/helpers/registerWebsocket';
+import { websocketManager } from 'methods/initApp/websocket/registerWebsocket';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { logoutAction } from 'store/actions/sharedActions/sharedActions';
 

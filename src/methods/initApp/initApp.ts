@@ -23,8 +23,8 @@ import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { waitForStoreRehydration } from './helpers/waitForStoreRehydration';
 import { getAccount } from '../account/getAccount';
 import { trackTransactions } from '../trackTransactions/trackTransactions';
-import { registerWebsocketListener } from './helpers/registerWebsocket';
 import { setGasStationMetadata } from './helpers/setGasStationMetadata';
+import { registerWebsocketListener } from './websocket/registerWebsocket';
 
 const defaultInitAppProps = {
   storage: {

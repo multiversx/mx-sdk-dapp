@@ -4,10 +4,10 @@ import { defineCustomElements } from 'lib/sdkDappUi';
 import { registerCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { getAccount } from 'methods/account/getAccount';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import { registerWebsocketListener } from 'methods/initApp/helpers/registerWebsocket';
 import { setGasStationMetadata } from 'methods/initApp/helpers/setGasStationMetadata';
 import { waitForStoreRehydration } from 'methods/initApp/helpers/waitForStoreRehydration';
 import { initApp, resetInitAppState } from 'methods/initApp/initApp';
+import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
@@ -98,7 +98,7 @@ jest.mock('methods/initApp/helpers/setGasStationMetadata', () => ({
   setGasStationMetadata: jest.fn().mockResolvedValue(undefined)
 }));
 
-jest.mock('methods/initApp/helpers/registerWebsocket', () => ({
+jest.mock('methods/initApp/websocket/registerWebsocket', () => ({
   registerWebsocketListener: jest.fn().mockResolvedValue(undefined)
 }));
 
