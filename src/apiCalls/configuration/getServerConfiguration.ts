@@ -23,10 +23,8 @@ export async function getServerConfiguration(apiAddress: string) {
           decimals,
           digits
         };
-        console.log('networkConfig return', networkConfig);
         return networkConfig;
       }
-      console.log('data return', data);
       return data;
     }
   } catch (_err) {
