@@ -9,7 +9,7 @@ import { getAuthTokenText } from './getAuthTokenText';
 import { updateAccountsList } from './updateAccountsList';
 import { LedgerLoginType } from '../../../types/ledgerProvider.types';
 
-interface SelectedAccount {
+interface ISelectedAccount {
   address: string;
   signature: string;
   addressIndex: number;
@@ -31,13 +31,13 @@ export async function waitForLedgerSelection({
   token,
   explorerAddress,
   authData
-}: IWaitForLedgerSelection): Promise<SelectedAccount> {
+}: IWaitForLedgerSelection): Promise<ISelectedAccount> {
   const accountsListProps = {
     manager,
     provider
   };
 
-  const selectedAccount = await new Promise<SelectedAccount>(async function (
+  const selectedAccount = await new Promise<ISelectedAccount>(async function (
     resolve,
     reject
   ) {
