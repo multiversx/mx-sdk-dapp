@@ -2,63 +2,42 @@ import { HWProvider } from '@multiversx/sdk-hw-provider/out';
 import { BigNumber } from 'bignumber.js';
 
 import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
-import { IEventBus } from 'lib/sdkDappUi';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
-import { getExplorerAddress } from 'methods/network/getExplorerAddress';
-import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
-import { setLedgerAccount } from 'store/actions';
-import { setLedgerLogin } from 'store/actions/loginInfo/loginInfoActions';
 import { getExplorerLink } from 'utils/transactions/getExplorerLink';
 
 import { getAuthTokenText } from './getAuthTokenText';
 import { updateAccountsList } from './updateAccountsList';
-import {
-  LedgerConfigType,
-  LedgerLoginType
-} from '../types/ledgerProvider.types';
+import { LedgerLoginType } from '../../../types/ledgerProvider.types';
 
-interface IGetLedgerLogin {
-  options?: {
-    callbackUrl?: string;
-    token?: string;
-  };
-  config: LedgerConfigType;
-  provider: HWProvider | null;
-  eventBus?: IEventBus | null;
-  login: LedgerLoginType | null;
-}
-
-interface ISelectedAccount {
+interface SelectedAccount {
   address: string;
   signature: string;
   addressIndex: number;
 }
 
-export async function authenticateLedgerAccount({
-  options,
-  config,
+interface IWaitForLedgerSelection {
+  manager: LedgerConnectStateManager;
+  provider: HWProvider | null;
+  login: LedgerLoginType | null;
+  token?: string;
+  explorerAddress: string;
+  authData: ReturnType<typeof getAuthTokenText>;
+}
+
+export async function waitForLedgerSelection({
+  manager,
   provider,
-  login
-}: IGetLedgerLogin) {
-  const manager = LedgerConnectStateManager.getInstance();
-
-  const explorerAddress = getExplorerAddress();
-
-  const authData = getAuthTokenText({
-    loginToken: options?.token,
-    version: config.version
-  });
-
+  login,
+  token,
+  explorerAddress,
+  authData
+}: IWaitForLedgerSelection): Promise<SelectedAccount> {
   const accountsListProps = {
     manager,
     provider
   };
 
-  // refresh account list
-  await updateAccountsList(accountsListProps);
-
-  // cycle through accounts until user makes a choice
-  const selectedAccount = await new Promise<ISelectedAccount>(async function (
+  const selectedAccount = await new Promise<SelectedAccount>(async function (
     resolve,
     reject
   ) {
@@ -88,9 +67,9 @@ export async function authenticateLedgerAccount({
       });
 
       try {
-        const loginInfo = options?.token
+        const loginInfo = token
           ? await provider.tokenLogin({
-              token: Buffer.from(`${options?.token}{}`),
+              token: Buffer.from(`${token}{}`),
               addressIndex: payload.addressIndex
             })
           : await login({
@@ -137,23 +116,5 @@ export async function authenticateLedgerAccount({
     });
   });
 
-  const { version, dataEnabled } = config;
-
-  // login is finished, data can be persisted in the store
-  setLedgerLogin({
-    index: selectedAccount.addressIndex,
-    loginType: ProviderTypeEnum.ledger
-  });
-
-  setLedgerAccount({
-    address: selectedAccount.address,
-    index: selectedAccount.addressIndex,
-    version,
-    hasContractDataEnabled: dataEnabled
-  });
-
-  return {
-    address: selectedAccount.address,
-    signature: selectedAccount.signature
-  };
+  return selectedAccount;
 }
