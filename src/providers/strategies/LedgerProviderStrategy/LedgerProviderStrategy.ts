@@ -13,7 +13,7 @@ import { createCustomToast } from 'store/actions/toasts/toastsActions';
 import { IconNamesEnum } from 'types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { getLedgerProvider } from './helpers';
-import { authenticateLedgerAccount } from './helpers/authenticateLedgerAccount';
+import { authenticateLedgerAccount } from './helpers/authenticateLedgerAccount/authenticateLedgerAccount';
 import { initializeLedgerProvider } from './helpers/initializeLedgerProvider';
 import { signLedgerMessage } from './helpers/signLedgerMessage';
 import { LedgerConfigType } from './types/ledgerProvider.types';
