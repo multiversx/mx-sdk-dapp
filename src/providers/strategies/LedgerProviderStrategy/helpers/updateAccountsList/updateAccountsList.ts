@@ -84,7 +84,6 @@ export const updateAccountsList = async ({
     const newAllAccountsObject = newAllAccounts.reduce(
       (accountsObject: UpdateAccountObjectType, account) =>
         Object.assign(accountsObject, { [account.address]: account }),
-
       {}
     );
 
