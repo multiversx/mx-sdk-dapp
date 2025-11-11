@@ -1,4 +1,4 @@
-import ledgerVersionOptions from '../helpers/authenticateLedgerAccount/helpers/getLedgerVersionOptions';
+import ledgerVersionOptions from '../getLedgerVersionOptions';
 
 describe('ledgerOptions tests', () => {
   test('detects ledger without multiAccount', () => {
@@ -51,7 +51,7 @@ describe('ledgerOptions tests', () => {
       ledgerWithUsernames: false
     });
   });
-  test('ledger with latest tokens', () => {
+  test('ledger with tokens version', () => {
     expect(ledgerVersionOptions('1.0.22')).toStrictEqual({
       ledgerWithHashSign: true,
       ledgerWithMultiAccount: true,
