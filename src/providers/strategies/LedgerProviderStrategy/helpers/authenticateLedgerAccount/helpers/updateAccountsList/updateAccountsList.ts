@@ -11,7 +11,7 @@ import {
   IUpdateAccountsList,
   UpdateAccountObjectType
 } from './updateAccountsList.types';
-import { ILedgerAccount } from '../../types/ledger.types';
+import { ILedgerAccount } from '../../../../types/ledger.types';
 
 /**
  * Updates the list of accounts and fetches their balances.

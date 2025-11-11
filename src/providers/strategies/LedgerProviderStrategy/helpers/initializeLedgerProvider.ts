@@ -1,7 +1,7 @@
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { getLedgerErrorCodes } from './getLedgerErrorCodes';
-import { getLedgerProvider } from './getLedgerProvider';
+import { getLedgerProvider } from './getLedgerProvider/getLedgerProvider';
 
 type InitializeLedgerProviderType = {
   manager: LedgerConnectStateManager | null;
