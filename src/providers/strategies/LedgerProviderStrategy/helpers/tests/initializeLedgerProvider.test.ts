@@ -6,7 +6,12 @@ jest.mock('../getLedgerProvider/getLedgerProvider', () => ({
   getLedgerProvider: jest.fn()
 }));
 
+jest.mock('../getLedgerErrorCodes', () => ({
+  getLedgerErrorCodes: jest.fn()
+}));
+
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
+import { getLedgerErrorCodes } from '../getLedgerErrorCodes';
 import { getLedgerProvider } from '../getLedgerProvider/getLedgerProvider';
 import { initializeLedgerProvider } from '../initializeLedgerProvider';
 
@@ -15,6 +20,9 @@ const mockGetIsLoggedIn = getIsLoggedIn as jest.MockedFunction<
 >;
 const mockGetLedgerProvider = getLedgerProvider as jest.MockedFunction<
   typeof getLedgerProvider
+>;
+const mockGetLedgerErrorCodes = getLedgerErrorCodes as jest.MockedFunction<
+  typeof getLedgerErrorCodes
 >;
 
 describe('initializeLedgerProvider tests', () => {
@@ -75,5 +83,60 @@ describe('initializeLedgerProvider tests', () => {
       ledgerConfig: { version: '1.0.0', dataEnabled: false } as any
     });
     await initPromise.catch();
+  });
+
+  it('should handle errors when user is not logged in by updating connect screen and subscribing', async () => {
+    const testError = new Error('Ledger connection failed');
+    const errorMessage = 'Custom error message';
+
+    const manager = {
+      updateAccountScreen: jest.fn(),
+      updateConnectScreen: jest.fn(),
+      subscribeToProviderInit: jest.fn(),
+      unsubscribeFromProviderInit: jest.fn()
+    } as any;
+
+    const resolve = jest.fn();
+    const reject = jest.fn();
+
+    // ensure shouldInitiateLogin === true (user not logged in)
+    mockGetIsLoggedIn.mockReturnValue(false);
+    // make provider init fail
+    mockGetLedgerProvider.mockRejectedValue(testError);
+    // mock error codes to return a custom error message
+    mockGetLedgerErrorCodes.mockReturnValue({
+      errorMessage,
+      defaultErrorMessage: 'Check if the MultiversX app is open on Ledger'
+    });
+
+    await initializeLedgerProvider({
+      manager,
+      resolve,
+      reject,
+      shouldInitProvider: true
+    });
+
+    // should set loading state initially
+    expect(manager.updateAccountScreen).toHaveBeenCalledWith({
+      isLoading: true
+    });
+
+    // should call getLedgerErrorCodes with the error
+    expect(mockGetLedgerErrorCodes).toHaveBeenCalledWith(testError);
+
+    // should update connect screen with error message
+    expect(manager.updateConnectScreen).toHaveBeenCalledWith({
+      error: errorMessage
+    });
+
+    // should subscribe to provider init with handlers
+    expect(manager.subscribeToProviderInit).toHaveBeenCalledWith({
+      handleRetry: expect.any(Function),
+      handleCancel: expect.any(Function)
+    });
+
+    // should not resolve or reject (error is handled internally)
+    expect(resolve).not.toHaveBeenCalled();
+    expect(reject).not.toHaveBeenCalled();
   });
 });
