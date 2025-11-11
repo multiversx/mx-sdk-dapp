@@ -145,7 +145,7 @@ describe('initializeWebsocketConnection tests', () => {
     await initializeWebsocketConnection(testAddress);
 
     // Get the onAny callback that was registered
-    const onAnyCallback = mockSocketInstance.onAny.mock.calls[0][0];
+    const [onAnyCallback] = mockSocketInstance.onAny.mock.calls[0];
 
     // Simulate receiving a message
     onAnyCallback('test-message');
@@ -176,10 +176,8 @@ describe('initializeWebsocketConnection tests', () => {
     };
     batchUpdateCallback?.(mockBatchData);
 
-    // Advance timers to trigger the debounced setWebsocketBatchEvent
-    jest.advanceTimersByTime(300); // MESSAGE_DELAY
+    jest.advanceTimersByTime(300);
 
-    // Verify the batch update handler was registered
     expect(mockSocketInstance.on).toHaveBeenCalledWith(
       'batchUpdated',
       expect.any(Function)
