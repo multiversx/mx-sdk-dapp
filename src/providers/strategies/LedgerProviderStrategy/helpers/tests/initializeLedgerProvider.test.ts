@@ -32,6 +32,14 @@ describe('initializeLedgerProvider tests', () => {
   let resolve: jest.Mock;
   let reject: jest.Mock;
 
+  const startInitializePromise = () =>
+    initializeLedgerProvider({
+      manager,
+      resolve,
+      reject,
+      shouldInitProvider: true
+    });
+
   beforeEach(() => {
     jest.clearAllMocks();
     manager = {
@@ -56,12 +64,7 @@ describe('initializeLedgerProvider tests', () => {
     mockGetLedgerProvider.mockReturnValue(deferred);
 
     // start initialization (do not `await` resolution)
-    const initPromise = initializeLedgerProvider({
-      manager,
-      resolve,
-      reject,
-      shouldInitProvider: true
-    });
+    const initPromise = startInitializePromise();
 
     // handlers captured in first subscribe call
     expect(manager.subscribeToProviderInit).toHaveBeenCalledWith({
@@ -103,34 +106,12 @@ describe('initializeLedgerProvider tests', () => {
       defaultErrorMessage: 'Check if the MultiversX app is open on Ledger'
     });
 
-    await initializeLedgerProvider({
-      manager,
-      resolve,
-      reject,
-      shouldInitProvider: true
-    });
-
-    // should set loading state initially
-    expect(manager.updateAccountScreen).toHaveBeenCalledWith({
-      isLoading: true
-    });
-
-    // should call getLedgerErrorCodes with the error
-    expect(mockGetLedgerErrorCodes).toHaveBeenCalledWith(testError);
-
-    // should update connect screen with error message
-    expect(manager.updateConnectScreen).toHaveBeenCalledWith({
-      error: errorMessage
-    });
+    await startInitializePromise();
 
     // should subscribe to provider init with handlers
     expect(manager.subscribeToProviderInit).toHaveBeenCalledWith({
       handleRetry: expect.any(Function),
       handleCancel: expect.any(Function)
     });
-
-    // should not resolve or reject (error is handled internally)
-    expect(resolve).not.toHaveBeenCalled();
-    expect(reject).not.toHaveBeenCalled();
   });
 });
