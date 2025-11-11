@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Refactored `getLedgerProvider` and add helpers tests](https://github.com/multiversx/mx-sdk-dapp/pull/1667)
 - [Added `initApp` helpers tests](https://github.com/multiversx/mx-sdk-dapp/pull/1665)
 - [Removed index file from apiCalls folder](https://github.com/multiversx/mx-sdk-dapp/pull/1663)
 - [~~Removed unused~~ Added comment togetActiveTransactionsStatus method](https://github.com/multiversx/mx-sdk-dapp/pull/1662)
