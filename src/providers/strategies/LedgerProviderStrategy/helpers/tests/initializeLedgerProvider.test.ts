@@ -25,27 +25,33 @@ const mockGetLedgerErrorCodes = getLedgerErrorCodes as jest.MockedFunction<
   typeof getLedgerErrorCodes
 >;
 
+type DeferredProps = Awaited<ReturnType<typeof getLedgerProvider>>;
+
 describe('initializeLedgerProvider tests', () => {
-  it('should wire handleCancel to reject and handleRetry to re-invoke initialize', async () => {
-    // create a deferred promise so initialize flow doesn't complete before we inspect handlers
-    type DeferredProps = Awaited<ReturnType<typeof getLedgerProvider>>;
-    let deferredResolve: (props: DeferredProps) => void;
+  let manager: any;
+  let resolve: jest.Mock;
+  let reject: jest.Mock;
 
-    const deferred = new Promise<DeferredProps>((resolve) => {
-      deferredResolve = resolve;
-    });
-
-    const manager = {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    manager = {
       updateAccountScreen: jest.fn(),
+      updateConnectScreen: jest.fn(),
       subscribeToProviderInit: jest.fn(),
       unsubscribeFromProviderInit: jest.fn()
     } as any;
-
-    const resolve = jest.fn();
-    const reject = jest.fn();
-
-    // ensure shouldInitiateLogin === true to subscribe
+    resolve = jest.fn();
+    reject = jest.fn();
+    // ensure shouldInitiateLogin === true (user not logged in) by default
     mockGetIsLoggedIn.mockReturnValue(false);
+  });
+
+  it('should wire handleCancel to reject and handleRetry to re-invoke initialize', async () => {
+    // create a deferred promise so initialize flow doesn't complete before we inspect handlers
+    let deferredResolve: (props: DeferredProps) => void;
+    const deferred = new Promise<DeferredProps>((innerResolve) => {
+      deferredResolve = innerResolve;
+    });
     // keep provider init pending so subscribe stays active
     mockGetLedgerProvider.mockReturnValue(deferred);
 
@@ -89,18 +95,6 @@ describe('initializeLedgerProvider tests', () => {
     const testError = new Error('Ledger connection failed');
     const errorMessage = 'Custom error message';
 
-    const manager = {
-      updateAccountScreen: jest.fn(),
-      updateConnectScreen: jest.fn(),
-      subscribeToProviderInit: jest.fn(),
-      unsubscribeFromProviderInit: jest.fn()
-    } as any;
-
-    const resolve = jest.fn();
-    const reject = jest.fn();
-
-    // ensure shouldInitiateLogin === true (user not logged in)
-    mockGetIsLoggedIn.mockReturnValue(false);
     // make provider init fail
     mockGetLedgerProvider.mockRejectedValue(testError);
     // mock error codes to return a custom error message
