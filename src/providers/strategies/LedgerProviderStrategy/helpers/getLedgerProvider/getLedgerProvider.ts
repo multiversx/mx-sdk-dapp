@@ -6,6 +6,7 @@ import { ledgerLoginSelector } from 'store/selectors/loginInfoSelectors';
 import { getState } from 'store/store';
 import { getLedgerConfiguration } from './helpers/getLedgerConfiguration';
 import { initHwProvider } from './helpers/initHwProvider';
+import { LedgerConfigType } from '../../types/ledgerProvider.types';
 
 export async function getLedgerProvider(props?: {
   shouldInitProvider?: boolean; // provider will be initialized if not logged in
@@ -20,12 +21,13 @@ export async function getLedgerProvider(props?: {
 
   try {
     if (!shouldInitProvider && ledgerAccount) {
+      const ledgerConfig: LedgerConfigType = {
+        version: ledgerAccount.version,
+        dataEnabled: ledgerAccount.hasContractDataEnabled
+      };
       return {
         ledgerProvider,
-        ledgerConfig: {
-          version: ledgerAccount.version,
-          dataEnabled: ledgerAccount.hasContractDataEnabled
-        }
+        ledgerConfig
       };
     }
 
