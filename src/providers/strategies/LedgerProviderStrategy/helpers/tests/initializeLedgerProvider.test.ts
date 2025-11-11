@@ -1,3 +1,8 @@
+import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
+import { getLedgerErrorCodes } from '../getLedgerErrorCodes';
+import { getLedgerProvider } from '../getLedgerProvider/getLedgerProvider';
+import { initializeLedgerProvider } from '../initializeLedgerProvider';
+
 jest.mock('methods/account/getIsLoggedIn', () => ({
   getIsLoggedIn: jest.fn(() => false)
 }));
@@ -9,11 +14,6 @@ jest.mock('../getLedgerProvider/getLedgerProvider', () => ({
 jest.mock('../getLedgerErrorCodes', () => ({
   getLedgerErrorCodes: jest.fn()
 }));
-
-import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import { getLedgerErrorCodes } from '../getLedgerErrorCodes';
-import { getLedgerProvider } from '../getLedgerProvider/getLedgerProvider';
-import { initializeLedgerProvider } from '../initializeLedgerProvider';
 
 const mockGetIsLoggedIn = getIsLoggedIn as jest.MockedFunction<
   typeof getIsLoggedIn
