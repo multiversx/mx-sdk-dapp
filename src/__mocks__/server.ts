@@ -48,6 +48,10 @@ const handlers = [
   rest.get(`${testNetwork.apiAddress}/economics`, mockResponse(economics)),
   rest.get(
     `${testNetwork.apiAddress}/accounts/${testAddress}`,
+    mockResponse({ ...account, address: testAddress })
+  ),
+  rest.get(
+    `${testNetwork.apiAddress}/accounts/${account.address}`,
     mockResponse(account)
   ),
   rest.get(
