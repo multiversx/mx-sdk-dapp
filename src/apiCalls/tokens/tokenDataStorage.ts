@@ -20,8 +20,5 @@ export const tokenDataStorage = {
   },
   clear: async () => {
     memoryCache = {};
-  },
-  removeItem: async (key: string) => {
-    delete memoryCache[key];
   }
 };
