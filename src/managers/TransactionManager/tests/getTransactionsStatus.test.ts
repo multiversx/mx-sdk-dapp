@@ -6,7 +6,7 @@ import {
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
-} from 'types';
+} from 'types/enums.types';
 import { SignedTransactionType } from 'types/transactions.types';
 import { getTransactionsSessionStatus } from '../helpers/getTransactionsStatus';
 

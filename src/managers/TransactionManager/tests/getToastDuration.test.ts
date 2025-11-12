@@ -3,7 +3,7 @@ import {
   CROSS_SHARD_ROUNDS
 } from 'constants/transactions.constants';
 import { accountSelector } from 'store/selectors/accountSelectors';
-import { TransactionServerStatusesEnum } from 'types';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { SignedTransactionType } from 'types/transactions.types';
 import { getAreTransactionsCrossShards } from '../helpers/getAreTransactionsCorssShards';
 import { getToastDuration } from '../helpers/getToastDuration';

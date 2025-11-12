@@ -3,7 +3,7 @@ import {
   getIsTransactionNotExecuted,
   getIsTransactionSuccessful
 } from 'store/actions/transactions/transactionStateByStatus';
-import { TransactionBatchStatusesEnum } from 'types';
+import { TransactionBatchStatusesEnum } from 'types/enums.types';
 import { SignedTransactionType } from 'types/transactions.types';
 
 export function getTransactionsSessionStatus(

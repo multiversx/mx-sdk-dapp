@@ -1,7 +1,7 @@
 import { testAddress } from '__mocks__/accountConfig';
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import { isServerTransactionPending } from 'store/actions/transactions/transactionStateByStatus';
-import { TransactionServerStatusesEnum } from 'types';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { getToastTransactionsStatus } from '../helpers/getToastTransactionsStatus';
 
 jest.mock('store/actions/transactions/transactionStateByStatus');

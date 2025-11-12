@@ -10,7 +10,7 @@ import {
   ProviderType
 } from 'providers/types/providerFactory.types';
 import { createCustomToast } from 'store/actions/toasts/toastsActions';
-import { IconNamesEnum } from 'types';
+import { IconNamesEnum } from 'types/enums.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { getLedgerProvider } from './helpers';
 import { authenticateLedgerAccount } from './helpers/authenticateLedgerAccount';

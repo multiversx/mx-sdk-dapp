@@ -15,7 +15,7 @@ import {
 } from 'store/actions/config/configActions';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
-import { ThemesEnum } from 'types';
+import { ThemesEnum } from 'types/theme.types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';

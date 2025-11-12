@@ -1,4 +1,4 @@
-import { TransactionServerStatusesEnum } from 'types';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { TransactionActionsEnum } from 'types/serverTransactions.types';
 
 export const baseTransactionMock = {

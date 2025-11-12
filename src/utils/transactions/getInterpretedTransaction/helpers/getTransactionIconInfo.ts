@@ -1,4 +1,4 @@
-import { IconNamesEnum } from 'types';
+import { IconNamesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { capitalize } from 'utils/operations/capitalize';
 import { getTransactionMessages } from './getTransactionMessages';

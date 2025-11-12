@@ -1,7 +1,7 @@
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
-} from 'types';
+} from 'types/enums.types';
 import { SignedTransactionType } from 'types/transactions.types';
 import { getAddressFromDataField } from 'utils/validation/isContract';
 import { getAreTransactionsCrossShards } from '../helpers/getAreTransactionsCorssShards';

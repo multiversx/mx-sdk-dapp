@@ -1,5 +1,5 @@
 import { createJSONStorage } from 'zustand/middleware';
-import { SubscriptionsEnum } from 'types';
+import { SubscriptionsEnum } from 'types/subscriptions.type';
 import { safeWindow } from './window.constants';
 
 export const persistConfig: {
