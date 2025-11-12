@@ -3,7 +3,7 @@ import {
   EXTRA_GAS_LIMIT_GUARDED_TX,
   GAS_LIMIT,
   GAS_PRICE
-} from 'constants/index';
+} from 'constants/mvx.constants';
 import { Transaction, Address, TransactionComputer } from 'lib/sdkCore';
 import { stringIsFloat, stringIsInteger, ZERO } from 'lib/sdkDappUtils';
 import { isGuardianTx } from 'utils/transactions/isGuardianTx';

@@ -5,7 +5,7 @@ import {
   LEDGER_WITH_WHITELISTED_TOKENS_MINIMUM_VERSION,
   LEDGER_WITH_GUARDIANS_MINIMUM_VERSION,
   LEDGER_WITH_USERNAMES_MINIMUM_VERSION
-} from 'constants/index';
+} from 'constants/ledger.constants';
 
 function compareVersions(a: string, b: string) {
   let i, diff;

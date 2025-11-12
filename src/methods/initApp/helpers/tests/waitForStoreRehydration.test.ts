@@ -1,7 +1,7 @@
 import { defaultStorageCallback } from 'store/storage';
 import { InMemoryStorage } from 'store/storage';
 import { StoreApi } from 'store/store';
-import { REHYDRATE_STORE_TIMEOUT } from '../../../../constants';
+import { REHYDRATE_STORE_TIMEOUT } from '../../../../constants/storage.constants';
 import { waitForStoreRehydration } from '../waitForStoreRehydration';
 
 const createMockStore = (isHydrated = false): StoreApi => {

@@ -1,6 +1,6 @@
 import { defaultStorageCallback, StorageCallback } from 'store/storage';
 import { StoreApi } from 'store/store';
-import { REHYDRATE_STORE_TIMEOUT } from '../../../constants';
+import { REHYDRATE_STORE_TIMEOUT } from '../../../constants/storage.constants';
 
 const REHYDRATE_TIMEOUT_SECONDS = REHYDRATE_STORE_TIMEOUT / 1000;
 
