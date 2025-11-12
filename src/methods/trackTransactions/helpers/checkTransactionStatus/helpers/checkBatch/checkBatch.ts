@@ -8,7 +8,7 @@ import {
 } from 'types/enums.types';
 import { SignedTransactionType } from 'types/transactions.types';
 
-import { refreshAccount } from 'utils';
+import { refreshAccount } from 'utils/account/refreshAccount';
 import { getPendingTransactions } from '../getPendingTransactions';
 import { runTransactionStatusUpdate } from './helpers/runTransactionStatusUpdate';
 

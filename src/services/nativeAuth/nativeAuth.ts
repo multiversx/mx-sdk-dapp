@@ -5,7 +5,8 @@ import {
   LatestBlockHashType
 } from './helpers/getLatestBlockHash';
 
-import { buildNativeAuthConfig, getTokenExpiration } from './methods';
+import { buildNativeAuthConfig } from './methods/buildNativeAuthConfig';
+import { getTokenExpiration } from './methods/getTokenExpiration';
 import { NativeAuthConfigType } from './nativeAuth.types';
 
 interface NativeAuthInitType {
