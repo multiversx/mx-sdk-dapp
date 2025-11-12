@@ -1,6 +1,6 @@
 import { matchPath } from '../matchPath';
 
-describe('matchPath', () => {
+describe('matchPath tests', () => {
   it('should return true for simple routes', () => {
     const result = matchPath('/home', '/home');
     expect(Boolean(result)).toBe(true);

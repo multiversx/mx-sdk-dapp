@@ -1,7 +1,7 @@
 import { GuardianActionsEnum } from 'types/enums.types';
 import { isGuardianTx } from '../isGuardianTx';
 
-describe('isGuardianTx Function', () => {
+describe('isGuardianTx tests', () => {
   // Test Valid Actions
   Object.values(GuardianActionsEnum).forEach((action) => {
     test(`should return true for valid action starting with "${action}"`, () => {
