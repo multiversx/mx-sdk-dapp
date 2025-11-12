@@ -54,7 +54,7 @@ jest.mock('methods/initApp/helpers/waitForStoreRehydration', () => ({
   waitForStoreRehydration: jest.fn().mockResolvedValue(undefined)
 }));
 
-jest.mock('store/actions', () => ({
+jest.mock('store/actions/network/initializeNetwork', () => ({
   initializeNetwork: jest.fn().mockResolvedValue({
     apiAddress: network.apiAddress
   })
