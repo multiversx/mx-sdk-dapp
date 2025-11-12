@@ -1,4 +1,4 @@
-name: "CHANGELOG entry secretary"
+name: 'CHANGELOG entry secretary'
 on:
   pull_request:
     branches: [main, development]
@@ -12,5 +12,6 @@ jobs:
   # Enforces the update of a changelog file on every pull request
   changelog:
     runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.draft }}
     steps:
-    - uses: dangoslen/changelog-enforcer@v3
+      - uses: dangoslen/changelog-enforcer@v3
