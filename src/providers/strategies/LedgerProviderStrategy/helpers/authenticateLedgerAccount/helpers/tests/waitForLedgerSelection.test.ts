@@ -1,3 +1,5 @@
+import { testAddress } from '__mocks__';
+import { network } from '__mocks__/data/storeData/network';
 import { waitForLedgerSelection } from '../waitForLedgerSelection';
 
 jest.mock('../updateAccountsList', () => ({
@@ -12,9 +14,9 @@ describe('waitForLedgerSelection tests', () => {
   let manager: any;
   let provider: any;
   let login: any;
-  const explorerAddress = 'https://explorer.test';
+  const explorerAddress = network.explorerAddress;
   const authData = {
-    data: 'data',
+    data: 'https://localhost:3000 for more than one day.',
     confirmAddressText: 'Confirm Ledger Address',
     authText: 'Authorise Authentication Token'
   };
@@ -106,7 +108,7 @@ describe('waitForLedgerSelection tests', () => {
   it('on accessWallet rejection goes back to accounts list if confirm screen is visible', async () => {
     const token = 'tok123';
     const addressIndex = 0;
-    const selectedAddress = 'erd1...';
+    const selectedAddress = testAddress;
     provider.tokenLogin.mockRejectedValue(new Error('rejected'));
     manager.getConfirmScreenData.mockReturnValue({ any: 'value' });
 
