@@ -6,7 +6,7 @@ import {
 } from 'types/serverTransactions.types';
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { timeAgo } from 'utils/operations/timeRemaining';
-import { isContract } from 'utils/validation';
+import { isContract } from 'utils/validation/isContract';
 import { explorerUrlBuilder } from '../explorerUrlBuilder';
 import { getExplorerLink } from '../getExplorerLink';
 import { getHumanReadableTimeFormat } from '../getHumanReadableTimeFormat';
