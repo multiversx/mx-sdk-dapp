@@ -1,5 +1,4 @@
 import { HWProvider } from '@multiversx/sdk-hw-provider/out';
-import { IEventBus } from 'lib/sdkDappUi';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { getExplorerAddress } from 'methods/network/getExplorerAddress';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
@@ -21,7 +20,6 @@ interface IGetLedgerLogin {
   };
   config: LedgerConfigType;
   provider: HWProvider | null;
-  eventBus?: IEventBus | null;
   login: LedgerLoginType | null;
 }
 
