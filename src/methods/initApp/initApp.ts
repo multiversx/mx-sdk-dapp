@@ -96,19 +96,18 @@ export async function initApp({
     environment: dAppConfig.environment
   });
 
+  let nativeAuthConfig: NativeAuthConfigType | null = null;
+
   if (dAppConfig?.nativeAuth) {
-    const nativeAuthConfig: NativeAuthConfigType =
+    nativeAuthConfig =
       typeof dAppConfig.nativeAuth === 'boolean' &&
       dAppConfig.nativeAuth === true
         ? getDefaultNativeAuthConfig({ apiAddress })
         : getDefaultNativeAuthConfig(dAppConfig.nativeAuth);
-
-    setNativeAuthConfig(nativeAuthConfig);
   }
 
-  if (dAppConfig?.providers?.walletConnect) {
-    setWalletConnectConfig(dAppConfig.providers.walletConnect);
-  }
+  setNativeAuthConfig(nativeAuthConfig);
+  setWalletConnectConfig(dAppConfig?.providers?.walletConnect ?? null);
 
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();
