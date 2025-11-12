@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Added LogoutManager tests](https://github.com/multiversx/mx-sdk-dapp/pull/1672)
+- [Added LogoutManager tests](https://github.com/multiversx/mx-sdk-dapp/pull/1673)
 
 ## [[5.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/1671)] - 2025-11-12
 
