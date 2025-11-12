@@ -4,7 +4,7 @@ import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderS
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { getStore } from 'store/store';
 
-export const setNativeAuthConfig = (config: NativeAuthConfigType) =>
+export const setNativeAuthConfig = (config: NativeAuthConfigType | null) =>
   getStore().setState(
     ({ config: state }) => {
       state.nativeAuthConfig = config;
@@ -34,21 +34,25 @@ export const setWebsocketStatus = (status: WebsocketConnectionStatusEnum) =>
     }
   );
 
-export const setWalletConnectConfig = (config: WalletConnectConfig) =>
+export const setWalletConnectConfig = (config: WalletConnectConfig | null) =>
   getStore().setState(
     ({ config: state }) => {
-      const walletConnectV2RelayAddress =
-        config.walletConnectV2RelayAddress ||
-        fallbackWalletConnectConfigurations.walletConnectV2RelayAddress;
-      const walletConnectDeepLink =
-        config.walletConnectDeepLink ||
-        fallbackWalletConnectConfigurations.walletConnectDeepLink;
+      if (config) {
+        const walletConnectV2RelayAddress =
+          config.walletConnectV2RelayAddress ||
+          fallbackWalletConnectConfigurations.walletConnectV2RelayAddress;
+        const walletConnectDeepLink =
+          config.walletConnectDeepLink ||
+          fallbackWalletConnectConfigurations.walletConnectDeepLink;
 
-      state.walletConnectConfig = {
-        ...config,
-        walletConnectDeepLink,
-        walletConnectV2RelayAddress
-      };
+        state.walletConnectConfig = {
+          ...config,
+          walletConnectDeepLink,
+          walletConnectV2RelayAddress
+        };
+      } else {
+        state.walletConnectConfig = null;
+      }
     },
     false,
     {
