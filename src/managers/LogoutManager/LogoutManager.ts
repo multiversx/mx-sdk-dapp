@@ -10,7 +10,7 @@ import {
 import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
 import { tokenLoginSelector } from 'store/selectors/loginInfoSelectors';
 import { getStore } from 'store/store';
-import { IconNamesEnum } from 'types';
+import { IconNamesEnum } from 'types/enums.types';
 import { getHumanReadableTokenExpirationTime } from './helpers/getHumanReadableTokenExpirationTime';
 
 export class LogoutManager {

@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import { decodeBase64 } from 'utils/decoders';
+import { decodeBase64 } from 'utils/decoders/base64Utils';
 import { getEgldValueData } from './getEgldValueData';
 
 let warningLogged = false;

@@ -9,7 +9,7 @@ import { isLoggedInSelector } from 'store/selectors/accountSelectors';
 import { loginInfoSelector } from 'store/selectors/loginInfoSelectors';
 import { isSidePanelOpenSelector } from 'store/selectors/uiSelectors';
 import { getState, getStore } from 'store/store';
-import { IconNamesEnum } from 'types';
+import { IconNamesEnum } from 'types/enums.types';
 import { ToastManager } from '../../ToastManager';
 
 const LEDGER_IDLE_STATE_CHECK_INTERVAL = 30_000;

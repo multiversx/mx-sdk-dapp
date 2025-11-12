@@ -1,4 +1,4 @@
-import { IconNamesEnum } from 'types';
+import { IconNamesEnum } from 'types/enums.types';
 import { getTransactionIconInfo } from '../getTransactionIconInfo';
 import * as getTransactionMessagesModule from '../getTransactionMessages';
 import * as getTransactionStatusModule from '../getTransactionStatus';

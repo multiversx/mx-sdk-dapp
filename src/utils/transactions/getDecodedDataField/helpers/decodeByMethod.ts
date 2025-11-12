@@ -5,7 +5,7 @@ import {
   DecodeMethodEnum,
   TransactionTokensType
 } from 'types/serverTransactions.types';
-import { isUtf8 } from 'utils/decoders';
+import { isUtf8 } from 'utils/decoders/isUtf8';
 import { addressIsValid } from 'utils/validation/addressIsValid';
 
 interface IDecodeByMethod {

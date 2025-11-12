@@ -9,15 +9,13 @@ import {
   ACTIONS_WITH_VALUE_IN_DATA_FIELD
 } from './constants';
 
-import {
-  getEgldValueData,
-  getTitleText,
-  getValueFromActions,
-  getValueFromDataField,
-  getValueFromOperations
-} from './helpers';
+import { getEgldValueData } from './helpers/getEgldValueData';
+import { getTitleText } from './helpers/getTitleText';
 import { getTransactionActionNftText } from './helpers/getTransactionActionNftText';
 import { getTransactionTokens } from './helpers/getTransactionTokens';
+import { getValueFromActions } from './helpers/getValueFromActions';
+import { getValueFromDataField } from './helpers/getValueFromDataField';
+import { getValueFromOperations } from './helpers/getValueFromOperations';
 import {
   EgldValueDataType,
   NFTValueDataType,

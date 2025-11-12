@@ -8,14 +8,14 @@ import { ProviderFactory } from 'providers/ProviderFactory';
 import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
-import { initializeNetwork } from 'store/actions';
 import {
   setNativeAuthConfig,
   setWalletConnectConfig
 } from 'store/actions/config/configActions';
+import { initializeNetwork } from 'store/actions/network/initializeNetwork';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
-import { ThemesEnum } from 'types';
+import { ThemesEnum } from 'types/theme.types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';

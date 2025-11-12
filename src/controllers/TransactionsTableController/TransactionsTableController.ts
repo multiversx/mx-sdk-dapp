@@ -4,10 +4,8 @@ import {
   TransactionDirectionEnum
 } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
-import {
-  getExplorerLink,
-  getInterpretedTransaction
-} from 'utils/transactions/getInterpretedTransaction';
+import { getExplorerLink } from 'utils/transactions/getExplorerLink';
+import { getInterpretedTransaction } from 'utils/transactions/getInterpretedTransaction/getInterpretedTransaction';
 import { getTransactionValue } from 'utils/transactions/getInterpretedTransaction/getTransactionValue/getTransactionValue';
 import { getLockedAccountName } from 'utils/transactions/getInterpretedTransaction/helpers/getLockedAccountName';
 import { getShardText } from 'utils/transactions/getInterpretedTransaction/helpers/getShardText';

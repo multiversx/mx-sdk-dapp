@@ -2,16 +2,14 @@ import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { createStore } from 'zustand/vanilla';
 import { applyMiddlewares } from './middleware';
-import {
-  networkSlice,
-  accountSlice,
-  loginInfoSlice,
-  configSlice,
-  toastSlice,
-  cacheSlice,
-  uiSlice
-} from './slices';
+import { accountSlice } from './slices/account';
+import { cacheSlice } from './slices/cache';
+import { configSlice } from './slices/config';
+import { loginInfoSlice } from './slices/loginInfo';
+import { networkSlice } from './slices/network';
+import { toastSlice } from './slices/toast';
 import { transactionsSlice } from './slices/transactions';
+import { uiSlice } from './slices/ui';
 import {
   InMemoryStorage,
   defaultStorageCallback,

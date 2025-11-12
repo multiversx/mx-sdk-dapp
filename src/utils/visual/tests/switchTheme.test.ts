@@ -1,5 +1,5 @@
 import { safeWindow } from 'constants/window.constants';
-import { ThemesEnum } from 'types';
+import { ThemesEnum } from 'types/theme.types';
 import { switchTheme } from '../switchTheme';
 
 jest.mock('constants/window.constants', () => {

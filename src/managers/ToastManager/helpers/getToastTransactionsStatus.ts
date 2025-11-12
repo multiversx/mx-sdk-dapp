@@ -1,6 +1,6 @@
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import { isServerTransactionPending } from 'store/actions/transactions/transactionStateByStatus';
-import { TransactionServerStatusesEnum } from 'types';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
 
 export const getToastTransactionsStatus = (
   transactions: ITransactionListItem[]

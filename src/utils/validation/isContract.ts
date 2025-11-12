@@ -1,5 +1,8 @@
 import { Address } from 'lib/sdkCore';
-import { ESDTTransferTypesEnum, TypesOfSmartContractCallsEnum } from 'types';
+import {
+  ESDTTransferTypesEnum,
+  TypesOfSmartContractCallsEnum
+} from 'types/enums.types';
 import { decodeBase64, isStringBase64 } from 'utils/decoders/base64Utils';
 import { addressIsValid } from './addressIsValid';
 import { isHexValidCharacters, isHexValidLength } from './hex';

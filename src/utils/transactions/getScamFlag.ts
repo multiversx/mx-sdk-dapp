@@ -3,7 +3,7 @@ import {
   SuspiciousLinkType,
   SuspiciousLinkPropsType,
   TextWithLinksType
-} from 'types';
+} from 'types/suspiciousLink.types';
 
 export const getTextWithLinks = (text: string): TextWithLinksType => {
   const links = linkify.find(text);
