@@ -1,6 +1,6 @@
 let memoryCache: Record<string, string> = {};
 
-export let tokenDataStorage = {
+export const tokenDataStorage = {
   setItem: async <T>(key: string, tokenData: T) => {
     try {
       memoryCache[key] = JSON.stringify(tokenData);
@@ -20,14 +20,5 @@ export let tokenDataStorage = {
   },
   clear: async () => {
     memoryCache = {};
-  },
-  removeItem: async (key: string) => {
-    delete memoryCache[key];
   }
-};
-
-export const setTokenDataStorage = (
-  tokenDataCacheStorage: typeof tokenDataStorage
-) => {
-  tokenDataStorage = tokenDataCacheStorage;
 };

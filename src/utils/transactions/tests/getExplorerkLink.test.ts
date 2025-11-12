@@ -1,6 +1,6 @@
 import { getExplorerLink } from '../getExplorerLink';
 
-describe('getNetworkLink', () => {
+describe('getExplorerLink tests', () => {
   it('return "/${to}" parameter when the explorerAddress is empty and log an error in console', () => {
     // prevent showing errors in Jest console
     jest.mock('console', () => ({
