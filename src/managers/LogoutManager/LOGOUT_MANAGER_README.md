@@ -1,4 +1,4 @@
- LogoutManager
+# LogoutManager
 
 The `LogoutManager` is a singleton class in the MultiversX Front-End SDK that manages automatic logout and session expiration warnings for users authenticated with native auth tokens. It ensures users are securely logged out when their authentication token expires and provides customizable warning toasts before logout.
 
