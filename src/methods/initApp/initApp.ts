@@ -19,14 +19,12 @@ import { ThemesEnum } from 'types';
 import { refreshAccount } from 'utils';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
-import { REHYDRATE_STORE_TIMEOUT } from '../../constants';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
-import { registerWebsocketListener } from './websocket/registerWebsocket';
-import { trackTransactions } from '../trackTransactions/trackTransactions';
-import { setGasStationMetadata } from './gastStationMetadata/setGasStationMetadata';
+import { setGasStationMetadata } from './gasStationMetadata/setGasStationMetadata';
+import { waitForStoreRehydration } from './helpers/waitForStoreRehydration';
 import { getAccount } from '../account/getAccount';
-
-const REHYDRATE_TIMEOUT_SECONDS = REHYDRATE_STORE_TIMEOUT / 1000;
+import { trackTransactions } from '../trackTransactions/trackTransactions';
+import { registerWebsocketListener } from './websocket/registerWebsocket';
 
 const defaultInitAppProps = {
   storage: {
@@ -46,6 +44,15 @@ const defaultInitAppProps = {
  */
 let isAppInitialized = false;
 let isInitializing = false;
+
+/**
+ * Reset the initialization state. Used primarily for testing.
+ * @internal
+ */
+export function resetInitAppState() {
+  isAppInitialized = false;
+  isInitializing = false;
+}
 
 /**
  * Initializes the dApp with the given configuration.
@@ -75,32 +82,14 @@ export async function initApp({
 
   switchTheme(defaultTheme);
 
-  const store = initStore(storage.getStorageCallback);
+  const { getStorageCallback } = storage;
 
-  // Wait for store rehydration when using async storage (like React Native AsyncStorage)
-  // This ensures the store is fully populated before restoreProvider() executes
-  if (storage.getStorageCallback !== defaultStorageCallback) {
-    try {
-      await new Promise<void>((resolve, reject) => {
-        if (store.persist.hasHydrated()) {
-          resolve();
-        }
+  const store = initStore(getStorageCallback);
 
-        store.persist.onFinishHydration(() => {
-          resolve();
-        });
-
-        setTimeout(() => {
-          reject();
-        }, REHYDRATE_STORE_TIMEOUT);
-      });
-    } catch (error: any) {
-      console.warn(
-        `Store rehydration timed out after ${REHYDRATE_TIMEOUT_SECONDS} seconds. Continuing initialization...`,
-        error.message
-      );
-    }
-  }
+  await waitForStoreRehydration({
+    store,
+    getStorageCallback
+  });
 
   const { apiAddress } = await initializeNetwork({
     customNetworkConfig: dAppConfig.network,
@@ -156,7 +145,7 @@ export async function initApp({
     }
   }
 
-  if (account.shard != null) {
+  if (account?.shard != null) {
     await setGasStationMetadata({
       shard: Number(account.shard),
       apiAddress

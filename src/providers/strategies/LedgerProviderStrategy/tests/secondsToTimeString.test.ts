@@ -1,4 +1,4 @@
-import { secondsToTimeString } from '../helpers/secondsToTimeString';
+import { secondsToTimeString } from '../helpers/authenticateLedgerAccount/helpers/secondsToTimeString';
 
 describe('secondsToTimeString tests', () => {
   it('converts 0 seconds to "N/A time"', () => {

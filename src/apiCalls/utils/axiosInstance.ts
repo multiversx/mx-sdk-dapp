@@ -34,6 +34,25 @@ const getFormattedAxiosResponse = async <T>(response: Response, config?: T) => {
   };
 };
 
+async function customGet<T = any, R = AxiosResponse<T, any>, D = any>(
+  url: string,
+  config?: AxiosRequestConfig<D> | undefined
+): Promise<R> {
+  try {
+    const response = await fetch(url, config as RequestInit);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    return getFormattedAxiosResponse(response, config) as unknown as Promise<R>;
+  } catch (error) {
+    console.error('Fetch Error:', error);
+    throw error;
+  }
+}
+
+/*
+// Implement post and patch methods only if needed
 async function customPost<T = any, R = AxiosResponse<T, any>, D = any>(
   url: string,
   data?: D,
@@ -49,23 +68,6 @@ async function customPost<T = any, R = AxiosResponse<T, any>, D = any>(
       },
       ...config
     } as RequestInit);
-
-    return getFormattedAxiosResponse(response, config) as unknown as Promise<R>;
-  } catch (error) {
-    console.error('Fetch Error:', error);
-    throw error;
-  }
-}
-
-async function customGet<T = any, R = AxiosResponse<T, any>, D = any>(
-  url: string,
-  config?: AxiosRequestConfig<D> | undefined
-): Promise<R> {
-  try {
-    const response = await fetch(url, config as RequestInit);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
 
     return getFormattedAxiosResponse(response, config) as unknown as Promise<R>;
   } catch (error) {
@@ -97,10 +99,11 @@ async function customPatch<T = any, R = AxiosResponse<T, any>, D = any>(
     throw error;
   }
 }
+axiosInstance.post = customPost;
+axiosInstance.patch = customPatch;
+*/
 
 const axiosInstance = axios.create();
 axiosInstance.get = customGet;
-axiosInstance.post = customPost;
-axiosInstance.patch = customPatch;
 
 export { axiosInstance };

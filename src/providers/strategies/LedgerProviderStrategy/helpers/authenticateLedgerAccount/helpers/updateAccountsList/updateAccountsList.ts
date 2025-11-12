@@ -11,7 +11,7 @@ import {
   IUpdateAccountsList,
   UpdateAccountObjectType
 } from './updateAccountsList.types';
-import { ILedgerAccount } from '../../types/ledger.types';
+import { ILedgerAccount } from '../../../../types/ledger.types';
 
 /**
  * Updates the list of accounts and fetches their balances.
@@ -84,7 +84,6 @@ export const updateAccountsList = async ({
     const newAllAccountsObject = newAllAccounts.reduce(
       (accountsObject: UpdateAccountObjectType, account) =>
         Object.assign(accountsObject, { [account.address]: account }),
-
       {}
     );
 

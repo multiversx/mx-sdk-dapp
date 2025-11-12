@@ -1,6 +1,7 @@
 name: 'Jest Unit Tests'
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     branches: [main, development]
     paths:
       - 'src/**'
@@ -18,6 +19,7 @@ concurrency:
 jobs:
   run-unit-tests:
     runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.draft }}
     steps:
       - name: Fix permissions
         run: |
