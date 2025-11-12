@@ -1,7 +1,7 @@
 import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { IProvider } from 'providers/types/providerFactory.types';
-import { nativeAuthConfigSelector } from 'store/selectors';
+import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
 import { getState } from 'store/store';
 import { loginWithNativeToken } from './helpers/loginWithNativeToken';
 import { loginWithoutNativeToken } from './helpers/loginWithoutNativeToken';

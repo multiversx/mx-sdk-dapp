@@ -14,7 +14,8 @@ import {
   ProviderType
 } from 'providers/types/providerFactory.types';
 import { logoutAction } from 'store/actions';
-import { chainIdSelector, nativeAuthConfigSelector } from 'store/selectors';
+import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
+import { chainIdSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import {

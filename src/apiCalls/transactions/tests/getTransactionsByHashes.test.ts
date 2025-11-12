@@ -1,5 +1,6 @@
 import { server, rest, mockPendingTransaction, testNetwork } from '__mocks__';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
+import { apiAddressSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { getTransactionsByHashes } from '../getTransactionsByHashes';
 
@@ -7,7 +8,7 @@ jest.mock('store/store', () => ({
   getState: jest.fn()
 }));
 
-jest.mock('store/selectors', () => ({
+jest.mock('store/selectors/networkSelectors', () => ({
   apiAddressSelector: jest.fn()
 }));
 
@@ -19,6 +20,7 @@ describe('getTransactionsByHashes test', () => {
         network: testNetwork
       }
     });
+    (apiAddressSelector as jest.Mock).mockReturnValue(testNetwork.apiAddress);
   });
   afterEach(() => {
     server.resetHandlers();

@@ -8,13 +8,13 @@ import {
   websocketConnection
 } from 'constants/websocket.constants';
 import { setWebsocketStatus } from 'store/actions/config/configActions';
-import { networkSelector } from 'store/selectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getStore } from 'store/store';
 import { initializeWebsocketConnection } from '../initializeWebsocketConnection';
 
 jest.mock('socket.io-client');
 jest.mock('store/store');
-jest.mock('store/selectors');
+jest.mock('store/selectors/networkSelectors');
 jest.mock('store/actions/account/accountActions', () => ({
   setWebsocketBatchEvent: jest.fn(),
   setWebsocketEvent: jest.fn()

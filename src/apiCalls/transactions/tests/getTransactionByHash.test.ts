@@ -1,13 +1,13 @@
 import { server, rest, mockPendingTransaction, testNetwork } from '__mocks__';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
-import { networkSelector } from 'store/selectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getTransactionByHash } from '../getTransactionByHash';
 
 jest.mock('store/store', () => ({
   getState: jest.fn()
 }));
 
-jest.mock('store/selectors', () => ({
+jest.mock('store/selectors/networkSelectors', () => ({
   networkSelector: jest.fn()
 }));
 

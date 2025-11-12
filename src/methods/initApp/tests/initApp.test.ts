@@ -15,7 +15,7 @@ import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefau
 import { setNativeAuthConfig } from 'store/actions/config/configActions';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { ThemesEnum } from 'types/theme.types';
-import { refreshAccount } from 'utils';
+import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
 
 jest.mock('constants/window.constants', () => ({
@@ -32,6 +32,10 @@ jest.mock('lib/sdkDappUi', () => ({
 
 jest.mock('utils/visual/switchTheme', () => ({
   switchTheme: jest.fn()
+}));
+
+jest.mock('utils/account/refreshAccount', () => ({
+  refreshAccount: jest.fn().mockResolvedValue(undefined)
 }));
 
 jest.mock('store/store', () => {
@@ -79,11 +83,6 @@ jest.mock('methods/trackTransactions/trackTransactions', () => ({
 
 jest.mock('providers/helpers/restoreProvider', () => ({
   restoreProvider: jest.fn().mockResolvedValue(undefined)
-}));
-
-jest.mock('utils', () => ({
-  ...jest.requireActual('utils'),
-  refreshAccount: jest.fn().mockResolvedValue(undefined)
 }));
 
 jest.mock('methods/account/getAccount', () => ({

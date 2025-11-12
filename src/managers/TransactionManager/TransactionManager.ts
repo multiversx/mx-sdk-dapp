@@ -5,7 +5,7 @@ import { getAccount } from 'methods/account/getAccount';
 import { TransactionTrackingConfigType } from 'methods/initApp/initApp.types';
 import { addTransactionToast } from 'store/actions/toasts/toastsActions';
 import { createTransactionsSession } from 'store/actions/transactions/transactionsActions';
-import { networkSelector } from 'store/selectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import {
   TransactionBatchStatusesEnum,

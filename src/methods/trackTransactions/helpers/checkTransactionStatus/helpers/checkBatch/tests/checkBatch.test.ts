@@ -7,7 +7,7 @@ import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums.types';
-import * as utils from 'utils';
+import { refreshAccount } from 'utils/account/refreshAccount';
 import { getPendingTransactions } from '../../getPendingTransactions';
 import { checkBatch } from '../checkBatch';
 import { runTransactionStatusUpdate } from '../helpers/runTransactionStatusUpdate';
@@ -17,9 +17,7 @@ jest.mock('apiCalls/transactions/getTransactionsByHashes');
 jest.mock('methods/account/getIsLoggedIn');
 jest.mock('store/actions/transactions/transactionsActions');
 jest.mock('store/store');
-jest.mock('utils', () => ({
-  refreshAccount: jest.fn()
-}));
+jest.mock('utils/account/refreshAccount');
 jest.mock('../../getPendingTransactions');
 jest.mock('../helpers/runTransactionStatusUpdate');
 
@@ -38,8 +36,8 @@ const mockUpdateSessionStatus = updateSessionStatus as jest.MockedFunction<
 
 const mockGetState = getState as jest.MockedFunction<typeof getState>;
 
-const mockRefreshAccount = utils.refreshAccount as jest.MockedFunction<
-  typeof utils.refreshAccount
+const mockRefreshAccount = refreshAccount as jest.MockedFunction<
+  typeof refreshAccount
 >;
 
 const mockGetPendingTransactions =

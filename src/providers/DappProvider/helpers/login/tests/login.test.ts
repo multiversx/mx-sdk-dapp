@@ -2,12 +2,12 @@ import { account } from '__mocks__/data';
 import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { IProvider } from 'providers/types/providerFactory.types';
-import { nativeAuthConfigSelector } from 'store/selectors';
+import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
 import { loginWithNativeToken } from '../helpers/loginWithNativeToken';
 import { loginWithoutNativeToken } from '../helpers/loginWithoutNativeToken';
 import { login } from '../login';
 
-jest.mock('store/selectors');
+jest.mock('store/selectors/configSelectors');
 jest.mock('store/store');
 jest.mock('../helpers/loginWithNativeToken');
 jest.mock('../helpers/loginWithoutNativeToken');
