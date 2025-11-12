@@ -2,7 +2,7 @@ import { getAddress } from 'methods/account/getAddress';
 import { getLatestNonce } from 'methods/account/getLatestNonce';
 import { getNetworkConfig } from 'methods/network/getNetworkConfig';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
-import { setAccount } from 'store/actions';
+import { setAccount } from 'store/actions/account/accountActions';
 import { fetchAccount } from './fetchAccount';
 import { trimUsernameDomain } from './trimUsernameDomain';
 

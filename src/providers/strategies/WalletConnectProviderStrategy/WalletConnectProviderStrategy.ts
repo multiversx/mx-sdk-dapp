@@ -13,7 +13,7 @@ import {
   ProviderTypeEnum,
   ProviderType
 } from 'providers/types/providerFactory.types';
-import { logoutAction } from 'store/actions';
+import { logoutAction } from 'store/actions/sharedActions/sharedActions';
 import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
 import { chainIdSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';

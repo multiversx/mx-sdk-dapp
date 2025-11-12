@@ -9,7 +9,7 @@ import {
   IProvider,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
-import { setAccountNonce } from 'store/actions';
+import { setAccountNonce } from 'store/actions/account/accountActions';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { computeNonces } from '../computeNonces/computeNonces';
 
