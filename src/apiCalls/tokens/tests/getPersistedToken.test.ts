@@ -12,53 +12,40 @@ jest.mock('apiCalls/utils/axiosInstance', () => ({
   }
 }));
 
-jest.mock('../tokenDataStorage', () => ({
-  tokenDataStorage: {
-    getItem: jest.fn(),
-    setItem: jest.fn()
-  }
-}));
-
 const mockedAxiosGet = axiosInstance.get as jest.MockedFunction<
   typeof axiosInstance.get
->;
-const mockedGetItem = tokenDataStorage.getItem as jest.MockedFunction<
-  typeof tokenDataStorage.getItem
->;
-const mockedSetItem = tokenDataStorage.setItem as jest.MockedFunction<
-  typeof tokenDataStorage.setItem
 >;
 
 describe('getPersistedToken tests', () => {
   const url = network.apiAddress;
   const expectedConfig = { timeout: TIMEOUT };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks();
+    await tokenDataStorage.clear();
   });
 
   it('returns cached token without calling axios when available', async () => {
-    mockedGetItem.mockResolvedValueOnce(testToken);
+    await tokenDataStorage.setItem(url, testToken);
 
     const result = await getPersistedToken<typeof testToken>(url);
 
-    expect(result).toBe(testToken);
-    expect(mockedGetItem).toHaveBeenCalledWith(url);
+    expect(result).toEqual(testToken);
     expect(mockedAxiosGet).not.toHaveBeenCalled();
-    expect(mockedSetItem).not.toHaveBeenCalled();
   });
 
   it('fetches token from API, stores it, and returns it when not cached', async () => {
-    mockedGetItem.mockResolvedValueOnce(null);
     mockedAxiosGet.mockResolvedValueOnce({
       data: testToken
     } as any);
 
     const result = await getPersistedToken<typeof testToken>(url);
 
-    expect(mockedGetItem).toHaveBeenCalledWith(url);
     expect(mockedAxiosGet).toHaveBeenCalledWith(url, expectedConfig);
-    expect(mockedSetItem).toHaveBeenCalledWith(url, testToken);
     expect(result).toEqual(testToken);
+
+    // Verify it was actually stored
+    const cached = await tokenDataStorage.getItem(url);
+    expect(cached).toEqual(testToken);
   });
 });
