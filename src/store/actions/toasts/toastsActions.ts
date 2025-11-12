@@ -3,7 +3,10 @@ import {
   IComponentToast
 } from 'store/slices/toast/toastSlice.types';
 import { getStore } from 'store/store';
-import { getUnixTimestamp, getUnixTimestampWithAddedMilliseconds } from 'utils';
+import {
+  getUnixTimestamp,
+  getUnixTimestampWithAddedMilliseconds
+} from 'utils/dateTime';
 
 export const customToastComponentDictionary: Record<
   string,
