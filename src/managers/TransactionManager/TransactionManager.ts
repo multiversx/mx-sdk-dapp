@@ -124,7 +124,6 @@ export class TransactionManager {
 
     const status = getTransactionsSessionStatus(flatTransactions);
 
-    console.log('a');
     const sessionId = createTransactionsSession({
       transactions: flatTransactions,
       transactionsDisplayInfo: options.transactionsDisplayInfo,
