@@ -1,4 +1,4 @@
-import { safeWindow } from 'constants/index';
+import { safeWindow } from 'constants/window.constants';
 import { Address, Message, Transaction } from 'lib/sdkCore';
 import {
   WindowProviderRequestEnums,

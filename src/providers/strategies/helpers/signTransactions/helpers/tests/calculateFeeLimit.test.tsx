@@ -1,5 +1,5 @@
 import { testAddress } from '__mocks__';
-import { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER } from 'constants/index';
+import { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER } from 'constants/mvx.constants';
 import { calculateFeeLimit } from '../calculateFeeLimit';
 
 describe('calculateFeeLimit tests', () => {

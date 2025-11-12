@@ -1,5 +1,5 @@
 import { IProviderAccount } from '@multiversx/sdk-wallet-connect-provider/out';
-import { providerLabels } from 'constants/index';
+import { providerLabels } from 'constants/providerFactory.constants';
 import { Transaction, Message } from 'lib/sdkCore';
 import { IDAppProviderOptions, IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager';

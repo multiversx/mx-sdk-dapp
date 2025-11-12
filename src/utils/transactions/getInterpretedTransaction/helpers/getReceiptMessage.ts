@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { REFUNDED_GAS } from 'constants/index';
+import { REFUNDED_GAS } from 'constants/mvx.constants';
 import { DECIMALS, DIGITS, formatAmount } from 'lib/sdkDappUtils';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 
