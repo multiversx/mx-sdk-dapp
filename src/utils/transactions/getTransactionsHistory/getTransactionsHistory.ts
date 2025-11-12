@@ -1,10 +1,8 @@
 import isEmpty from 'lodash.isempty';
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import type { IGetHistoricalTransactionsParams } from 'types/transaction-list-item.types';
-import {
-  createTransactionsHistoryFromSessions,
-  mapServerTransactionsToListItems
-} from './helpers';
+import { createTransactionsHistoryFromSessions } from './helpers/createTransactionsHistoryFromSessions';
+import { mapServerTransactionsToListItems } from './helpers/mapServerTransactionsToListItems';
 
 export const getTransactionsHistory = async ({
   transactionsSessions
