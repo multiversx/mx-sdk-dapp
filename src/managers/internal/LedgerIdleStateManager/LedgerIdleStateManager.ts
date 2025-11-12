@@ -5,7 +5,8 @@ import {
 } from 'providers/helpers/accountProvider';
 import { LedgerProviderStrategy } from 'providers/strategies/LedgerProviderStrategy/LedgerProviderStrategy';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
-import { isLoggedInSelector, loginInfoSelector } from 'store/selectors';
+import { isLoggedInSelector } from 'store/selectors/accountSelectors';
+import { loginInfoSelector } from 'store/selectors/loginInfoSelectors';
 import { isSidePanelOpenSelector } from 'store/selectors/uiSelectors';
 import { getState, getStore } from 'store/store';
 import { IconNamesEnum } from 'types';

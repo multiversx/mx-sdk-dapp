@@ -6,7 +6,7 @@ import {
   IProviderFactory,
   ProviderType
 } from 'providers/types/providerFactory.types';
-import { networkSelector } from 'store/selectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import {
   OnCloseUnlockPanelType,

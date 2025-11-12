@@ -1,5 +1,5 @@
 import { TRANSACTIONS_STATUS_POLLING_INTERVAL_MS } from 'constants/transactions.constants';
-import { roundDurationSelectorSelector } from 'store/selectors';
+import { roundDurationSelectorSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { getPollingInterval } from '../getPollingInterval';
 
@@ -7,7 +7,7 @@ jest.mock('store/store', () => ({
   getState: jest.fn()
 }));
 
-jest.mock('store/selectors', () => ({
+jest.mock('store/selectors/networkSelectors', () => ({
   roundDurationSelectorSelector: jest.fn()
 }));
 

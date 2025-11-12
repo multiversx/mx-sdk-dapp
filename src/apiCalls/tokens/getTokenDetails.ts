@@ -1,6 +1,6 @@
 import { NFTS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
 import { axiosInstance } from 'apiCalls/utils/axiosInstance';
-import { networkSelector } from 'store/selectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { TokenOptionType, TokenInfoResponse } from 'types/tokens.types';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';

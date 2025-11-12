@@ -1,11 +1,11 @@
 import { network } from '__mocks__/data/storeData/network';
-import { networkSelector } from 'store/selectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { getDefaultNativeAuthConfig } from '../getDefaultNativeAuthConfig';
 
 jest.mock('store/store');
-jest.mock('store/selectors');
+jest.mock('store/selectors/networkSelectors');
 jest.mock('utils/window/getWindowLocation');
 
 describe('getDefaultNativeAuthConfig tests', () => {

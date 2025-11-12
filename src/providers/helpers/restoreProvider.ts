@@ -3,7 +3,7 @@ import {
   ProviderBaseType,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
-import { providerTypeSelector } from 'store/selectors';
+import { providerTypeSelector } from 'store/selectors/loginInfoSelectors';
 import { getState } from 'store/store';
 import { getIsInIframe } from 'utils/window/getIsInIframe';
 import { setAccountProvider } from './accountProvider';

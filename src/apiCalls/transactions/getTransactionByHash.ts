@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
-import { networkSelector } from 'store/selectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 

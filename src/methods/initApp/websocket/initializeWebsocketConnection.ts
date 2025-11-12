@@ -9,7 +9,7 @@ import {
   setWebsocketEvent
 } from 'store/actions/account/accountActions';
 import { setWebsocketStatus } from 'store/actions/config/configActions';
-import { networkSelector } from 'store/selectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getStore } from 'store/store';
 import { BatchTransactionsWSResponseType } from 'types/websocket.types';
 
