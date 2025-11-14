@@ -61,31 +61,11 @@ describe('checkBatch', () => {
     jest.restoreAllMocks();
   });
 
-  it('should return early if transactions is null', async () => {
-    await checkBatch({
-      sessionId,
-      transactionBatch: null as any
-    });
-
-    expect(mockGetPendingTransactions).not.toHaveBeenCalled();
-    expect(mockGetTransactionsByHashes).not.toHaveBeenCalled();
-  });
-
-  it('should return early if transactions is undefined', async () => {
-    await checkBatch({
-      sessionId,
-      transactionBatch: undefined as any
-    });
-
-    expect(mockGetPendingTransactions).not.toHaveBeenCalled();
-    expect(mockGetTransactionsByHashes).not.toHaveBeenCalled();
-  });
-
-  it('should process transactions and update session status to success when all transactions are successful', async () => {
+  const setupMocks = (status: TransactionServerStatusesEnum) => {
     const mockServerTransactions = [
       {
         ...mockPendingTransaction,
-        status: TransactionServerStatusesEnum.success
+        status
       }
     ];
 
@@ -93,7 +73,7 @@ describe('checkBatch', () => {
       transactions: [
         {
           ...mockPendingTransaction,
-          status: TransactionServerStatusesEnum.success
+          status
         }
       ]
     };
@@ -107,6 +87,23 @@ describe('checkBatch', () => {
       }
     } as any);
     mockRefreshAccount.mockResolvedValue(undefined);
+
+    return { mockServerTransactions };
+  };
+
+  it('should return early if transactions is null', async () => {
+    await checkBatch({
+      sessionId,
+      transactionBatch: null as any
+    });
+
+    expect(mockUpdateSessionStatus).not.toHaveBeenCalled();
+  });
+
+  it('should process transactions and update session status to success when all transactions are successful', async () => {
+    const { mockServerTransactions } = setupMocks(
+      TransactionServerStatusesEnum.success
+    );
 
     await checkBatch({
       sessionId,
@@ -126,6 +123,34 @@ describe('checkBatch', () => {
     expect(mockUpdateSessionStatus).toHaveBeenCalledWith({
       sessionId,
       status: TransactionBatchStatusesEnum.success
+    });
+  });
+
+  it('should update session status to fail when at least one transaction has failed', async () => {
+    setupMocks(TransactionServerStatusesEnum.fail);
+
+    await checkBatch({
+      sessionId,
+      transactionBatch: mockTransactions
+    });
+
+    expect(mockUpdateSessionStatus).toHaveBeenCalledWith({
+      sessionId,
+      status: TransactionBatchStatusesEnum.fail
+    });
+  });
+
+  it('should update session status to invalid when all transactions are not executed', async () => {
+    setupMocks(TransactionServerStatusesEnum.notExecuted);
+
+    await checkBatch({
+      sessionId,
+      transactionBatch: mockTransactions
+    });
+
+    expect(mockUpdateSessionStatus).toHaveBeenCalledWith({
+      sessionId,
+      status: TransactionBatchStatusesEnum.invalid
     });
   });
 
