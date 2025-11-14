@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Extended tests](https://github.com/multiversx/mx-sdk-dapp/pull/1677)
+- [Extended tests](https://github.com/multiversx/mx-sdk-dapp/pull/1678)
 - [Removed index files in project including main index file](https://github.com/multiversx/mx-sdk-dapp/pull/1676)
 - [Removed index files in selectors folder](https://github.com/multiversx/mx-sdk-dapp/pull/1675)
 - [Removed constants index file](https://github.com/multiversx/mx-sdk-dapp/pull/1674)
