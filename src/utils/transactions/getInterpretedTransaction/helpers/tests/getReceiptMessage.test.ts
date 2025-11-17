@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { REFUNDED_GAS } from 'constants/mvx.constants';
 import { DECIMALS, DIGITS, formatAmount } from 'lib/sdkDappUtils';
 import { getReceiptMessage } from '../getReceiptMessage';
-import { baseTransactionMock } from './base-transaction-mock';
+import { baseTransactionMock } from './baseTransactionMock';
 
 describe('getReceiptMessage', () => {
   it('returns empty string if no data exists on the transaction receipt field', () => {

@@ -4,7 +4,7 @@ import {
   TransactionActionsEnum
 } from 'types/serverTransactions.types';
 import { getTransactionMethod } from '../getTransactionMethod';
-import { baseTransactionMock } from './base-transaction-mock';
+import { baseTransactionMock } from './baseTransactionMock';
 
 describe('getTransactionMethod', () => {
   it('returns default value "Transaction" in case of missing "action" field', () => {

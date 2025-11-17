@@ -4,7 +4,7 @@ import {
   TransferTypeEnum
 } from 'types/serverTransactions.types';
 import { getTransactionTransferType } from '../getTransactionTransferType';
-import { baseTransactionMock } from './base-transaction-mock';
+import { baseTransactionMock } from './baseTransactionMock';
 
 describe('getTransactionTransferType', () => {
   it(`returns "${TransactionDirectionEnum.INTERNAL}" when the transaction type is "${TransferTypeEnum.SmartContractResult}" `, () => {

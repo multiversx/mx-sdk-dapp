@@ -4,7 +4,7 @@ import {
   TransactionActionsEnum
 } from 'types/serverTransactions.types';
 import { getTransactionReceiver } from '../getTransactionReceiver';
-import { baseTransactionMock } from './base-transaction-mock';
+import { baseTransactionMock } from './baseTransactionMock';
 
 describe('getTransactionReceiver', () => {
   it('returns receiver address from transaction body', () => {

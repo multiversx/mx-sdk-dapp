@@ -4,7 +4,7 @@ import {
   TransactionActionsEnum
 } from 'types/serverTransactions.types';
 import { getTransactionReceiverAssets } from '../getTransactionReceiverAssets';
-import { baseTransactionMock } from './base-transaction-mock';
+import { baseTransactionMock } from './baseTransactionMock';
 
 describe('getTransactionReceiverAssets', () => {
   it('returns receiver assets', () => {
