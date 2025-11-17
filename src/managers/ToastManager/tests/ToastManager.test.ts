@@ -256,3 +256,18 @@ describe('ToastManager closeToast', () => {
     expect(result).toBe(true);
   });
 });
+
+describe('ToastManager handleTransactionToastClose', () => {
+  it('returns true when transaction toast is completed', () => {
+    const toastId = 'transaction-toast';
+    const { manager } = createToastManagerTestContext();
+
+    jest
+      .spyOn(manager as any, 'handleCompletedTransaction')
+      .mockReturnValue(true);
+
+    const result = (manager as any).handleTransactionToastClose(toastId);
+
+    expect(result).toBe(true);
+  });
+});
