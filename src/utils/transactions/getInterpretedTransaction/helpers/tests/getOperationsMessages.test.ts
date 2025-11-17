@@ -4,7 +4,7 @@ import {
   VisibleTransactionOperationType
 } from 'types/serverTransactions.types';
 import { getOperationsMessages } from '../getOperationsMessages';
-import { baseTransactionMock } from './base-transaction-mock';
+import { baseTransactionMock } from './baseTransactionMock';
 
 describe('getOperationsMessages', () => {
   it('receive empty array if no operations messages exists on the transaction', () => {
