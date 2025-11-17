@@ -3,7 +3,7 @@ import {
   ServerTransactionType
 } from 'types/serverTransactions.types';
 import { getScResultsMessages } from '../getScResultsMessages';
-import { baseTransactionMock } from './base-transaction-mock';
+import { baseTransactionMock } from './baseTransactionMock';
 
 describe('getScResultsMessages', () => {
   it('receive empty array if no results exists on the transaction', () => {

@@ -1,6 +1,6 @@
+import { getCleanApiAddress } from 'apiCalls/configuration/getCleanApiAddress';
 import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
 import { axiosInstance } from 'apiCalls/utils/axiosInstance';
-import { getCleanApiAddress } from 'apiCalls/utils/getCleanApiAddress';
 import { TIMEOUT } from 'constants/network.constants';
 import { AccountType } from 'types/account.types';
 

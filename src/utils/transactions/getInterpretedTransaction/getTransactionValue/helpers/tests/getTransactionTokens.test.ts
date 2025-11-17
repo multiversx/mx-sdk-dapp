@@ -3,7 +3,7 @@ import {
   TransactionActionCategoryEnum,
   TransactionActionsEnum
 } from 'types/serverTransactions.types';
-import { baseTransactionMock } from '../../../helpers/tests/base-transaction-mock';
+import { baseTransactionMock } from '../../../helpers/tests/baseTransactionMock';
 import { getTransactionTokens } from '../getTransactionTokens';
 
 describe('getTransactionTokens tests', () => {
