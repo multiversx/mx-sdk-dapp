@@ -182,7 +182,7 @@
     "@lifeomic/axios-fetch": "3.0.1",
     "@multiversx/sdk-dapp-utils": "2.0.0",
     "@multiversx/sdk-extension-provider": "5.0.0",
-    "@multiversx/sdk-hw-provider": "8.0.0",
+    "@multiversx/sdk-hw-provider": "8.1.1",
     "@multiversx/sdk-metamask-provider": "3.0.2",
     "@multiversx/sdk-native-auth-client": "1.0.9",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",

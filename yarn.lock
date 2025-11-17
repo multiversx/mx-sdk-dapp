@@ -2427,10 +2427,10 @@
   resolved "https://registry.npmjs.org/@multiversx/sdk-extension-provider/-/sdk-extension-provider-5.0.0.tgz#6352febd4ff6090bd1fd1ae4c2980686ef1100c9"
   integrity sha512-n/TVLqaeDYXVr4vXsNtR5ckxTz5n8VaDUcG6WL004+Y3WXRUwo32czzlpIoowt38pT60IDNjVo8echPbVJHytQ==
 
-"@multiversx/sdk-hw-provider@8.0.0":
-  version "8.0.0"
-  resolved "https://registry.npmjs.org/@multiversx/sdk-hw-provider/-/sdk-hw-provider-8.0.0.tgz#e2ba107a52fadf442d275eba3b9593a3240eb658"
-  integrity sha512-u7r0IaGpi8i0qLAVvvL9PaBCspnqPH5dbh3buIterpZjm/ysFG3KqKzCJVwOKt2165O+ZIuY/XYO0X4EfhWObg==
+"@multiversx/sdk-hw-provider@8.1.1":
+  version "8.1.1"
+  resolved "https://registry.npmjs.org/@multiversx/sdk-hw-provider/-/sdk-hw-provider-8.1.1.tgz#642047762d8f1a2a0a3319bd6e578653cd8aa369"
+  integrity sha512-vrCoqTRPmXDFyR8LeRlEk/oyrUXhD1nk9tAltXyzJgRIUcuyPJJKd45pi8mumBP0DTmzICeJKgi+A8wHxogL8g==
   dependencies:
     "@ledgerhq/devices" "8.0.3"
     "@ledgerhq/errors" "6.12.6"
