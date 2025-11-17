@@ -1,6 +1,7 @@
 import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderStrategy/types/walletConnect.types';
 import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
+import { IProviderSettings } from 'store/slices/config/config.types';
 import { StorageCallback } from 'store/storage';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { CustomNetworkType } from 'types/network.types';
@@ -19,13 +20,7 @@ type BaseDappConfigType = {
    */
   providers?: {
     walletConnect?: WalletConnectConfig;
-    ledger?: {
-      /**
-       * If set to true, will disable the transaction UI when signing with Ledger.
-       * Users will still need to confirm on their Ledger device.
-       */
-      disableUI?: boolean;
-    };
+    settings?: IProviderSettings;
   };
   /**
    * Customize the dApp theme.

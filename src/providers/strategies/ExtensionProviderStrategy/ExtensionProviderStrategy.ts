@@ -74,7 +74,7 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
       await onClose({ shouldCancelAction: false });
       throw error;
     } finally {
-      manager.closeUI();
+      manager?.closeUI();
     }
   };
 

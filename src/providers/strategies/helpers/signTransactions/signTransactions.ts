@@ -9,6 +9,7 @@ import { getEgldLabel } from 'methods/network/getEgldLabel';
 import { cancelCrossWindowAction } from 'providers/helpers/cancelCrossWindowAction';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { setIsSidePanelOpen } from 'store/actions/ui/uiActions';
+import { providerSettingsSelector } from 'store/selectors/configSelectors';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { getCommonData } from './helpers/getCommonData/getCommonData';
@@ -18,7 +19,6 @@ import { guardTransactions as getGuardedTransactions } from './helpers/guardTran
 
 type SignTransactionsParamsType = {
   transactions?: Transaction[];
-  disableUI?: boolean;
   handleSign: IProvider['signTransactions'];
   guardTransactions?: typeof getGuardedTransactions;
 };
@@ -26,11 +26,11 @@ type SignTransactionsParamsType = {
 export async function signTransactions({
   transactions = [],
   handleSign,
-  guardTransactions = getGuardedTransactions,
-  disableUI = false
+  guardTransactions = getGuardedTransactions
 }: SignTransactionsParamsType): Promise<Transaction[]> {
   const { address, shard, username } = getAccount();
   const network = networkSelector(getState());
+  const providerConfig = providerSettingsSelector(getState());
 
   const egldLabel = getEgldLabel();
 
@@ -39,15 +39,15 @@ export async function signTransactions({
 
   const signedIndexes: number[] = [];
 
-  if (disableUI) {
+  if (providerConfig?.isSigningUiEnabled === false) {
     // Mark signing as in progress so idle state manager doesn't interfere
     setIsSidePanelOpen(true);
 
     try {
       const signedTransactions: Transaction[] = [];
 
-      for (const { transaction } of allTransactions) {
-        const signedTxs = await handleSign([transaction]);
+      for (const item of allTransactions) {
+        const signedTxs = await handleSign([item.transaction]);
         if (signedTxs && signedTxs.length > 0) {
           signedTransactions.push(signedTxs[0]);
         }

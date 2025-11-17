@@ -9,6 +9,6 @@ export const walletConnectConfigSelector = ({ config }: StoreType) => {
   return config.walletConnectConfig;
 };
 
-export const ledgerConfigSelector = ({ config }: StoreType) => {
-  return config.ledgerConfig;
+export const providerSettingsSelector = ({ config }: StoreType) => {
+  return config.settings;
 };

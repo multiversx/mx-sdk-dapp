@@ -8,6 +8,8 @@ import {
   ICustomProvider
 } from 'providers/types/providerFactory.types';
 import { setIsSidePanelOpen } from 'store/actions/ui/uiActions';
+import { providerSettingsSelector } from 'store/selectors/configSelectors';
+import { getState } from 'store/store';
 import { SigningWarningsEnum } from 'types/enums.types';
 import { getPendingTransactionsHandlers } from '../getPendingTransactionsHandlers';
 
@@ -16,7 +18,6 @@ type SignMessageWithModalPropsType<T> = {
   handleSignMessage: (message: Message) => Promise<Message>;
   cancelAction?: () => Promise<T> | undefined;
   providerType: string;
-  disableUI?: boolean;
 };
 
 const isProviderType = (
@@ -29,10 +30,11 @@ export async function signMessage<T>({
   message,
   handleSignMessage,
   cancelAction,
-  providerType,
-  disableUI = false
+  providerType
 }: SignMessageWithModalPropsType<T>): Promise<Message> {
-  if (disableUI) {
+  const providerConfig = providerSettingsSelector(getState());
+
+  if (providerConfig?.isSigningUiEnabled === false) {
     // Mark signing as in progress so idle state manager doesn't interfere
     setIsSidePanelOpen(true);
 
