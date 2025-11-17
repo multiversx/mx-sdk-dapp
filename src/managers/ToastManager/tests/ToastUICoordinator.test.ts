@@ -1,6 +1,21 @@
 import { EventBus } from '@multiversx/sdk-dapp-ui/utils/EventBus';
+import type { NotificationsFeedManager } from 'managers/NotificationsFeedManager/NotificationsFeedManager';
 import { ToastUICoordinator } from '../ToastUICoordinator';
 import { ToastEventsEnum } from '../types';
+
+const createNotificationsFeedManagerMock = (
+  overrides: Partial<{
+    isNotificationsFeedOpen: () => boolean;
+    openNotificationsFeed: () => void;
+    destroy: () => void;
+  }> = {}
+) =>
+  ({
+    isNotificationsFeedOpen: () => false,
+    openNotificationsFeed: jest.fn(),
+    destroy: jest.fn(),
+    ...overrides
+  }) as unknown as NotificationsFeedManager;
 
 describe('ToastUICoordinator tests', () => {
   it('publishes show event when showToasts is called', () => {
@@ -19,15 +34,11 @@ describe('ToastUICoordinator tests', () => {
   });
 
   it('publishes transaction update when notifications feed is open', async () => {
-    const notificationsFeedManager = {
-      isNotificationsFeedOpen: () => true,
-      openNotificationsFeed: jest.fn(),
-      destroy: jest.fn()
-    };
-
     const coordinator = new ToastUICoordinator({
       onCloseToast: jest.fn(),
-      notificationsFeedManager: notificationsFeedManager as any
+      notificationsFeedManager: createNotificationsFeedManagerMock({
+        isNotificationsFeedOpen: () => true
+      })
     });
 
     const eventBus = new EventBus();
@@ -49,11 +60,9 @@ describe('ToastUICoordinator tests', () => {
     const openNotificationsFeed = jest.fn();
     const coordinator = new ToastUICoordinator({
       onCloseToast: jest.fn(),
-      notificationsFeedManager: {
-        isNotificationsFeedOpen: () => false,
-        openNotificationsFeed,
-        destroy: jest.fn()
-      } as any
+      notificationsFeedManager: createNotificationsFeedManagerMock({
+        openNotificationsFeed
+      })
     });
 
     (coordinator as any).handleOpenNotificationsFeed();
@@ -65,11 +74,7 @@ describe('ToastUICoordinator tests', () => {
     const onCloseToast = jest.fn();
     const coordinator = new ToastUICoordinator({
       onCloseToast,
-      notificationsFeedManager: {
-        isNotificationsFeedOpen: () => false,
-        openNotificationsFeed: jest.fn(),
-        destroy: jest.fn()
-      } as any
+      notificationsFeedManager: createNotificationsFeedManagerMock()
     });
 
     const eventBus = {
@@ -110,11 +115,9 @@ describe('ToastUICoordinator tests', () => {
 
     const coordinator = new ToastUICoordinator({
       onCloseToast: jest.fn(),
-      notificationsFeedManager: {
-        isNotificationsFeedOpen: () => false,
-        openNotificationsFeed: jest.fn(),
+      notificationsFeedManager: createNotificationsFeedManagerMock({
         destroy: destroyNotificationsFeed
-      } as any
+      })
     });
 
     (coordinator as any).eventBusUnsubscribeFunctions = [unsubscribe];
