@@ -72,7 +72,7 @@ export const setProviderSettings = (settings: IProviderSettings | null) =>
     },
     false,
     {
-      type: 'setProviderConfig',
+      type: 'setProviderSettings',
       // @ts-ignore
       payload: {
         value: settings
