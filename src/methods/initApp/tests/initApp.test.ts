@@ -62,7 +62,8 @@ jest.mock('store/actions/network/initializeNetwork', () => ({
 
 jest.mock('store/actions/config/configActions', () => ({
   setNativeAuthConfig: jest.fn(),
-  setWalletConnectConfig: jest.fn()
+  setWalletConnectConfig: jest.fn(),
+  setProviderSettings: jest.fn()
 }));
 
 jest.mock('services/nativeAuth/methods/getDefaultNativeAuthConfig', () => ({
