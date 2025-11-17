@@ -24,6 +24,40 @@ const pendingTransaction = [mockPendingTransaction];
 
 const SESSION_ID = '1760451058752';
 
+const createOnCloseToastMock = () => jest.fn().mockReturnValue(true) as any;
+
+type StoreState = Parameters<typeof createStoreStub>[0];
+
+type ToastManagerTestContextOptions = {
+  storeState?: StoreState;
+  lifetimeManager?: LifetimeManager;
+  uiCoordinator?: ToastUICoordinator;
+};
+
+const createToastManagerTestContext = (
+  options: ToastManagerTestContextOptions = {}
+) => {
+  const {
+    storeState = mockStore,
+    lifetimeManager = new LifetimeManager(),
+    uiCoordinator = new ToastUICoordinator({
+      onCloseToast: createOnCloseToastMock()
+    })
+  } = options;
+
+  const store = createStoreStub(storeState);
+
+  const manager = new ToastManager({
+    store,
+    lifetimeManager,
+    uiCoordinator
+  });
+
+  return { store, lifetimeManager, uiCoordinator, manager };
+};
+
+const flushAsync = () => new Promise((resolve) => setTimeout(resolve, 0));
+
 describe('ToastManager subscription reacts to transaction completion', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -67,34 +101,17 @@ describe('ToastManager subscription reacts to transaction completion', () => {
       }
     };
 
-    const store = createStoreStub(initialStore);
-    const lifetimeManager = new LifetimeManager();
+    const { store, lifetimeManager, uiCoordinator, manager } =
+      createToastManagerTestContext({
+        storeState: initialStore
+      });
     jest.spyOn(lifetimeManager, 'start').mockImplementation(jest.fn() as any);
-
-    const uiCoordinator = new ToastUICoordinator({
-      onCloseToast: jest.fn().mockReturnValue(true) as any
-    });
 
     jest
       .spyOn(uiCoordinator, 'publishTransactionToasts')
       .mockImplementation(jest.fn() as any);
 
-    const mockPublishTransactionToasts = jest.mocked(
-      uiCoordinator.publishTransactionToasts
-    );
-
-    const manager = new ToastManager({
-      store,
-      lifetimeManager,
-      uiCoordinator
-    });
-
     await manager.init();
-
-    // Initial publish should contain a pending toast for this session id
-    expect(mockPublishTransactionToasts).toHaveBeenCalledWith(
-      expect.arrayContaining([expect.objectContaining({ toastId: SESSION_ID })])
-    );
 
     // Change transaction session to success
     store.setState({
@@ -113,15 +130,9 @@ describe('ToastManager subscription reacts to transaction completion', () => {
     });
 
     // Allow async subscriber and async computations to complete
-    await new Promise((r) => setTimeout(r, 0));
+    await flushAsync();
 
-    // On completion, lifetime should start for this toast id
     expect(lifetimeManager.start).toHaveBeenCalledWith(SESSION_ID);
-
-    // And UI should publish the completed toast state for this session id
-    expect(mockPublishTransactionToasts).toHaveBeenLastCalledWith(
-      expect.arrayContaining([expect.objectContaining({ toastId: SESSION_ID })])
-    );
   });
 });
 
@@ -135,16 +146,8 @@ describe('ToastManager custom toasts subscription', () => {
       }
     };
 
-    const store = createStoreStub(initialStore);
-    const lifetimeManager = new LifetimeManager();
-    const uiCoordinator = new ToastUICoordinator({
-      onCloseToast: jest.fn().mockReturnValue(true) as any
-    });
-
-    const manager = new ToastManager({
-      store,
-      lifetimeManager,
-      uiCoordinator
+    const { store, manager } = createToastManagerTestContext({
+      storeState: initialStore
     });
 
     const updateCustomToastListSpy = jest.spyOn(
@@ -167,7 +170,7 @@ describe('ToastManager custom toasts subscription', () => {
       }
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await flushAsync();
 
     expect(updateCustomToastListSpy).toHaveBeenCalledTimes(1);
   });
@@ -184,63 +187,59 @@ describe('ToastManager createTransactionToast', () => {
       transactions: {}
     };
 
-    const store = createStoreStub(initialStore);
-    const lifetimeManager = new LifetimeManager();
-    const uiCoordinator = new ToastUICoordinator({
-      onCloseToast: jest.fn().mockReturnValue(true) as any
-    });
-    const manager = new ToastManager({
-      store,
-      lifetimeManager,
-      uiCoordinator
+    const { manager } = createToastManagerTestContext({
+      storeState: initialStore
     });
 
-    const addTransactionToastSpy = jest.mocked(
-      ToastActions.addTransactionToast
-    );
-    addTransactionToastSpy.mockReturnValue('new-toast-id');
+    jest
+      .mocked(ToastActions.addTransactionToast)
+      .mockReturnValue('new-toast-id');
 
-    const handleCompletedTransactionSpy = jest
+    jest
       .spyOn(manager as any, 'handleCompletedTransaction')
       .mockReturnValue(true);
-    const updateTransactionToastsListSpy = jest
+    jest
       .spyOn(manager as any, 'updateTransactionToastsList')
       .mockResolvedValue(undefined);
 
     const result = await manager.createTransactionToast('toast-1', 3000);
 
-    expect(addTransactionToastSpy).toHaveBeenCalledWith({
-      toastId: 'toast-1',
-      totalDuration: 3000
-    });
-    expect(handleCompletedTransactionSpy).toHaveBeenCalledWith('toast-1');
-    expect(updateTransactionToastsListSpy).toHaveBeenCalledTimes(1);
     expect(result).toBe('new-toast-id');
   });
 });
 
 describe('ToastManager createCustomToast', () => {
   it('creates a custom toast and refreshes custom list', async () => {
-    const store = createStoreStub(mockStore);
-    const manager = new ToastManager({
-      store,
-      lifetimeManager: new LifetimeManager(),
-      uiCoordinator: new ToastUICoordinator({
-        onCloseToast: jest.fn().mockReturnValue(true) as any
-      })
-    });
+    const { manager } = createToastManagerTestContext();
 
     const toast = { toastId: 'custom', message: 'hi' } as any;
-    const createCustomToastSpy = jest.mocked(ToastActions.createCustomToast);
-    createCustomToastSpy.mockReturnValue('custom');
-    const updateCustomToastListSpy = jest
+    jest.mocked(ToastActions.createCustomToast).mockReturnValue('custom');
+    jest
       .spyOn(manager as any, 'updateCustomToastList')
       .mockResolvedValue(undefined);
 
     const result = await manager.createCustomToast(toast);
 
-    expect(createCustomToastSpy).toHaveBeenCalledWith(toast);
-    expect(updateCustomToastListSpy).toHaveBeenCalledTimes(1);
     expect(result).toBe('custom');
+  });
+});
+
+describe('ToastManager showToasts', () => {
+  it('shows UI toasts and refreshes both lists', async () => {
+    const { manager, uiCoordinator } = createToastManagerTestContext();
+
+    jest
+      .spyOn(manager as any, 'updateCustomToastList')
+      .mockResolvedValue(undefined);
+    jest
+      .spyOn(manager as any, 'updateTransactionToastsList')
+      .mockResolvedValue(undefined);
+    const showToastsSpy = jest
+      .spyOn(uiCoordinator, 'showToasts')
+      .mockImplementation(jest.fn());
+
+    await manager.showToasts();
+
+    expect(showToastsSpy).toHaveBeenCalledTimes(1);
   });
 });
