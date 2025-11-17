@@ -5,7 +5,7 @@ import {
   TransactionsDataTokensType
 } from 'types/transactions.types';
 import { decodeBase64 } from 'utils/decoders/base64Utils';
-import { getTokenFromData } from './getTokenFromData';
+import { getTokenFromData } from 'utils/transactions/getInterpretedTransaction/helpers/getTokenFromData';
 import { parseMultiEsdtTransferData } from './parseMultiEsdtTransferData';
 
 export function parseMultiEsdtTransferDataForMultipleTransactions({
