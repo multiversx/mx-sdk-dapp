@@ -6,7 +6,7 @@ import {
 import { baseTransactionMock } from '../../../helpers/tests/base-transaction-mock';
 import { getTransactionTokens } from '../getTransactionTokens';
 
-describe('getTransactionTokens', () => {
+describe('getTransactionTokens tests', () => {
   it('returns empty array when the transaction action details are missing', () => {
     const transaction: ServerTransactionType = {
       ...baseTransactionMock,
