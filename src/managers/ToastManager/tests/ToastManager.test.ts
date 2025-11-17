@@ -243,3 +243,16 @@ describe('ToastManager showToasts', () => {
     expect(showToastsSpy).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('ToastManager closeToast', () => {
+  it('returns true when closing an existing custom toast', () => {
+    const toastId = 'custom-toast';
+    const { manager } = createToastManagerTestContext();
+
+    (manager as any).customToasts = [{ toastId, message: 'hello' }];
+
+    const result = manager.closeToast(toastId);
+
+    expect(result).toBe(true);
+  });
+});
