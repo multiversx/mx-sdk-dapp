@@ -10,7 +10,8 @@ import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefau
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import {
   setNativeAuthConfig,
-  setWalletConnectConfig
+  setWalletConnectConfig,
+  setLedgerConfig
 } from 'store/actions/config/configActions';
 import { initializeNetwork } from 'store/actions/network/initializeNetwork';
 import { defaultStorageCallback } from 'store/storage';
@@ -108,6 +109,7 @@ export async function initApp({
 
   setNativeAuthConfig(nativeAuthConfig);
   setWalletConnectConfig(dAppConfig?.providers?.walletConnect ?? null);
+  setLedgerConfig(dAppConfig?.providers?.ledger ?? null);
 
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();

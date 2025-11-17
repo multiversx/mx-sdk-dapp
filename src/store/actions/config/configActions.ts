@@ -2,6 +2,7 @@ import { fallbackWalletConnectConfigurations } from 'constants/walletConnect.con
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
 import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderStrategy/types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
+import { ILedgerConfig } from 'store/slices/config/config.types';
 import { getStore } from 'store/store';
 
 export const setNativeAuthConfig = (config: NativeAuthConfigType | null) =>
@@ -57,6 +58,21 @@ export const setWalletConnectConfig = (config: WalletConnectConfig | null) =>
     false,
     {
       type: 'setWalletConnectConfig',
+      // @ts-ignore
+      payload: {
+        value: config
+      }
+    }
+  );
+
+export const setLedgerConfig = (config: ILedgerConfig | null) =>
+  getStore().setState(
+    ({ config: state }) => {
+      state.ledgerConfig = config;
+    },
+    false,
+    {
+      type: 'setLedgerConfig',
       // @ts-ignore
       payload: {
         value: config

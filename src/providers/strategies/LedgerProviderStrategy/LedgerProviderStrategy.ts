@@ -10,6 +10,8 @@ import {
   ProviderType
 } from 'providers/types/providerFactory.types';
 import { createCustomToast } from 'store/actions/toasts/toastsActions';
+import { ledgerConfigSelector } from 'store/selectors/configSelectors';
+import { getState } from 'store/store';
 import { IconNamesEnum } from 'types/enums.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { authenticateLedgerAccount } from './helpers/authenticateLedgerAccount';
@@ -157,10 +159,12 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
     }
 
     await this.rebuildProvider();
+    const ledgerConfig = ledgerConfigSelector(getState());
 
     const signedTransactions = await signTransactions({
       transactions,
-      handleSign: this.provider.signTransactions.bind(this.provider)
+      handleSign: this.provider.signTransactions.bind(this.provider),
+      disableUI: ledgerConfig?.disableUI
     });
 
     return signedTransactions;

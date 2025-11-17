@@ -19,6 +19,13 @@ type BaseDappConfigType = {
    */
   providers?: {
     walletConnect?: WalletConnectConfig;
+    ledger?: {
+      /**
+       * If set to true, will disable the transaction UI when signing with Ledger.
+       * Users will still need to confirm on their Ledger device.
+       */
+      disableUI?: boolean;
+    };
   };
   /**
    * Customize the dApp theme.

@@ -8,6 +8,7 @@ import { getAccount } from 'methods/account/getAccount';
 import { getEgldLabel } from 'methods/network/getEgldLabel';
 import { cancelCrossWindowAction } from 'providers/helpers/cancelCrossWindowAction';
 import { IProvider } from 'providers/types/providerFactory.types';
+import { setIsSidePanelOpen } from 'store/actions/ui/uiActions';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { getCommonData } from './helpers/getCommonData/getCommonData';
@@ -17,6 +18,7 @@ import { guardTransactions as getGuardedTransactions } from './helpers/guardTran
 
 type SignTransactionsParamsType = {
   transactions?: Transaction[];
+  disableUI?: boolean;
   handleSign: IProvider['signTransactions'];
   guardTransactions?: typeof getGuardedTransactions;
 };
@@ -24,7 +26,8 @@ type SignTransactionsParamsType = {
 export async function signTransactions({
   transactions = [],
   handleSign,
-  guardTransactions = getGuardedTransactions
+  guardTransactions = getGuardedTransactions,
+  disableUI = false
 }: SignTransactionsParamsType): Promise<Transaction[]> {
   const { address, shard, username } = getAccount();
   const network = networkSelector(getState());
@@ -35,6 +38,29 @@ export async function signTransactions({
     getMultiEsdtTransferData(transactions);
 
   const signedIndexes: number[] = [];
+
+  if (disableUI) {
+    // Mark signing as in progress so idle state manager doesn't interfere
+    setIsSidePanelOpen(true);
+
+    try {
+      const signedTransactions: Transaction[] = [];
+
+      for (const { transaction } of allTransactions) {
+        const signedTxs = await handleSign([transaction]);
+        if (signedTxs && signedTxs.length > 0) {
+          signedTransactions.push(signedTxs[0]);
+        }
+      }
+
+      const optionallyGuardedTransactions =
+        await guardTransactions(signedTransactions);
+
+      return optionallyGuardedTransactions;
+    } finally {
+      setIsSidePanelOpen(false);
+    }
+  }
 
   const manager = SignTransactionsStateManager.getInstance();
   await manager.openUI();
