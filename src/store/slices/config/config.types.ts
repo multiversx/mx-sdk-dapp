@@ -3,6 +3,10 @@ import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderS
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 
 export interface IProviderSettings {
+  /**
+   * Enables or disables the signing UI for all providers
+   * @default true
+   */
   isSigningUiEnabled?: boolean;
 }
 
