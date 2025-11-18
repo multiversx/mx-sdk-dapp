@@ -177,6 +177,10 @@ describe('ToastManager custom toasts subscription', () => {
 });
 
 describe('ToastManager createTransactionToast', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('creates a transaction toast and refreshes transaction list', async () => {
     const initialStore = {
       ...mockStore,
@@ -209,6 +213,10 @@ describe('ToastManager createTransactionToast', () => {
 });
 
 describe('ToastManager createCustomToast', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('creates a custom toast and refreshes custom list', async () => {
     const { manager } = createToastManagerTestContext();
 
@@ -225,6 +233,10 @@ describe('ToastManager createCustomToast', () => {
 });
 
 describe('ToastManager showToasts', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('shows UI toasts and refreshes both lists', async () => {
     const { manager, uiCoordinator } = createToastManagerTestContext();
 
@@ -245,6 +257,10 @@ describe('ToastManager showToasts', () => {
 });
 
 describe('ToastManager closeToast', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('returns true when closing an existing custom toast', () => {
     const toastId = 'custom-toast';
     const { manager } = createToastManagerTestContext();
@@ -258,6 +274,10 @@ describe('ToastManager closeToast', () => {
 });
 
 describe('ToastManager handleTransactionToastClose', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('returns true when transaction toast is completed', () => {
     const toastId = 'transaction-toast';
     const { manager } = createToastManagerTestContext();
