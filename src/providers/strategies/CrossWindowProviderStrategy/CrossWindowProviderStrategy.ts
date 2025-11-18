@@ -96,7 +96,7 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
 
       throw error;
     } finally {
-      manager.closeUI();
+      manager?.closeUI();
     }
   };
 

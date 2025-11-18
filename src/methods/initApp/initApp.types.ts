@@ -1,6 +1,7 @@
 import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderStrategy/types/walletConnect.types';
 import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
+import { IProviderSettings } from 'store/slices/config/config.types';
 import { StorageCallback } from 'store/storage';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { CustomNetworkType } from 'types/network.types';
@@ -19,6 +20,7 @@ type BaseDappConfigType = {
    */
   providers?: {
     walletConnect?: WalletConnectConfig;
+    settings?: IProviderSettings;
   };
   /**
    * Customize the dApp theme.

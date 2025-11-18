@@ -285,7 +285,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
       await onClose({ shouldCancelAction: true });
       throw error;
     } finally {
-      manager.closeUI();
+      manager?.closeUI();
     }
   };
 
