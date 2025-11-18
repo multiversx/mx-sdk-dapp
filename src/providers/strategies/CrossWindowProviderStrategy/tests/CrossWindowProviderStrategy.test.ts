@@ -1,119 +1,199 @@
-import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
-import { setProviderType } from 'store/actions/loginInfo/loginInfoActions';
-import { login as loginHelper } from '../../../DappProvider/helpers/login/login';
-import { setAccountProvider } from '../../../helpers/accountProvider';
-import { clearInitiatedLogins } from '../../../helpers/clearInitiatedLogins';
-import { ProviderFactory } from '../../../ProviderFactory';
+import { providerLabels } from 'constants/providerFactory.constants';
 import { ProviderTypeEnum } from '../../../types/providerFactory.types';
 import { CrossWindowProviderStrategy } from '../CrossWindowProviderStrategy';
 
-const logoutManagerInit = jest.fn();
+const mockCrossWindowProvider = {
+  init: jest.fn(),
+  setWalletUrl: jest.fn(),
+  setAddress: jest.fn(),
+  login: jest.fn(),
+  logout: jest.fn(),
+  signTransactions: jest.fn(),
+  signMessage: jest.fn(),
+  cancelAction: jest.fn(),
+  isInitialized: jest.fn(),
+  getAddress: jest.fn(),
+  setAccount: jest.fn()
+};
 
-jest.mock('../../../helpers/accountProvider', () => ({
-  setAccountProvider: jest.fn(),
-  getAccountProvider: jest.fn()
-}));
-
-jest.mock('../../../helpers/clearInitiatedLogins', () => ({
-  clearInitiatedLogins: jest.fn()
-}));
-
-jest.mock('store/actions/loginInfo/loginInfoActions', () => ({
-  setProviderType: jest.fn()
-}));
-
-jest.mock('../../../DappProvider/helpers/login/login', () => ({
-  login: jest.fn()
-}));
-
-jest.mock('managers/LogoutManager/LogoutManager', () => ({
-  LogoutManager: {
-    getInstance: () => ({
-      init: logoutManagerInit
-    })
+jest.mock('lib/sdkWebWalletCrossWindowProvider', () => ({
+  CrossWindowProvider: {
+    getInstance: () => mockCrossWindowProvider
   }
 }));
 
-jest.mock('lib/sdkWebWalletCrossWindowProvider', () => {
-  class MockCrossWindowProvider {
-    setWalletUrl() {
-      return undefined;
-    }
+jest.mock('store/selectors/networkSelectors', () => ({
+  networkSelector: jest.fn()
+}));
 
-    setAddress() {
-      return undefined;
-    }
+const { networkSelector: mockNetworkSelector } = jest.requireMock(
+  'store/selectors/networkSelectors'
+) as {
+  networkSelector: jest.Mock;
+};
 
-    init() {
-      return Promise.resolve(true);
-    }
+jest.mock('store/store', () => ({
+  getState: jest.fn()
+}));
 
-    static getInstance() {
-      return new MockCrossWindowProvider();
-    }
-  }
+const { getState: mockGetState } = jest.requireMock('store/store') as {
+  getState: jest.Mock;
+};
 
-  return { CrossWindowProvider: MockCrossWindowProvider };
-});
+jest.mock(
+  '../../helpers/signTransactions/helpers/guardTransactions/guardTransactions',
+  () => ({
+    guardTransactions: jest.fn()
+  })
+);
 
-jest.mock('../CrossWindowProviderStrategy');
+const { guardTransactions: mockGuardTransactions } = jest.requireMock(
+  '../../helpers/signTransactions/helpers/guardTransactions/guardTransactions'
+) as {
+  guardTransactions: jest.Mock;
+};
+
+jest.mock('../../helpers/signMessage/signMessage', () => ({
+  signMessage: jest.fn()
+}));
+
+const { signMessage: mockSignMessageHelper } = jest.requireMock(
+  '../../helpers/signMessage/signMessage'
+) as {
+  signMessage: jest.Mock;
+};
+
+jest.mock('../../helpers', () => ({
+  getPendingTransactionsHandlers: jest.fn()
+}));
+
+const { getPendingTransactionsHandlers: mockGetPendingTransactionsHandlers } =
+  jest.requireMock('../../helpers') as {
+    getPendingTransactionsHandlers: jest.Mock;
+  };
 
 describe('CrossWindowProviderStrategy tests', () => {
-  const crossWindowStrategyMock = jest.mocked(CrossWindowProviderStrategy);
-  const mockSetAccountProvider = jest.mocked(setAccountProvider);
-  const mockClearInitiatedLogins = jest.mocked(clearInitiatedLogins);
-  const mockSetProviderType = jest.mocked(setProviderType);
-  const mockLoginHelper = jest.mocked(loginHelper);
-
-  let strategyInstance: any;
+  const buildHandlers = () => {
+    const manager = {
+      subscribeToEventBus: jest.fn(),
+      updateData: jest.fn(),
+      closeUI: jest.fn()
+    };
+    const onClose = jest.fn();
+    return { manager, onClose };
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    logoutManagerInit.mockReset();
+    Object.values(mockCrossWindowProvider).forEach((fn) => fn.mockReset());
 
-    strategyInstance = {
-      init: jest.fn().mockResolvedValue(true),
-      login: jest.fn().mockResolvedValue('provider-login'),
-      getType: jest.fn().mockReturnValue(ProviderTypeEnum.crossWindow),
-      cancelLogin: jest.fn(),
-      provider: new CrossWindowProvider()
-    };
-
-    crossWindowStrategyMock.mockImplementation(() => strategyInstance);
-    mockLoginHelper.mockResolvedValue('login-helper-token' as any);
+    mockNetworkSelector.mockReturnValue({
+      walletAddress: 'https://wallet.multiversx.com'
+    });
+    mockGetState.mockReturnValue({});
+    mockGuardTransactions.mockImplementation(async (txs) => txs);
+    mockSignMessageHelper.mockResolvedValue('signed-message');
+    mockGetPendingTransactionsHandlers.mockResolvedValue(buildHandlers());
   });
 
-  it('creates crossWindow provider and clears initiated logins', async () => {
-    const dappProvider = await ProviderFactory.create({
-      type: ProviderTypeEnum.crossWindow
+  it('initializes provider with wallet url and optional address', async () => {
+    mockCrossWindowProvider.init.mockResolvedValue(true);
+    const strategy = new CrossWindowProviderStrategy({
+      address: 'erd1address'
     });
 
-    expect(strategyInstance.init).toHaveBeenCalled();
-    expect(mockSetAccountProvider).toHaveBeenCalledWith(dappProvider);
-    expect(mockClearInitiatedLogins).toHaveBeenCalledWith({
-      skipLoginMethod: ProviderTypeEnum.crossWindow
-    });
-    expect(dappProvider).toBeDefined();
+    const result = await strategy.init();
+
+    expect(mockCrossWindowProvider.init).toHaveBeenCalled();
+    expect(mockCrossWindowProvider.setWalletUrl).toHaveBeenCalledWith(
+      'https://wallet.multiversx.com'
+    );
+    expect(mockCrossWindowProvider.setAddress).toHaveBeenCalledWith(
+      'erd1address'
+    );
+    expect(result).toBe(true);
   });
 
-  it('performs login via DappProvider and wires store updates', async () => {
-    const dappProvider = await ProviderFactory.create({
-      type: ProviderTypeEnum.crossWindow
+  it('proxies login calls to underlying provider', async () => {
+    mockCrossWindowProvider.login.mockResolvedValue({
+      address: 'erd1user',
+      signature: 'sig'
     });
+    const strategy = new CrossWindowProviderStrategy();
 
-    mockSetAccountProvider.mockClear();
-    mockSetProviderType.mockClear();
+    const result = await strategy.login({ token: 'abc' });
 
-    const result = await dappProvider.login({ token: 'abc' });
-
-    expect(mockLoginHelper).toHaveBeenCalledWith(strategyInstance, {
+    expect(mockCrossWindowProvider.login).toHaveBeenCalledWith({
       token: 'abc'
     });
-    expect(mockSetProviderType).toHaveBeenCalledWith(
-      ProviderTypeEnum.crossWindow
+    expect(result).toEqual({ address: 'erd1user', signature: 'sig' });
+  });
+
+  it('signTransactions resolves guarded transactions and closes UI', async () => {
+    const handlers = buildHandlers();
+    mockGetPendingTransactionsHandlers.mockResolvedValue(handlers);
+    const signedTx = [{ hash: 'signed' } as any];
+    const guardedTx = [{ hash: 'guarded' } as any];
+    mockCrossWindowProvider.signTransactions.mockResolvedValue(signedTx);
+    mockGuardTransactions.mockResolvedValue(guardedTx);
+
+    const strategy = new CrossWindowProviderStrategy();
+    const result = await strategy.signTransactions([{} as any]);
+
+    expect(mockCrossWindowProvider.signTransactions).toHaveBeenCalled();
+    expect(mockGuardTransactions).toHaveBeenCalledWith(signedTx);
+    expect(handlers.manager.closeUI).toHaveBeenCalled();
+    expect(result).toBe(guardedTx);
+  });
+
+  it('signTransactions cancels action on error', async () => {
+    const handlers = buildHandlers();
+    mockGetPendingTransactionsHandlers.mockResolvedValue(handlers);
+    const error = new Error('sign error');
+    mockCrossWindowProvider.signTransactions.mockRejectedValue(error);
+
+    const strategy = new CrossWindowProviderStrategy();
+
+    await expect(strategy.signTransactions([{} as any])).rejects.toThrow(
+      'sign error'
     );
-    expect(mockSetAccountProvider).toHaveBeenLastCalledWith(dappProvider);
-    expect(logoutManagerInit).toHaveBeenCalled();
-    expect(result).toBe('login-helper-token');
+
+    expect(handlers.onClose).toHaveBeenCalledWith({
+      shouldCancelAction: true
+    });
+    expect(handlers.manager.closeUI).toHaveBeenCalled();
+  });
+
+  it('signMessage delegates to helper with cancelAction', async () => {
+    const strategy = new CrossWindowProviderStrategy();
+    const message = { data: 'hello' } as any;
+    mockSignMessageHelper.mockResolvedValue(message);
+
+    const result = await strategy.signMessage(message);
+
+    expect(mockSignMessageHelper).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message,
+        cancelAction: strategy.cancelAction,
+        providerType: providerLabels.crossWindow
+      })
+    );
+    expect(result).toBe(message);
+  });
+
+  it('cancelAction triggers underlying provider cancel', async () => {
+    const strategy = new CrossWindowProviderStrategy();
+    await strategy.cancelAction();
+    expect(mockCrossWindowProvider.cancelAction).toHaveBeenCalled();
+  });
+
+  it('getType returns crossWindow and proxies address utilities', async () => {
+    mockCrossWindowProvider.getAddress.mockResolvedValue('erd1user');
+    const strategy = new CrossWindowProviderStrategy();
+
+    expect(strategy.getType()).toBe(ProviderTypeEnum.crossWindow);
+    const address = await strategy.getAddress();
+    expect(mockCrossWindowProvider.getAddress).toHaveBeenCalled();
+    expect(address).toBe('erd1user');
   });
 });
