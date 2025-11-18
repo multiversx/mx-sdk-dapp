@@ -3,6 +3,7 @@ import { account, testNetwork } from '__mocks__';
 import { Transaction } from 'lib/sdkCore';
 import { SignTransactionsStateManager } from 'managers/internal/SignTransactionsStateManager';
 import { SignEventsEnum } from 'managers/internal/SignTransactionsStateManager/types';
+import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { ComponentFactory } from 'utils/ComponentFactory';
 import { signTransactions } from '../signTransactions';
 import {
@@ -26,6 +27,20 @@ jest.spyOn(ComponentFactory, 'create').mockResolvedValue({
   getEventBus: async () => new EventBus()
 });
 
+jest.mock('providers/helpers/accountProvider', () => ({
+  getAccountProvider: jest.fn()
+}));
+
+const { getAccountProvider: mockGetAccountProvider } = jest.requireMock(
+  'providers/helpers/accountProvider'
+) as {
+  getAccountProvider: jest.Mock;
+};
+
+mockGetAccountProvider.mockReturnValue({
+  getType: () => ProviderTypeEnum.extension
+});
+
 const mockHandleSign = jest.fn((txs) => Promise.resolve(txs));
 
 const manager = SignTransactionsStateManager.getInstance();
@@ -36,6 +51,16 @@ const executeHandler = async (handler: Function) => {
 };
 
 describe('signTransactions tests', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockGetAccountProvider.mockReset();
+    mockGetAccountProvider.mockReturnValue({
+      getType: () => ProviderTypeEnum.extension,
+      cancelAction: jest.fn(),
+      dispose: jest.fn()
+    });
+  });
+
   const startSigning = async (
     transactions = mockSignTransactionsInputData.transactions
   ) => {
@@ -118,5 +143,32 @@ describe('signTransactions tests', () => {
     secondTxConfirm();
     const signedTransactions = await signPromise;
     expect(signedTransactions.length).toBe(2);
+  });
+
+  it('cancels cross-window provider when closing signing modal', async () => {
+    const cancelAction = jest.fn().mockResolvedValue(undefined);
+    const dispose = jest.fn().mockResolvedValue(undefined);
+
+    mockGetAccountProvider.mockReturnValue({
+      getType: () => ProviderTypeEnum.crossWindow,
+      cancelAction,
+      dispose
+    });
+
+    const { signPromise } = await startSigning();
+
+    const closeHandlers = manager.getEventHandlers(SignEventsEnum.CLOSE);
+    expect(closeHandlers.length).toBeGreaterThan(0);
+
+    const handlerPromises = closeHandlers.map((handler) => handler());
+
+    await Promise.allSettled(handlerPromises);
+
+    await expect(signPromise).rejects.toThrow(
+      'Transaction signing cancelled by user'
+    );
+
+    expect(cancelAction).toHaveBeenCalledTimes(closeHandlers.length);
+    expect(dispose).toHaveBeenCalledTimes(closeHandlers.length);
   });
 });

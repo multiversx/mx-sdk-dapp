@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added CrossWindowProviderStrategy tests](https://github.com/multiversx/mx-sdk-dapp/pull/1682)
 - [Extended tests](https://github.com/multiversx/mx-sdk-dapp/pull/1680)
 - [Added providers settings to disable UI in signing screens](https://github.com/multiversx/mx-sdk-dapp/pull/1679)
 - [Extended tests](https://github.com/multiversx/mx-sdk-dapp/pull/1678)
