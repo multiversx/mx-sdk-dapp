@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Added CrossWindowProviderStrategy tests](https://github.com/multiversx/mx-sdk-dapp/pull/1681)
+- [Added CrossWindowProviderStrategy tests](https://github.com/multiversx/mx-sdk-dapp/pull/1682)
 - [Extended tests](https://github.com/multiversx/mx-sdk-dapp/pull/1680)
 - [Extended tests](https://github.com/multiversx/mx-sdk-dapp/pull/1678)
 - [Removed index files in project including main index file](https://github.com/multiversx/mx-sdk-dapp/pull/1676)
