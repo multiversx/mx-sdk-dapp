@@ -90,7 +90,11 @@ describe('CrossWindowProviderStrategy tests', () => {
     Object.values(mockCrossWindowProvider).forEach((fn) => fn.mockReset());
 
     mockNetworkSelector.mockReturnValue(network);
-    mockGetState.mockReturnValue({});
+    mockGetState.mockReturnValue({
+      config: {
+        settings: {}
+      }
+    });
     mockGuardTransactions.mockImplementation(async (txs) => txs);
     mockSignMessageHelper.mockResolvedValue('signed-message');
     mockGetPendingTransactionsHandlers.mockResolvedValue(buildHandlers());
