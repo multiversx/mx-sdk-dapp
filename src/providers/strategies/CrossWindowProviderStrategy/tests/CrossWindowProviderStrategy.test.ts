@@ -1,3 +1,5 @@
+import { account } from '__mocks__/data/storeData/account';
+import { network } from '__mocks__/data/storeData/network';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { ProviderTypeEnum } from '../../../types/providerFactory.types';
 import { CrossWindowProviderStrategy } from '../CrossWindowProviderStrategy';
@@ -87,9 +89,7 @@ describe('CrossWindowProviderStrategy tests', () => {
     jest.clearAllMocks();
     Object.values(mockCrossWindowProvider).forEach((fn) => fn.mockReset());
 
-    mockNetworkSelector.mockReturnValue({
-      walletAddress: 'https://wallet.multiversx.com'
-    });
+    mockNetworkSelector.mockReturnValue(network);
     mockGetState.mockReturnValue({});
     mockGuardTransactions.mockImplementation(async (txs) => txs);
     mockSignMessageHelper.mockResolvedValue('signed-message');
@@ -99,24 +99,24 @@ describe('CrossWindowProviderStrategy tests', () => {
   it('initializes provider with wallet url and optional address', async () => {
     mockCrossWindowProvider.init.mockResolvedValue(true);
     const strategy = new CrossWindowProviderStrategy({
-      address: 'erd1address'
+      address: account.address
     });
 
     const result = await strategy.init();
 
     expect(mockCrossWindowProvider.init).toHaveBeenCalled();
     expect(mockCrossWindowProvider.setWalletUrl).toHaveBeenCalledWith(
-      'https://wallet.multiversx.com'
+      network.walletAddress
     );
     expect(mockCrossWindowProvider.setAddress).toHaveBeenCalledWith(
-      'erd1address'
+      account.address
     );
     expect(result).toBe(true);
   });
 
   it('proxies login calls to underlying provider', async () => {
     mockCrossWindowProvider.login.mockResolvedValue({
-      address: 'erd1user',
+      address: account.address,
       signature: 'sig'
     });
     const strategy = new CrossWindowProviderStrategy();
@@ -126,7 +126,17 @@ describe('CrossWindowProviderStrategy tests', () => {
     expect(mockCrossWindowProvider.login).toHaveBeenCalledWith({
       token: 'abc'
     });
-    expect(result).toEqual({ address: 'erd1user', signature: 'sig' });
+    expect(result).toEqual({ address: account.address, signature: 'sig' });
+  });
+
+  it('proxies logout calls to underlying provider', async () => {
+    mockCrossWindowProvider.logout.mockResolvedValue(true);
+    const strategy = new CrossWindowProviderStrategy();
+
+    const result = await strategy.logout();
+
+    expect(mockCrossWindowProvider.logout).toHaveBeenCalled();
+    expect(result).toBe(true);
   });
 
   it('signTransactions resolves guarded transactions and closes UI', async () => {
