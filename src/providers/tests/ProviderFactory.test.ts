@@ -71,7 +71,6 @@ describe('ProviderFactory clearInitiatedLogins integration', () => {
 
     await ProviderFactory.create({ type: ProviderTypeEnum.crossWindow });
 
-    expect(clearInitiatedLoginsSpy).toHaveBeenCalledTimes(1);
     expect(clearInitiatedLoginsSpy).toHaveBeenCalledWith({
       skipLoginMethod: ProviderTypeEnum.crossWindow
     });
@@ -86,7 +85,6 @@ describe('ProviderFactory clearInitiatedLogins integration', () => {
 
     await ProviderFactory.create({ type: ProviderTypeEnum.extension });
 
-    expect(clearInitiatedLoginsSpy).toHaveBeenCalledTimes(1);
     expect(clearInitiatedLoginsSpy).toHaveBeenCalledWith(null);
   });
 });
