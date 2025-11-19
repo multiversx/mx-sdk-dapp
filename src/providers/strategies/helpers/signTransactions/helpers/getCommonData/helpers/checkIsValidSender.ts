@@ -20,11 +20,8 @@ export const checkIsValidSender = (
 
   // Allow multisig contracts to be the sender
   const isSenderContract = isContract(senderAccount.address);
-  const isAccountContract = Array.isArray(address)
-    ? address.every((addr) => isContract(addr))
-    : isContract(address);
 
-  if (isMultiversxWallet || isSenderContract || isAccountContract) {
+  if (isMultiversxWallet || isSenderContract) {
     return true;
   }
 
