@@ -1,6 +1,6 @@
 import { testAddress } from '__mocks__/accountConfig';
 import { ITransactionListItem } from 'lib/sdkDappUi';
-import { TransactionServerStatusesEnum } from 'types';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
 
 export const baseTransactionMock: ITransactionListItem = {
   status: TransactionServerStatusesEnum.success,

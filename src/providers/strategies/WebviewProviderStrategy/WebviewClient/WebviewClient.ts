@@ -1,4 +1,4 @@
-import { safeWindow } from 'constants/index';
+import { safeWindow } from 'constants/window.constants';
 import { Address, Message, Transaction } from 'lib/sdkCore';
 import {
   WindowProviderRequestEnums,
@@ -7,7 +7,7 @@ import {
   RequestPayloadType
 } from 'lib/sdkWebWalletCrossWindowProvider';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
-import { accountSelector } from 'store/selectors';
+import { accountSelector } from 'store/selectors/accountSelectors';
 import { getStore } from 'store/store';
 
 type MessageHandler = (event: MessageEvent) => void;

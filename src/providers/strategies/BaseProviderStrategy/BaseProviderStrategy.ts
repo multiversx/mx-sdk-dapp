@@ -1,10 +1,12 @@
 import { IProviderAccount } from '@multiversx/sdk-wallet-connect-provider/out';
-import { providerLabels } from 'constants/index';
+import { providerLabels } from 'constants/providerFactory.constants';
 import { Transaction, Message } from 'lib/sdkCore';
 import { IDAppProviderOptions, IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager';
 import { getAddress } from 'methods/account/getAddress';
 import { IProvider, ProviderType } from 'providers/types/providerFactory.types';
+import { providerSettingsSelector } from 'store/selectors/configSelectors';
+import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { getPendingTransactionsHandlers } from '../helpers';
 
@@ -153,6 +155,16 @@ export abstract class BaseProviderStrategy<
   // }
 
   protected async initSignState() {
+    const providerConfig = providerSettingsSelector(getState());
+
+    // If UI is disabled, return null values to skip UI operations
+    if (providerConfig?.isSigningUiEnabled === false) {
+      return {
+        onClose: async () => ({}),
+        manager: null
+      };
+    }
+
     const { onClose, manager } = await getPendingTransactionsHandlers({
       cancelAction: this.cancelAction?.bind(this)
     });

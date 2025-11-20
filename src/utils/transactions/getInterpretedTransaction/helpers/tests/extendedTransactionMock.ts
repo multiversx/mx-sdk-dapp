@@ -6,7 +6,7 @@ import {
   VisibleTransactionOperationType
 } from 'types/serverTransactions.types';
 import { EsdtEnumType } from 'types/tokens.types';
-import { baseTransactionMock } from './base-transaction-mock';
+import { baseTransactionMock } from './baseTransactionMock';
 
 export const transactionMock: ServerTransactionType = {
   ...baseTransactionMock,

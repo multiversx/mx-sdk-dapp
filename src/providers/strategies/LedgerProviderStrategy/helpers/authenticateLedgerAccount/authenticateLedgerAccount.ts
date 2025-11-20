@@ -2,7 +2,7 @@ import { HWProvider } from '@multiversx/sdk-hw-provider/out';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { getExplorerAddress } from 'methods/network/getExplorerAddress';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
-import { setLedgerAccount } from 'store/actions';
+import { setLedgerAccount } from 'store/actions/account/accountActions';
 import { setLedgerLogin } from 'store/actions/loginInfo/loginInfoActions';
 
 import { getAuthTokenText } from './helpers/getAuthTokenText';

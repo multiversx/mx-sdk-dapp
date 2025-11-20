@@ -9,8 +9,8 @@ import {
   IProvider,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
-import { setAccountNonce } from 'store/actions';
-import { refreshAccount } from 'utils';
+import { setAccountNonce } from 'store/actions/account/accountActions';
+import { refreshAccount } from 'utils/account/refreshAccount';
 import { computeNonces } from '../computeNonces/computeNonces';
 
 export type SignTransactionsOptionsType = {

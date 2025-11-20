@@ -1,4 +1,4 @@
-import { IconNamesEnum, TransactionBatchStatusesEnum } from 'types';
+import { IconNamesEnum, TransactionBatchStatusesEnum } from 'types/enums.types';
 import {
   GetToastsOptionsDataPropsType,
   IToastDataState,

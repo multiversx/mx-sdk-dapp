@@ -103,7 +103,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
       await onClose({ shouldCancelAction: true });
       throw error;
     } finally {
-      manager.closeUI();
+      manager?.closeUI();
     }
   };
 

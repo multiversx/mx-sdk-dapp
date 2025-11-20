@@ -3,8 +3,8 @@ import { setGasStationMetadata } from 'methods/initApp/gasStationMetadata/setGas
 import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { IProvider } from 'providers/types/providerFactory.types';
-import { loginAction } from 'store/actions';
 import { setAccount } from 'store/actions/account';
+import { loginAction } from 'store/actions/sharedActions/sharedActions';
 import { AccountType } from 'types/account.types';
 import { fetchAccount } from 'utils/account/fetchAccount';
 import { trimUsernameDomain } from 'utils/account/trimUsernameDomain';

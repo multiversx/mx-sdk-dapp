@@ -8,15 +8,16 @@ import { ProviderFactory } from 'providers/ProviderFactory';
 import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
-import { initializeNetwork } from 'store/actions';
 import {
   setNativeAuthConfig,
-  setWalletConnectConfig
+  setWalletConnectConfig,
+  setProviderSettings
 } from 'store/actions/config/configActions';
+import { initializeNetwork } from 'store/actions/network/initializeNetwork';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
-import { ThemesEnum } from 'types';
-import { refreshAccount } from 'utils';
+import { ThemesEnum } from 'types/theme.types';
+import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
@@ -96,19 +97,19 @@ export async function initApp({
     environment: dAppConfig.environment
   });
 
+  let nativeAuthConfig: NativeAuthConfigType | null = null;
+
   if (dAppConfig?.nativeAuth) {
-    const nativeAuthConfig: NativeAuthConfigType =
+    nativeAuthConfig =
       typeof dAppConfig.nativeAuth === 'boolean' &&
       dAppConfig.nativeAuth === true
         ? getDefaultNativeAuthConfig({ apiAddress })
         : getDefaultNativeAuthConfig(dAppConfig.nativeAuth);
-
-    setNativeAuthConfig(nativeAuthConfig);
   }
 
-  if (dAppConfig?.providers?.walletConnect) {
-    setWalletConnectConfig(dAppConfig.providers.walletConnect);
-  }
+  setNativeAuthConfig(nativeAuthConfig);
+  setWalletConnectConfig(dAppConfig?.providers?.walletConnect ?? null);
+  setProviderSettings(dAppConfig?.providers?.settings ?? null);
 
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();

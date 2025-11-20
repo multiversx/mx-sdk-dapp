@@ -1,7 +1,7 @@
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { IHWWalletApp } from '@multiversx/sdk-hw-provider/out/interface';
 
-import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
+import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/mvx.constants';
 
 export async function getLedgerConfiguration(initializedHwWalletP: HWProvider) {
   if (!initializedHwWalletP.isInitialized()) {

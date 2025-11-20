@@ -23,7 +23,7 @@ jest.mock('methods/network/getNetworkConfig', () => ({
   getNetworkConfig: jest.fn()
 }));
 
-jest.mock('store/actions', () => ({
+jest.mock('store/actions/account/accountActions', () => ({
   setAccount: jest.fn()
 }));
 

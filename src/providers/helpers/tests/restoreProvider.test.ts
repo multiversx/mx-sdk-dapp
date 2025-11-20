@@ -1,6 +1,6 @@
 import { isMobileWebview } from 'lib/sdkWebviewProvider';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
-import { providerTypeSelector } from 'store/selectors';
+import { providerTypeSelector } from 'store/selectors/loginInfoSelectors';
 import { getState } from 'store/store';
 import { getIsInIframe } from 'utils/window/getIsInIframe';
 import { ProviderFactory } from '../../ProviderFactory';
@@ -10,7 +10,7 @@ import { restoreProvider } from '../restoreProvider';
 jest.mock('lib/sdkWebviewProvider');
 jest.mock('utils/window/getIsInIframe');
 jest.mock('store/store');
-jest.mock('store/selectors');
+jest.mock('store/selectors/loginInfoSelectors');
 jest.mock('../accountProvider');
 jest.mock('../../ProviderFactory');
 

@@ -2,7 +2,7 @@ import {
   AVERAGE_TX_DURATION_MS,
   CROSS_SHARD_ROUNDS
 } from 'constants/transactions.constants';
-import { accountSelector } from 'store/selectors';
+import { accountSelector } from 'store/selectors/accountSelectors';
 import { getState } from 'store/store';
 import { SignedTransactionType } from 'types/transactions.types';
 import { getAreTransactionsCrossShards } from './getAreTransactionsCorssShards';

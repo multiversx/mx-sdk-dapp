@@ -1,4 +1,7 @@
-import { ALL_SHARDS_SHARD_ID, METACHAIN_SHARD_ID } from 'constants/index';
+import {
+  ALL_SHARDS_SHARD_ID,
+  METACHAIN_SHARD_ID
+} from 'constants/mvx.constants';
 
 export const getShardText = (shard: number | string) => {
   let shardText = shard;

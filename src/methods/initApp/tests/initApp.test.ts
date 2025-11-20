@@ -15,7 +15,7 @@ import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefau
 import { setNativeAuthConfig } from 'store/actions/config/configActions';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { ThemesEnum } from 'types/theme.types';
-import { refreshAccount } from 'utils';
+import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
 
 jest.mock('constants/window.constants', () => ({
@@ -34,6 +34,10 @@ jest.mock('utils/visual/switchTheme', () => ({
   switchTheme: jest.fn()
 }));
 
+jest.mock('utils/account/refreshAccount', () => ({
+  refreshAccount: jest.fn().mockResolvedValue(undefined)
+}));
+
 jest.mock('store/store', () => {
   const mockStore = {
     getState: jest.fn(),
@@ -50,7 +54,7 @@ jest.mock('methods/initApp/helpers/waitForStoreRehydration', () => ({
   waitForStoreRehydration: jest.fn().mockResolvedValue(undefined)
 }));
 
-jest.mock('store/actions', () => ({
+jest.mock('store/actions/network/initializeNetwork', () => ({
   initializeNetwork: jest.fn().mockResolvedValue({
     apiAddress: network.apiAddress
   })
@@ -58,7 +62,8 @@ jest.mock('store/actions', () => ({
 
 jest.mock('store/actions/config/configActions', () => ({
   setNativeAuthConfig: jest.fn(),
-  setWalletConnectConfig: jest.fn()
+  setWalletConnectConfig: jest.fn(),
+  setProviderSettings: jest.fn()
 }));
 
 jest.mock('services/nativeAuth/methods/getDefaultNativeAuthConfig', () => ({
@@ -79,11 +84,6 @@ jest.mock('methods/trackTransactions/trackTransactions', () => ({
 
 jest.mock('providers/helpers/restoreProvider', () => ({
   restoreProvider: jest.fn().mockResolvedValue(undefined)
-}));
-
-jest.mock('utils', () => ({
-  ...jest.requireActual('utils'),
-  refreshAccount: jest.fn().mockResolvedValue(undefined)
 }));
 
 jest.mock('methods/account/getAccount', () => ({

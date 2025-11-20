@@ -1,4 +1,4 @@
-import { networkSelector } from 'store/selectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { NativeAuthConfigType } from '../nativeAuth.types';

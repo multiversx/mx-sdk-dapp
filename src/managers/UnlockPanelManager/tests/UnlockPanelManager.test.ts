@@ -1,6 +1,6 @@
 import { ProviderFactory } from 'providers/ProviderFactory';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
-import { networkSelector } from 'store/selectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { ComponentFactory } from 'utils/ComponentFactory';
 import { UnlockPanelManager } from '../UnlockPanelManager';
 
@@ -10,7 +10,7 @@ jest.mock('providers/ProviderFactory', () => ({
   }
 }));
 
-jest.mock('store/selectors', () => ({
+jest.mock('store/selectors/networkSelectors', () => ({
   networkSelector: jest.fn()
 }));
 

@@ -13,8 +13,9 @@ import {
   ProviderTypeEnum,
   ProviderType
 } from 'providers/types/providerFactory.types';
-import { logoutAction } from 'store/actions';
-import { chainIdSelector, nativeAuthConfigSelector } from 'store/selectors';
+import { logoutAction } from 'store/actions/sharedActions/sharedActions';
+import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
+import { chainIdSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import {
@@ -284,7 +285,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
       await onClose({ shouldCancelAction: true });
       throw error;
     } finally {
-      manager.closeUI();
+      manager?.closeUI();
     }
   };
 

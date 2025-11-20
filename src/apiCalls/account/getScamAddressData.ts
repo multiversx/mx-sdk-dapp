@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { getCleanApiAddress } from 'apiCalls/utils/getCleanApiAddress';
-import { TIMEOUT } from 'constants/index';
+import { getCleanApiAddress } from 'apiCalls/configuration/getCleanApiAddress';
+import { TIMEOUT } from 'constants/network.constants';
 import { ScamInfoType } from 'types/account.types';
 import { ACCOUNTS_ENDPOINT } from '../endpoints';
 

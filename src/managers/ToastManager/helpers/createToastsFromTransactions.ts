@@ -9,7 +9,7 @@ import { toastsSliceSelector } from 'store/selectors/toastsSelectors';
 import { transactionsSliceSelector } from 'store/selectors/transactionsSelector';
 import { getState } from 'store/store';
 import { StoreType } from 'store/store.types';
-import { mapServerTransactionsToListItems } from 'utils/transactions/getTransactionsHistory/helpers';
+import { mapServerTransactionsToListItems } from 'utils/transactions/getTransactionsHistory/helpers/mapServerTransactionsToListItems';
 import { createTransactionToast } from './createTransactionToast';
 import { ITransactionToast } from '../types/toast.types';
 interface CreateToastsFromTransactionsReturnType {

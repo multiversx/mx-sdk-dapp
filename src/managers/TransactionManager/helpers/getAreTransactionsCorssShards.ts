@@ -1,5 +1,5 @@
 import { SignedTransactionType } from 'types/transactions.types';
-import { getAddressFromDataField } from 'utils';
+import { getAddressFromDataField } from 'utils/validation/isContract';
 import { isCrossShardTransaction } from './isCrossShardTransaction';
 
 export const getAreTransactionsCrossShards = (

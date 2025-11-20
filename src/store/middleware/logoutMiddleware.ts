@@ -6,9 +6,9 @@ import {
 } from 'store/actions/loginInfo/loginInfoActions';
 import {
   accountInfoSelector,
-  isLoggedInSelector,
-  loginExpiresAtSelector
-} from 'store/selectors';
+  isLoggedInSelector
+} from 'store/selectors/accountSelectors';
+import { loginExpiresAtSelector } from 'store/selectors/loginInfoSelectors';
 import { initialState as initialAccountState } from 'store/slices/account/accountSlice';
 import { initialState as initialLoginInfoState } from 'store/slices/loginInfo/loginInfoSlice';
 import { initialState as initialToastState } from 'store/slices/toast/toastSlice';

@@ -2,8 +2,8 @@ import {
   AVERAGE_TX_DURATION_MS,
   CROSS_SHARD_ROUNDS
 } from 'constants/transactions.constants';
-import { accountSelector } from 'store/selectors';
-import { TransactionServerStatusesEnum } from 'types';
+import { accountSelector } from 'store/selectors/accountSelectors';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { SignedTransactionType } from 'types/transactions.types';
 import { getAreTransactionsCrossShards } from '../helpers/getAreTransactionsCorssShards';
 import { getToastDuration } from '../helpers/getToastDuration';
@@ -25,7 +25,9 @@ const mockTransaction: SignedTransactionType = {
 
 jest.mock('../helpers/getAreTransactionsCorssShards');
 jest.mock('store/store', () => ({ getState: jest.fn() }));
-jest.mock('store/selectors', () => ({ accountSelector: jest.fn() }));
+jest.mock('store/selectors/accountSelectors', () => ({
+  accountSelector: jest.fn()
+}));
 jest.mock('../helpers/isBatchTransaction');
 
 describe('getToastDuration', () => {

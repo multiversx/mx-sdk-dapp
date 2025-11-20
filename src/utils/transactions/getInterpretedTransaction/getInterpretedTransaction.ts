@@ -6,16 +6,16 @@ import {
 } from 'types/serverTransactions.types';
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { timeAgo } from 'utils/operations/timeRemaining';
-import { isContract } from 'utils/validation';
+import { isContract } from 'utils/validation/isContract';
 import { explorerUrlBuilder } from '../explorerUrlBuilder';
 import { getExplorerLink } from '../getExplorerLink';
 import { getHumanReadableTimeFormat } from '../getHumanReadableTimeFormat';
+import { getTransactionTokens } from './getTransactionValue/helpers/getTransactionTokens';
 import { getTokenFromData } from './helpers/getTokenFromData';
 import { getTransactionIconInfo } from './helpers/getTransactionIconInfo';
 import { getTransactionMethod } from './helpers/getTransactionMethod';
 import { getTransactionReceiver } from './helpers/getTransactionReceiver';
 import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
-import { getTransactionTokens } from './helpers/getTransactionTokens';
 import { getTransactionTransferType } from './helpers/getTransactionTransferType';
 
 export interface GetInterpretedTransactionType {

@@ -1,6 +1,6 @@
 import axios from 'axios';
+import { getCleanApiAddress } from 'apiCalls/configuration/getCleanApiAddress';
 import { ECONOMICS_ENDPOINT } from 'apiCalls/endpoints';
-import { getCleanApiAddress } from 'apiCalls/utils/getCleanApiAddress';
 
 export interface EconomicsInfoType {
   totalSupply: number;

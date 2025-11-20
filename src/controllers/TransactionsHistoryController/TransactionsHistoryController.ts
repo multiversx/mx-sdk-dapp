@@ -1,5 +1,5 @@
 import { IGetHistoricalTransactionsParams } from 'types/transaction-list-item.types';
-import { getTransactionsHistory } from 'utils/transactions';
+import { getTransactionsHistory } from 'utils/transactions/getTransactionsHistory';
 
 // TODO: Will replace TransactionsTableController in the future
 export const TransactionsHistoryController = {

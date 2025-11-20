@@ -2,14 +2,14 @@ import { PROVIDER_SEARCH_PARAM } from 'constants/providerFactory.constants';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { LedgerIdleStateManager } from 'managers/internal/LedgerIdleStateManager/LedgerIdleStateManager';
 import { getAddress } from 'methods/account/getAddress';
+import { CrossWindowProviderStrategy } from 'providers/strategies/CrossWindowProviderStrategy';
+import { ExtensionProviderStrategy } from 'providers/strategies/ExtensionProviderStrategy';
+import { IframeProviderStrategy } from 'providers/strategies/IframeProviderStrategy';
+import { LedgerProviderStrategy } from 'providers/strategies/LedgerProviderStrategy';
 import {
-  CrossWindowProviderStrategy,
-  ExtensionProviderStrategy,
-  IframeProviderStrategy,
-  LedgerProviderStrategy,
   WalletConnectProviderStrategy,
   WalletConnectV2Error
-} from 'providers/strategies';
+} from 'providers/strategies/WalletConnectProviderStrategy';
 import { setProviderType } from 'store/actions/loginInfo/loginInfoActions';
 import { walletConnectConfigSelector } from 'store/selectors/configSelectors';
 import { networkSelector } from 'store/selectors/networkSelectors';
