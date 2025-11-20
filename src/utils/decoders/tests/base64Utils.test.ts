@@ -105,6 +105,21 @@ describe('isStringBase64', () => {
     expect(result).toStrictEqual(false);
   });
 
+  it('should return false for null value', () => {
+    const result = isStringBase64(null as any);
+    expect(result).toStrictEqual(false);
+  });
+
+  it('should return false for undefined value', () => {
+    const result = isStringBase64(undefined as any);
+    expect(result).toStrictEqual(false);
+  });
+
+  it('should return false for false value', () => {
+    const result = isStringBase64(false as any);
+    expect(result).toStrictEqual(false);
+  });
+
   it('should return false for strings with invalid base64 characters', () => {
     const result = isStringBase64('invalid@#$%');
     expect(result).toStrictEqual(false);
