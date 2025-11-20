@@ -14,5 +14,6 @@ export const config: ConfigSliceType = {
       'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://xportal.com/',
     walletConnectV2RelayAddress: 'wss://relay.walletconnect.com'
   },
+  settings: null,
   websocketStatus: WebsocketConnectionStatusEnum.PENDING
 };
