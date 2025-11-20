@@ -18,7 +18,7 @@
  * @param str
  */
 export function isStringBase64(str: string) {
-  if (!str.length) {
+  if (!str) {
     return false;
   }
 
