@@ -364,7 +364,7 @@ describe('LedgerConnectStateManager tests', () => {
         LedgerConnectEventsEnum.CLOSE,
         expect.any(Function)
       );
-      const callback = subscribe.mock.calls[0][1];
+      const [, callback] = subscribe.mock.calls[0];
       callback();
       expect(handleCloseSpy).toHaveBeenCalledTimes(1);
     });
@@ -375,7 +375,10 @@ describe('LedgerConnectStateManager tests', () => {
       const manager = new LedgerConnectStateManager();
       (manager as any).allAccounts = [{ address: 'erd1' }];
       (manager as any).accountScreenData = {
-        accounts: [{ address: 'erd1' }],
+        accounts: Array.from({ length: 5 }).map((_, index) => ({
+          address: `erd1resetaddr${index}`,
+          index
+        })),
         startIndex: 5,
         addressesPerPage: 5,
         isLoading: false
