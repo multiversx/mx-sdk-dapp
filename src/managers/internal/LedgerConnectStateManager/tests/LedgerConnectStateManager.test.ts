@@ -1,3 +1,5 @@
+import { testAddress } from '__mocks__/accountConfig';
+import { network } from '__mocks__/data/storeData/network';
 import { UITagsEnum } from 'constants/UITags.enum';
 import { UnlockPanelEventsEnum } from 'managers/UnlockPanelManager/UnlockPanelManager.types';
 import { LedgerConnectStateManager } from '../LedgerConnectStateManager';
@@ -24,18 +26,14 @@ jest.mock('../../UIBaseManager/UIBaseManager', () => ({
       return mockGetInitialData();
     }
 
-    public notifyDataUpdate() {
-      // noop for tests – spied per instance where needed
-    }
+    public notifyDataUpdate() {}
 
     protected resetData() {
       mockSuperResetData();
       this.data = this.getInitialData();
     }
 
-    public destroy() {
-      // noop for tests – spied per instance where needed
-    }
+    public destroy() {}
   }
 }));
 
@@ -118,26 +116,45 @@ describe('LedgerConnectStateManager tests', () => {
     it('updates account screen data and notifies listeners', () => {
       const manager = new LedgerConnectStateManager();
       const notifySpy = jest.spyOn(manager as any, 'notifyDataUpdate');
-      const update = { startIndex: 20, isLoading: false };
+      const firstUpdate = { isLoading: true };
+      const fakeAccounts = Array.from({ length: 10 }).map((_, index) => ({
+        address: `erd1fakeaddress${index.toString().padStart(2, '0')}`,
+        balance: `${index}.0000`,
+        index,
+        usdValue: `$${(index * 10).toFixed(2)}`
+      }));
+      const secondUpdate = {
+        accounts: fakeAccounts,
+        isLoading: false
+      };
 
-      manager.updateAccountScreen(update);
+      manager.updateAccountScreen(firstUpdate);
+      manager.updateAccountScreen(secondUpdate);
 
       expect((manager as any).accountScreenData).toMatchObject({
-        accounts: [],
+        accounts: fakeAccounts,
+        startIndex: 0,
         addressesPerPage: manager.addressesPerPage,
-        ...update
+        isLoading: false
       });
       expect((manager as any).data).toMatchObject({
         accountScreenData: (manager as any).accountScreenData,
         confirmScreenData: null
       });
-      expect(notifySpy).toHaveBeenCalledTimes(1);
+      expect(notifySpy).toHaveBeenCalledTimes(2);
     });
 
     it('updates confirm screen data and notifies listeners', () => {
       const manager = new LedgerConnectStateManager();
       const notifySpy = jest.spyOn(manager as any, 'notifyDataUpdate');
-      const update = { selectedAddress: 'erd1', explorerLink: 'link' };
+      const explorerLink = `${network.explorerAddress}/accounts/${testAddress}`;
+      const update = {
+        data: 'https://localhost:3000 for more than one day.',
+        confirmAddressText: 'Confirm Ledger Address',
+        authText: 'Authorise Authentication Token',
+        selectedAddress: testAddress,
+        explorerLink
+      };
 
       manager.updateConfirmScreen(update);
 
@@ -162,7 +179,11 @@ describe('LedgerConnectStateManager tests', () => {
 
     it('returns current confirm screen data', () => {
       const manager = new LedgerConnectStateManager();
-      manager.updateConfirmScreen({ selectedAddress: 'erd1' });
+      const confirmData = {
+        selectedAddress: testAddress,
+        explorerLink: `${network.explorerAddress}/accounts/${testAddress}`
+      };
+      manager.updateConfirmScreen(confirmData);
 
       expect(manager.getConfirmScreenData()).toEqual(
         (manager as any).confirmScreenData
