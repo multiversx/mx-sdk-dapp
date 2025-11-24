@@ -56,7 +56,7 @@ export abstract class UIBaseManager<
       existing.push(unsubscribe);
       this.unsubscribeFunctions.set(event, existing);
 
-      // Store handler programatic access (e.g. for testing)
+      // Store handler programmatic access (e.g. for testing)
       const existingHandlers = this.eventHandlers.get(event) || [];
       existingHandlers.push(callback);
       this.eventHandlers.set(event, existingHandlers);

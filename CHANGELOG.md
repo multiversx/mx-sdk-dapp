@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.4.0](https://github.com/multiversx/mx-sdk-dapp/pull/1690)] - 2025-11-24
+
+- [Updated providers to LTS and removed unused dependecy](https://github.com/multiversx/mx-sdk-dapp/pull/1689)
+- [Extended tests](https://github.com/multiversx/mx-sdk-dapp/pull/1688)
+- [Added LedgerConnect tests](https://github.com/multiversx/mx-sdk-dapp/pull/1687)
+- [Added WalletConnect and Webview tests](https://github.com/multiversx/mx-sdk-dapp/pull/1686)
+
 ## [[5.3.3](https://github.com/multiversx/mx-sdk-dapp/pull/1684)] - 2025-11-20
 
 - [Allow signing transactions from wallet origin and multisig sender account](https://github.com/multiversx/mx-sdk-dapp/pull/1683)
