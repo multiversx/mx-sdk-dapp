@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Extended tests](https://github.com/multiversx/mx-sdk-dapp/pull/1688)
 - [Added LedgerConnect tests](https://github.com/multiversx/mx-sdk-dapp/pull/1687)
 - [Added WalletConnect and Webview tests](https://github.com/multiversx/mx-sdk-dapp/pull/1686)
 
