@@ -1,4 +1,4 @@
-import type { Transaction } from '@multiversx/sdk-core';
+import type { Transaction } from 'lib/sdkCore';
 
 import {
   MultiSignTransactionType,

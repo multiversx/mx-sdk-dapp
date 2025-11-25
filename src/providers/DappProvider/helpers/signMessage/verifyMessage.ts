@@ -23,8 +23,8 @@ export async function verifyMessage(
 
     const msg = new Message({
       address: bech32Address,
-      data: decodedMessage,
-      signature: decodedSignature
+      data: new Uint8Array(decodedMessage),
+      signature: new Uint8Array(decodedSignature)
     });
 
     const serializedMessage = messageComputer.computeBytesForVerifying(msg);
