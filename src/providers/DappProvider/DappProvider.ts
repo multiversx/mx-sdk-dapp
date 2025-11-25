@@ -8,10 +8,6 @@ import { logout } from './helpers/logout/logout';
 import { handleSignError } from './helpers/signErrors/handleSignError';
 import { signMessageWithProvider } from './helpers/signMessage/signMessageWithProvider';
 import {
-  verifyMessage,
-  VerifyMessageReturnType
-} from './helpers/signMessage/verifyMessage';
-import {
   signTransactionsWithProvider,
   SignTransactionsOptionsType
 } from './helpers/signTransactions/signTransactionsWithProvider';
@@ -104,14 +100,6 @@ export class DappProvider {
       const errorMessage = handleSignError(error, 'warning');
       throw new Error(errorMessage);
     }
-  }
-
-  /**
-   * @param signedMessage - The signed message to verify in form of a JSON string with `address`, `message` and `signature` properties.
-   * @returns The verification result with `isVerified`, `message` and `address` properties.
-   */
-  async verifyMessage(signedMessage: string): Promise<VerifyMessageReturnType> {
-    return await verifyMessage(signedMessage);
   }
 
   cancelLogin(): void {

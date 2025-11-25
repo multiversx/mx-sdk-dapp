@@ -1,8 +1,8 @@
-import { Message, Transaction } from '@multiversx/sdk-core';
 import {
   IDAppProviderAccount,
   IDAppProviderOptions
 } from '@multiversx/sdk-dapp-utils/out';
+import { Message, Transaction } from 'lib/sdkCore';
 import {
   IProvider,
   ProviderType,

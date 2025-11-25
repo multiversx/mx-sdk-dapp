@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.5.0](https://github.com/multiversx/mx-sdk-dapp/pull/1692)] - 2025-11-24
+
+- [Update sdk-core imports and fix fs module in SSR envs](https://github.com/multiversx/mx-sdk-dapp/pull/1691)
+
 ## [[5.4.0](https://github.com/multiversx/mx-sdk-dapp/pull/1690)] - 2025-11-24
 
 - [Updated providers to LTS and removed unused dependecy](https://github.com/multiversx/mx-sdk-dapp/pull/1689)

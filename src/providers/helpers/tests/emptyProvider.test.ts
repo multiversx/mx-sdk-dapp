@@ -1,4 +1,4 @@
-import { Message, Transaction } from '@multiversx/sdk-core';
+import { Message, Transaction } from 'lib/sdkCore';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { EmptyProvider, emptyProvider } from '../emptyProvider';
 
