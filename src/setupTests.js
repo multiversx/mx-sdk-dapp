@@ -20,6 +20,11 @@ afterEach(() => server.resetHandlers());
 // Clean up after the tests are finished.
 afterAll(() => server.close());
 
+if (typeof global.setImmediate !== 'function') {
+  global.setImmediate = (cb, ...args) => setTimeout(cb, 0, ...args);
+  global.clearImmediate = (id) => clearTimeout(id);
+}
+
 /**************
  * files
  ***************/
