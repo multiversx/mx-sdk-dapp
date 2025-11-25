@@ -1,6 +1,7 @@
 import { Transaction } from '@multiversx/sdk-core/out';
 import { mockPendingTransaction } from '__mocks__';
 import { testAddress } from '__mocks__/accountConfig';
+import { Address, Message } from 'lib/sdkCore';
 import { initApp } from 'methods/initApp/initApp';
 import { ProviderFactory } from 'providers/ProviderFactory';
 import { ExtensionProviderStrategy } from 'providers/strategies/ExtensionProviderStrategy/ExtensionProviderStrategy';
@@ -37,6 +38,10 @@ jest.mock('providers/DappProvider/helpers/computeNonces/computeNonces', () => ({
     // Return transactions as-is to avoid calling toPlainObject() on mock objects
     return transactions;
   })
+}));
+
+jest.mock('providers/strategies/helpers/signMessage/signMessage', () => ({
+  signMessage: jest.fn()
 }));
 
 describe('ExtensionProviderStrategy tests', () => {
@@ -85,5 +90,40 @@ describe('ExtensionProviderStrategy tests', () => {
     ]);
 
     expect(result).toEqual(expectedSigned);
+  });
+
+  describe('signMessage', () => {
+    const mockSignMessageHelper = jest.requireMock(
+      'providers/strategies/helpers/signMessage/signMessage'
+    ).signMessage as jest.Mock;
+
+    beforeEach(() => {
+      mockSignMessageHelper.mockClear();
+    });
+
+    it('should sign a message successfully', async () => {
+      const { provider } = await setupProvider();
+      const message = new Message({
+        address: new Address(testAddress),
+        data: new Uint8Array(Buffer.from('test message'))
+      });
+      const expectedSignedMessage = new Message({
+        address: new Address(testAddress),
+        data: new Uint8Array(Buffer.from('test message')),
+        signature: new Uint8Array([1, 2, 3])
+      });
+
+      mockSignMessageHelper.mockResolvedValueOnce(expectedSignedMessage);
+
+      const result = await provider.signMessage(message);
+
+      expect(mockSignMessageHelper).toHaveBeenCalledWith({
+        message,
+        handleSignMessage: expect.any(Function),
+        cancelAction: expect.any(Function),
+        providerType: expect.any(String)
+      });
+      expect(result).toEqual(expectedSignedMessage);
+    });
   });
 });
