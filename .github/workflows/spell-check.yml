@@ -1,0 +1,16 @@
+name: Spell Check
+
+on: pull_request
+
+jobs:
+  spell-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Spell Check
+        uses: streetsidesoftware/cspell-action@v6
+        with:
+          files: '**/*.{ts,tsx,js,jsx,md,json,yml,yaml}'
+          incremental_files_only: false
