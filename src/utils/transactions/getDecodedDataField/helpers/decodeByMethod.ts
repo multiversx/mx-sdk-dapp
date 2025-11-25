@@ -1,5 +1,5 @@
-import { Address } from '@multiversx/sdk-core';
 import BigNumber from 'bignumber.js';
+import { Address } from 'lib/sdkCore';
 
 import {
   DecodeMethodEnum,

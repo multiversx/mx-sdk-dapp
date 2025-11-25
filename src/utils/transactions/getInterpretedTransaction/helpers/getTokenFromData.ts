@@ -1,5 +1,5 @@
-import { Address } from '@multiversx/sdk-core';
 import BigNumber from 'bignumber.js';
+import { Address } from 'lib/sdkCore';
 import { TransactionTypesEnum } from 'types/enums.types';
 import { decodePart } from 'utils/decoders/decodePart';
 import { addressIsValid } from 'utils/validation/addressIsValid';
