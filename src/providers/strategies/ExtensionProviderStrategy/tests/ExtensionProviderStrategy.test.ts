@@ -40,11 +40,7 @@ jest.mock('providers/DappProvider/helpers/computeNonces/computeNonces', () => ({
 }));
 
 describe('ExtensionProviderStrategy tests', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should login with the provider', async () => {
+  const setupProvider = async () => {
     await initApp({
       dAppConfig: {
         environment: EnvironmentsEnum.devnet
@@ -53,29 +49,27 @@ describe('ExtensionProviderStrategy tests', () => {
     const provider = await ProviderFactory.create({
       type: ProviderTypeEnum.extension
     });
-
     const result = await provider.login();
+    return { provider, result };
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should login with the provider', async () => {
+    const { result } = await setupProvider();
     expect(result?.address).toBe(testAddress);
   });
 
   it('should sign transactions via the provider strategy', async () => {
-    await initApp({
-      dAppConfig: {
-        environment: EnvironmentsEnum.devnet
-      }
-    });
-
     jest
       .spyOn(ExtensionProviderStrategy.prototype as any, 'initSignState')
       .mockResolvedValue({
         manager: { closeUI: jest.fn() }
       });
 
-    const provider = await ProviderFactory.create({
-      type: ProviderTypeEnum.extension
-    });
-
-    await provider.login();
+    const { provider } = await setupProvider();
 
     const expectedSigned = [
       Transaction.newFromPlainObject({
