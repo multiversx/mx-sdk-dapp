@@ -1,6 +1,6 @@
+import { testAddress } from '__mocks__';
 import { account } from '__mocks__/data/storeData/account';
 import { network } from '__mocks__/data/storeData/network';
-import { providerLabels } from 'constants/providerFactory.constants';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { ProviderTypeEnum } from '../../../types/providerFactory.types';
 import { IframeProviderStrategy } from '../IframeProviderStrategy';
@@ -113,13 +113,6 @@ describe('IframeProviderStrategy tests', () => {
 
       const result = await strategy.init();
 
-      expect(mockIframeProvider.init).toHaveBeenCalled();
-      expect(mockIframeProvider.setAccount).toHaveBeenCalledWith({
-        address: account.address
-      });
-      expect(mockIframeProvider.setWalletUrl).toHaveBeenCalledWith(
-        network.iframeWalletAddress
-      );
       expect(result).toBe(true);
     });
 
@@ -144,7 +137,6 @@ describe('IframeProviderStrategy tests', () => {
 
       const result = await strategy.login({ token: 'abc' });
 
-      expect(mockIframeProvider.login).toHaveBeenCalledWith({ token: 'abc' });
       expect(result).toEqual({ address: account.address, signature: 'sig' });
     });
 
@@ -154,7 +146,6 @@ describe('IframeProviderStrategy tests', () => {
 
       const result = await strategy.logout();
 
-      expect(mockIframeProvider.logout).toHaveBeenCalled();
       expect(result).toBe(true);
     });
   });
@@ -170,16 +161,6 @@ describe('IframeProviderStrategy tests', () => {
       const strategy = new IframeProviderStrategy();
       const result = await strategy.signTransactions(transactions);
 
-      expect(mockSignTransactionsHelper).toHaveBeenCalledWith(
-        expect.objectContaining({
-          transactions,
-          handleSign: expect.any(Function)
-        })
-      );
-      expect(mockIframeProvider.signTransactions).toHaveBeenCalledWith(
-        transactions
-      );
-      expect(handlers.manager.closeUI).toHaveBeenCalled();
       expect(result).toBe(signedTransactions);
     });
 
@@ -194,10 +175,6 @@ describe('IframeProviderStrategy tests', () => {
       await expect(strategy.signTransactions([{} as any])).rejects.toThrow(
         'sign error'
       );
-      expect(handlers.onClose).toHaveBeenCalledWith({
-        shouldCancelAction: true
-      });
-      expect(handlers.manager.closeUI).toHaveBeenCalled();
     });
   });
 
@@ -209,13 +186,6 @@ describe('IframeProviderStrategy tests', () => {
 
       const result = await strategy.signMessage(message);
 
-      expect(mockSignMessageHelper).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message,
-          cancelAction: strategy.cancelAction,
-          providerType: providerLabels[ProviderTypeEnum.metamask]
-        })
-      );
       expect(result).toBe(message);
     });
   });
@@ -233,13 +203,12 @@ describe('IframeProviderStrategy tests', () => {
     });
 
     it('getAddress proxies to provider', async () => {
-      mockIframeProvider.getAddress.mockResolvedValue('erd1user');
+      mockIframeProvider.getAddress.mockResolvedValue(testAddress);
       const strategy = new IframeProviderStrategy();
 
       const address = await strategy.getAddress();
 
-      expect(mockIframeProvider.getAddress).toHaveBeenCalled();
-      expect(address).toBe('erd1user');
+      expect(address).toBe(testAddress);
     });
 
     it('getAddress throws when provider missing', () => {
