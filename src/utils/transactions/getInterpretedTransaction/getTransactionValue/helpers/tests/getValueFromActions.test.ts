@@ -6,6 +6,20 @@ import {
 import { baseTransactionMock } from '../../../helpers/tests/baseTransactionMock';
 import { getValueFromActions } from '../getValueFromActions';
 
+const createTransaction = (
+  overrides: Partial<InterpretedTransactionType> = {}
+): InterpretedTransactionType => {
+  return {
+    ...baseTransactionMock,
+    ...overrides
+  } as unknown as InterpretedTransactionType;
+};
+
+const baseAction = {
+  name: TransactionActionsEnum.transfer,
+  category: TransactionActionCategoryEnum.scCall
+};
+
 describe('getValueFromActions tests', () => {
   beforeEach(() => {
     jest.spyOn(console, 'error').mockImplementation();
@@ -16,16 +30,14 @@ describe('getValueFromActions tests', () => {
   });
 
   it('returns value from action arguments when valid', () => {
-    const transaction = {
-      ...baseTransactionMock,
+    const transaction = createTransaction({
       action: {
-        name: TransactionActionsEnum.transfer,
-        category: TransactionActionCategoryEnum.scCall,
+        ...baseAction,
         arguments: {
           value: '1000'
         }
       }
-    } as unknown as InterpretedTransactionType;
+    });
 
     const result = getValueFromActions(transaction);
 
@@ -35,17 +47,15 @@ describe('getValueFromActions tests', () => {
   });
 
   it('falls back to transaction value when action value is invalid', () => {
-    const transaction = {
-      ...baseTransactionMock,
+    const transaction = createTransaction({
       value: '1234',
       action: {
-        name: TransactionActionsEnum.transfer,
-        category: TransactionActionCategoryEnum.scCall,
+        ...baseAction,
         arguments: {
           value: 'invalid'
         }
       }
-    } as unknown as InterpretedTransactionType;
+    });
 
     const result = getValueFromActions(transaction);
 
@@ -54,11 +64,10 @@ describe('getValueFromActions tests', () => {
   });
 
   it('falls back to transaction value when action is undefined', () => {
-    const transaction = {
-      ...baseTransactionMock,
+    const transaction = createTransaction({
       value: '1234',
       action: undefined
-    } as unknown as InterpretedTransactionType;
+    });
 
     const result = getValueFromActions(transaction);
 
@@ -67,14 +76,10 @@ describe('getValueFromActions tests', () => {
   });
 
   it('falls back to transaction value when action arguments is undefined', () => {
-    const transaction = {
-      ...baseTransactionMock,
+    const transaction = createTransaction({
       value: '1234',
-      action: {
-        name: TransactionActionsEnum.transfer,
-        category: TransactionActionCategoryEnum.scCall
-      }
-    } as unknown as InterpretedTransactionType;
+      action: baseAction
+    });
 
     const result = getValueFromActions(transaction);
 
@@ -83,15 +88,13 @@ describe('getValueFromActions tests', () => {
   });
 
   it('falls back to transaction value when action arguments value is undefined', () => {
-    const transaction = {
-      ...baseTransactionMock,
+    const transaction = createTransaction({
       value: '1234',
       action: {
-        name: TransactionActionsEnum.transfer,
-        category: TransactionActionCategoryEnum.scCall,
+        ...baseAction,
         arguments: {}
       }
-    } as unknown as InterpretedTransactionType;
+    });
 
     const result = getValueFromActions(transaction);
 
