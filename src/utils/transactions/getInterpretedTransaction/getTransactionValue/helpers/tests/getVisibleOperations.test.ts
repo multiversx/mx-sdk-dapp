@@ -5,12 +5,22 @@ import {
 import { baseTransactionMock } from '../../../helpers/tests/baseTransactionMock';
 import { getVisibleOperations } from '../getVisibleOperations';
 
+const createTransaction = (
+  overrides: Partial<InterpretedTransactionType> = {}
+): InterpretedTransactionType => {
+  return {
+    ...baseTransactionMock,
+    transactionDetails: {} as any,
+    links: {} as any,
+    ...overrides
+  } as unknown as InterpretedTransactionType;
+};
+
 describe('getVisibleOperations tests', () => {
   it('returns empty array when operations are missing', () => {
-    const transaction: InterpretedTransactionType = {
-      ...baseTransactionMock,
+    const transaction = createTransaction({
       operations: undefined
-    };
+    });
 
     const result = getVisibleOperations(transaction);
 
@@ -18,8 +28,7 @@ describe('getVisibleOperations tests', () => {
   });
 
   it('filters and returns only visible operations', () => {
-    const transaction: InterpretedTransactionType = {
-      ...baseTransactionMock,
+    const transaction = createTransaction({
       operations: [
         {
           type: VisibleTransactionOperationType.egld,
@@ -34,7 +43,7 @@ describe('getVisibleOperations tests', () => {
           value: '3000'
         } as any
       ]
-    };
+    });
 
     const result = getVisibleOperations(transaction);
 
