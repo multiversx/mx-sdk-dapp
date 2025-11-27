@@ -1,21 +1,13 @@
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import { TransactionActionsEnum } from 'types/serverTransactions.types';
+import {
+  TransactionActionCategoryEnum,
+  TransactionActionsEnum
+} from 'types/serverTransactions.types';
 import { baseTransactionMock } from '../../../helpers/tests/baseTransactionMock';
 import { getValueFromActions } from '../getValueFromActions';
 
-jest.mock('../getEgldValueData', () => ({
-  getEgldValueData: jest.fn()
-}));
-
-const { getEgldValueData: mockGetEgldValueData } = jest.requireMock(
-  '../getEgldValueData'
-) as {
-  getEgldValueData: jest.Mock;
-};
-
 describe('getValueFromActions tests', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
     jest.spyOn(console, 'error').mockImplementation();
   });
 
@@ -24,91 +16,86 @@ describe('getValueFromActions tests', () => {
   });
 
   it('returns value from action arguments when valid', () => {
-    const mockValue = { egldValueData: { value: '1000' } };
-    mockGetEgldValueData.mockReturnValue(mockValue);
-    const transaction: InterpretedTransactionType = {
+    const transaction = {
       ...baseTransactionMock,
       action: {
         name: TransactionActionsEnum.transfer,
+        category: TransactionActionCategoryEnum.scCall,
         arguments: {
           value: '1000'
         }
       }
-    };
+    } as unknown as InterpretedTransactionType;
 
     const result = getValueFromActions(transaction);
 
-    expect(mockGetEgldValueData).toHaveBeenCalledWith('1000');
-    expect(result).toBe(mockValue);
+    expect(result.egldValueData.value).toBe('1000');
+    expect(result.egldValueData.formattedValue).toBeTruthy();
+    expect(result.egldValueData.decimals).toBeTruthy();
   });
 
   it('falls back to transaction value when action value is invalid', () => {
-    const mockValue = { egldValueData: { value: '1234' } };
-    mockGetEgldValueData.mockReturnValue(mockValue);
-    const transaction: InterpretedTransactionType = {
+    const transaction = {
       ...baseTransactionMock,
       value: '1234',
       action: {
         name: TransactionActionsEnum.transfer,
+        category: TransactionActionCategoryEnum.scCall,
         arguments: {
           value: 'invalid'
         }
       }
-    };
+    } as unknown as InterpretedTransactionType;
 
     const result = getValueFromActions(transaction);
 
-    expect(mockGetEgldValueData).toHaveBeenCalledWith('1234');
-    expect(result).toBe(mockValue);
+    expect(result.egldValueData.value).toBe('1234');
+    expect(result.egldValueData.formattedValue).toBeTruthy();
   });
 
   it('falls back to transaction value when action is undefined', () => {
-    const mockValue = { egldValueData: { value: '1234' } };
-    mockGetEgldValueData.mockReturnValue(mockValue);
-    const transaction: InterpretedTransactionType = {
+    const transaction = {
       ...baseTransactionMock,
       value: '1234',
       action: undefined
-    };
+    } as unknown as InterpretedTransactionType;
 
     const result = getValueFromActions(transaction);
 
-    expect(mockGetEgldValueData).toHaveBeenCalledWith('1234');
-    expect(result).toBe(mockValue);
+    expect(result.egldValueData.value).toBe('1234');
+    expect(result.egldValueData.formattedValue).toBeTruthy();
   });
 
   it('falls back to transaction value when action arguments is undefined', () => {
-    const mockValue = { egldValueData: { value: '1234' } };
-    mockGetEgldValueData.mockReturnValue(mockValue);
-    const transaction: InterpretedTransactionType = {
-      ...baseTransactionMock,
-      value: '1234',
-      action: {
-        name: TransactionActionsEnum.transfer
-      }
-    };
-
-    const result = getValueFromActions(transaction);
-
-    expect(mockGetEgldValueData).toHaveBeenCalledWith('1234');
-    expect(result).toBe(mockValue);
-  });
-
-  it('falls back to transaction value when action arguments value is undefined', () => {
-    const mockValue = { egldValueData: { value: '1234' } };
-    mockGetEgldValueData.mockReturnValue(mockValue);
-    const transaction: InterpretedTransactionType = {
+    const transaction = {
       ...baseTransactionMock,
       value: '1234',
       action: {
         name: TransactionActionsEnum.transfer,
-        arguments: {}
+        category: TransactionActionCategoryEnum.scCall
       }
-    };
+    } as unknown as InterpretedTransactionType;
 
     const result = getValueFromActions(transaction);
 
-    expect(mockGetEgldValueData).toHaveBeenCalledWith('1234');
-    expect(result).toBe(mockValue);
+    expect(result.egldValueData.value).toBe('1234');
+    expect(result.egldValueData.formattedValue).toBeTruthy();
+  });
+
+  it('falls back to transaction value when action arguments value is undefined', () => {
+    const transaction = {
+      ...baseTransactionMock,
+      value: '1234',
+      action: {
+        name: TransactionActionsEnum.transfer,
+        category: TransactionActionCategoryEnum.scCall,
+        arguments: {}
+      }
+    } as unknown as InterpretedTransactionType;
+
+    const result = getValueFromActions(transaction);
+
+    expect(result.egldValueData.value).toBe('1234');
+    expect(result.egldValueData.formattedValue).toBeTruthy();
   });
 });
