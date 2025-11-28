@@ -93,4 +93,24 @@ describe('getValueFromDataField tests', () => {
     expect(result.egldValueData.value).toBe('1234');
     expect(result.egldValueData.formattedValue).toBeTruthy();
   });
+
+  it('logs error only once when decoding fails repeatedly', () => {
+    const transaction = createTransaction({
+      value: '1234',
+      data: undefined
+    });
+
+    jest.isolateModules(() => {
+      const { getValueFromDataField: getValueWithFreshState } =
+        require('../getValueFromDataField') as typeof import('../getValueFromDataField');
+
+      getValueWithFreshState(transaction);
+      getValueWithFreshState(transaction);
+    });
+
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenCalledWith(
+      `Unable to extract value for txHash: ${transaction.txHash}`
+    );
+  });
 });
