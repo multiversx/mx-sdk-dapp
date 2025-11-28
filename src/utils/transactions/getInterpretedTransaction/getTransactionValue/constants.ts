@@ -18,14 +18,14 @@ export const ACTIONS_WITH_EGLD_VALUE = [
 ];
 
 /**
- * If `action.name` is in `ACTIONS_WITH_VALUE_IN_DATA_FIELD[]`, transaction value will be computed based `data` field
+ * If `action.name` is in `ACTIONS_WITH_VALUE_IN_DATA_FIELD[]`, transaction value will be computed based on `data` field
  */
 export const ACTIONS_WITH_VALUE_IN_DATA_FIELD = [
   TransactionActionsEnum.unStake
 ];
 
 /**
- * If `action.name` is in `ACTIONS_WITH_VALUE_IN_ACTION_FIELD[]`, transaction value will be computed based `action` field
+ * If `action.name` is in `ACTIONS_WITH_VALUE_IN_ACTION_FIELD[]`, transaction value will be computed based on `action` field
  */
 export const ACTIONS_WITH_VALUE_IN_ACTION_FIELD = [
   TransactionActionsEnum.unDelegate
