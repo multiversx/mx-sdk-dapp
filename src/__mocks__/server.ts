@@ -55,6 +55,10 @@ const handlers = [
     mockResponse(account)
   ),
   rest.get(
+    `${testNetwork.apiAddress}/transactions/ppu/0`,
+    mockResponse({ lastBlock: 11605677, fast: 0, faster: null })
+  ),
+  rest.get(
     `${testNetwork.apiAddress}/tokens/${testToken.identifier}`,
     mockResponse(testToken)
   ),
