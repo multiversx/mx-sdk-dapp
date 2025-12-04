@@ -4,6 +4,7 @@ import { Transaction, Message } from 'lib/sdkCore';
 import { IDAppProviderOptions, IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager';
 import { getAddress } from 'methods/account/getAddress';
+import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
 import { IProvider, ProviderType } from 'providers/types/providerFactory.types';
 import { providerSettingsSelector } from 'store/selectors/configSelectors';
 import { getState } from 'store/store';
@@ -47,7 +48,7 @@ export abstract class BaseProviderStrategy<
 
   signTransaction(
     _transaction: Transaction,
-    _options?: IDAppProviderOptions
+    _options?: SignTransactionsOptionsType
   ): Promise<Transaction | null> {
     throw new Error('Method not implemented.');
   }

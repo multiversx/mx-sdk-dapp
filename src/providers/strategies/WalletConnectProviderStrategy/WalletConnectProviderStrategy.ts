@@ -9,6 +9,7 @@ import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { WalletConnectStateManager } from 'managers/internal/WalletConnectStateManager/WalletConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
+import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
 import {
   ProviderTypeEnum,
   ProviderType
@@ -25,6 +26,7 @@ import {
 import { WalletConnectV2Error, WalletConnectConfig } from './types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
+import { guardTransactions } from '../helpers/signTransactions/helpers/guardTransactions/guardTransactions';
 
 const dappMethods: string[] = [
   WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
@@ -258,7 +260,10 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     }
   }
 
-  signTransactions = async (transactions: Transaction[]) => {
+  signTransactions = async (
+    transactions: Transaction[],
+    _options?: SignTransactionsOptionsType
+  ) => {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
@@ -280,7 +285,10 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
         abortPromise
       ]);
 
-      return signedTransactions;
+      const optionallyGuardedTransactions =
+        await guardTransactions(signedTransactions);
+
+      return optionallyGuardedTransactions;
     } catch (error) {
       await onClose({ shouldCancelAction: true });
       throw error;

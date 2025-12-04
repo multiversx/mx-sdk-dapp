@@ -79,3 +79,17 @@ export const setProviderSettings = (settings: IProviderSettings | null) =>
       }
     }
   );
+
+export const setIsSigningUiEnabled = (isEnabled: boolean) =>
+  getStore().setState(
+    ({ config: state }) => {
+      if (!state.settings) {
+        state.settings = {};
+      }
+      state.settings.isSigningUiEnabled = isEnabled;
+    },
+    false,
+    {
+      type: 'setIsSigningUiEnabled'
+    }
+  );

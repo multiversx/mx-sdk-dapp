@@ -5,7 +5,6 @@
 [![Integration tests](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/run-template-dapps-integration.yml/badge.svg)](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/run-template-dapps-integration.yml)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/multiversx/mx-sdk-dapp)
 
-
 MultiversX Front-End SDK for JavaScript and TypeScript (written in TypeScript).
 
 ## Introduction
@@ -304,6 +303,47 @@ const provider = getAccountProvider();
 const signedTransactions = await provider.signTransactions(transactions);
 ```
 
+#### 4.1.1 Signing Options
+
+The `signTransactions` method accepts an optional second parameter with signing options:
+
+```typescript
+import type { SignTransactionsOptionsType } from '@multiversx/sdk-dapp/out/providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
+
+const options: SignTransactionsOptionsType = {
+  skipGuardian?: boolean;  // Skip guardian validation for guarded accounts
+  callback?: (signedTransactions: Transaction[]) => Promise<Transaction[]>; // Post-signing callback
+};
+
+const signedTransactions = await provider.signTransactions(transactions, options);
+```
+
+**Available options:**
+
+- `skipGuardian` (`boolean`): Optional. When `true`, skips the guardian co-signing step for guarded accounts. Useful for transactions that don't require guardian approval.
+
+- `callback` (`(signedTransactions: Transaction[]) => Promise<Transaction[]>`): Optional. A callback function that receives the signed transactions after all transactions have been signed by the user, but before guardian validation. This allows you to modify, filter, or perform additional processing on the signed transactions. The returned transactions will proceed to guardian validation (if applicable).
+
+**Example: Using the callback option**
+
+The `callback` option is particularly useful for:
+
+- **Guarded accounts**: Processing signed transactions before they are sent to the guardian service for co-signing
+- **Custom validation**: Adding additional validation logic after user signing
+- **Logging/Analytics**: Recording signed transactions before final submission
+
+```typescript
+const signedTransactions = await provider.signTransactions(transactions, {
+  callback: async (signedTxs) => {
+    // Example: Log signed transactions before guardian processing
+    console.log('User signed transactions:', signedTxs);
+
+    // Return the transactions to proceed with guardian validation
+    return signedTxs;
+  }
+});
+```
+
 #### 4.2 Sending and tracking transactions
 
 Then, to send the transactions, you need to use the `TransactionManager` class and pass in the `signedTransactions` to the `send` method. You can then track the transactions by using the `track` method. This will create a toast notification with the transaction hash and its status.
@@ -589,24 +629,27 @@ import { TransactionManagerTrackOptionsType } from '@multiversx/sdk-dapp/out/man
 
 const options: TransactionManagerTrackOptionsType = {
   disableToasts: false, // `false` by default
-  transactionsDisplayInfo: { // optional. If left `undefined`, it will use the default messages
+  transactionsDisplayInfo: {
+    // optional. If left `undefined`, it will use the default messages
     errorMessage: 'Failed adding stake',
     successMessage: 'Stake successfully added',
     receivedMessage: 'Stake successfully added', // optional, add it in case of multiple transactions
-    processingMessage: 'Staking in progress',
+    processingMessage: 'Staking in progress'
     // submittedMessage: 'Stake submitted',
-    // timedOutMessage: 'Transaction timed out', 
+    // timedOutMessage: 'Transaction timed out',
     // invalidMessage: 'Invalid transaction',
   },
   sessionInformation: {
     // `undefined` by default. Use to perform additional actions based on the session information
     stakeAmount: '1000000000000000000000000'
   },
-  onSuccess: async(sessionId) => { // optional
+  onSuccess: async (sessionId) => {
+    // optional
     // overrides the the global `onSuccess` callback set in the `initApp` method for the current session only
     console.log('Session successful', sessionId);
   },
-  onFail: async(sessionId) => { // optional
+  onFail: async (sessionId) => {
+    // optional
     console.log('Session failed', sessionId);
   }
 };
