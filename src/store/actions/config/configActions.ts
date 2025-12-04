@@ -89,5 +89,7 @@ export const setIsSigningUiEnabled = (isEnabled: boolean) =>
       state.settings.isSigningUiEnabled = isEnabled;
     },
     false,
-    'setIsSigningUiEnabled'
+    {
+      type: 'setIsSigningUiEnabled'
+    }
   );
