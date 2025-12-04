@@ -330,7 +330,6 @@ The `callback` option is particularly useful for:
 
 - **Guarded accounts**: Processing signed transactions before they are sent to the guardian service for co-signing
 - **Custom validation**: Adding additional validation logic after user signing
-- **Transaction modification**: Modifying transaction properties after signing (e.g., adding metadata)
 - **Logging/Analytics**: Recording signed transactions before final submission
 
 ```typescript
