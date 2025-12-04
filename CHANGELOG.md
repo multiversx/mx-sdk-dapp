@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v4.6.3](https://github.com/multiversx/mx-sdk-dapp/pull/1700)] - 2025-12-04
+
+- [Updated sdk paskey provider to v3.0.5 and sdk HW provider to v8.1.2](https://github.com/multiversx/mx-sdk-dapp/pull/1700)
+
 ## [[v4.6.2](https://github.com/multiversx/mx-sdk-dapp/pull/1681)] - 2025-11-17
 
 - [Updated sdk HW provider to v8.1.1](https://github.com/multiversx/mx-sdk-dapp/pull/1681)
