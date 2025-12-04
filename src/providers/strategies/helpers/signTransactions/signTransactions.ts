@@ -42,11 +42,6 @@ export async function signTransactions({
 
   const signedIndexes: number[] = [];
 
-  console.log({
-    providerConfig,
-    options
-  });
-
   if (providerConfig?.isSigningUiEnabled === false) {
     // Mark signing as in progress so idle state manager doesn't interfere
     setIsSidePanelOpen(true);
