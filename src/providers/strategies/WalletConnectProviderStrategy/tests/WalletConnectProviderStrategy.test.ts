@@ -70,6 +70,10 @@ jest.mock('store/actions/sharedActions/sharedActions', () => ({
   logoutAction: jest.fn()
 }));
 
+jest.mock('methods/account/getAccount', () => ({
+  getAccount: jest.fn()
+}));
+
 jest.mock('../../helpers', () => ({
   getPendingTransactionsHandlers: jest.fn()
 }));
@@ -111,6 +115,12 @@ const { logoutAction: mockLogoutAction } = jest.requireMock(
   'store/actions/sharedActions/sharedActions'
 ) as {
   logoutAction: jest.Mock;
+};
+
+const { getAccount: mockGetAccount } = jest.requireMock(
+  'methods/account/getAccount'
+) as {
+  getAccount: jest.Mock;
 };
 
 const { getPendingTransactionsHandlers: mockGetPendingTransactionsHandlers } =
@@ -185,6 +195,11 @@ describe('WalletConnectProviderStrategy', () => {
     mockProviderSettingsSelector.mockReturnValue({});
     mockGetState.mockReturnValue({ state: 'test' });
     mockLogoutAction.mockReset();
+    mockGetAccount.mockReturnValue({
+      address: storeAccount.address,
+      isGuarded: false,
+      activeGuardianAddress: undefined
+    });
     mockGetPendingTransactionsHandlers.mockReset();
     mockGetPendingTransactionsHandlers.mockResolvedValue(buildHandlers());
     mockSignMessageHelper.mockReset();

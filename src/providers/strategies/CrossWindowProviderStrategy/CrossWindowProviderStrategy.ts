@@ -2,6 +2,7 @@ import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
 import {
   ProviderTypeEnum,
   ProviderType
@@ -11,7 +12,6 @@ import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
-import { guardTransactions } from '../helpers/signTransactions/helpers/guardTransactions/guardTransactions';
 
 type CrossWindowProviderProps = {
   address?: string;
@@ -76,7 +76,10 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
     this.provider.cancelAction();
   };
 
-  signTransactions = async (transactions: Transaction[]) => {
+  signTransactions = async (
+    transactions: Transaction[],
+    _options?: SignTransactionsOptionsType
+  ) => {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
@@ -87,10 +90,7 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
       const signedTransactions: Transaction[] =
         (await this.provider.signTransactions(transactions)) ?? [];
 
-      const optionallyGuardedTransactions =
-        await guardTransactions(signedTransactions);
-
-      return optionallyGuardedTransactions;
+      return signedTransactions;
     } catch (error) {
       await onClose({ shouldCancelAction: true });
 

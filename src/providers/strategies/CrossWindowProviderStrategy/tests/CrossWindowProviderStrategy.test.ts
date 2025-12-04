@@ -143,21 +143,18 @@ describe('CrossWindowProviderStrategy tests', () => {
     expect(result).toBe(true);
   });
 
-  it('signTransactions resolves guarded transactions and closes UI', async () => {
+  it('signTransactions resolves signed transactions and closes UI', async () => {
     const handlers = buildHandlers();
     mockGetPendingTransactionsHandlers.mockResolvedValue(handlers);
     const signedTx = [{ hash: 'signed' } as any];
-    const guardedTx = [{ hash: 'guarded' } as any];
     mockCrossWindowProvider.signTransactions.mockResolvedValue(signedTx);
-    mockGuardTransactions.mockResolvedValue(guardedTx);
 
     const strategy = new CrossWindowProviderStrategy();
     const result = await strategy.signTransactions([{} as any]);
 
     expect(mockCrossWindowProvider.signTransactions).toHaveBeenCalled();
-    expect(mockGuardTransactions).toHaveBeenCalledWith(signedTx);
     expect(handlers.manager.closeUI).toHaveBeenCalled();
-    expect(result).toBe(guardedTx);
+    expect(result).toEqual(signedTx);
   });
 
   it('signTransactions cancels action on error', async () => {

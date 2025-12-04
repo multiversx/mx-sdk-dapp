@@ -2,6 +2,7 @@ import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewPro
 import { safeWindow, version } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
+import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
 import {
   ProviderTypeEnum,
   ProviderType
@@ -70,7 +71,10 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
     this.provider.cancelAction();
   };
 
-  signTransactions = async (transactions: Transaction[]) => {
+  signTransactions = async (
+    transactions: Transaction[],
+    _options?: SignTransactionsOptionsType
+  ) => {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }

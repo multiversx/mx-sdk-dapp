@@ -15,6 +15,7 @@ import { computeNonces } from '../computeNonces/computeNonces';
 
 export type SignTransactionsOptionsType = {
   skipGuardian?: boolean;
+  callback?: (signedTransactions: Transaction[]) => Promise<Transaction[]>;
 };
 
 type SignTransactionsType = {
@@ -53,7 +54,7 @@ export async function signTransactionsWithProvider({
       : transactionsWithComputedNonce;
 
   const signedTransactions: Transaction[] =
-    (await provider.signTransactions(transactionsToSign)) ?? [];
+    (await provider.signTransactions(transactionsToSign, options)) ?? [];
 
   setAccountNonce(nonce + signedTransactions.length);
 
