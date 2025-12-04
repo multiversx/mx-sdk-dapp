@@ -89,11 +89,5 @@ export const setIsSigningUiEnabled = (isEnabled: boolean) =>
       state.settings.isSigningUiEnabled = isEnabled;
     },
     false,
-    {
-      type: 'setIsSigningUiEnabled',
-      // @ts-ignore
-      payload: {
-        value: isEnabled
-      }
-    }
+    'setIsSigningUiEnabled'
   );

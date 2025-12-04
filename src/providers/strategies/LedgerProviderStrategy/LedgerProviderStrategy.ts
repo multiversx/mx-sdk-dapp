@@ -5,6 +5,7 @@ import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
+import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
 import {
   ProviderTypeEnum,
   ProviderType
@@ -151,7 +152,10 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
     await ledgerConnectManager.init(anchor);
   };
 
-  signTransactions = async (transactions: Transaction[]) => {
+  signTransactions = async (
+    transactions: Transaction[],
+    options?: SignTransactionsOptionsType
+  ) => {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
@@ -160,7 +164,8 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
 
     const signedTransactions = await signTransactions({
       transactions,
-      handleSign: this.provider.signTransactions.bind(this.provider)
+      handleSign: this.provider.signTransactions.bind(this.provider),
+      options
     });
 
     return signedTransactions;

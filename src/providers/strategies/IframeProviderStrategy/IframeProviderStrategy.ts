@@ -2,6 +2,7 @@ import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
+import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
 import {
   ProviderTypeEnum,
   ProviderType
@@ -85,7 +86,10 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
     this.provider.cancelAction();
   };
 
-  signTransactions = async (transactions: Transaction[]) => {
+  signTransactions = async (
+    transactions: Transaction[],
+    options?: SignTransactionsOptionsType
+  ) => {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
@@ -95,7 +99,8 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
     try {
       const signedTransactions = await signTransactions({
         transactions,
-        handleSign: this.provider.signTransactions.bind(this.provider)
+        handleSign: this.provider.signTransactions.bind(this.provider),
+        options
       });
 
       return signedTransactions;
