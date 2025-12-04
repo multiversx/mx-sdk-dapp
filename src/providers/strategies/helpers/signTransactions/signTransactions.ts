@@ -6,6 +6,7 @@ import { SignTransactionsStateManager } from 'managers/internal/SignTransactions
 import { SignEventsEnum } from 'managers/internal/SignTransactionsStateManager/types';
 import { getAccount } from 'methods/account/getAccount';
 import { getEgldLabel } from 'methods/network/getEgldLabel';
+import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
 import { cancelCrossWindowAction } from 'providers/helpers/cancelCrossWindowAction';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { setIsSidePanelOpen } from 'store/actions/ui/uiActions';
@@ -21,12 +22,14 @@ type SignTransactionsParamsType = {
   transactions?: Transaction[];
   handleSign: IProvider['signTransactions'];
   guardTransactions?: typeof getGuardedTransactions;
+  options?: SignTransactionsOptionsType;
 };
 
 export async function signTransactions({
   transactions = [],
   handleSign,
-  guardTransactions = getGuardedTransactions
+  guardTransactions = getGuardedTransactions,
+  options
 }: SignTransactionsParamsType): Promise<Transaction[]> {
   const { address, shard, username } = getAccount();
   const network = networkSelector(getState());
@@ -38,6 +41,11 @@ export async function signTransactions({
     getMultiEsdtTransferData(transactions);
 
   const signedIndexes: number[] = [];
+
+  console.log({
+    providerConfig,
+    options
+  });
 
   if (providerConfig?.isSigningUiEnabled === false) {
     // Mark signing as in progress so idle state manager doesn't interfere
@@ -242,8 +250,13 @@ export async function signTransactions({
           signedTransactions.length === allSignableTransactions.length;
 
         if (isLastScreen && areAllTransactionsSigned) {
-          const optionallyGuardedTransactions =
-            await guardTransactions(signedTransactions);
+          const finalizedTransactions =
+            (await options?.callback?.(signedTransactions)) ||
+            signedTransactions;
+
+          const optionallyGuardedTransactions = await guardTransactions(
+            finalizedTransactions
+          );
           manager.closeUI();
           return resolve(optionallyGuardedTransactions);
         }

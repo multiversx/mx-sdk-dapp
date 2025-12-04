@@ -11,7 +11,6 @@ import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
-import { guardTransactions } from '../helpers/signTransactions/helpers/guardTransactions/guardTransactions';
 
 type CrossWindowProviderProps = {
   address?: string;
@@ -87,10 +86,7 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
       const signedTransactions: Transaction[] =
         (await this.provider.signTransactions(transactions)) ?? [];
 
-      const optionallyGuardedTransactions =
-        await guardTransactions(signedTransactions);
-
-      return optionallyGuardedTransactions;
+      return signedTransactions;
     } catch (error) {
       await onClose({ shouldCancelAction: true });
 
