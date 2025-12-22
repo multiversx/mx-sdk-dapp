@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v4.6.4](https://github.com/multiversx/mx-sdk-dapp/commit/93d1189ce837f531adf845299907e1814ed1e9c5)] - 2025-12-22
+
+- [Updated webview provider to latest version using sdk-core v15](https://github.com/multiversx/mx-sdk-dapp/commit/ff80546e9d96b0c60044ca2dcddc6e3e3e3ad521)
+
 ## [[v4.6.3](https://github.com/multiversx/mx-sdk-dapp/pull/1700)] - 2025-12-04
 
 - [Updated sdk paskey provider to v3.0.5 and sdk HW provider to v8.1.2](https://github.com/multiversx/mx-sdk-dapp/pull/1700)

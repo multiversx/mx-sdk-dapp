@@ -17,6 +17,7 @@
     "build:cjs-types": "tsc --build tsconfig.cjs.json",
     "build": "rimraf dist && node esbuild.js && npm run build:esm-types && npm run build:cjs-types && cp package.json dist && cp README.md dist",
     "publish-package": "npm run test && npm run build && cd dist && npm publish",
+    "publish-package-legacy": "npm run test && npm run build && cd dist && npm publish --tag legacy",
     "publish-package-next": "npm run test && npm run build && cd dist && npm publish --tag next",
     "unpublish-verdaccio": "npm unpublish @multiversx/sdk-dapp@4.3.6 --registry http://localhost:4873",
     "publish-verdaccio": "npm run unpublish-verdaccio && npm run build && cd dist && npm publish --registry http://localhost:4873",
