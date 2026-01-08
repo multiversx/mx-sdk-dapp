@@ -44,7 +44,7 @@ export const createDAppStore = (getStorageCallback: StorageCallback) => {
           ui: uiSlice(...args)
         })),
         {
-          name: 'sdk-dapp-store',
+          name: 'sdk-dapp-store-v5',
           storage: createJSONStorage(getStorageCallback)
         }
       ),
