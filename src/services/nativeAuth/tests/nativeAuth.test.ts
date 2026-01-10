@@ -101,7 +101,7 @@ describe('Native Auth', () => {
     it('Internal server error', async () => {
       server.use(...handlers.serverError);
 
-      //this will make sure to expire the cache
+      // this will make sure to expire the cache
       jest
         .useFakeTimers()
         .setSystemTime(new Date().setSeconds(new Date().getSeconds() + 60));

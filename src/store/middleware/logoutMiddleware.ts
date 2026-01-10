@@ -57,7 +57,7 @@ export const logoutMiddleware = (state: StoreType) => {
   const isExpired = loginTimestamp - now < 0;
 
   if (isExpired) {
-    // logout
+    // logout user when session expires
     setLoginExpiresAt(null);
     getStore().setState(resetStore);
   }

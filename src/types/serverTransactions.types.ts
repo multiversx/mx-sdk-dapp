@@ -277,9 +277,9 @@ export enum TransferTypeEnum {
   SmartContractResult = 'SmartContractResult'
 }
 
-//#endregion
+// #endregion
 
-//#region interpreted transactions
+// #region interpreted transactions
 
 export enum TransactionDirectionEnum {
   SELF = 'Self',
@@ -340,7 +340,7 @@ export enum DecodeMethodEnum {
   smart = 'smart'
 }
 
-//#endregion
+// #endregion
 
 export enum BatchTransactionStatus {
   pending = 'pending',
