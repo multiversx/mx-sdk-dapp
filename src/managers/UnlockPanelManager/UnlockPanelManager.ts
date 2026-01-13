@@ -82,6 +82,16 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     this.notifyDataUpdate();
   };
 
+  public selectProvider = (providerType: ProviderType) => {
+    if (!this.eventBus) {
+      throw new Error('Panel not initialized. Call openUnlockPanel() first.');
+    }
+
+    this.eventBus.publish(UnlockPanelEventsEnum.SELECT_PROVIDER, {
+      providerType
+    });
+  };
+
   protected setupEventListeners = async () => {
     if (!this.eventBus) {
       return;

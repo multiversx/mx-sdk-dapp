@@ -9,6 +9,7 @@ export enum UnlockPanelEventsEnum {
   LOGIN = 'LOGIN',
   CANCEL_LOGIN = 'CANCEL_LOGIN',
   CANCEL_IN_PROVIDER = 'CANCEL_IN_PROVIDER',
+  SELECT_PROVIDER = 'SELECT_PROVIDER',
   /**
    * User clicks Close button inside mounted provider
    */
