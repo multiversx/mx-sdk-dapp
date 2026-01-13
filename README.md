@@ -183,6 +183,9 @@ export const AdvancedConnectButton = () => {
       const { address, signature } = await provider.login();
       navigate(`/dashboard?address=${address}`);
     },
+    onCancelLogin: () => { // optional action to be performed when the user cancels the login
+      navigate('/');
+    }
   });
   const handleOpenUnlockPanel = () => {
     unlockPanelManager.openUnlockPanel();
