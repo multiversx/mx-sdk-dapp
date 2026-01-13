@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.5.2](https://github.com/multiversx/mx-sdk-dapp/pull/1704)] - 2026-01-13
+
+- [Added `selectProvider` method to UnlockPanelManager](https://github.com/multiversx/mx-sdk-dapp/pull/1703)
+
 ## [[5.5.1](https://github.com/multiversx/mx-sdk-dapp/pull/1702)] - 2025-12-04
 
 - [Exposed setIsSigningUiEnabled and added callback for signTransactions](https://github.com/multiversx/mx-sdk-dapp/pull/1701)
