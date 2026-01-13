@@ -186,6 +186,8 @@ export const AdvancedConnectButton = () => {
   });
   const handleOpenUnlockPanel = () => {
     unlockPanelManager.openUnlockPanel();
+    // if you want to select a specific provider for your user, you can call
+    // unlockPanelManager.selectProvider(ProviderTypeEnum.extension);
   };
   return <Button onClick={handleOpenUnlockPanel}>Advanced Connect</Button>;
 };
