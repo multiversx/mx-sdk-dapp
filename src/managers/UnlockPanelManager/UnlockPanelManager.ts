@@ -114,7 +114,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     isLoginFinished?: boolean;
   }) => {
     if (!options?.isLoginFinished && UnlockPanelManager.onClose) {
-      UnlockPanelManager.onClose();
+      await UnlockPanelManager.onClose();
     }
 
     this.closeUI();
@@ -147,6 +147,8 @@ export class UnlockPanelManager extends SidePanelBaseManager<
 
   private readonly handleCancelLogin = async () => {
     await ProviderFactory.destroy();
-    UnlockPanelManager.onCancelLogin?.();
+    if (UnlockPanelManager.onCancelLogin) {
+      await UnlockPanelManager.onCancelLogin();
+    }
   };
 }
