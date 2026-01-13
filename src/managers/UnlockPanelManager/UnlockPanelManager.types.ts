@@ -24,7 +24,7 @@ export type LoginFunctonType = ({
 export type LoginCallbackType = () => void;
 
 export type LoginHandlerType = LoginFunctonType | LoginCallbackType;
-export type OnCloseUnlockPanelType = () => void;
+export type OnCloseUnlockPanelType = () => Promise<void>;
 
 export type UnlockPanelManagerInitParamsType = {
   /**
@@ -70,7 +70,7 @@ export type UnlockPanelManagerInitParamsType = {
    * 
    * @example
    * ```ts
-     onClose: () => {
+     onClose: async () => {
        navigate('/');
      }
    *  ```
@@ -80,10 +80,10 @@ export type UnlockPanelManagerInitParamsType = {
    * Callback function to handle UI behavior when the login is cancelled
    * @example
    * ```ts
-   *  onCancelLogin: () => {
+   *  onCancelLogin: async () => {
    *    navigate('/');
    *  }
    *  ```
    */
-  onCancelLogin?: () => void;
+  onCancelLogin?: () => Promise<void>;
 };

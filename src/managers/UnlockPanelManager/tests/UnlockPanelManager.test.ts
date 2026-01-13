@@ -43,7 +43,7 @@ describe('UnlockPanelManager tests', () => {
       loginHandler: () => {
         navigete();
       },
-      onClose: () => {
+      onClose: async () => {
         onClose();
       }
     });

@@ -37,7 +37,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
   private static loginHandler: LoginHandlerType | null = null;
   private static onClose: OnCloseUnlockPanelType | null = null;
   private static allowedProviders?: ProviderType[] | null = null;
-  private static onCancelLogin?: (() => void) | null = null;
+  private static onCancelLogin?: (() => Promise<void>) | null = null;
 
   constructor() {
     super({
