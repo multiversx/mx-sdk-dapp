@@ -86,4 +86,12 @@ export type UnlockPanelManagerInitParamsType = {
    *  ```
    */
   onCancelLogin?: () => Promise<void>;
+  /**
+   * Token to be used for login
+   * @example
+   * ```ts
+   *  token: '1234567890'
+   *  ```
+   */
+  token?: string | null;
 };
