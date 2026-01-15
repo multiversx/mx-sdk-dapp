@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[5.6.2](https://github.com/multiversx/mx-sdk-dapp/pull/1709)] - 2026-01-14
+## [[5.6.3](https://github.com/multiversx/mx-sdk-dapp/pull/1710)] - 2026-01-15
+
+- [Update minimum version for sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp/pull/1709)
+
+## [[5.6.2](https://github.com/multiversx/mx-sdk-dapp/pull/1708)] - 2026-01-14
 
 - [Add token parameter to UnlockPanelManager for enhanced login functionality](https://github.com/multiversx/mx-sdk-dapp/pull/1709)
 
