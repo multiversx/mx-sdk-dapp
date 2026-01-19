@@ -40,6 +40,12 @@ export const clearCache = () => {
       });
     },
     false,
-    'clearCache'
+    {
+      type: 'clearCache',
+      // @ts-ignore
+      payload: {
+        value: null
+      }
+    }
   );
 };

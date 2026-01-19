@@ -34,6 +34,10 @@ export class WalletConnectStateManager extends UIBaseManager<
     this.data = { ...this.initialData };
   }
 
+  public get walletConnectData(): IWalletConnectModalData {
+    return { ...this.data };
+  }
+
   public handleClose(options?: { isLoginFinished?: boolean }) {
     if (options?.isLoginFinished) {
       return;

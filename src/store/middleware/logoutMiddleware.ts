@@ -59,6 +59,12 @@ export const logoutMiddleware = (state: StoreType) => {
   if (isExpired) {
     // logout
     setLoginExpiresAt(null);
-    getStore().setState(resetStore);
+    getStore().setState(resetStore, false, {
+      type: 'logoutMiddleware',
+      // @ts-ignore
+      payload: {
+        value: null
+      }
+    });
   }
 };
