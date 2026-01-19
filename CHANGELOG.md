@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.6.4](https://github.com/multiversx/mx-sdk-dapp/pull/1713)] - 2026-01-19
+
+- [Added missing Redux action names](https://github.com/multiversx/mx-sdk-dapp/pull/1712)
+
 ## [[5.6.3](https://github.com/multiversx/mx-sdk-dapp/pull/1710)] - 2026-01-15
 
 - [Update minimum version for sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp/pull/1709)
