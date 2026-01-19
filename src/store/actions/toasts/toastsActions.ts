@@ -98,9 +98,19 @@ export const removeAllCustomToasts = () => {
 };
 
 export const removeAllTransactionToasts = () => {
-  getStore().setState(({ toasts: state }) => {
-    state.transactionToasts = [];
-  });
+  getStore().setState(
+    ({ toasts: state }) => {
+      state.transactionToasts = [];
+    },
+    false,
+    {
+      type: 'removeAllTransactionToasts',
+      // @ts-ignore
+      payload: {
+        value: null
+      }
+    }
+  );
 };
 
 export const addTransactionToast = ({
@@ -130,7 +140,13 @@ export const addTransactionToast = ({
       });
     },
     false,
-    'addTransactionToast'
+    {
+      type: 'addTransactionToast',
+      // @ts-ignore
+      payload: {
+        value: { toastId, totalDuration }
+      }
+    }
   );
 
   return newToastId;
@@ -144,7 +160,13 @@ export const removeTransactionToast = (toastId: string) => {
       });
     },
     false,
-    'removeTransactionToast'
+    {
+      type: 'removeTransactionToast',
+      // @ts-ignore
+      payload: {
+        value: toastId
+      }
+    }
   );
 
   delete customToastCloseHandlersDictionary[toastId];
@@ -193,7 +215,13 @@ export const createCustomToast = (props: CustomToastType) => {
         }
       },
       false,
-      'createCustomToast'
+      {
+        type: 'createCustomToast',
+        // @ts-ignore
+        payload: {
+          value: props
+        }
+      }
     );
 
     return toastId;
