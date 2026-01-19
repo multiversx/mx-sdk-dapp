@@ -3,7 +3,14 @@ import { ProviderType } from 'providers/types/providerFactory.types';
 import { resetStore } from 'store/middleware/logoutMiddleware';
 import { getStore } from 'store/store';
 
-export const logoutAction = () => getStore().setState(resetStore);
+export const logoutAction = () =>
+  getStore().setState(resetStore, false, {
+    type: 'logoutAction',
+    // @ts-ignore
+    payload: {
+      value: null
+    }
+  });
 export interface LoginActionPayloadType<T extends ProviderType = ProviderType> {
   address: string;
   providerType: T;

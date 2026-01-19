@@ -90,6 +90,10 @@ export const setIsSigningUiEnabled = (isEnabled: boolean) =>
     },
     false,
     {
-      type: 'setIsSigningUiEnabled'
+      type: 'setIsSigningUiEnabled',
+      // @ts-ignore
+      payload: {
+        value: isEnabled
+      }
     }
   );
