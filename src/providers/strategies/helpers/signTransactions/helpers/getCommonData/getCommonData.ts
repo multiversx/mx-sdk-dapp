@@ -115,7 +115,6 @@ export async function getCommonData({
         input: isEgld ? transaction.value.toString() : amount,
         decimals: isEgld ? Number(network.decimals) : tokenDecimals,
         digits: Number(network.digits),
-        showLastNonZeroDecimal: false,
         addCommas
       });
 
