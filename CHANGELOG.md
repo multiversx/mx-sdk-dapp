@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.6.7](https://github.com/multiversx/mx-sdk-dapp/pull/1715)] - 2026-01-26
+
+- [Update sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp/pull/1715)
+
 ## [[5.6.6](https://github.com/multiversx/mx-sdk-dapp/pull/1714)] - 2026-01-22
 
 - [Remove unnecessary parameter 'showLastNonZeroDecimal' from getCommonData function - removes unnecessary trailing zero](https://github.com/multiversx/mx-sdk-dapp/pull/1714)
