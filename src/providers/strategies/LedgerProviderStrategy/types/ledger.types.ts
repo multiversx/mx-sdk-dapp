@@ -33,6 +33,7 @@ export interface ILedgerAccount {
   balance: string;
   usdValue?: string;
   index: number;
+  shard?: number | null;
 }
 
 export enum LedgerConnectEventsEnum {

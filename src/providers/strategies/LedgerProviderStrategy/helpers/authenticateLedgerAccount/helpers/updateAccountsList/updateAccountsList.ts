@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import { getEconomics } from 'apiCalls/economics/getEconomics';
+import { Address, AddressComputer } from 'lib/sdkCore';
 import { formatAmount } from 'lib/sdkDappUtils';
 import { getNetworkConfig } from 'methods/network/getNetworkConfig';
 import { ProviderErrorsEnum } from 'types/provider.types';
@@ -28,6 +29,7 @@ export const updateAccountsList = async ({
   manager,
   provider
 }: IUpdateAccountsList) => {
+  const addressComputer = new AddressComputer();
   if (!manager || !provider) {
     throw new Error(ProviderErrorsEnum.notInitialized);
   }
@@ -68,11 +70,18 @@ export const updateAccountsList = async ({
     );
 
     const accountsWithBalance = accountsArray.map(
-      (address, accountIindex): ILedgerAccount => ({
-        address,
-        balance: '...',
-        index: accountIindex + startIndex
-      })
+      (address, accountIindex): ILedgerAccount => {
+        const shard = addressComputer.getShardOfAddress(
+          Address.newFromBech32(address)
+        );
+
+        return {
+          address,
+          balance: '...',
+          index: accountIindex + startIndex,
+          shard
+        };
+      }
     );
 
     const newAllAccounts = [...allAccounts, ...accountsWithBalance];
