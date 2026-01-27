@@ -69,12 +69,14 @@ describe('updateAccountsList tests', () => {
           address: testAddress,
           balance: '116.8938',
           index: 2,
+          shard: 1,
           usdValue: '$981.91'
         },
         {
           address: account.address,
           balance: '116.8938',
           index: 3,
+          shard: 0,
           usdValue: '$981.91'
         }
       ],
