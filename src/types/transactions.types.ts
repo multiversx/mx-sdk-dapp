@@ -8,6 +8,8 @@ export interface SignedTransactionType extends IPlainTransactionObject {
   status?: ServerTransactionType['status'];
   results?: ResultType[];
   inTransit?: boolean;
+  data?: string;
+  receiver: string;
 }
 
 export interface MultiSignTransactionType {
