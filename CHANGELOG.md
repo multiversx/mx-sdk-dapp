@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[5.6.10](https://github.com/multiversx/mx-sdk-dapp/pull/1720)] - 2026-02-04
+## [[5.6.11](https://github.com/multiversx/mx-sdk-dapp/pull/1720)] - 2026-02-04
 
 - [Update TransactionType interface to include data and receiver](https://github.com/multiversx/mx-sdk-dapp/pull/1720)
 
