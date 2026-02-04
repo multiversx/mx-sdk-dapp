@@ -321,12 +321,6 @@ export interface InterpretedTransactionType extends ServerTransactionType {
   };
 }
 
-export interface DecodeForDisplayPropsType {
-  input: string;
-  decodeMethod: DecodeMethodEnum;
-  identifier?: string;
-}
-
 export type DecodedDisplayType = {
   displayValue: string;
   validationWarnings: string[];
