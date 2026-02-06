@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.6.12",
+  "version": "5.6.13",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "MIT",
@@ -65,7 +65,7 @@
     "@multiversx/sdk-wallet-connect-provider": "6.1.4",
     "@multiversx/sdk-web-wallet-cross-window-provider": "3.2.2",
     "@multiversx/sdk-web-wallet-iframe-provider": "4.0.1",
-    "@multiversx/sdk-webview-provider": "3.2.6",
+    "@multiversx/sdk-webview-provider": "3.2.7",
     "immer": "10.1.1",
     "linkifyjs": "4.3.2",
     "lodash.isempty": "4.4.0",
