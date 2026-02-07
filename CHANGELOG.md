@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[5.6.12](https://github.com/multiversx/mx-sdk-dapp/pull/1721)] - 2026-02-04
+## [[5.6.13](https://github.com/multiversx/mx-sdk-dapp/pull/1721)] - 2026-02-06
+
+- [Update sdk-webview-provider to LTS](https://github.com/multiversx/mx-sdk-dapp/pull/1721)
+
+## [[5.6.12](https://github.com/multiversx/mx-sdk-dapp/pull/1720)] - 2026-02-04
 
 - [TS definitions missing. Republish](https://github.com/multiversx/mx-sdk-dapp/pull/1720)
 
