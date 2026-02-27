@@ -17,7 +17,7 @@ export class FormatAmountController {
     }
 
     const formattedAmount = formatAmount(props);
-    const isValid = stringIsFloat(formattedAmount);
+    const isValid = stringIsFloat(formattedAmount.replaceAll(',', ''));
     const [valueInteger, valueDecimal] = formattedAmount.split('.');
 
     return {
