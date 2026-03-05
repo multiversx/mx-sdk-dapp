@@ -102,4 +102,22 @@ describe('FormatAmountController', () => {
       valueDecimal: '.00'
     });
   });
+
+  it('handles addCommas param', () => {
+    const result = FormatAmountController.getData({
+      digits: 2,
+      decimals: 18,
+      showLastNonZeroDecimal: false,
+      addCommas: true,
+      egldLabel: 'xEGLD',
+      input: '31455417380321253900800'
+    });
+
+    expect(result).toEqual({
+      isValid: true,
+      label: ' xEGLD',
+      valueInteger: '31,455',
+      valueDecimal: '.41'
+    });
+  });
 });
