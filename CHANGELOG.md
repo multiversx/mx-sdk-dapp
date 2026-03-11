@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.6.21](https://github.com/multiversx/mx-sdk-dapp/pull/1728)] - 2026-03-11
+
+- [Use websocket transport as default on websocket init](https://github.com/multiversx/mx-sdk-dapp/pull/1727)
+
 ## [[5.6.20](https://github.com/multiversx/mx-sdk-dapp/pull/1726)] - 2026-03-10
 
 - [Added missing option to skip guardian checks in signTransactions function](https://github.com/multiversx/mx-sdk-dapp/pull/1726)
