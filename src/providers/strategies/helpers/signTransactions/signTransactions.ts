@@ -56,8 +56,9 @@ export async function signTransactions({
         }
       }
 
-      const optionallyGuardedTransactions =
-        await guardTransactions(signedTransactions);
+      const optionallyGuardedTransactions = options?.skipGuardian
+        ? signedTransactions
+        : await guardTransactions(signedTransactions);
 
       return optionallyGuardedTransactions;
     } finally {
@@ -249,9 +250,9 @@ export async function signTransactions({
             (await options?.callback?.(signedTransactions)) ||
             signedTransactions;
 
-          const optionallyGuardedTransactions = await guardTransactions(
-            finalizedTransactions
-          );
+          const optionallyGuardedTransactions = options?.skipGuardian
+            ? finalizedTransactions
+            : await guardTransactions(finalizedTransactions);
           manager.closeUI();
           return resolve(optionallyGuardedTransactions);
         }
