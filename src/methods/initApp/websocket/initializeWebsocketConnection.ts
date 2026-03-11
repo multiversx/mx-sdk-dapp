@@ -106,7 +106,8 @@ export async function initializeWebsocketConnection(address: string) {
       reconnectionAttempts: RECONNECTION_ATTEMPTS,
       reconnectionDelay: RETRY_INTERVAL,
       timeout: TIMEOUT,
-      query: { address }
+      query: { address },
+      transports: ['websocket']
     });
 
     websocketConnection.instance.onAny(handleMessageReceived);

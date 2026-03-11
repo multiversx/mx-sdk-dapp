@@ -73,7 +73,8 @@ describe('initializeWebsocketConnection tests', () => {
       reconnectionAttempts: 3,
       reconnectionDelay: 500,
       timeout: 3000,
-      query: { address: account.address }
+      query: { address: account.address },
+      transports: ['websocket']
     });
     expect(mockSocketInstance.onAny).toHaveBeenCalled();
     expect(mockSocketInstance.on).toHaveBeenCalledTimes(4);
