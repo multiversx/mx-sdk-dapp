@@ -1,8 +1,11 @@
 import { subscriptions } from 'constants/storage.constants';
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
+import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
+import { pendingTransactionsSessionsSelector } from 'store/selectors/transactionsSelector';
 import { websocketEventSelector } from 'store/selectors/accountSelectors';
 import { getStore } from 'store/store';
 import { SubscriptionsEnum } from 'types/subscriptions.type';
+import { refreshAccount } from 'utils/account/refreshAccount';
 import { checkTransactionStatus } from '../helpers/checkTransactionStatus';
 import { getPollingInterval } from '../helpers/getPollingInterval';
 import { trackTransactions } from '../trackTransactions';
@@ -10,12 +13,25 @@ import { trackTransactions } from '../trackTransactions';
 // Mock all dependencies
 jest.mock('store/store');
 jest.mock('store/selectors/accountSelectors');
+jest.mock('store/selectors/transactionsSelector');
+jest.mock('methods/account/getIsLoggedIn');
+jest.mock('utils/account/refreshAccount');
 jest.mock('../helpers/checkTransactionStatus');
 jest.mock('../helpers/getPollingInterval');
 
 const mockGetStore = getStore as jest.MockedFunction<typeof getStore>;
 const mockWebsocketEventSelector =
   websocketEventSelector as jest.MockedFunction<typeof websocketEventSelector>;
+const mockPendingTransactionsSessionsSelector =
+  pendingTransactionsSessionsSelector as jest.MockedFunction<
+    typeof pendingTransactionsSessionsSelector
+  >;
+const mockGetIsLoggedIn = getIsLoggedIn as jest.MockedFunction<
+  typeof getIsLoggedIn
+>;
+const mockRefreshAccount = refreshAccount as jest.MockedFunction<
+  typeof refreshAccount
+>;
 const mockCheckTransactionStatus =
   checkTransactionStatus as jest.MockedFunction<typeof checkTransactionStatus>;
 const mockGetPollingInterval = getPollingInterval as jest.MockedFunction<
@@ -62,6 +78,9 @@ describe('trackTransactions', () => {
       timestamp: 1234567890,
       message: 'test-message'
     });
+    mockPendingTransactionsSessionsSelector.mockReturnValue({});
+    mockGetIsLoggedIn.mockReturnValue(false);
+    mockRefreshAccount.mockResolvedValue(undefined);
     mockCheckTransactionStatus.mockResolvedValue(undefined);
   });
 
