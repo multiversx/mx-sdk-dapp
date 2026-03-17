@@ -1,8 +1,11 @@
 import { subscriptions } from 'constants/storage.constants';
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
+import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
+import { pendingTransactionsSessionsSelector } from 'store/selectors/transactionsSelector';
 import { websocketEventSelector } from 'store/selectors/accountSelectors';
 import { getStore } from 'store/store';
 import { SubscriptionsEnum } from 'types/subscriptions.type';
+import { refreshAccount } from 'utils/account/refreshAccount';
 import { checkTransactionStatus } from './helpers/checkTransactionStatus';
 import { getPollingInterval } from './helpers/getPollingInterval';
 
@@ -55,6 +58,15 @@ export async function trackTransactions(): Promise<{
         ) {
           timestamp = websocketEvent.timestamp;
           recheckStatus();
+
+          const hasPendingSessions =
+            Object.keys(
+              pendingTransactionsSessionsSelector(store.getState())
+            ).length > 0;
+
+          if (!hasPendingSessions && getIsLoggedIn()) {
+            refreshAccount();
+          }
         }
       }
     );
