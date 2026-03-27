@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.6.23](https://github.com/multiversx/mx-sdk-dapp/pull/1731)] - 2026-03-27
+
+- [Update WalletConnect Provider to 6.1.5](https://github.com/multiversx/mx-sdk-dapp/pull/1730)
+
 ## [[5.6.22](https://github.com/multiversx/mx-sdk-dapp/pull/1729)] - 2026-03-17
 
-- [Fixed account balance does not update in the UI after receiving an incoming transaction via WebSocket.
-](https://github.com/multiversx/mx-sdk-dapp/pull/1729)
+- [Fixed account balance does not update in the UI after receiving an incoming transaction via WebSocket.](https://github.com/multiversx/mx-sdk-dapp/pull/1729)
 
 ## [[5.6.21](https://github.com/multiversx/mx-sdk-dapp/pull/1728)] - 2026-03-11
 
