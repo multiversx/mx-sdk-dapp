@@ -1,8 +1,8 @@
 import { subscriptions } from 'constants/storage.constants';
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import { pendingTransactionsSessionsSelector } from 'store/selectors/transactionsSelector';
 import { websocketEventSelector } from 'store/selectors/accountSelectors';
+import { pendingTransactionsSessionsSelector } from 'store/selectors/transactionsSelector';
 import { getStore } from 'store/store';
 import { SubscriptionsEnum } from 'types/subscriptions.type';
 import { refreshAccount } from 'utils/account/refreshAccount';

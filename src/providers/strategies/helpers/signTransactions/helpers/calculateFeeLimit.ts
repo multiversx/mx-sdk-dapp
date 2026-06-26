@@ -49,7 +49,7 @@ export function calculateFeeLimit({
     sender: new Address(from),
     gasPrice: BigInt(validGasPrice),
     gasLimit: BigInt(usedGasLimit),
-    data: Buffer.from(data.trim()),
+    data: new Uint8Array(Buffer.from(data.trim())),
     chainID: chainId,
     version: 1
   });

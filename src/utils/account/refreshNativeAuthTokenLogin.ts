@@ -36,7 +36,7 @@ export const refreshNativeAuthTokenLogin = async ({
 
   const messageToSign = new Message({
     address: new Address(address),
-    data: Buffer.from(`${address}${loginToken}`)
+    data: new Uint8Array(Buffer.from(`${address}${loginToken}`))
   });
 
   const signedMessage = await signMessageCallback(messageToSign, {});
