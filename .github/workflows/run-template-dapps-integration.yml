@@ -16,7 +16,7 @@ jobs:
           sudo chown -R $USER:$USER ${{ github.workspace }}
           sudo chmod -R 755 ${{ github.workspace }}
         continue-on-error: true
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           clean: true
