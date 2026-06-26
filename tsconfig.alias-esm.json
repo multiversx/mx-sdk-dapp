@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.build.json",
+  "comment": "Points tsc-alias at the ESM tree (out-esm) emitted by esbuild.js so it can rewrite baseUrl aliases to relative paths and stamp the .mjs extension. Not used by tsc.",
+  "compilerOptions": {
+    "outDir": "out-esm"
+  }
+}
