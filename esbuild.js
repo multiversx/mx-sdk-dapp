@@ -59,6 +59,8 @@ const targets = [
 
 async function build() {
   try {
+    fs.rmSync('out', { recursive: true, force: true });
+
     for (const target of targets) {
       fs.rmSync(target.outdir, { recursive: true, force: true });
 
