@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.esm.json",
+  "comment": "Declaration build only. Excludes tests/stories/mocks from the emitted output (mirrors the files exclusions in package.json). Linting uses tsconfig.json, which keeps these files in the project.",
+  "exclude": [
+    "node_modules",
+    "out",
+    "src/**/tests/**",
+    "src/**/stories/**",
+    "src/**/__mocks__/**",
+    "src/**/__tests__/**",
+    "src/**/*.test.*",
+    "src/**/*.spec.*",
+    "src/**/*.bgTest.*",
+    "src/**/*.jest.*",
+    "src/**/*.playwright.*",
+    "src/**/*.puppeteer.*",
+    "src/**/*-mock.*"
+  ]
+}
