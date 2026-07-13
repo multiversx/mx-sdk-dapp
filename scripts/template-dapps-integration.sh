@@ -41,7 +41,7 @@ echo "Installing dependencies mx-template-dapp..."
 pnpm install --no-frozen-lockfile
 
 echo "Linking mx-sdk-dapp..."
-yalc add @multiversx/sdk-dapp
+yalc add --pure @multiversx/sdk-dapp
 
 echo "Building mx-template-dapp..."
 pnpm build-devnet
@@ -60,7 +60,7 @@ echo "Installing dependencies mx-template-dapp-nextjs..."
 pnpm install --no-frozen-lockfile
 
 echo "Linking mx-sdk-dapp..."
-yalc add @multiversx/sdk-dapp
+yalc add --pure @multiversx/sdk-dapp
 
 echo "Building mx-template-dapp-nextjs..."
 pnpm build:devnet
