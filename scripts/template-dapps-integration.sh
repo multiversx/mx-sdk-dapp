@@ -38,13 +38,13 @@ echo "git checkout development..."
 git checkout development
 
 echo "Installing dependencies mx-template-dapp..."
-yarn install
+pnpm install --frozen-lockfile
 
 echo "Linking mx-sdk-dapp..."
 yalc add @multiversx/sdk-dapp
 
 echo "Building mx-template-dapp..."
-yarn build-devnet
+pnpm build-devnet
 
 
 # Consume mx-sdk-dapp in mx-template-dapp-nextjs
@@ -54,12 +54,12 @@ echo "cd mx-template-dapp-nextjs..."
 cd mx-template-dapp-nextjs
 
 echo "Installing dependencies mx-template-dapp-nextjs..."
-yarn install
+pnpm install --frozen-lockfile
 
 echo "Linking mx-sdk-dapp..."
 yalc add @multiversx/sdk-dapp
 
 echo "Building mx-template-dapp-nextjs..."
-yarn build:devnet
+pnpm build:devnet
 
 echo "Script executed successfully!"

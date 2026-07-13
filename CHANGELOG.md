@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[5.7.1](https://github.com/multiversx/mx-sdk-dapp/pull/1735)] - 2026-07-13
 
+- [Migrate Yarn to pnpm](https://github.com/multiversx/mx-sdk-dapp/pull/1736)
 - [Update Ledger Provider to 8.2.0](https://github.com/multiversx/mx-sdk-dapp/pull/1734)
 
 ## [[5.7.0](https://github.com/multiversx/mx-sdk-dapp/pull/1733)] - 2026-07-02

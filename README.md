@@ -40,7 +40,7 @@ See [Template dApp](https://template-dapp.multiversx.com/) for live demo or chec
 
 ## Installation
 
-The library can be installed via npm or yarn.
+The library can be installed via npm or pnpm.
 
 ```bash
 npm install @multiversx/sdk-dapp
@@ -49,7 +49,7 @@ npm install @multiversx/sdk-dapp
 or
 
 ```bash
-yarn add @multiversx/sdk-dapp
+pnpm add @multiversx/sdk-dapp
 ```
 
 > **Note:** Make sure you run your app on `https`, not `http`, otherwise some providers will not work.
