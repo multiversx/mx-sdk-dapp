@@ -1,0 +1,9 @@
+minimumReleaseAgeExclude:
+  - '@multiversx/*'
+allowBuilds:
+  '@swc/core': false
+  esbuild: false
+  keccak: false
+  msw: false
+  protobufjs: false
+  unrs-resolver: false

@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.build.json",
+  "comment": "Points tsc-alias at the CJS tree (out-cjs) emitted by esbuild.js so it can rewrite baseUrl aliases to relative paths and stamp the .cjs extension. Not used by tsc.",
+  "compilerOptions": {
+    "outDir": "out-cjs"
+  }
+}

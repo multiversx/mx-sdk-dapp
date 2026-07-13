@@ -13,7 +13,8 @@ export default [
       'dist/**',
       'node_modules/**',
       '.snapshots/**',
-      '**/*.min.js'
+      '**/*.min.js',
+      'src/setupTests.js'
     ]
   },
   {
