@@ -38,7 +38,7 @@ echo "git checkout development..."
 git checkout development
 
 echo "Installing dependencies mx-template-dapp..."
-pnpm install --frozen-lockfile
+pnpm install
 
 echo "Linking mx-sdk-dapp..."
 yalc add @multiversx/sdk-dapp
@@ -54,7 +54,7 @@ echo "cd mx-template-dapp-nextjs..."
 cd mx-template-dapp-nextjs
 
 echo "Installing dependencies mx-template-dapp-nextjs..."
-pnpm install --frozen-lockfile
+pnpm install
 
 echo "Linking mx-sdk-dapp..."
 yalc add @multiversx/sdk-dapp
