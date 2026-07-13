@@ -45,6 +45,7 @@ yalc add @multiversx/sdk-dapp
 
 echo "Building mx-template-dapp..."
 pnpm build-devnet
+cd ..
 
 
 # Consume mx-sdk-dapp in mx-template-dapp-nextjs
@@ -52,6 +53,9 @@ git clone https://github.com/multiversx/mx-template-dapp-nextjs.git
 
 echo "cd mx-template-dapp-nextjs..."
 cd mx-template-dapp-nextjs
+
+echo "git checkout development..."
+git checkout development
 
 echo "Installing dependencies mx-template-dapp-nextjs..."
 pnpm install
