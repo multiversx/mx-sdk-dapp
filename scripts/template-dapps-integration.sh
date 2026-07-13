@@ -5,7 +5,7 @@ set -e
 
 # Install prerequisites
 echo "Installing pnpm..."
-npm install --global pnpm
+npm install --global pnpm@11.11.0
 echo "Installing yalc..."
 npm install --global yalc
 
@@ -46,7 +46,6 @@ yalc add @multiversx/sdk-dapp
 echo "Building mx-template-dapp..."
 pnpm build-devnet
 cd ..
-
 
 # Consume mx-sdk-dapp in mx-template-dapp-nextjs
 git clone https://github.com/multiversx/mx-template-dapp-nextjs.git
