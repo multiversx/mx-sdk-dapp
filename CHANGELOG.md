@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.7.1](https://github.com/multiversx/mx-sdk-dapp/pull/1735)] - 2026-07-13
+
+- [Update Ledger Provider to 8.2.0](https://github.com/multiversx/mx-sdk-dapp/pull/1734)
+
 ## [[5.7.0](https://github.com/multiversx/mx-sdk-dapp/pull/1733)] - 2026-07-02
 
 - [Update build system and packages](https://github.com/multiversx/mx-sdk-dapp/pull/1732)

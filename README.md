@@ -17,7 +17,7 @@ It is built for applications that use any of the following technologies:
 - React JS (example: [React JS Template Dapp](https://github.com/multiversx/mx-template-dapp-reactjs))
 - Angular (example: [Angular Template Dapp](https://github.com/multiversx/mx-template-dapp-angular))
 - Vue (example: [Vue Template Dapp](https://github.com/multiversx/mx-template-dapp-vue))
-- Any other JavaScript framework (e.g. Solid.js etc.) (example: [Solid.js Dapp](https://github.com/multiversx/mx-solidjs-template-dapp))
+- Any other JavaScript framework (e.g. Solid.js etc.) (example: [Solid.js Dapp](https://github.com/multiversx/mx-template-dapp-solidjs))
 - React Native (example: [React Native Dapp](https://github.com/multiversx/mx-template-dapp-react-native))
 - Next.js (example: [Next.js Dapp](https://github.com/multiversx/mx-template-dapp-nextjs))
 
