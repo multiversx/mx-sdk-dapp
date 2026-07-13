@@ -18,7 +18,7 @@ cd mx-sdk-dapp
 git checkout development
 
 echo "Installing dependencies for mx-sdk-dapp..."
-pnpm install --frozen-lockfile
+pnpm install --no-frozen-lockfile
 
 echo "Building mx-sdk-dapp..."
 pnpm build
