@@ -5,7 +5,7 @@ set -e
 
 # Install prerequisites
 echo "Installing pnpm..."
-npm install --global pnpm
+npm install --global pnpm@11.11.0
 echo "Installing yalc..."
 npm install --global yalc
 
@@ -18,7 +18,7 @@ cd mx-sdk-dapp
 git checkout development
 
 echo "Installing dependencies for mx-sdk-dapp..."
-pnpm install --frozen-lockfile
+pnpm install --no-frozen-lockfile
 
 echo "Building mx-sdk-dapp..."
 pnpm build
@@ -38,14 +38,14 @@ echo "git checkout development..."
 git checkout development
 
 echo "Installing dependencies mx-template-dapp..."
-yarn install
+pnpm install --no-frozen-lockfile
 
 echo "Linking mx-sdk-dapp..."
-yalc add @multiversx/sdk-dapp
+yalc add --pure @multiversx/sdk-dapp
 
 echo "Building mx-template-dapp..."
-yarn build-devnet
-
+pnpm build-devnet
+cd ..
 
 # Consume mx-sdk-dapp in mx-template-dapp-nextjs
 git clone https://github.com/multiversx/mx-template-dapp-nextjs.git
@@ -53,13 +53,16 @@ git clone https://github.com/multiversx/mx-template-dapp-nextjs.git
 echo "cd mx-template-dapp-nextjs..."
 cd mx-template-dapp-nextjs
 
+echo "git checkout development..."
+git checkout development
+
 echo "Installing dependencies mx-template-dapp-nextjs..."
-yarn install
+pnpm install --no-frozen-lockfile
 
 echo "Linking mx-sdk-dapp..."
-yalc add @multiversx/sdk-dapp
+yalc add --pure @multiversx/sdk-dapp
 
 echo "Building mx-template-dapp-nextjs..."
-yarn build:devnet
+pnpm build:devnet
 
 echo "Script executed successfully!"

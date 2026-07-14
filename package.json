@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.7.0",
+  "version": "5.7.1",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "MIT",
@@ -40,7 +40,7 @@
   "dependencies": {
     "@lifeomic/axios-fetch": "3.1.0",
     "@multiversx/sdk-extension-provider": "5.1.2",
-    "@multiversx/sdk-hw-provider": "8.1.2",
+    "@multiversx/sdk-hw-provider": "8.2.0",
     "@multiversx/sdk-native-auth-client": "2.0.1",
     "@multiversx/sdk-wallet-connect-provider": "6.1.5",
     "@multiversx/sdk-web-wallet-cross-window-provider": "3.2.2",
