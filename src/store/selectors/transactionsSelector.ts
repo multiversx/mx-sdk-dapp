@@ -37,7 +37,15 @@ export const successfulTransactionsSessionsSelector = ({
     const hasSuccessfulTransactions = data.transactions.some(
       ({ status }) => status === TransactionServerStatusesEnum.success
     );
-    if (hasSuccessfulTransactions && data.status === 'sent') {
+
+    const isSessionSettled = [
+      TransactionBatchStatusesEnum.sent,
+      TransactionBatchStatusesEnum.success
+    ]
+      .map((el) => String(el))
+      .includes(String(data.status));
+
+    if (hasSuccessfulTransactions && isSessionSettled) {
       successfulSessions[sessionId] = data;
     }
   });
@@ -63,7 +71,17 @@ export const failedTransactionsSessionsSelector = ({
           .map((el) => String(el))
           .includes(status)
     );
-    if (hasFailedTransactions && data.status === 'sent') {
+    const isSessionSettled = [
+      TransactionBatchStatusesEnum.sent,
+      TransactionBatchStatusesEnum.fail,
+      TransactionBatchStatusesEnum.invalid,
+      TransactionBatchStatusesEnum.timedOut,
+      TransactionBatchStatusesEnum.cancelled
+    ]
+      .map((el) => String(el))
+      .includes(String(data.status));
+
+    if (hasFailedTransactions && isSessionSettled) {
       failedSessions[sessionId] = data;
     }
   });
