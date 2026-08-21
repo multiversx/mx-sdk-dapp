@@ -19,7 +19,7 @@ export const fallbackNetworkConfigurations: Record<
     apiAddress: 'https://devnet-api.multiversx.com',
     explorerAddress: 'http://devnet-explorer.multiversx.com',
     apiTimeout: '4000',
-    roundDuration: 6000
+    roundDuration: 600
   },
   testnet: {
     id: 'testnet',
@@ -35,7 +35,7 @@ export const fallbackNetworkConfigurations: Record<
     apiAddress: 'https://testnet-api.multiversx.com',
     explorerAddress: 'http://testnet-explorer.multiversx.com',
     apiTimeout: '4000',
-    roundDuration: 6000
+    roundDuration: 600
   },
   mainnet: {
     id: 'mainnet',
@@ -51,7 +51,7 @@ export const fallbackNetworkConfigurations: Record<
     apiAddress: 'https://api.multiversx.com',
     explorerAddress: 'https://explorer.multiversx.com',
     apiTimeout: '4000',
-    roundDuration: 6000
+    roundDuration: 600
   }
 };
 
