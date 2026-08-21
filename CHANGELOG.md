@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix tx tracking and no digits output](https://github.com/multiversx/mx-sdk-dapp/pull/1737)
+
 ## [[5.7.1](https://github.com/multiversx/mx-sdk-dapp/pull/1735)] - 2026-07-13
 
 - [Migrate Yarn to pnpm](https://github.com/multiversx/mx-sdk-dapp/pull/1736)
