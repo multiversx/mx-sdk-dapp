@@ -4,10 +4,14 @@ import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { websocketEventSelector } from 'store/selectors/accountSelectors';
 import { pendingTransactionsSessionsSelector } from 'store/selectors/transactionsSelector';
 import { getStore } from 'store/store';
+import { StoreType } from 'store/store.types';
 import { SubscriptionsEnum } from 'types/subscriptions.type';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { checkTransactionStatus } from './helpers/checkTransactionStatus';
 import { getPollingInterval } from './helpers/getPollingInterval';
+
+const getPendingSessionIds = (state: StoreType): string[] =>
+  Object.keys(pendingTransactionsSessionsSelector(state));
 
 /**
  * Tracks transactions using websocket or polling
@@ -20,6 +24,14 @@ export async function trackTransactions(): Promise<{
   const pollingInterval = getPollingInterval();
   let pollingIntervalRef: ReturnType<typeof setTimeout> | null = null;
   let timestamp = websocketEventSelector(store.getState())?.timestamp ?? null;
+  let isWebsocketTrackingActive = false;
+
+  subscriptions.get(SubscriptionsEnum.websocketEventReceived)?.();
+  subscriptions.delete(SubscriptionsEnum.websocketEventReceived);
+  subscriptions.get(SubscriptionsEnum.websocketStatusChanged)?.();
+  subscriptions.delete(SubscriptionsEnum.websocketStatusChanged);
+
+  let pendingSessionIds = new Set(getPendingSessionIds(store.getState()));
 
   const recheckStatus = async (): Promise<void> => {
     try {
@@ -48,7 +60,11 @@ export async function trackTransactions(): Promise<{
   };
 
   const setupWebSocketTracking = (): void => {
-    stopPolling();
+    if (isWebsocketTrackingActive) {
+      return;
+    }
+    isWebsocketTrackingActive = true;
+
     const unsubscribeWebsocketEvent = store.subscribe(
       ({ account: { websocketEvent } }) => {
         if (
@@ -60,8 +76,7 @@ export async function trackTransactions(): Promise<{
           recheckStatus();
 
           const hasPendingSessions =
-            Object.keys(pendingTransactionsSessionsSelector(store.getState()))
-              .length > 0;
+            getPendingSessionIds(store.getState()).length > 0;
 
           if (!hasPendingSessions && getIsLoggedIn()) {
             refreshAccount();
@@ -76,39 +91,68 @@ export async function trackTransactions(): Promise<{
     );
   };
 
-  // Initial execution
-  recheckStatus();
-
   const stopTransactionsTracking = (): void => {
     stopPolling();
   };
 
-  const unsubscribeWebsocketStatus = store.subscribe(
-    ({ account: { address }, config: { websocketStatus } }, prevState) => {
-      const hasStatusChange =
-        prevState.config.websocketStatus !== websocketStatus;
-
-      if (!hasStatusChange) {
-        return;
-      }
-
-      switch (websocketStatus) {
-        case WebsocketConnectionStatusEnum.COMPLETED:
-          setupWebSocketTracking();
-          break;
-        case WebsocketConnectionStatusEnum.PENDING:
-          startPolling();
-          break;
-        default:
-          address ? startPolling() : stopTransactionsTracking();
-          break;
-      }
+  const applyWebsocketStatus = (
+    websocketStatus?: WebsocketConnectionStatusEnum,
+    address?: string
+  ): void => {
+    switch (websocketStatus) {
+      case WebsocketConnectionStatusEnum.COMPLETED:
+        setupWebSocketTracking();
+        break;
+      case WebsocketConnectionStatusEnum.PENDING:
+        startPolling();
+        break;
+      default:
+        address ? startPolling() : stopTransactionsTracking();
+        break;
     }
-  );
+  };
+
+  recheckStatus();
+
+  const unsubscribeWebsocketStatus = store.subscribe((state, prevState) => {
+    const {
+      account: { address },
+      config: { websocketStatus }
+    } = state;
+
+    const nextPendingSessionIds = getPendingSessionIds(state);
+    const hasNewPendingSession = nextPendingSessionIds.some(
+      (sessionId) => !pendingSessionIds.has(sessionId)
+    );
+    pendingSessionIds = new Set(nextPendingSessionIds);
+
+    if (hasNewPendingSession) {
+      recheckStatus();
+    }
+
+    if (nextPendingSessionIds.length > 0) {
+      startPolling();
+    } else if (websocketStatus === WebsocketConnectionStatusEnum.COMPLETED) {
+      stopPolling();
+    }
+
+    if (prevState.config.websocketStatus === websocketStatus) {
+      return;
+    }
+
+    applyWebsocketStatus(websocketStatus, address);
+  });
 
   subscriptions.set(
     SubscriptionsEnum.websocketStatusChanged,
     unsubscribeWebsocketStatus
   );
+
+  const initialState = store.getState();
+  applyWebsocketStatus(
+    initialState?.config?.websocketStatus,
+    initialState?.account?.address
+  );
+
   return { stopTransactionsTracking };
 }

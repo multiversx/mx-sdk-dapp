@@ -454,6 +454,119 @@ describe('trackTransactions', () => {
     });
   });
 
+  describe('pending session tracking', () => {
+    const pendingSession = { transactions: [], status: 'sent' } as any;
+
+    const triggerStoreChange = (
+      subscribeCallback: any,
+      websocketStatus = WebsocketConnectionStatusEnum.COMPLETED
+    ) =>
+      subscribeCallback(
+        {
+          account: { address: 'test-address' },
+          config: { websocketStatus }
+        },
+        { config: { websocketStatus } }
+      );
+
+    it('should check transaction status when a new pending session appears', async () => {
+      await trackTransactions();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+
+      mockPendingTransactionsSessionsSelector.mockReturnValue({
+        'session-1': pendingSession
+      });
+      triggerStoreChange(subscribeCallback);
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2); // Initial + new session
+    });
+
+    it('should not re-check for an already known pending session', async () => {
+      await trackTransactions();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+
+      mockPendingTransactionsSessionsSelector.mockReturnValue({
+        'session-1': pendingSession
+      });
+      triggerStoreChange(subscribeCallback);
+      triggerStoreChange(subscribeCallback);
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2); // Initial + first appearance only
+    });
+
+    it('should keep polling while sessions are pending and websocket is COMPLETED', async () => {
+      await trackTransactions();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+
+      mockPendingTransactionsSessionsSelector.mockReturnValue({
+        'session-1': pendingSession
+      });
+      triggerStoreChange(subscribeCallback);
+
+      expect(mockSetInterval).toHaveBeenCalledWith(expect.any(Function), 5000);
+
+      // The polling callback keeps checking without any websocket event
+      const [pollingCallback] = mockSetInterval.mock.calls[0];
+      pollingCallback();
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(3);
+    });
+
+    it('should stop polling once no session is pending anymore', async () => {
+      await trackTransactions();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+
+      mockPendingTransactionsSessionsSelector.mockReturnValue({
+        'session-1': pendingSession
+      });
+      triggerStoreChange(subscribeCallback);
+
+      mockPendingTransactionsSessionsSelector.mockReturnValue({});
+      triggerStoreChange(subscribeCallback);
+
+      expect(mockClearInterval).toHaveBeenCalledWith(123);
+    });
+  });
+
+  describe('already connected websocket', () => {
+    it('should setup websocket tracking when the socket connected before tracking started', async () => {
+      mockGetState.mockReturnValue({
+        account: { address: 'test-address' },
+        config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
+      });
+
+      await trackTransactions();
+
+      expect(subscriptions.has(SubscriptionsEnum.websocketEventReceived)).toBe(
+        true
+      );
+    });
+
+    it('should setup websocket tracking only once', async () => {
+      await trackTransactions();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+
+      const completedState = {
+        account: { address: 'test-address' },
+        config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
+      };
+      const pendingState = {
+        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
+      };
+
+      subscribeCallback(completedState, pendingState);
+      subscribeCallback(completedState, pendingState);
+
+      expect(mockSubscribe).toHaveBeenCalledTimes(2); // Status subscription + single websocket event subscription
+    });
+
+    it('should unsubscribe previously registered subscriptions on re-init', async () => {
+      await trackTransactions();
+      await trackTransactions();
+
+      expect(mockUnsubscribe).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('edge cases', () => {
     it('should handle missing websocket event in selector', async () => {
       mockWebsocketEventSelector.mockReturnValue(null);

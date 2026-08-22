@@ -152,7 +152,7 @@ describe('initializeWebsocketConnection tests', () => {
     onAnyCallback('test-message');
 
     // Advance timers to trigger the debounced setWebsocketEvent
-    jest.advanceTimersByTime(300); // MESSAGE_DELAY
+    jest.advanceTimersByTime(300); // past the MESSAGE_DELAY debounce
 
     // Note: We can't directly test setWebsocketEvent is called here because it's mocked
     // But we verify the onAny handler was registered

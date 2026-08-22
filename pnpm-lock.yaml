@@ -200,8 +200,8 @@ importers:
         version: 8.62.0(eslint@9.15.0)(typescript@5.9.3)
     optionalDependencies:
       '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.1.25-alpha.1 <0.2.0'
-        version: 0.1.25-alpha.1
+        specifier: '>=0.1.25-alpha.2 <0.2.0'
+        version: 0.1.25-alpha.2
 
 packages:
 
@@ -806,8 +806,8 @@ packages:
       bignumber.js: ^9.0.1
       protobufjs: ^7.5.6
 
-  '@multiversx/sdk-dapp-ui@0.1.25-alpha.1':
-    resolution: {integrity: sha512-Ic2amkv3GzNETJlZyNC8OxfHXLab0jCXPC9C0ss5B66OBx0EGz473OqYHd7/n3QtDf5aAEVtuqNnnllgBYMfcQ==}
+  '@multiversx/sdk-dapp-ui@0.1.25-alpha.2':
+    resolution: {integrity: sha512-Yc60s88rxEgfXw8Zy1zsPgBA5/BFj5yPE2YXdWA2zJJQ0L5+HNMomvF7lN0Ey2K61r9Kh2sti99r3IWat0JDFw==}
 
   '@multiversx/sdk-dapp-utils@3.1.0':
     resolution: {integrity: sha512-m3u2ymm+ME/+6Hbu0iNmi+CQbuImNOc8GeX+KtdW0tihQrMwEuWIECj/U5EapEFbGMlNbPb/YmwiMMfQ1bk/fQ==}
@@ -5196,7 +5196,7 @@ snapshots:
       - debug
       - supports-color
 
-  '@multiversx/sdk-dapp-ui@0.1.25-alpha.1':
+  '@multiversx/sdk-dapp-ui@0.1.25-alpha.2':
     dependencies:
       '@stencil/core': 4.44.0
       classnames: 2.5.1

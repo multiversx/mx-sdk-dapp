@@ -16,7 +16,7 @@ import { BatchTransactionsWSResponseType } from 'types/websocket.types';
 const TIMEOUT = 3_000;
 const RECONNECTION_ATTEMPTS = 3;
 const RETRY_INTERVAL = 500;
-const MESSAGE_DELAY = 500;
+const MESSAGE_DELAY = 150;
 const BATCH_UPDATED_EVENT = 'batchUpdated';
 const CONNECT = 'connect';
 const CONNECT_ERROR = 'connect_error';
