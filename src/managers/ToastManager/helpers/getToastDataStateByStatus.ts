@@ -15,7 +15,7 @@ export const getToastDataStateByStatus = ({
 }: GetToastsOptionsDataPropsType) => {
   const successToastData: IToastDataState = {
     id: toastId,
-    icon: IconNamesEnum.check,
+    icon: IconNamesEnum.circleCheck,
     hasCloseButton: true,
     title:
       transactionsDisplayInfo?.successMessage ??
@@ -26,7 +26,7 @@ export const getToastDataStateByStatus = ({
 
   const receivedToastData: IToastDataState = {
     id: toastId,
-    icon: IconNamesEnum.check,
+    icon: IconNamesEnum.circleCheck,
     hasCloseButton: true,
     title:
       transactionsDisplayInfo?.receivedMessage ??
@@ -49,7 +49,7 @@ export const getToastDataStateByStatus = ({
 
   const failToastData: IToastDataState = {
     id: toastId,
-    icon: IconNamesEnum.triangularWarning,
+    icon: IconNamesEnum.fail,
     title:
       transactionsDisplayInfo?.errorMessage ??
       txActionName ??

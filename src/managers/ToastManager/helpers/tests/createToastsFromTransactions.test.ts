@@ -151,7 +151,7 @@ describe('createToastsFromTransactions', () => {
         {
           toastDataState: {
             id: SESSION_IDS.SUCCESS,
-            icon: IconNamesEnum.check,
+            icon: IconNamesEnum.circleCheck,
             hasCloseButton: true,
             title: 'Self transaction successful',
             iconClassName: 'success'

@@ -16,7 +16,7 @@ export const getTransactionIconInfo = (
   const tooltip = `${capitalize(transaction.status)} ${errorText}`;
 
   if (failed) {
-    return { icon: IconNamesEnum.ban, tooltip };
+    return { icon: IconNamesEnum.fail, tooltip };
   }
 
   if (invalid) {

@@ -32,7 +32,7 @@ describe('handleSignError tests', () => {
           new RegExp(`^${CANCEL_TRANSACTION_TOAST_ID}-\\d+$`)
         ),
         duration: CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
-        icon: IconNamesEnum.ban,
+        icon: IconNamesEnum.fail,
         iconClassName: 'warning',
         message: 'Transaction canceled',
         title: 'Signing canceled'
@@ -51,7 +51,7 @@ describe('handleSignError tests', () => {
           new RegExp(`^${ERROR_SIGNING_TOAST_ID}-\\d+$`)
         ),
         duration: CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
-        icon: IconNamesEnum.ban,
+        icon: IconNamesEnum.fail,
         iconClassName: 'danger',
         message: SigningErrorsEnum.errorSigning,
         title: SigningErrorsEnum.errorSigning

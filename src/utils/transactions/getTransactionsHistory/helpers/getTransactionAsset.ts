@@ -63,7 +63,7 @@ export const getTransactionAsset = ({
 
   if (showDefaultTransactionIcon && !showDefaultState) {
     return {
-      icon: isTransactionPending ? IconNamesEnum.hourglass : IconNamesEnum.ban
+      icon: isTransactionPending ? IconNamesEnum.hourglass : IconNamesEnum.fail
     };
   }
 

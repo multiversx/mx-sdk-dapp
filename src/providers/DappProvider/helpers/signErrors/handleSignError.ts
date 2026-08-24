@@ -59,7 +59,7 @@ export function handleSignError(
   createCustomToast({
     toastId,
     duration: CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
-    icon: IconNamesEnum.ban,
+    icon: IconNamesEnum.fail,
     iconClassName,
     message: errorMessage,
     title

@@ -61,7 +61,7 @@ export class LedgerIdleStateManager {
       } catch (_error) {
         ToastManager.getInstance().createCustomToast({
           toastId: 'ledger-provider-idle-warning',
-          icon: IconNamesEnum.close,
+          icon: IconNamesEnum.triangularWarning,
           iconClassName: 'warning',
           message: 'Unlock your device to continue signing transactions',
           title: 'Ledger disconnected'
