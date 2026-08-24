@@ -202,7 +202,7 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
         createCustomToast({
           toastId: 'ledger-provider-rebuild-error',
           duration: CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
-          icon: IconNamesEnum.close,
+          icon: IconNamesEnum.triangularWarning,
           iconClassName: 'warning',
           message: 'Unlock your device & open the MultiversX App',
           title: 'Ledger unavailable'

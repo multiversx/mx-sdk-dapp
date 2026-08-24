@@ -108,7 +108,7 @@ export class LogoutManager {
         toastId: 'native-auth-logout',
         iconClassName: 'warning',
         title: 'Logging out',
-        icon: IconNamesEnum.close,
+        icon: IconNamesEnum.triangularWarning,
         message: 'Your session has expired!'
       });
       this.actualLogoutTimeoutRef = null;

@@ -78,5 +78,6 @@ export enum IconNamesEnum {
   hourglass = 'hourglass',
   ban = 'ban',
   coins = 'coins',
-  check = 'check'
+  check = 'check',
+  triangularWarning = 'triangular-warning'
 }

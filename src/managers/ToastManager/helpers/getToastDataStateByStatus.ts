@@ -49,7 +49,7 @@ export const getToastDataStateByStatus = ({
 
   const failToastData: IToastDataState = {
     id: toastId,
-    icon: IconNamesEnum.close,
+    icon: IconNamesEnum.triangularWarning,
     title:
       transactionsDisplayInfo?.errorMessage ??
       txActionName ??
@@ -71,7 +71,7 @@ export const getToastDataStateByStatus = ({
 
   const timedOutToastData = {
     id: toastId,
-    icon: IconNamesEnum.close,
+    icon: IconNamesEnum.triangularWarning,
     title:
       transactionsDisplayInfo?.timedOutMessage ??
       txActionName ??
