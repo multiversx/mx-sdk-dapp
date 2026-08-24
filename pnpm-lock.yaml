@@ -200,8 +200,8 @@ importers:
         version: 8.62.0(eslint@9.15.0)(typescript@5.9.3)
     optionalDependencies:
       '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.1.25-alpha.6 <0.2.0'
-        version: 0.1.25-alpha.6(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)(vue@3.5.41(typescript@5.9.3))
+        specifier: '>=0.1.25-alpha.9 <0.2.0'
+        version: 0.1.25-alpha.9(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)(vue@3.5.41(typescript@5.9.3))
 
 packages:
 
@@ -814,8 +814,8 @@ packages:
       bignumber.js: ^9.0.1
       protobufjs: ^7.5.6
 
-  '@multiversx/sdk-dapp-ui@0.1.25-alpha.6':
-    resolution: {integrity: sha512-+8rR8C9c+SLX4l30HVl4WgG9RojMd5omUp5MFqmCLTlMSgkypsWV2axEtbDE0YshPfI/LOsyRBLt2F7isETMlw==}
+  '@multiversx/sdk-dapp-ui@0.1.25-alpha.9':
+    resolution: {integrity: sha512-mK/vOSf9/2jSZNfJtmSes3ev01SHaHU3ZcCU2v9LyfKr+h2Ve4OhdfOeDWKs4p1UPr1x0OwDbTLe3pjIp9Y3iA==}
 
   '@multiversx/sdk-dapp-utils@3.1.0':
     resolution: {integrity: sha512-m3u2ymm+ME/+6Hbu0iNmi+CQbuImNOc8GeX+KtdW0tihQrMwEuWIECj/U5EapEFbGMlNbPb/YmwiMMfQ1bk/fQ==}
@@ -1029,8 +1029,8 @@ packages:
   '@socket.io/component-emitter@3.1.2':
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
 
-  '@stencil/core@4.44.0':
-    resolution: {integrity: sha512-A3kArg+80t9zJdul7FLUcxcjqvYrF76nDavfm2L8R7hGKWPbTTGM/tkOSf7MJqMd1ED0ztYoa9X90UlEXY3nLA==}
+  '@stencil/core@4.44.1':
+    resolution: {integrity: sha512-OaFtMODcDcKswPbJC6An6xAcNmeuBggxyUTVKSX1UY7bPtWgIR5mGy1jZ6JkyFGgIxZCj/9wp2r97KBQow9wOQ==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
@@ -5354,11 +5354,11 @@ snapshots:
       - debug
       - supports-color
 
-  '@multiversx/sdk-dapp-ui@0.1.25-alpha.6(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)(vue@3.5.41(typescript@5.9.3))':
+  '@multiversx/sdk-dapp-ui@0.1.25-alpha.9(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)(vue@3.5.41(typescript@5.9.3))':
     dependencies:
-      '@stencil/core': 4.44.0
-      '@stencil/react-output-target': 1.6.2(@stencil/core@4.44.0)(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)
-      '@stencil/vue-output-target': 0.14.1(@stencil/core@4.44.0)(vue@3.5.41(typescript@5.9.3))
+      '@stencil/core': 4.44.1
+      '@stencil/react-output-target': 1.6.2(@stencil/core@4.44.1)(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)
+      '@stencil/vue-output-target': 0.14.1(@stencil/core@4.44.1)(vue@3.5.41(typescript@5.9.3))
       classnames: 2.5.1
       lodash.capitalize: 4.2.1
       lodash.inrange: 3.3.6
@@ -5577,7 +5577,7 @@ snapshots:
 
   '@socket.io/component-emitter@3.1.2': {}
 
-  '@stencil/core@4.44.0':
+  '@stencil/core@4.44.1':
     optionalDependencies:
       '@rollup/rollup-darwin-arm64': 4.44.0
       '@rollup/rollup-darwin-x64': 4.44.0
@@ -5589,10 +5589,10 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.44.0
     optional: true
 
-  '@stencil/react-output-target@1.6.2(@stencil/core@4.44.0)(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)':
+  '@stencil/react-output-target@1.6.2(@stencil/core@4.44.1)(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@lit/react': 1.0.8(@types/react@18.2.0)
-      '@stencil/core': 4.44.0
+      '@stencil/core': 4.44.1
       html-react-parser: 5.2.17(@types/react@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 19.2.8(react@18.2.0)
@@ -5602,11 +5602,11 @@ snapshots:
       - '@types/react'
     optional: true
 
-  '@stencil/vue-output-target@0.14.1(@stencil/core@4.44.0)(vue@3.5.41(typescript@5.9.3))':
+  '@stencil/vue-output-target@0.14.1(@stencil/core@4.44.1)(vue@3.5.41(typescript@5.9.3))':
     dependencies:
       vue: 3.5.41(typescript@5.9.3)
     optionalDependencies:
-      '@stencil/core': 4.44.0
+      '@stencil/core': 4.44.1
     optional: true
 
   '@swc/core-darwin-arm64@1.15.43':

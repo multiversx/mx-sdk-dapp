@@ -14,7 +14,7 @@ const pendingTransactionToasts = [
       icon: 'hourglass',
       hasCloseButton: false,
       title: 'Processing Self transaction',
-      iconClassName: 'warning'
+      iconClassName: 'mvx-toast-pending'
     },
     processedTransactionsStatus: '0 / 1 transactions processed',
     transactionProgressState: {

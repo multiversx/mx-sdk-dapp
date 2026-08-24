@@ -21,7 +21,7 @@ export const getToastDataStateByStatus = ({
       transactionsDisplayInfo?.successMessage ??
       txActionName ??
       TransactionsDefaultTitles.success,
-    iconClassName: 'success'
+    iconClassName: 'mvx-toast-success'
   };
 
   const receivedToastData: IToastDataState = {
@@ -33,7 +33,7 @@ export const getToastDataStateByStatus = ({
       transactionsDisplayInfo?.successMessage ??
       txActionName ??
       TransactionsDefaultTitles.received,
-    iconClassName: 'success'
+    iconClassName: 'mvx-toast-success'
   };
 
   const pendingToastData: IToastDataState = {
@@ -44,7 +44,7 @@ export const getToastDataStateByStatus = ({
       transactionsDisplayInfo?.processingMessage ??
       txActionName ??
       TransactionsDefaultTitles.pending,
-    iconClassName: 'warning'
+    iconClassName: 'mvx-toast-pending'
   };
 
   const failToastData: IToastDataState = {
@@ -55,7 +55,7 @@ export const getToastDataStateByStatus = ({
       txActionName ??
       TransactionsDefaultTitles.failed,
     hasCloseButton: true,
-    iconClassName: 'danger'
+    iconClassName: 'mvx-toast-danger'
   };
 
   const invalidToastData: IToastDataState = {
@@ -66,7 +66,7 @@ export const getToastDataStateByStatus = ({
       txActionName ??
       TransactionsDefaultTitles.invalid,
     hasCloseButton: true,
-    iconClassName: 'warning'
+    iconClassName: 'mvx-toast-warning'
   };
 
   const timedOutToastData = {
@@ -77,7 +77,7 @@ export const getToastDataStateByStatus = ({
       txActionName ??
       TransactionsDefaultTitles.timedOut,
     hasCloseButton: true,
-    iconClassName: 'warning'
+    iconClassName: 'mvx-toast-warning'
   };
 
   switch (status) {

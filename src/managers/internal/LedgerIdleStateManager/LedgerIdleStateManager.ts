@@ -62,7 +62,7 @@ export class LedgerIdleStateManager {
         ToastManager.getInstance().createCustomToast({
           toastId: 'ledger-provider-idle-warning',
           icon: IconNamesEnum.triangularWarning,
-          iconClassName: 'warning',
+          iconClassName: 'mvx-toast-warning',
           message: 'Unlock your device to continue signing transactions',
           title: 'Ledger disconnected'
         });
@@ -102,7 +102,7 @@ export class LedgerIdleStateManager {
         toastId: 'ledger-provider-idle-warning',
         duration: RECONNECT_SUCCESS_DURATION,
         icon: IconNamesEnum.check,
-        iconClassName: 'success',
+        iconClassName: 'mvx-toast-success',
         message: 'Your device is ready to sign transactions',
         title: 'Ledger reconnected'
       });

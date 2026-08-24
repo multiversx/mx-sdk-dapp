@@ -33,7 +33,7 @@ describe('handleSignError tests', () => {
         ),
         duration: CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
         icon: IconNamesEnum.fail,
-        iconClassName: 'warning',
+        iconClassName: 'mvx-toast-warning',
         message: 'Transaction canceled',
         title: 'Signing canceled'
       })
@@ -52,7 +52,7 @@ describe('handleSignError tests', () => {
         ),
         duration: CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
         icon: IconNamesEnum.fail,
-        iconClassName: 'danger',
+        iconClassName: 'mvx-toast-danger',
         message: SigningErrorsEnum.errorSigning,
         title: SigningErrorsEnum.errorSigning
       })
@@ -66,7 +66,7 @@ describe('handleSignError tests', () => {
     expect(result).toBe('Unable to sign transactions');
     expect(mockCreateCustomToast).toHaveBeenCalledWith(
       expect.objectContaining({
-        iconClassName: 'warning',
+        iconClassName: 'mvx-toast-warning',
         message: 'Unable to sign transactions'
       })
     );
@@ -79,7 +79,7 @@ describe('handleSignError tests', () => {
     expect(result).toBe(SigningErrorsEnum.errorSigning);
     expect(mockCreateCustomToast).toHaveBeenCalledWith(
       expect.objectContaining({
-        iconClassName: 'danger',
+        iconClassName: 'mvx-toast-danger',
         message: SigningErrorsEnum.errorSigning
       })
     );
