@@ -106,9 +106,9 @@ export class LogoutManager {
     this.actualLogoutTimeoutRef = setTimeout(() => {
       ToastManager.getInstance().createCustomToast({
         toastId: 'native-auth-logout',
-        iconClassName: 'warning',
+        iconClassName: 'mvx-toast-warning',
         title: 'Logging out',
-        icon: IconNamesEnum.close,
+        icon: IconNamesEnum.triangularWarning,
         message: 'Your session has expired!'
       });
       this.actualLogoutTimeoutRef = null;
@@ -169,7 +169,7 @@ export class LogoutManager {
     this.warningLogoutTimeoutRef = setTimeout(() => {
       ToastManager.getInstance().createCustomToast({
         toastId: 'native-auth-expired',
-        iconClassName: 'warning',
+        iconClassName: 'mvx-toast-warning',
         title: 'Session Expiration Warning',
         icon: IconNamesEnum.hourglass,
         message: `Your session will expire in ${readableMinutesUntilLogout}!`

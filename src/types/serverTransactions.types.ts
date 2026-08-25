@@ -249,6 +249,7 @@ export interface ServerTransactionType {
     | `${TransactionBatchStatusesEnum}`;
   inTransit?: boolean;
   timestamp: number;
+  timestampMs?: number;
   value: string;
   price: number;
   results?: ResultType[];

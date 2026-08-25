@@ -7,6 +7,7 @@ export const initialState: AccountSliceType = {
   address: '',
   websocketEvent: null,
   websocketBatchEvent: null,
+  websocketTransactionEvent: null,
   accounts: { '': emptyAccount },
   ledgerAccount: null,
   publicKey: '',

@@ -77,6 +77,37 @@ describe('FormatAmountController', () => {
       });
     });
 
+    it('returns empty decimal part when digits is 0', () => {
+      const result = FormatAmountController.getData({
+        input: '1000000000000000000', // 1 EGLD
+        decimals: 18,
+        digits: 0,
+        egldLabel: 'EGLD'
+      });
+
+      expect(result).toEqual({
+        isValid: true,
+        label: ' EGLD',
+        valueInteger: '1',
+        valueDecimal: ''
+      });
+    });
+
+    it('returns empty decimal part when digits is 0 for empty input', () => {
+      const result = FormatAmountController.getData({
+        input: '',
+        digits: 0,
+        egldLabel: 'EGLD'
+      });
+
+      expect(result).toEqual({
+        isValid: false,
+        label: ' EGLD',
+        valueInteger: '0',
+        valueDecimal: ''
+      });
+    });
+
     it('shows less than decimals label when needed', () => {
       const result = FormatAmountController.getData({
         input: '1',

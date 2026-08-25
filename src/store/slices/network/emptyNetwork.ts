@@ -12,5 +12,5 @@ export const emptyNetwork: NetworkType = {
   apiAddress: '',
   explorerAddress: '',
   apiTimeout: '4000',
-  roundDuration: 60000
+  roundDuration: 600
 };

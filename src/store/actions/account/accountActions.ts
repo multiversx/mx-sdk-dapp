@@ -2,7 +2,10 @@ import { LedgerAccountType } from 'store/slices/account/account.types';
 import { emptyAccount } from 'store/slices/account/emptyAccount';
 import { getStore } from 'store/store';
 import { AccountType } from 'types/account.types';
-import { BatchTransactionsWSResponseType } from 'types/websocket.types';
+import {
+  BatchTransactionsWSResponseType,
+  WebsocketTransactionEventType
+} from 'types/websocket.types';
 
 export const setAccount = (account: AccountType) => {
   getStore().setState(
@@ -85,6 +88,28 @@ export const setWebsocketBatchEvent = (data: BatchTransactionsWSResponseType) =>
       // @ts-ignore
       payload: {
         value: data
+      }
+    }
+  );
+
+export const setWebsocketTransactionEvent = ({
+  eventName,
+  hashes
+}: WebsocketTransactionEventType) =>
+  getStore().setState(
+    ({ account: state }) => {
+      state.websocketTransactionEvent = {
+        timestamp: Date.now(),
+        eventName,
+        hashes
+      };
+    },
+    false,
+    {
+      type: 'setWebsocketTransactionEvent',
+      // @ts-ignore
+      payload: {
+        value: { eventName, hashes }
       }
     }
   );

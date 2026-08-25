@@ -131,7 +131,7 @@ describe('createToastsFromTransactions', () => {
             icon: IconNamesEnum.hourglass,
             hasCloseButton: false,
             title: 'Processing Self transaction',
-            iconClassName: 'warning'
+            iconClassName: 'mvx-toast-pending'
           },
           processedTransactionsStatus: '0 / 1 transactions processed',
           transactionProgressState: {
@@ -151,10 +151,10 @@ describe('createToastsFromTransactions', () => {
         {
           toastDataState: {
             id: SESSION_IDS.SUCCESS,
-            icon: IconNamesEnum.check,
+            icon: IconNamesEnum.circleCheck,
             hasCloseButton: true,
             title: 'Self transaction successful',
-            iconClassName: 'success'
+            iconClassName: 'mvx-toast-success'
           },
           processedTransactionsStatus: 'Transaction processed',
           transactionProgressState: null,

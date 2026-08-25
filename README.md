@@ -584,7 +584,7 @@ createCustomToast({
 createCustomToast({
   toastId: 'custom-toast',
   icon: 'times',
-  iconClassName: 'warning',
+  iconClassName: 'mvx-toast-warning',
   message: 'This is a custom toast',
   title: 'My custom toast'
 });

@@ -47,7 +47,7 @@ describe('getTransactionIconInfo', () => {
 
     const result = getTransactionIconInfo(mockTransaction);
 
-    expect(result.icon).toEqual(IconNamesEnum.close);
+    expect(result.icon).toEqual(IconNamesEnum.fail);
     expect(result.tooltip).toBe('Pending Error message');
   });
 
