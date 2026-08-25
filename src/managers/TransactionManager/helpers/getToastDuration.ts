@@ -15,7 +15,10 @@ const getRoundDuration = (roundDuration?: number) => {
     Number.isFinite(roundDuration) &&
     roundDuration > 0;
 
-  return isUsableRoundDuration ? roundDuration : AVERAGE_TX_DURATION_MS;
+  // add 60ms for network lag
+  return (
+    Number(isUsableRoundDuration ? roundDuration : AVERAGE_TX_DURATION_MS) + 60
+  );
 };
 
 export const getToastDuration = (
