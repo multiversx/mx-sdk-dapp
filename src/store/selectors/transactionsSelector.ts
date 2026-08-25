@@ -28,6 +28,26 @@ export const pendingTransactionsSessionsSelector = ({
   return pendingSessions;
 };
 
+export const pendingSessionsByHashesSelector =
+  (hashes: string[]) =>
+  (state: StoreType): Record<string, SessionTransactionType> => {
+    const pendingSessions = pendingTransactionsSessionsSelector(state);
+    const lookup = new Set(hashes);
+    const matchingSessions: Record<string, SessionTransactionType> = {};
+
+    Object.entries(pendingSessions).forEach(([sessionId, data]) => {
+      const hasMatchingTransaction = data.transactions.some(
+        ({ hash }) => hash != null && lookup.has(hash)
+      );
+
+      if (hasMatchingTransaction) {
+        matchingSessions[sessionId] = data;
+      }
+    });
+
+    return matchingSessions;
+  };
+
 export const successfulTransactionsSessionsSelector = ({
   transactions: state
 }: StoreType): Record<string, SessionTransactionType> => {

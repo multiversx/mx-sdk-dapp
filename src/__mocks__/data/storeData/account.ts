@@ -8,6 +8,7 @@ export const account: AccountSliceType = {
     message: 'transactionCompleted'
   },
   websocketBatchEvent: null,
+  websocketTransactionEvent: null,
   accounts: {
     [testAddress]: {
       address: testAddress,
