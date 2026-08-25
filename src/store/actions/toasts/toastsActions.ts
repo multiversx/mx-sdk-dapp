@@ -3,7 +3,7 @@ import {
   IComponentToast
 } from 'store/slices/toast/toastSlice.types';
 import { getStore } from 'store/store';
-import { getUnixTimestampRange } from 'utils/dateTime';
+import { getUnixTimestampRangeMs } from 'utils/dateTime';
 
 export const customToastComponentDictionary: Record<
   string,
@@ -130,7 +130,7 @@ export const addTransactionToast = ({
           : 0;
       newToastId = toastId ?? `transaction-toast-${lastToastIndex + 1}`;
 
-      const { startTime, endTime } = getUnixTimestampRange(totalDuration);
+      const { startTime, endTime } = getUnixTimestampRangeMs(totalDuration);
 
       state.transactionToasts.push({
         startTime,

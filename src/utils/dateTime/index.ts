@@ -1,4 +1,5 @@
 export * from './getUnixTimestamp';
-export * from './getUnixTimestampRange';
+export * from './getUnixTimestampMs';
+export * from './getUnixTimestampRangeMs';
 export * from './getUnixTimestampWithAddedMilliseconds';
 export * from './getUnixTimestampWithAddedSeconds';

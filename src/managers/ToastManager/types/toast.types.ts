@@ -29,7 +29,9 @@ export interface IToastDataState {
   iconClassName: string;
 }
 export interface ITransactionProgressState {
+  /** UNIX timestamp in milliseconds */
   startTime: number;
+  /** UNIX timestamp in milliseconds */
   endTime: number;
 }
 export interface ITransaction {
