@@ -200,8 +200,8 @@ importers:
         version: 8.62.0(eslint@9.15.0)(typescript@5.9.3)
     optionalDependencies:
       '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.1.25 <0.2.0'
-        version: 0.1.25(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)(vue@3.5.41(typescript@5.9.3))
+        specifier: '>=0.1.26-alpha.0 <0.2.0'
+        version: 0.1.26-alpha.0(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)(vue@3.5.41(typescript@5.9.3))
 
 packages:
 
@@ -814,8 +814,8 @@ packages:
       bignumber.js: ^9.0.1
       protobufjs: ^7.5.6
 
-  '@multiversx/sdk-dapp-ui@0.1.25':
-    resolution: {integrity: sha512-rLvh0x69Whf8nZggb+tsKjoCVZQfr4L0SGa0Qy2bPoaDCJfldmotSqRLQIrKG460nkVFwSoqEgF4NlxJ23astQ==}
+  '@multiversx/sdk-dapp-ui@0.1.26-alpha.0':
+    resolution: {integrity: sha512-mRFT10TK9VnKz5Vo6G6z2j5kextZgTqy0Q+gTqbB837buUmV6clDq3s5QYUuD9+Whry9FP7LcUObduDZ9tJATg==}
 
   '@multiversx/sdk-dapp-utils@3.1.0':
     resolution: {integrity: sha512-m3u2ymm+ME/+6Hbu0iNmi+CQbuImNOc8GeX+KtdW0tihQrMwEuWIECj/U5EapEFbGMlNbPb/YmwiMMfQ1bk/fQ==}
@@ -5354,7 +5354,7 @@ snapshots:
       - debug
       - supports-color
 
-  '@multiversx/sdk-dapp-ui@0.1.25(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)(vue@3.5.41(typescript@5.9.3))':
+  '@multiversx/sdk-dapp-ui@0.1.26-alpha.0(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)(vue@3.5.41(typescript@5.9.3))':
     dependencies:
       '@stencil/core': 4.44.1
       '@stencil/react-output-target': 1.6.2(@stencil/core@4.44.1)(@types/react@18.2.0)(react-dom@19.2.8(react@18.2.0))(react@18.2.0)

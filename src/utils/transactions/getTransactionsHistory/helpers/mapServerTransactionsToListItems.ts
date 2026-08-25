@@ -10,6 +10,8 @@ import { StoreType } from 'store/store.types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { SignedTransactionType } from 'types/transactions.types';
+import { getUnixTimestampMs } from 'utils/dateTime';
+import { getTransactionTimestampMs } from 'utils/transactions/getTransactionTimestampMs';
 import { getCachedTransactionListItem } from './getCachedTransactionListItem';
 import { mapTransactionToListItem } from './mapTransactionToListItem';
 
@@ -19,7 +21,10 @@ interface IMapServerTransactionsToListItemsParams {
 }
 
 const sortTransactionsByTimestamp = (transactions: ITransactionListItem[]) =>
-  transactions.sort((a, b) => b.timestamp - a.timestamp);
+  transactions.sort(
+    (a, b) =>
+      (getTransactionTimestampMs(b) ?? 0) - (getTransactionTimestampMs(a) ?? 0)
+  );
 
 export const mapServerTransactionsToListItems = async ({
   transactions,
@@ -65,6 +70,8 @@ export const mapServerTransactionsToListItems = async ({
 
     // In case the transactions were not found, we create a dummy transaction with the pending status
     // until all pending transactions are returned from the API
+    const nowMs = getUnixTimestampMs();
+
     const pendingDummyTransactions = filteredTransactions.map(
       (transaction) =>
         ({
@@ -77,7 +84,8 @@ export const mapServerTransactionsToListItems = async ({
           receiverShard: 0,
           round: 0,
           senderShard: 0,
-          timestamp: Date.now()
+          timestamp: Math.floor(nowMs / 1000),
+          timestampMs: nowMs
         }) as ServerTransactionType
     );
 

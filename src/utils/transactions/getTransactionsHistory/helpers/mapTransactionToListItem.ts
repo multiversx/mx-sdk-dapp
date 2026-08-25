@@ -4,6 +4,7 @@ import { ServerTransactionType } from 'types/serverTransactions.types';
 import { explorerUrlBuilder } from 'utils/transactions/explorerUrlBuilder';
 import { getExplorerLink } from 'utils/transactions/getExplorerLink';
 import { getReceiverData } from 'utils/transactions/getTransactionsHistory/helpers/getReceiverData';
+import { getTransactionTimestampMs } from 'utils/transactions/getTransactionTimestampMs';
 import { getTransactionAction } from './getTransactionAction';
 import { getTransactionAmount } from './getTransactionAmount';
 import { getTransactionAsset } from './getTransactionAsset';
@@ -63,6 +64,7 @@ export const mapTransactionToListItem = ({
     hash,
     status: transaction.status as TransactionServerStatusesEnum,
     timestamp: transaction.timestamp,
+    timestampMs: getTransactionTimestampMs(transaction),
     link: getExplorerLink({
       explorerAddress,
       to: explorerUrlBuilder.transactionDetails(hash)
