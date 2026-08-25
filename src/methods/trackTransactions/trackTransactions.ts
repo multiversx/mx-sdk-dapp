@@ -1,14 +1,21 @@
 import { subscriptions } from 'constants/storage.constants';
+import { TRANSACTIONS_STATUS_POLLING_INTERVAL_MS } from 'constants/transactions.constants';
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import { websocketEventSelector } from 'store/selectors/accountSelectors';
+import { websocketTransactionEventSelector } from 'store/selectors/accountSelectors';
 import { pendingTransactionsSessionsSelector } from 'store/selectors/transactionsSelector';
 import { getStore } from 'store/store';
 import { StoreType } from 'store/store.types';
 import { SubscriptionsEnum } from 'types/subscriptions.type';
+import { WebsocketTransactionEventsEnum } from 'types/websocket.types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { checkTransactionStatus } from './helpers/checkTransactionStatus';
 import { getPollingInterval } from './helpers/getPollingInterval';
+import { createWebsocketHashResolver } from './helpers/resolveWebsocketHashes';
+
+const isResolvableEvent = (eventName?: string) =>
+  eventName === WebsocketTransactionEventsEnum.transactionCompleted ||
+  eventName === WebsocketTransactionEventsEnum.batchUpdated;
 
 const getPendingSessionIds = (state: StoreType): string[] =>
   Object.keys(pendingTransactionsSessionsSelector(state));
@@ -21,9 +28,11 @@ export async function trackTransactions(): Promise<{
   stopTransactionsTracking: () => void;
 }> {
   const store = getStore();
-  const pollingInterval = getPollingInterval();
+  const { resolve: resolveWebsocketHashes } = createWebsocketHashResolver();
   let pollingIntervalRef: ReturnType<typeof setTimeout> | null = null;
-  let timestamp = websocketEventSelector(store.getState())?.timestamp ?? null;
+  let pollingIntervalMs: number | null = null;
+  let timestamp =
+    websocketTransactionEventSelector(store.getState())?.timestamp ?? null;
   let isWebsocketTrackingActive = false;
 
   subscriptions.get(SubscriptionsEnum.websocketEventReceived)?.();
@@ -44,19 +53,42 @@ export async function trackTransactions(): Promise<{
     }
   };
 
-  const startPolling = (): void => {
-    // Prevent multiple polling intervals
-    if (pollingIntervalRef) {
-      return;
-    }
-    pollingIntervalRef = setInterval(recheckStatus, pollingInterval);
-  };
-
   const stopPolling = (): void => {
     if (pollingIntervalRef) {
       clearInterval(pollingIntervalRef);
       pollingIntervalRef = null;
+      pollingIntervalMs = null;
     }
+  };
+
+  const startPolling = (state?: StoreType): void => {
+    const isWebsocketHealthy =
+      (state ?? store.getState())?.config?.websocketStatus ===
+      WebsocketConnectionStatusEnum.COMPLETED;
+
+    const nextIntervalMs = isWebsocketHealthy
+      ? TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
+      : getPollingInterval();
+
+    if (pollingIntervalRef && pollingIntervalMs === nextIntervalMs) {
+      return;
+    }
+
+    stopPolling();
+    pollingIntervalMs = nextIntervalMs;
+    pollingIntervalRef = setInterval(recheckStatus, nextIntervalMs);
+  };
+
+  const syncPolling = (state?: StoreType): void => {
+    const currentState = state ?? store.getState();
+    const hasPendingSessions = getPendingSessionIds(currentState).length > 0;
+
+    if (hasPendingSessions) {
+      startPolling(currentState);
+      return;
+    }
+
+    stopPolling();
   };
 
   const setupWebSocketTracking = (): void => {
@@ -66,22 +98,37 @@ export async function trackTransactions(): Promise<{
     isWebsocketTrackingActive = true;
 
     const unsubscribeWebsocketEvent = store.subscribe(
-      ({ account: { websocketEvent } }) => {
-        if (
-          websocketEvent?.message &&
-          websocketEvent.timestamp != null &&
-          timestamp !== websocketEvent.timestamp
-        ) {
-          timestamp = websocketEvent.timestamp;
-          recheckStatus();
+      ({ account: { websocketTransactionEvent } }) => {
+        const isNewEvent =
+          websocketTransactionEvent?.hashes?.length &&
+          websocketTransactionEvent.timestamp != null &&
+          timestamp !== websocketTransactionEvent.timestamp;
 
-          const hasPendingSessions =
-            getPendingSessionIds(store.getState()).length > 0;
-
-          if (!hasPendingSessions && getIsLoggedIn()) {
-            refreshAccount();
-          }
+        if (!isNewEvent) {
+          return;
         }
+
+        timestamp = websocketTransactionEvent.timestamp;
+
+        if (!isResolvableEvent(websocketTransactionEvent.eventName)) {
+          return;
+        }
+
+        resolveWebsocketHashes(websocketTransactionEvent.hashes)
+          .then(() => {
+            const hasPendingSessions =
+              getPendingSessionIds(store.getState()).length > 0;
+
+            if (!hasPendingSessions && getIsLoggedIn()) {
+              refreshAccount();
+            }
+          })
+          .catch((error) => {
+            console.error(
+              '[trackTransactions] Error resolving websocket hashes:',
+              error
+            );
+          });
       }
     );
 
@@ -97,17 +144,20 @@ export async function trackTransactions(): Promise<{
 
   const applyWebsocketStatus = (
     websocketStatus?: WebsocketConnectionStatusEnum,
-    address?: string
+    address?: string,
+    state?: StoreType
   ): void => {
     switch (websocketStatus) {
       case WebsocketConnectionStatusEnum.COMPLETED:
         setupWebSocketTracking();
+        recheckStatus();
+        syncPolling(state);
         break;
       case WebsocketConnectionStatusEnum.PENDING:
-        startPolling();
+        startPolling(state);
         break;
       default:
-        address ? startPolling() : stopTransactionsTracking();
+        address ? startPolling(state) : stopTransactionsTracking();
         break;
     }
   };
@@ -130,17 +180,13 @@ export async function trackTransactions(): Promise<{
       recheckStatus();
     }
 
-    if (nextPendingSessionIds.length > 0) {
-      startPolling();
-    } else if (websocketStatus === WebsocketConnectionStatusEnum.COMPLETED) {
-      stopPolling();
-    }
+    syncPolling(state);
 
     if (prevState.config.websocketStatus === websocketStatus) {
       return;
     }
 
-    applyWebsocketStatus(websocketStatus, address);
+    applyWebsocketStatus(websocketStatus, address, state);
   });
 
   subscriptions.set(
@@ -151,7 +197,8 @@ export async function trackTransactions(): Promise<{
   const initialState = store.getState();
   applyWebsocketStatus(
     initialState?.config?.websocketStatus,
-    initialState?.account?.address
+    initialState?.account?.address,
+    initialState
   );
 
   return { stopTransactionsTracking };

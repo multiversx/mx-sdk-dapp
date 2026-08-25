@@ -1,9 +1,24 @@
-import { pendingTransactionsSessionsSelector } from 'store/selectors/transactionsSelector';
+import {
+  pendingSessionsByHashesSelector,
+  pendingTransactionsSessionsSelector
+} from 'store/selectors/transactionsSelector';
 import { getState } from 'store/store';
 import { checkBatch } from './helpers/checkBatch';
 
-export async function checkTransactionStatus() {
-  const pendingSessions = pendingTransactionsSessionsSelector(getState());
+export interface CheckTransactionStatusPropsType {
+  hashes?: string[];
+}
+
+export async function checkTransactionStatus(
+  props: CheckTransactionStatusPropsType = {}
+) {
+  const { hashes } = props;
+  const state = getState();
+
+  const pendingSessions =
+    hashes == null
+      ? pendingTransactionsSessionsSelector(state)
+      : pendingSessionsByHashesSelector(hashes)(state);
 
   const entries = Object.entries(pendingSessions);
   if (entries.length === 0) {
@@ -14,7 +29,8 @@ export async function checkTransactionStatus() {
     entries.map(([sessionId, { transactions }]) =>
       checkBatch({
         sessionId,
-        transactionBatch: transactions
+        transactionBatch: transactions,
+        hashes
       })
     )
   );

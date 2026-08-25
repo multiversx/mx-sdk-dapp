@@ -7,6 +7,7 @@ import {
   WebsocketConnectionStatusEnum,
   websocketConnection
 } from 'constants/websocket.constants';
+import { setWebsocketTransactionEvent } from 'store/actions/account/accountActions';
 import { setWebsocketStatus } from 'store/actions/config/configActions';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getStore } from 'store/store';
@@ -17,7 +18,8 @@ jest.mock('store/store');
 jest.mock('store/selectors/networkSelectors');
 jest.mock('store/actions/account/accountActions', () => ({
   setWebsocketBatchEvent: jest.fn(),
-  setWebsocketEvent: jest.fn()
+  setWebsocketEvent: jest.fn(),
+  setWebsocketTransactionEvent: jest.fn()
 }));
 jest.mock('store/actions/config/configActions');
 
@@ -42,6 +44,7 @@ describe('initializeWebsocketConnection tests', () => {
     mockSocketInstance = {
       on: jest.fn(),
       onAny: jest.fn(),
+      offAny: jest.fn(),
       off: jest.fn(),
       close: jest.fn(),
       active: false
@@ -77,7 +80,15 @@ describe('initializeWebsocketConnection tests', () => {
       transports: ['websocket']
     });
     expect(mockSocketInstance.onAny).toHaveBeenCalled();
-    expect(mockSocketInstance.on).toHaveBeenCalledTimes(4);
+    expect(mockSocketInstance.on).toHaveBeenCalledTimes(6);
+    expect(mockSocketInstance.on).toHaveBeenCalledWith(
+      'transactionCompleted',
+      expect.any(Function)
+    );
+    expect(mockSocketInstance.on).toHaveBeenCalledWith(
+      'transactionPendingResults',
+      expect.any(Function)
+    );
     expect(setWebsocketStatus).toHaveBeenCalledWith(
       WebsocketConnectionStatusEnum.PENDING
     );
@@ -126,7 +137,12 @@ describe('initializeWebsocketConnection tests', () => {
     expect(mockSocketInstance.off).toHaveBeenCalledWith('connect_error');
     expect(mockSocketInstance.off).toHaveBeenCalledWith('connect');
     expect(mockSocketInstance.off).toHaveBeenCalledWith('batchUpdated');
+    expect(mockSocketInstance.off).toHaveBeenCalledWith('transactionCompleted');
+    expect(mockSocketInstance.off).toHaveBeenCalledWith(
+      'transactionPendingResults'
+    );
     expect(mockSocketInstance.off).toHaveBeenCalledWith('disconnect');
+    expect(mockSocketInstance.offAny).toHaveBeenCalled();
 
     // Verify socket was closed
     expect(mockSocketInstance.close).toHaveBeenCalled();
@@ -157,6 +173,75 @@ describe('initializeWebsocketConnection tests', () => {
     // Note: We can't directly test setWebsocketEvent is called here because it's mocked
     // But we verify the onAny handler was registered
     expect(mockSocketInstance.onAny).toHaveBeenCalled();
+  });
+
+  it('should forward the transaction hash from the event payload to the store', async () => {
+    await initializeWebsocketConnection(account.address);
+
+    const onTransactionCompleted = mockSocketInstance.on.mock.calls.find(
+      (call: any[]) => call[0] === 'transactionCompleted'
+    )?.[1];
+
+    onTransactionCompleted('hash-1');
+    jest.advanceTimersByTime(300);
+
+    expect(setWebsocketTransactionEvent).toHaveBeenCalledWith({
+      eventName: 'transactionCompleted',
+      hashes: ['hash-1']
+    });
+  });
+
+  it('should pool every hash of a burst into a single event', async () => {
+    await initializeWebsocketConnection(account.address);
+
+    const onTransactionCompleted = mockSocketInstance.on.mock.calls.find(
+      (call: any[]) => call[0] === 'transactionCompleted'
+    )?.[1];
+
+    onTransactionCompleted('hash-1');
+    onTransactionCompleted('hash-2');
+    onTransactionCompleted('hash-1');
+    jest.advanceTimersByTime(300);
+
+    expect(setWebsocketTransactionEvent).toHaveBeenCalledTimes(1);
+    expect(setWebsocketTransactionEvent).toHaveBeenCalledWith({
+      eventName: 'transactionCompleted',
+      hashes: ['hash-1', 'hash-2']
+    });
+  });
+
+  it('should let transactionCompleted win over transactionPendingResults in a burst', async () => {
+    await initializeWebsocketConnection(account.address);
+
+    const findHandler = (eventName: string) =>
+      mockSocketInstance.on.mock.calls.find(
+        (call: any[]) => call[0] === eventName
+      )?.[1];
+
+    findHandler('transactionPendingResults')('hash-1');
+    findHandler('transactionCompleted')('hash-1');
+    jest.advanceTimersByTime(300);
+
+    expect(setWebsocketTransactionEvent).toHaveBeenCalledWith({
+      eventName: 'transactionCompleted',
+      hashes: ['hash-1']
+    });
+  });
+
+  it('should feed batchUpdated hashes into the transaction event', async () => {
+    await initializeWebsocketConnection(account.address);
+
+    const onBatchUpdated = mockSocketInstance.on.mock.calls.find(
+      (call: any[]) => call[0] === 'batchUpdated'
+    )?.[1];
+
+    onBatchUpdated({ batchId: 'batch-1', txHashes: ['hash-1', 'hash-2'] });
+    jest.advanceTimersByTime(300);
+
+    expect(setWebsocketTransactionEvent).toHaveBeenCalledWith({
+      eventName: 'batchUpdated',
+      hashes: ['hash-1', 'hash-2']
+    });
   });
 
   it('should handle batch update with debounce', async () => {

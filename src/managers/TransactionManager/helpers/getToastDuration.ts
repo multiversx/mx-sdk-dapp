@@ -1,6 +1,7 @@
 import {
   AVERAGE_TX_DURATION_MS,
-  CROSS_SHARD_ROUNDS
+  CROSS_SHARD_ROUNDS,
+  OBSERVATION_LATENCY_BUFFER_MS
 } from 'constants/transactions.constants';
 import { accountSelector } from 'store/selectors/accountSelectors';
 import { roundDurationSelectorSelector } from 'store/selectors/networkSelectors';
@@ -15,10 +16,7 @@ const getRoundDuration = (roundDuration?: number) => {
     Number.isFinite(roundDuration) &&
     roundDuration > 0;
 
-  // add 60ms for network lag
-  return (
-    Number(isUsableRoundDuration ? roundDuration : AVERAGE_TX_DURATION_MS) + 60
-  );
+  return isUsableRoundDuration ? roundDuration : AVERAGE_TX_DURATION_MS;
 };
 
 export const getToastDuration = (
@@ -27,9 +25,7 @@ export const getToastDuration = (
   let totalDuration = 0;
   const state = getState();
   const accountShard = accountSelector(state)?.shard;
-  const transactionDuration = getRoundDuration(
-    roundDurationSelectorSelector(state)
-  );
+  const roundDuration = getRoundDuration(roundDurationSelectorSelector(state));
 
   if (isBatchTransaction(transactions)) {
     transactions.forEach((transactionGroup) => {
@@ -38,19 +34,18 @@ export const getToastDuration = (
         accountShard
       );
       totalDuration += isCrossShard
-        ? CROSS_SHARD_ROUNDS * transactionDuration
-        : transactionDuration;
+        ? CROSS_SHARD_ROUNDS * roundDuration
+        : roundDuration;
     });
-    return totalDuration;
+  } else {
+    const isCrossShard = getAreTransactionsCrossShards(
+      transactions,
+      accountShard
+    );
+    totalDuration = isCrossShard
+      ? CROSS_SHARD_ROUNDS * roundDuration
+      : roundDuration;
   }
 
-  const isCrossShard = getAreTransactionsCrossShards(
-    transactions,
-    accountShard
-  );
-  totalDuration = isCrossShard
-    ? CROSS_SHARD_ROUNDS * transactionDuration
-    : transactionDuration;
-
-  return totalDuration;
+  return totalDuration + OBSERVATION_LATENCY_BUFFER_MS;
 };

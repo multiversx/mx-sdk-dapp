@@ -22,6 +22,14 @@ export const websocketEventSelector = ({
   account: { websocketEvent }
 }: StoreType) => websocketEvent;
 
+export const websocketBatchEventSelector = ({
+  account: { websocketBatchEvent }
+}: StoreType) => websocketBatchEvent;
+
+export const websocketTransactionEventSelector = ({
+  account: { websocketTransactionEvent }
+}: StoreType) => websocketTransactionEvent;
+
 export const accountNonceSelector = (store: StoreType) =>
   accountSelector(store)?.nonce || 0;
 

@@ -22,4 +22,9 @@ export type AccountSliceType = {
     timestamp: number;
     data: BatchTransactionsWSResponseType;
   } | null;
+  websocketTransactionEvent: {
+    timestamp: number;
+    eventName: string;
+    hashes: string[];
+  } | null;
 };

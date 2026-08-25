@@ -1,7 +1,7 @@
 import { subscriptions } from 'constants/storage.constants';
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import { websocketEventSelector } from 'store/selectors/accountSelectors';
+import { websocketTransactionEventSelector } from 'store/selectors/accountSelectors';
 import { pendingTransactionsSessionsSelector } from 'store/selectors/transactionsSelector';
 import { getStore } from 'store/store';
 import { SubscriptionsEnum } from 'types/subscriptions.type';
@@ -20,8 +20,10 @@ jest.mock('../helpers/checkTransactionStatus');
 jest.mock('../helpers/getPollingInterval');
 
 const mockGetStore = getStore as jest.MockedFunction<typeof getStore>;
-const mockWebsocketEventSelector =
-  websocketEventSelector as jest.MockedFunction<typeof websocketEventSelector>;
+const mockWebsocketTransactionEventSelector =
+  websocketTransactionEventSelector as jest.MockedFunction<
+    typeof websocketTransactionEventSelector
+  >;
 const mockPendingTransactionsSessionsSelector =
   pendingTransactionsSessionsSelector as jest.MockedFunction<
     typeof pendingTransactionsSessionsSelector
@@ -74,9 +76,10 @@ describe('trackTransactions', () => {
 
     mockGetStore.mockReturnValue(mockStore);
     mockGetPollingInterval.mockReturnValue(5000);
-    mockWebsocketEventSelector.mockReturnValue({
+    mockWebsocketTransactionEventSelector.mockReturnValue({
       timestamp: 1234567890,
-      message: 'test-message'
+      eventName: 'transactionCompleted',
+      hashes: ['hash-0']
     });
     mockPendingTransactionsSessionsSelector.mockReturnValue({});
     mockGetIsLoggedIn.mockReturnValue(false);
@@ -90,10 +93,12 @@ describe('trackTransactions', () => {
   });
 
   describe('initial execution', () => {
-    it('should get polling interval from helper', async () => {
+    it('should not resolve a polling interval before polling starts', async () => {
       await trackTransactions();
 
-      expect(mockGetPollingInterval).toHaveBeenCalledTimes(1);
+      // The interval is read at each polling start, so that a network config
+      // hydrated after tracking begins is picked up.
+      expect(mockGetPollingInterval).not.toHaveBeenCalled();
     });
 
     it('should handle checkTransactionStatus errors gracefully', async () => {
@@ -248,17 +253,21 @@ describe('trackTransactions', () => {
       // Get websocket event subscription callback
       const [websocketEventCallback] = mockSubscribe.mock.calls[1];
 
-      // Simulate websocket event with new timestamp
-      const mockWebsocketEvent = {
-        message: 'test-message',
-        timestamp: 1234567891 // Different timestamp
-      };
-
       websocketEventCallback({
-        account: { websocketEvent: mockWebsocketEvent }
+        account: {
+          websocketTransactionEvent: {
+            eventName: 'transactionCompleted',
+            hashes: ['hash-1'],
+            timestamp: 1234567891 // Different timestamp
+          }
+        }
       });
 
-      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2); // Initial + websocket event
+      // Initial + reconcile on connect + websocket event
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(3);
+      expect(mockCheckTransactionStatus).toHaveBeenLastCalledWith({
+        hashes: ['hash-1']
+      });
     });
 
     it('should not call checkTransactionStatus when websocket event timestamp is same', async () => {
@@ -279,17 +288,18 @@ describe('trackTransactions', () => {
       // Get websocket event subscription callback
       const [websocketEventCallback] = mockSubscribe.mock.calls[1];
 
-      // Simulate websocket event with same timestamp
-      const mockWebsocketEvent = {
-        message: 'test-message',
-        timestamp: 1234567890 // Same timestamp as initial
-      };
-
       websocketEventCallback({
-        account: { websocketEvent: mockWebsocketEvent }
+        account: {
+          websocketTransactionEvent: {
+            eventName: 'transactionCompleted',
+            hashes: ['hash-1'],
+            timestamp: 1234567890 // Same timestamp as initial
+          }
+        }
       });
 
-      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1); // Only initial call
+      // Initial + reconcile on connect only
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
     });
 
     it('should handle websocket event with null timestamp', async () => {
@@ -310,17 +320,93 @@ describe('trackTransactions', () => {
       // Get websocket event subscription callback
       const [websocketEventCallback] = mockSubscribe.mock.calls[1];
 
-      // Simulate websocket event with null timestamp
-      const mockWebsocketEvent = {
-        message: 'test-message',
-        timestamp: null
-      };
-
       websocketEventCallback({
-        account: { websocketEvent: mockWebsocketEvent }
+        account: {
+          websocketTransactionEvent: {
+            eventName: 'transactionCompleted',
+            hashes: ['hash-1'],
+            timestamp: null
+          }
+        }
       });
 
-      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1); // Only initial call
+      // Initial + reconcile on connect only
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
+    });
+
+    it('should not resolve hashes for transactionPendingResults', async () => {
+      await trackTransactions();
+
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+      subscribeCallback(
+        {
+          account: { address: 'test-address' },
+          config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
+        },
+        { config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING } }
+      );
+
+      mockCheckTransactionStatus.mockClear();
+
+      const [websocketEventCallback] = mockSubscribe.mock.calls[1];
+      websocketEventCallback({
+        account: {
+          websocketTransactionEvent: {
+            eventName: 'transactionPendingResults',
+            hashes: ['hash-1'],
+            timestamp: 1234567891
+          }
+        }
+      });
+
+      // The event only reports that cross-shard results are outstanding, so
+      // resolving it would spend a request to learn nothing changed.
+      expect(mockCheckTransactionStatus).not.toHaveBeenCalled();
+    });
+
+    it('should resolve each hash once across a burst of repeated events', async () => {
+      let resolveCheck: () => void = () => undefined;
+      mockCheckTransactionStatus.mockImplementation(
+        () =>
+          new Promise<void>((resolvePromise) => {
+            resolveCheck = resolvePromise;
+          })
+      );
+
+      await trackTransactions();
+
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+      subscribeCallback(
+        {
+          account: { address: 'test-address' },
+          config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
+        },
+        { config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING } }
+      );
+
+      mockCheckTransactionStatus.mockClear();
+
+      const [websocketEventCallback] = mockSubscribe.mock.calls[1];
+      const emit = (timestamp: number) =>
+        websocketEventCallback({
+          account: {
+            websocketTransactionEvent: {
+              eventName: 'batchUpdated',
+              hashes: ['hash-1'],
+              timestamp
+            }
+          }
+        });
+
+      emit(1234567891);
+      emit(1234567892);
+      emit(1234567893);
+
+      // The API repeats batchUpdated per processed block; only the first
+      // reaches the network while that hash is still resolving.
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
+
+      resolveCheck();
     });
   });
 
@@ -348,7 +434,7 @@ describe('trackTransactions', () => {
       expect(mockSetInterval).toHaveBeenCalledWith(expect.any(Function), 3000);
     });
 
-    it('should stop polling when websocket tracking is setup', async () => {
+    it('should downgrade to the watchdog interval once the socket connects', async () => {
       await trackTransactions();
 
       // Start polling first
@@ -377,11 +463,16 @@ describe('trackTransactions', () => {
         config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
       };
 
+      mockPendingTransactionsSessionsSelector.mockReturnValue({
+        'session-1': { transactions: [], status: 'sent' } as any
+      });
+      mockSetInterval.mockClear();
+
       subscribeCallback(websocketState, websocketPrevState);
 
-      // Advance time - should not call checkTransactionStatus via polling
-      jest.advanceTimersByTime(5000);
-      expect(mockCheckTransactionStatus).not.toHaveBeenCalled();
+      // Fast polling is replaced by the slow watchdog, not left running.
+      expect(mockClearInterval).toHaveBeenCalledWith(123);
+      expect(mockSetInterval).toHaveBeenCalledWith(expect.any(Function), 9000);
     });
   });
 
@@ -494,7 +585,7 @@ describe('trackTransactions', () => {
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2); // Initial + first appearance only
     });
 
-    it('should keep polling while sessions are pending and websocket is COMPLETED', async () => {
+    it('should run a slow watchdog while sessions are pending and websocket is COMPLETED', async () => {
       await trackTransactions();
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
 
@@ -503,12 +594,29 @@ describe('trackTransactions', () => {
       });
       triggerStoreChange(subscribeCallback);
 
-      expect(mockSetInterval).toHaveBeenCalledWith(expect.any(Function), 5000);
+      // A missed event is unrecoverable, so polling stays on as a safety net —
+      // at the slow interval rather than the fast one.
+      expect(mockSetInterval).toHaveBeenCalledWith(expect.any(Function), 9000);
+      expect(mockGetPollingInterval).not.toHaveBeenCalled();
 
-      // The polling callback keeps checking without any websocket event
       const [pollingCallback] = mockSetInterval.mock.calls[0];
       pollingCallback();
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(3);
+    });
+
+    it('should poll at the fast interval when the websocket is unavailable', async () => {
+      await trackTransactions();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+
+      mockPendingTransactionsSessionsSelector.mockReturnValue({
+        'session-1': pendingSession
+      });
+      triggerStoreChange(
+        subscribeCallback,
+        WebsocketConnectionStatusEnum.NOT_INITIALIZED
+      );
+
+      expect(mockSetInterval).toHaveBeenCalledWith(expect.any(Function), 5000);
     });
 
     it('should stop polling once no session is pending anymore', async () => {
@@ -569,7 +677,7 @@ describe('trackTransactions', () => {
 
   describe('edge cases', () => {
     it('should handle missing websocket event in selector', async () => {
-      mockWebsocketEventSelector.mockReturnValue(null);
+      mockWebsocketTransactionEventSelector.mockReturnValue(null);
 
       await trackTransactions();
 
@@ -577,7 +685,7 @@ describe('trackTransactions', () => {
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
     });
 
-    it('should handle websocket event without message', async () => {
+    it('should handle websocket event without hashes', async () => {
       await trackTransactions();
 
       // Setup websocket tracking
@@ -595,18 +703,18 @@ describe('trackTransactions', () => {
       // Get websocket event subscription callback
       const [websocketEventCallback] = mockSubscribe.mock.calls[1];
 
-      // Simulate websocket event without message
-      const mockWebsocketEvent = {
-        message: null,
-        timestamp: 1234567891
-      };
-
       websocketEventCallback({
-        account: { websocketEvent: mockWebsocketEvent }
+        account: {
+          websocketTransactionEvent: {
+            eventName: 'transactionCompleted',
+            hashes: [],
+            timestamp: 1234567891
+          }
+        }
       });
 
-      // Should not call checkTransactionStatus
-      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1); // Only initial call
+      // Initial + reconcile on connect, but nothing for the empty event
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
     });
   });
 });

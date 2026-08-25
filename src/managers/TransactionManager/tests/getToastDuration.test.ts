@@ -1,6 +1,7 @@
 import {
   AVERAGE_TX_DURATION_MS,
-  CROSS_SHARD_ROUNDS
+  CROSS_SHARD_ROUNDS,
+  OBSERVATION_LATENCY_BUFFER_MS
 } from 'constants/transactions.constants';
 import { accountSelector } from 'store/selectors/accountSelectors';
 import { roundDurationSelectorSelector } from 'store/selectors/networkSelectors';
@@ -34,6 +35,10 @@ jest.mock('store/selectors/networkSelectors', () => ({
 }));
 jest.mock('../helpers/isBatchTransaction');
 
+// The lag buffer is added once to the total, not to each round
+const withLagBuffer = (duration: number) =>
+  duration + OBSERVATION_LATENCY_BUFFER_MS;
+
 describe('getToastDuration', () => {
   const mockShard = 1;
   beforeEach(() => {
@@ -49,7 +54,9 @@ describe('getToastDuration', () => {
     const transactions = [mockTransaction];
     const duration = getToastDuration(transactions);
 
-    expect(duration).toBe(CROSS_SHARD_ROUNDS * AVERAGE_TX_DURATION_MS);
+    expect(duration).toBe(
+      withLagBuffer(CROSS_SHARD_ROUNDS * AVERAGE_TX_DURATION_MS)
+    );
   });
 
   it('should return AVERAGE_TX_DURATION_MS for a single same-shard transaction', () => {
@@ -59,7 +66,7 @@ describe('getToastDuration', () => {
     const transactions = [mockTransaction];
     const duration = getToastDuration(transactions);
 
-    expect(duration).toBe(AVERAGE_TX_DURATION_MS);
+    expect(duration).toBe(withLagBuffer(AVERAGE_TX_DURATION_MS));
   });
 
   it('should return correct duration for batch transactions on the same shard', () => {
@@ -69,7 +76,9 @@ describe('getToastDuration', () => {
     const transactions = [[mockTransaction], [mockTransaction]];
     const duration = getToastDuration(transactions);
 
-    expect(duration).toBe(transactions.length * AVERAGE_TX_DURATION_MS);
+    expect(duration).toBe(
+      withLagBuffer(transactions.length * AVERAGE_TX_DURATION_MS)
+    );
   });
 
   it('should return correct duration for batch transactions with cross-shard', () => {
@@ -80,7 +89,9 @@ describe('getToastDuration', () => {
     const duration = getToastDuration(transactions);
 
     expect(duration).toBe(
-      transactions.length * CROSS_SHARD_ROUNDS * AVERAGE_TX_DURATION_MS
+      withLagBuffer(
+        transactions.length * CROSS_SHARD_ROUNDS * AVERAGE_TX_DURATION_MS
+      )
     );
   });
 
@@ -90,12 +101,14 @@ describe('getToastDuration', () => {
     (isBatchTransaction as unknown as jest.Mock).mockReturnValue(false);
     (getAreTransactionsCrossShards as jest.Mock).mockReturnValue(false);
 
-    expect(getToastDuration([mockTransaction])).toBe(roundDuration);
+    expect(getToastDuration([mockTransaction])).toBe(
+      withLagBuffer(roundDuration)
+    );
 
     (getAreTransactionsCrossShards as jest.Mock).mockReturnValue(true);
 
     expect(getToastDuration([mockTransaction])).toBe(
-      CROSS_SHARD_ROUNDS * roundDuration
+      withLagBuffer(CROSS_SHARD_ROUNDS * roundDuration)
     );
   });
 
@@ -108,7 +121,9 @@ describe('getToastDuration', () => {
       (isBatchTransaction as unknown as jest.Mock).mockReturnValue(false);
       (getAreTransactionsCrossShards as jest.Mock).mockReturnValue(false);
 
-      expect(getToastDuration([mockTransaction])).toBe(AVERAGE_TX_DURATION_MS);
+      expect(getToastDuration([mockTransaction])).toBe(
+        withLagBuffer(AVERAGE_TX_DURATION_MS)
+      );
     }
   );
 });
