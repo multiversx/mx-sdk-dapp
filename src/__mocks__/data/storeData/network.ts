@@ -10,7 +10,7 @@ export const network = {
   apiAddress: 'https://devnet-api.multiversx.com',
   explorerAddress: 'http://devnet-explorer.multiversx.com',
   apiTimeout: '4000',
-  roundDuration: 6000,
+  roundDuration: 600,
   iframeWalletAddress: 'https://devnet-iframe-wallet.multiversx.com',
   xAliasAddress: 'https://devnet.xalias.com',
   gasStationMetadata: {

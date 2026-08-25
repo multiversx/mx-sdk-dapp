@@ -1,8 +1,11 @@
 export const CANCEL_TRANSACTION_TOAST_ID = 'cancel-transaction-toast';
 export const ERROR_SIGNING_TOAST_ID = 'error-signing-toast';
-export const AVERAGE_TX_DURATION_MS = 6000;
+export const AVERAGE_TX_DURATION_MS = 600;
+export const OBSERVATION_LATENCY_BUFFER_MS = 200;
 export const CROSS_SHARD_ROUNDS = 5;
-export const TRANSACTIONS_STATUS_POLLING_INTERVAL_MS = 90 * 1000; // 90sec
+export const TRANSACTIONS_STATUS_POLLING_INTERVAL_MS = 9 * 1000; // 9sec
+/** Polling floor, so a short round duration cannot flood the API. */
+export const MIN_TRANSACTIONS_STATUS_POLLING_INTERVAL_MS = 1000;
 export const TRANSACTIONS_STATUS_DROP_INTERVAL_MS = 10 * 60 * 1000; // 10min
 export const CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION = 10000;
 export const BATCH_TRANSACTIONS_ID_SEPARATOR = '-';

@@ -48,7 +48,9 @@ export interface IComponentToast extends ISharedCustomToast {
 export type CustomToastType = ISimpleToast | IComponentToast;
 
 export interface ITransactionToast {
+  /** UNIX timestamp in milliseconds */
   startTime: number;
+  /** UNIX timestamp in milliseconds */
   endTime: number;
   toastId: string;
   transaction?: SignedTransactionType;

@@ -28,6 +28,26 @@ export const pendingTransactionsSessionsSelector = ({
   return pendingSessions;
 };
 
+export const pendingSessionsByHashesSelector =
+  (hashes: string[]) =>
+  (state: StoreType): Record<string, SessionTransactionType> => {
+    const pendingSessions = pendingTransactionsSessionsSelector(state);
+    const lookup = new Set(hashes);
+    const matchingSessions: Record<string, SessionTransactionType> = {};
+
+    Object.entries(pendingSessions).forEach(([sessionId, data]) => {
+      const hasMatchingTransaction = data.transactions.some(
+        ({ hash }) => hash != null && lookup.has(hash)
+      );
+
+      if (hasMatchingTransaction) {
+        matchingSessions[sessionId] = data;
+      }
+    });
+
+    return matchingSessions;
+  };
+
 export const successfulTransactionsSessionsSelector = ({
   transactions: state
 }: StoreType): Record<string, SessionTransactionType> => {
@@ -37,7 +57,15 @@ export const successfulTransactionsSessionsSelector = ({
     const hasSuccessfulTransactions = data.transactions.some(
       ({ status }) => status === TransactionServerStatusesEnum.success
     );
-    if (hasSuccessfulTransactions && data.status === 'sent') {
+
+    const isSessionSettled = [
+      TransactionBatchStatusesEnum.sent,
+      TransactionBatchStatusesEnum.success
+    ]
+      .map((el) => String(el))
+      .includes(String(data.status));
+
+    if (hasSuccessfulTransactions && isSessionSettled) {
       successfulSessions[sessionId] = data;
     }
   });
@@ -63,7 +91,17 @@ export const failedTransactionsSessionsSelector = ({
           .map((el) => String(el))
           .includes(status)
     );
-    if (hasFailedTransactions && data.status === 'sent') {
+    const isSessionSettled = [
+      TransactionBatchStatusesEnum.sent,
+      TransactionBatchStatusesEnum.fail,
+      TransactionBatchStatusesEnum.invalid,
+      TransactionBatchStatusesEnum.timedOut,
+      TransactionBatchStatusesEnum.cancelled
+    ]
+      .map((el) => String(el))
+      .includes(String(data.status));
+
+    if (hasFailedTransactions && isSessionSettled) {
       failedSessions[sessionId] = data;
     }
   });

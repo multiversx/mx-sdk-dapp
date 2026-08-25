@@ -11,7 +11,7 @@ export type {
   ITransactionListItem,
   ITransactionListItemAsset,
   ITransactionListItemAction
-} from '@multiversx/sdk-dapp-ui/types/components/visual/transaction-list-item/transaction-list-item.types';
+} from '@multiversx/sdk-dapp-ui/types/components/functional/notifications-feed/components/TransactionListItem/transactionListItem.types';
 
 export async function defineCustomElements(opts?: any): Promise<void> {
   const isReactNative =

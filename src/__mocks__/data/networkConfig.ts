@@ -17,7 +17,7 @@ export const networkConfig = {
       erd_num_nodes_in_shard: 58,
       erd_num_shards_without_meta: 3,
       erd_rewards_top_up_gradient_point: '2000000000000000000000000',
-      erd_round_duration: 6000,
+      erd_round_duration: 600,
       erd_rounds_per_epoch: 1200,
       erd_shard_consensus_group_size: 21,
       erd_start_time: 1648551600,

@@ -33,6 +33,10 @@ export class FormatAmountController {
   }
 
   private static formatDecimalPart(decimalPart = '', digits = 2): string {
+    if (digits <= 0) {
+      return '';
+    }
+
     const padded = decimalPart.padEnd(digits, '0').slice(0, digits);
     return `.${padded || '0'.repeat(digits)}`;
   }

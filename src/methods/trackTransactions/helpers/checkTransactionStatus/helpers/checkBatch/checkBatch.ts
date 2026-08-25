@@ -1,6 +1,7 @@
 import { getTransactionsByHashes } from 'apiCalls/transactions/getTransactionsByHashes';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { updateSessionStatus } from 'store/actions/transactions/transactionsActions';
+import { getIsTransactionPending } from 'store/actions/transactions/transactionStateByStatus';
 import { getState } from 'store/store';
 import {
   TransactionBatchStatusesEnum,
@@ -16,12 +17,14 @@ export interface TransactionStatusTrackerPropsType {
   sessionId: string;
   transactionBatch: SignedTransactionType[];
   isSequential?: boolean;
+  hashes?: string[];
 }
 
 export async function checkBatch({
   sessionId,
   transactionBatch: transactions,
-  isSequential
+  isSequential,
+  hashes
 }: TransactionStatusTrackerPropsType) {
   try {
     if (transactions == null) {
@@ -32,8 +35,17 @@ export async function checkBatch({
 
     const pendingTransactions = getPendingTransactions(transactions);
 
+    const transactionsToCheck =
+      hashes == null
+        ? pendingTransactions
+        : pendingTransactions.filter(({ hash }) => hashes.includes(hash));
+
+    if (transactionsToCheck.length === 0) {
+      return;
+    }
+
     const serverTransactions =
-      await getTransactionsByHashes(pendingTransactions);
+      await getTransactionsByHashes(transactionsToCheck);
 
     for (const serverTransaction of serverTransactions) {
       await runTransactionStatusUpdate({
@@ -43,11 +55,18 @@ export async function checkBatch({
       });
     }
 
-    const hasCompleted = serverTransactions.every(
-      (tx) => tx.status !== TransactionServerStatusesEnum.pending
+    const { transactions: sessions } = getState();
+    const session = sessions?.[sessionId];
+
+    if (session == null) {
+      return;
+    }
+
+    const hasPendingTransactions = session.transactions.some(({ status }) =>
+      getIsTransactionPending(status)
     );
 
-    if (!hasCompleted) {
+    if (hasPendingTransactions) {
       return;
     }
 
@@ -57,9 +76,6 @@ export async function checkBatch({
 
     // Call the onSuccess or onFail callback only if the transactions are sent normally (not using batch transactions mechanism).
     // The batch transactions mechanism will call the callbacks separately.
-
-    const { transactions: sessions } = getState();
-    const session = sessions?.[sessionId];
 
     const isSuccessful = session.transactions.every(
       (tx) => tx.status === TransactionServerStatusesEnum.success

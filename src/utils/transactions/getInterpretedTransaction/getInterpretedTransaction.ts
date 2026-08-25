@@ -10,6 +10,7 @@ import { isContract } from 'utils/validation/isContract';
 import { explorerUrlBuilder } from '../explorerUrlBuilder';
 import { getExplorerLink } from '../getExplorerLink';
 import { getHumanReadableTimeFormat } from '../getHumanReadableTimeFormat';
+import { getTransactionTimestampMs } from '../getTransactionTimestampMs';
 import { getTransactionTokens } from './getTransactionValue/helpers/getTransactionTokens';
 import { getTokenFromData } from './helpers/getTokenFromData';
 import { getTransactionIconInfo } from './helpers/getTransactionIconInfo';
@@ -34,10 +35,11 @@ export function getInterpretedTransaction({
 
   const receiver = getTransactionReceiver(transaction);
   const receiverAssets = getTransactionReceiverAssets(transaction);
+  const timestampMs = getTransactionTimestampMs(transaction) ?? 0;
   const age: TransactionAgeType = {
-    timeAgo: timeAgo(transaction.timestamp * 1000, true),
+    timeAgo: timeAgo(timestampMs, true),
     tooltip: getHumanReadableTimeFormat({
-      value: transaction.timestamp,
+      value: timestampMs / 1000,
       noSeconds: false,
       utc: true
     })
