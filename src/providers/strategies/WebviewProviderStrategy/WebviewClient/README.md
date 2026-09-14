@@ -27,7 +27,9 @@ const webviewClient = new WebviewClient({
   // Perform action when login is cancelled
   onLoginCancelled: async () => {
     setApp(null)
-  }
+  },
+  // Origins of the embedded dApps allowed to request login and signing
+  allowedOrigins: ['https://devnet.template-dapp.multiversx.com']
 });
 
 webviewClient.startListening();
@@ -56,7 +58,7 @@ webviewClient.registerEvent('dAppcustomEvent', (event) => {
   - Builds a Native Auth loginToken.
   - Sends a LOGIN_REQUEST via the Webview Provider to the parent (Hub dApp).
 - In the Hub dApp:
-  - the WebviewClient (within sdk-dapp) receives the LOGIN_REQUEST.
+  - the WebviewClient (within sdk-dapp) receives the LOGIN_REQUEST and checks that it comes from an allowed child iframe and that the loginToken was generated for that iframe's origin.
   - it initiates a sign message request using the original provider (e.g extension) with the loginToken.
   - once signed, it responds with a LOGIN_RESPONSE, including the user's address and signature.
 - The Template dApp receives the LOGIN_RESPONSE from the parent and completes the login process.

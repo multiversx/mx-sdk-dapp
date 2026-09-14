@@ -9,6 +9,14 @@ import {
 import { getAccountProvider } from 'providers/helpers/accountProvider';
 import { accountSelector } from 'store/selectors/accountSelectors';
 import { getStore } from 'store/store';
+import {
+  isLoginTokenMessage,
+  isLoginTokenMessageForOrigin
+} from './helpers/isLoginTokenMessageForOrigin';
+import { normalizeAllowedOrigins } from './helpers/normalizeAllowedOrigins';
+
+const LOGIN_TOKEN_ORIGIN_MISMATCH_ERROR =
+  'Login token origin does not match the requesting origin';
 
 type MessageHandler = (event: MessageEvent) => void;
 
@@ -24,15 +32,28 @@ type MessageType =
       payload: null;
     };
 
+export type WebviewClientPropsType = {
+  onLoginCancelled: () => Promise<void>;
+  allowedOrigins: string[];
+};
+
 export class WebviewClient {
   private readonly handlers: Map<string, MessageHandler> = new Map();
   private readonly store = getStore();
   private isLoginInitiated = false;
   private readonly handleLoginCancelled: () => Promise<void>;
+  private readonly allowedOrigins: Set<string>;
 
-  constructor({ onLoginCancelled }: { onLoginCancelled: () => Promise<void> }) {
+  constructor({ onLoginCancelled, allowedOrigins }: WebviewClientPropsType) {
     this.handleMessage = this.handleMessage.bind(this);
     this.handleLoginCancelled = onLoginCancelled;
+    this.allowedOrigins = normalizeAllowedOrigins(allowedOrigins);
+
+    if (this.allowedOrigins.size === 0) {
+      console.error(
+        'WebviewClient: no valid allowedOrigins configured. All requests from embedded dApps will be ignored.'
+      );
+    }
   }
 
   public startListening() {
@@ -51,8 +72,41 @@ export class WebviewClient {
     this.handlers.delete(type);
   }
 
+  private isTrustedSender(event: MessageEvent) {
+    try {
+      const source = event.source as Window | null;
+      const isDirectChildFrame =
+        Boolean(source) &&
+        source !== safeWindow &&
+        source?.parent === safeWindow;
+
+      return isDirectChildFrame && this.allowedOrigins.has(event.origin);
+    } catch {
+      return false;
+    }
+  }
+
   private async handleMessage(event: MessageEvent<MessageType>) {
     const type = event.data?.type;
+
+    const isWalletCancelMessage =
+      type === WindowProviderResponseEnums.cancelResponse ||
+      type === 'cancelAction';
+
+    if (!isWalletCancelMessage && !this.isTrustedSender(event)) {
+      const isKnownRequest =
+        typeof type === 'string' &&
+        (this.handlers.has(type) ||
+          Object.values<string>(WindowProviderRequestEnums).includes(type));
+
+      if (isKnownRequest) {
+        console.warn(
+          `WebviewClient: ignored "${type}" from untrusted origin "${event.origin}"`
+        );
+      }
+
+      return;
+    }
 
     if (typeof type === 'string' && this.handlers.has(type)) {
       const handler = this.handlers.get(type);
@@ -67,7 +121,6 @@ export class WebviewClient {
         this.signMessage({ event, payload: event.data.payload });
         break;
       case WindowProviderRequestEnums.loginRequest:
-        this.isLoginInitiated = true;
         this.login({ event, payload: event.data.payload });
         break;
       case WindowProviderRequestEnums.signTransactionsRequest:
@@ -94,12 +147,29 @@ export class WebviewClient {
       return;
     }
 
+    const { address } = accountSelector(this.store.getState());
+
+    // Message format needed for token generation
+    const message = `${address}${loginToken}`;
+
+    if (
+      !isLoginTokenMessageForOrigin({ address, message, origin: event.origin })
+    ) {
+      event.source?.postMessage(
+        {
+          type: WindowProviderResponseEnums.loginResponse,
+          payload: { error: LOGIN_TOKEN_ORIGIN_MISMATCH_ERROR }
+        },
+        { targetOrigin: event.origin }
+      );
+      return;
+    }
+
+    this.isLoginInitiated = true;
+
     try {
-      const { address } = accountSelector(this.store.getState());
       const provider = getAccountProvider();
 
-      // Message format needed for token generation
-      const message = `${address}${loginToken}`;
       const messageToSign = new Message({
         address: new Address(address),
         data: new Uint8Array(Buffer.from(message))
@@ -156,6 +226,20 @@ export class WebviewClient {
   }) {
     const { address } = accountSelector(this.store.getState());
     const { message } = payload;
+
+    if (
+      isLoginTokenMessage(message) &&
+      !isLoginTokenMessageForOrigin({ address, message, origin: event.origin })
+    ) {
+      event.source?.postMessage(
+        {
+          type: WindowProviderResponseEnums.signMessageResponse,
+          payload: { error: LOGIN_TOKEN_ORIGIN_MISMATCH_ERROR }
+        },
+        { targetOrigin: event.origin }
+      );
+      return;
+    }
 
     try {
       const messageToSign = new Message({
