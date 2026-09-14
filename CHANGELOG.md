@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.7.3](https://github.com/multiversx/mx-sdk-dapp/pull/1741)] - 2026-09-14
+
+- [Added allowedOrigins to WebviewClient](https://github.com/multiversx/mx-sdk-dapp/pull/1740)
+
 ## [[5.7.2](https://github.com/multiversx/mx-sdk-dapp/pull/1739)] - 2026-08-25
 
 - [Use websocketEvents](https://github.com/multiversx/mx-sdk-dapp/pull/1738)
