@@ -1,5 +1,7 @@
 let errorMessageDisplayed = false;
 
+const ALLOWED_PROTOCOLS = ['http:', 'https:'];
+
 function logError(error: string) {
   if (!errorMessageDisplayed) {
     console.error(error);
@@ -17,6 +19,12 @@ export function getExplorerLink({
   try {
     // if a valid url is sent, return the original url
     const url = new URL(to);
+
+    if (!ALLOWED_PROTOCOLS.includes(url.protocol)) {
+      logError(`Unsupported protocol in explorer link: ${url.protocol}`);
+      return '';
+    }
+
     return url.href;
   } catch {
     if (to && !to.startsWith('/')) {

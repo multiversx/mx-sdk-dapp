@@ -142,7 +142,9 @@ describe('createToastsFromTransactions', () => {
           transactions: [
             {
               ...commonData,
-              link: `${testNetwork.explorerAddress}/transactions/${mockPendingTransaction.hash}`
+              link: `${testNetwork.explorerAddress}/transactions/${encodeURIComponent(
+                mockPendingTransaction.hash
+              )}`
             }
           ]
         }
@@ -168,7 +170,9 @@ describe('createToastsFromTransactions', () => {
               hash: successTransactionHash,
               interactor: testAddress,
               interactorAsset: undefined,
-              link: `${testNetwork.explorerAddress}/transactions/${successTransactionHash}`,
+              link: `${testNetwork.explorerAddress}/transactions/${encodeURIComponent(
+                successTransactionHash
+              )}`,
               status: TransactionServerStatusesEnum.success,
               timestamp: undefined
             }
