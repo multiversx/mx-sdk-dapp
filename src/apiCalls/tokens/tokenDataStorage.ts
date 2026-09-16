@@ -1,24 +1,49 @@
-let memoryCache: Record<string, string> = {};
+export const TOKEN_CACHE_MAX_ENTRIES = 500;
+
+let memoryCache = new Map<string, string>();
 
 export const tokenDataStorage = {
   setItem: async <T>(key: string, tokenData: T) => {
     try {
-      memoryCache[key] = JSON.stringify(tokenData);
+      const serialized = JSON.stringify(tokenData);
+
+      memoryCache.delete(key);
+      memoryCache.set(key, serialized);
+
+      while (memoryCache.size > TOKEN_CACHE_MAX_ENTRIES) {
+        const oldestKey = memoryCache.keys().next().value;
+
+        if (oldestKey === undefined) {
+          break;
+        }
+
+        memoryCache.delete(oldestKey);
+      }
     } catch (e) {
       console.error('tokenDataStorage unable to serialize', e);
     }
   },
   getItem: async (key: string) => {
-    if (!memoryCache[key]) {
+    const cached = memoryCache.get(key);
+
+    if (!cached) {
       return null;
     }
+
     try {
-      return JSON.parse(memoryCache[key]);
+      const parsed = JSON.parse(cached);
+
+      memoryCache.delete(key);
+      memoryCache.set(key, cached);
+
+      return parsed;
     } catch (e) {
       console.error('tokenDataStorage unable to parse', e);
+      memoryCache.delete(key);
+      return null;
     }
   },
   clear: async () => {
-    memoryCache = {};
+    memoryCache = new Map<string, string>();
   }
 };
