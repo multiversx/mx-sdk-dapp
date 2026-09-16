@@ -56,7 +56,15 @@ export async function signTransactionsWithProvider({
   const signedTransactions: Transaction[] =
     (await provider.signTransactions(transactionsToSign, options)) ?? [];
 
-  setAccountNonce(nonce + signedTransactions.length);
+  if (signedTransactions.length > 0) {
+    const highestSignedNonce = signedTransactions.reduce(
+      (highest, transaction) =>
+        transaction.nonce > highest ? transaction.nonce : highest,
+      BigInt(nonce)
+    );
+
+    setAccountNonce(Number(highestSignedNonce) + 1);
+  }
 
   return signedTransactions;
 }
