@@ -22,6 +22,13 @@ jest.mock('store/selectors/accountSelectors', () => ({
   })
 }));
 
+jest.mock('store/selectors/networkSelectors', () => ({
+  networkSelector: () => ({
+    walletAddress: 'https://devnet-wallet.multiversx.com',
+    iframeWalletAddress: 'https://devnet-iframe-wallet.multiversx.com'
+  })
+}));
+
 const CHILD_ORIGIN = 'https://child.example.com';
 const OTHER_ORIGIN = 'https://other.example.com';
 const BLOCK_HASH =
@@ -333,6 +340,28 @@ describe('WebviewClient', () => {
       );
 
       expect(onLoginCancelled).toHaveBeenCalledTimes(1);
+    });
+
+    it('ignores cancel messages from an origin that is neither a child nor a wallet', async () => {
+      const { handleMessage, onLoginCancelled } = createClient([CHILD_ORIGIN]);
+      mockSignMessage.mockImplementation(() => new Promise(() => null));
+
+      await handleMessage(
+        createEvent({
+          type: WindowProviderRequestEnums.loginRequest,
+          payload: { token: createLoginToken(CHILD_ORIGIN) }
+        })
+      );
+
+      await handleMessage(
+        createEvent({
+          type: 'cancelAction',
+          origin: 'https://attacker.example',
+          source: null
+        })
+      );
+
+      expect(onLoginCancelled).not.toHaveBeenCalled();
     });
   });
 

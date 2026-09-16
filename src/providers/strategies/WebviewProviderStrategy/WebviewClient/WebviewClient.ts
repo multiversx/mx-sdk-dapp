@@ -8,7 +8,9 @@ import {
 } from 'lib/sdkWebWalletCrossWindowProvider';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
 import { accountSelector } from 'store/selectors/accountSelectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getStore } from 'store/store';
+import { createHandshakeSession } from './helpers/createHandshakeSession';
 import {
   isLoginTokenMessage,
   isLoginTokenMessageForOrigin
@@ -86,12 +88,58 @@ export class WebviewClient {
     }
   }
 
+  private getCancelOrigins(): Set<string> {
+    const origins = new Set<string>(this.allowedOrigins);
+
+    const ownOrigin = safeWindow.location?.origin;
+
+    if (ownOrigin) {
+      origins.add(ownOrigin);
+    }
+
+    const { walletAddress, iframeWalletAddress } = networkSelector(
+      this.store.getState()
+    );
+
+    [walletAddress, iframeWalletAddress].forEach((walletUrl) => {
+      if (!walletUrl) {
+        return;
+      }
+
+      try {
+        origins.add(new URL(walletUrl).origin);
+      } catch {
+        // a malformed wallet url simply contributes no origin
+      }
+    });
+
+    return origins;
+  }
+
+  private resolveTargetOrigin(event: MessageEvent): string | null {
+    return this.allowedOrigins.has(event.origin) ? event.origin : null;
+  }
+
+  private respond(event: MessageEvent, response: unknown) {
+    const targetOrigin = this.resolveTargetOrigin(event);
+
+    if (!targetOrigin) {
+      console.warn(
+        `WebviewClient: refused to respond to untrusted origin "${event.origin}"`
+      );
+      return;
+    }
+
+    event.source?.postMessage(response, { targetOrigin });
+  }
+
   private async handleMessage(event: MessageEvent<MessageType>) {
     const type = event.data?.type;
 
     const isWalletCancelMessage =
-      type === WindowProviderResponseEnums.cancelResponse ||
-      type === 'cancelAction';
+      (type === WindowProviderResponseEnums.cancelResponse ||
+        type === 'cancelAction') &&
+      this.getCancelOrigins().has(event.origin);
 
     if (!isWalletCancelMessage && !this.isTrustedSender(event)) {
       const isKnownRequest =
@@ -155,13 +203,10 @@ export class WebviewClient {
     if (
       !isLoginTokenMessageForOrigin({ address, message, origin: event.origin })
     ) {
-      event.source?.postMessage(
-        {
-          type: WindowProviderResponseEnums.loginResponse,
-          payload: { error: LOGIN_TOKEN_ORIGIN_MISMATCH_ERROR }
-        },
-        { targetOrigin: event.origin }
-      );
+      this.respond(event, {
+        type: WindowProviderResponseEnums.loginResponse,
+        payload: { error: LOGIN_TOKEN_ORIGIN_MISMATCH_ERROR }
+      });
       return;
     }
 
@@ -178,28 +223,22 @@ export class WebviewClient {
       const signedMessage = await provider.signMessage(messageToSign);
       const signature = signedMessage?.signature ?? '';
 
-      event.source?.postMessage(
-        {
-          type: WindowProviderResponseEnums.loginResponse,
-          payload: {
-            data: {
-              address,
-              signature: Buffer.from(signature).toString('hex')
-            }
+      this.respond(event, {
+        type: WindowProviderResponseEnums.loginResponse,
+        payload: {
+          data: {
+            address,
+            signature: Buffer.from(signature).toString('hex')
           }
-        },
-        { targetOrigin: event.origin }
-      );
+        }
+      });
     } catch {
       if (this.isLoginInitiated) {
         await this.handleLoginCancelled();
-        event.source?.postMessage(
-          {
-            type: WindowProviderResponseEnums.cancelResponse,
-            payload: null
-          },
-          { targetOrigin: event.origin }
-        );
+        this.respond(event, {
+          type: WindowProviderResponseEnums.cancelResponse,
+          payload: null
+        });
       }
     } finally {
       this.isLoginInitiated = false;
@@ -207,15 +246,12 @@ export class WebviewClient {
   }
 
   private handshake({ event }: MessageEventType) {
-    const handshakeSession = Date.now().toString();
+    const handshakeSession = createHandshakeSession();
 
-    event.source?.postMessage(
-      {
-        type: WindowProviderResponseEnums.finalizeHandshakeResponse,
-        payload: { data: handshakeSession }
-      },
-      { targetOrigin: event.origin }
-    );
+    this.respond(event, {
+      type: WindowProviderResponseEnums.finalizeHandshakeResponse,
+      payload: { data: handshakeSession }
+    });
   }
 
   private async signMessage({
@@ -231,13 +267,10 @@ export class WebviewClient {
       isLoginTokenMessage(message) &&
       !isLoginTokenMessageForOrigin({ address, message, origin: event.origin })
     ) {
-      event.source?.postMessage(
-        {
-          type: WindowProviderResponseEnums.signMessageResponse,
-          payload: { error: LOGIN_TOKEN_ORIGIN_MISMATCH_ERROR }
-        },
-        { targetOrigin: event.origin }
-      );
+      this.respond(event, {
+        type: WindowProviderResponseEnums.signMessageResponse,
+        payload: { error: LOGIN_TOKEN_ORIGIN_MISMATCH_ERROR }
+      });
       return;
     }
 
@@ -251,18 +284,15 @@ export class WebviewClient {
       const signedMessage = await provider.signMessage(messageToSign);
       const signature = signedMessage?.signature ?? '';
 
-      event.source?.postMessage(
-        {
-          type: WindowProviderResponseEnums.signMessageResponse,
-          payload: {
-            data: {
-              signature: Buffer.from(signature).toString('hex'),
-              status: 'signed'
-            }
+      this.respond(event, {
+        type: WindowProviderResponseEnums.signMessageResponse,
+        payload: {
+          data: {
+            signature: Buffer.from(signature).toString('hex'),
+            status: 'signed'
           }
-        },
-        { targetOrigin: event.origin }
-      );
+        }
+      });
     } catch {
       throw new Error('Could not sign message');
     }
@@ -282,15 +312,12 @@ export class WebviewClient {
       );
 
       const signedTx = await provider.signTransactions(transactions);
-      event.source?.postMessage(
-        {
-          type: WindowProviderResponseEnums.signTransactionsResponse,
-          payload: {
-            data: signedTx.map((tx) => tx.toPlainObject())
-          }
-        },
-        { targetOrigin: event.origin }
-      );
+      this.respond(event, {
+        type: WindowProviderResponseEnums.signTransactionsResponse,
+        payload: {
+          data: signedTx.map((tx) => tx.toPlainObject())
+        }
+      });
     } catch {
       throw new Error('Could not sign transactions');
     }

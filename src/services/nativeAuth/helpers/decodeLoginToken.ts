@@ -33,7 +33,7 @@ export const decodeLoginToken = (
       blockHash
     };
   } catch (e) {
-    console.error(`Error trying to decode ${loginToken}:`, e);
+    console.error('Error trying to decode loginToken:', e);
 
     return null;
   }
