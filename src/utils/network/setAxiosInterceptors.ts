@@ -5,34 +5,81 @@ interface InterceptAxiosCallsConfig {
   bearerToken?: string;
 }
 
+let requestInterceptorId: number | null = null;
+let responseInterceptorId: number | null = null;
+
+const resolveRequestUrl = (config: InternalAxiosRequestConfig): URL | null => {
+  const url = config.url ?? '';
+
+  try {
+    return new URL(url);
+  } catch {
+    try {
+      return config.baseURL ? new URL(url, config.baseURL) : null;
+    } catch {
+      return null;
+    }
+  }
+};
+
+const isAuthenticatedTarget = (
+  target: URL | null,
+  authenticatedDomains: string[]
+): boolean => {
+  if (!target) {
+    return false;
+  }
+
+  return authenticatedDomains.some((domain) => {
+    try {
+      const allowed = new URL(domain);
+
+      if (allowed.origin !== target.origin) {
+        return false;
+      }
+
+      const allowedPath = allowed.pathname.replace(/\/$/, '');
+
+      return (
+        allowedPath === '' ||
+        target.pathname === allowedPath ||
+        target.pathname.startsWith(`${allowedPath}/`)
+      );
+    } catch {
+      return false;
+    }
+  });
+};
+
 export const setAxiosInterceptors = ({
   authenticatedDomains,
   bearerToken
 }: InterceptAxiosCallsConfig): void => {
-  axios.interceptors.request.clear();
-  axios.interceptors.response.clear();
+  if (requestInterceptorId !== null) {
+    axios.interceptors.request.eject(requestInterceptorId);
+  }
 
-  axios.interceptors.response.use(
+  if (responseInterceptorId !== null) {
+    axios.interceptors.response.eject(responseInterceptorId);
+  }
+
+  responseInterceptorId = axios.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
-      let url = error.config?.url;
-      if (error.config?.params) {
-        const queryString = new URLSearchParams(error.config.params);
-        url += `?${queryString.toString()}`;
-      }
+      const url = error.config?.url?.split('?')[0];
       console.error('Axios error for: ', url);
       return Promise.reject(error);
     }
   );
 
-  axios.interceptors.request.use(
+  requestInterceptorId = axios.interceptors.request.use(
     async (config: InternalAxiosRequestConfig) => {
-      if (
-        authenticatedDomains.includes(String(config?.baseURL)) &&
-        bearerToken
-      ) {
+      const target = resolveRequestUrl(config);
+
+      if (bearerToken && isAuthenticatedTarget(target, authenticatedDomains)) {
         config.headers.Authorization = `Bearer ${bearerToken}`;
       }
+
       return config;
     },
     (error) => Promise.reject(error)
