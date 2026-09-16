@@ -16,7 +16,8 @@
     "!**/*.puppeteer.*",
     "!**/__mocks__/**",
     "!**/__tests__/**",
-    "!**/*-mock.*"
+    "!**/*-mock.*",
+    "!**/*.map"
   ],
   "repository": {
     "type": "git",
