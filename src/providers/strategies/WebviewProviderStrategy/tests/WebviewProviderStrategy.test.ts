@@ -32,24 +32,27 @@ jest.mock('constants/window.constants', () => {
   };
 });
 
+const mockClearSdkDappStorage = jest.fn();
+
+jest.mock('store/storage/clearSdkDappStorage', () => ({
+  clearSdkDappStorage: (...args: unknown[]) => mockClearSdkDappStorage(...args)
+}));
+
 const { WebviewProvider } = jest.requireMock(
   '@multiversx/sdk-webview-provider/out/WebviewProvider'
 ) as {
   WebviewProvider: { getInstance: jest.Mock };
 };
 
-const { safeWindow: mockSafeWindow, version: mockedVersion } = jest.requireMock(
+const { version: mockedVersion } = jest.requireMock(
   'constants/window.constants'
 ) as {
-  safeWindow: {
-    localStorage: { clear: jest.Mock };
-    sessionStorage: { clear: jest.Mock };
-  };
   version: string;
 };
 
 type StrategyConfig = {
   address?: string;
+  clearAllStorageOnLogout?: boolean;
 };
 
 const createStrategy = (config?: StrategyConfig) =>
@@ -72,7 +75,7 @@ describe('WebviewProviderStrategy tests', () => {
     mockWebviewProvider.signMessage.mockResolvedValue('signed-message');
   });
 
-  it('creates provider instance with reset callback that clears storage', async () => {
+  it('creates provider instance with reset callback that clears only sdk-dapp storage', async () => {
     const strategy = createStrategy();
 
     expect(strategy).toBeDefined();
@@ -85,11 +88,23 @@ describe('WebviewProviderStrategy tests', () => {
     const { resetStateCallback } = WebviewProvider.getInstance.mock.calls[0][0];
     resetStateCallback();
 
-    expect(mockSafeWindow.localStorage.clear).toHaveBeenCalled();
-    expect(mockSafeWindow.sessionStorage.clear).toHaveBeenCalled();
+    expect(mockClearSdkDappStorage).toHaveBeenCalledWith({
+      clearAllStorage: undefined
+    });
     expect(typeof (strategy as any)._login).toBe('function');
     await (strategy as any)._login?.({ token: 'abc' });
     expect(mockWebviewProvider.login).toHaveBeenCalledWith({ token: 'abc' });
+  });
+
+  it('wipes all storage when the host opts in', () => {
+    createStrategy({ clearAllStorageOnLogout: true });
+
+    const { resetStateCallback } = WebviewProvider.getInstance.mock.calls[0][0];
+    resetStateCallback();
+
+    expect(mockClearSdkDappStorage).toHaveBeenCalledWith({
+      clearAllStorage: true
+    });
   });
 
   it('initializes provider and sets account when address provided', async () => {

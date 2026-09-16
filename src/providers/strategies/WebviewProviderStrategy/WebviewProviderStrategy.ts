@@ -1,5 +1,5 @@
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
-import { safeWindow, version } from 'constants/window.constants';
+import { version } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
@@ -7,11 +7,13 @@ import {
   ProviderTypeEnum,
   ProviderType
 } from 'providers/types/providerFactory.types';
+import { clearSdkDappStorage } from 'store/storage/clearSdkDappStorage';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 
 type WebviewProviderProps = {
   address?: string;
+  clearAllStorageOnLogout?: boolean;
 };
 
 export class WebviewProviderStrategy extends BaseProviderStrategy {
@@ -21,11 +23,13 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
     super(config?.address);
     this.provider = WebviewProvider.getInstance({
       resetStateCallback: () => {
-        /* 
+        /*
           Used in Hub to clear storage when logging out via the hub header.
+          Scoped to sdk-dapp keys so that state owned by the host app survives;          
         */
-        safeWindow.localStorage?.clear?.();
-        safeWindow.sessionStorage?.clear?.();
+        clearSdkDappStorage({
+          clearAllStorage: config?.clearAllStorageOnLogout
+        });
       }
     });
 
