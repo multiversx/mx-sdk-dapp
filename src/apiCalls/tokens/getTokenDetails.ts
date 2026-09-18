@@ -1,5 +1,5 @@
 import { NFTS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
-import { tokenSchema } from 'apiCalls/utils/apiResponseSchemas';
+import { getTokenSchema } from 'apiCalls/utils/apiResponseSchemas';
 import { axiosInstance } from 'apiCalls/utils/axiosInstance';
 import { validateApiResponse } from 'apiCalls/utils/validateApiResponse';
 import { networkSelector } from 'store/selectors/networkSelectors';
@@ -35,9 +35,19 @@ export async function getTokenDetails({
 
     validateApiResponse({
       data: selectedToken,
-      schema: tokenSchema,
+      schema: getTokenSchema(tokenIdentifier),
       source: tokenEndpoint
     });
+
+    if (selectedToken?.identifier !== tokenIdentifier) {
+      return {
+        error: `No details found for ${tokenIdentifier}`,
+        tokenDecimals: Number(network.decimals),
+        tokenLabel: '',
+        tokenAvatar: '',
+        identifier: tokenIdentifier
+      };
+    }
 
     const tokenDecimals = selectedToken
       ? selectedToken?.decimals

@@ -1,7 +1,7 @@
 import { testToken } from '__mocks__/data/testToken';
 import {
   getAccountSchema,
-  tokenSchema,
+  getTokenSchema,
   transactionSchema
 } from '../apiResponseSchemas';
 import {
@@ -30,7 +30,7 @@ describe('validateApiResponse', () => {
     expect(
       validateApiResponse({
         data: testToken,
-        schema: tokenSchema,
+        schema: getTokenSchema(testToken.identifier),
         source: 'tokens'
       })
     ).toBe(true);
@@ -41,7 +41,11 @@ describe('validateApiResponse', () => {
     const { decimals: _decimals, ...nft } = testToken;
 
     expect(
-      validateApiResponse({ data: nft, schema: tokenSchema, source: 'nfts' })
+      validateApiResponse({
+        data: nft,
+        schema: getTokenSchema(testToken.identifier),
+        source: 'nfts'
+      })
     ).toBe(true);
   });
 
@@ -54,11 +58,22 @@ describe('validateApiResponse', () => {
     expect(
       validateApiResponse({
         data: { ...testToken, decimals },
-        schema: tokenSchema,
+        schema: getTokenSchema(testToken.identifier),
         source: 'tokens'
       })
     ).toBe(false);
     expect(warn).toHaveBeenCalledWith(expect.stringContaining('decimals'));
+  });
+
+  it('flags a token response for a different identifier', () => {
+    expect(
+      validateApiResponse({
+        data: { ...testToken, identifier: 'OTHER-a1b2c3' },
+        schema: getTokenSchema(testToken.identifier),
+        source: 'tokens'
+      })
+    ).toBe(false);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('identifier'));
   });
 
   it('flags an account response for a different address', () => {
@@ -80,7 +95,7 @@ describe('validateApiResponse', () => {
     expect(
       validateApiResponse({
         data: 'not json',
-        schema: tokenSchema,
+        schema: getTokenSchema(testToken.identifier),
         source: 'tokens'
       })
     ).toBe(false);
@@ -92,8 +107,16 @@ describe('validateApiResponse', () => {
   it('warns once per endpoint and set of fields', () => {
     const data = { ...testToken, decimals: -1 };
 
-    validateApiResponse({ data, schema: tokenSchema, source: 'tokens' });
-    validateApiResponse({ data, schema: tokenSchema, source: 'tokens' });
+    validateApiResponse({
+      data,
+      schema: getTokenSchema(testToken.identifier),
+      source: 'tokens'
+    });
+    validateApiResponse({
+      data,
+      schema: getTokenSchema(testToken.identifier),
+      source: 'tokens'
+    });
 
     expect(warn).toHaveBeenCalledTimes(1);
   });
@@ -101,7 +124,7 @@ describe('validateApiResponse', () => {
   it('does not log the response values', () => {
     validateApiResponse({
       data: { ...testToken, name: 42 },
-      schema: tokenSchema,
+      schema: getTokenSchema(testToken.identifier),
       source: 'tokens'
     });
 

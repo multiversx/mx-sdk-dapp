@@ -26,6 +26,7 @@ import { getExtractTransactionsInfo } from './helpers/getExtractTransactionsInfo
 import { getGasPriceOptions } from './helpers/getGasPriceOptions';
 import { getHighlight } from './helpers/getHighlight';
 import { getScCall } from './helpers/getScCall';
+import { getTokenIdentifier } from './helpers/getTokenIdentifier';
 import { getTokenType } from './helpers/getTokenType';
 
 export type GetCommonDataPropsType = {
@@ -89,14 +90,17 @@ export async function getCommonData({
   const { tokenId, nonce, amount = '' } = txInfo?.transactionTokenInfo ?? {};
 
   const isNftOrSft = tokenId && nonce && nonce.length > 0;
-  const tokenIdForTokenDetails = isNftOrSft ? `${tokenId}-${nonce}` : tokenId;
+  const tokenIdForTokenDetails = isNftOrSft
+    ? getTokenIdentifier({ tokenId, nonce })
+    : tokenId;
 
   const tokenDetails = await getPersistedTokenDetails({
     tokenId: tokenIdForTokenDetails
   });
 
-  const { esdtPrice, tokenDecimals, type, identifier, tokenImageUrl } =
-    tokenDetails;
+  const { esdtPrice, tokenDecimals, type, tokenImageUrl } = tokenDetails;
+
+  const identifier = tokenIdForTokenDetails || undefined;
 
   const isNft =
     type === NftEnumType.SemiFungibleESDT ||

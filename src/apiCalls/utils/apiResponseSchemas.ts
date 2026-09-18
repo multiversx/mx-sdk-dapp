@@ -40,13 +40,13 @@ export const gasStationSchema: ResponseSchemaType = {
 };
 
 // `tokens/:identifier` and `nfts/:identifier`
-export const tokenSchema: ResponseSchemaType = {
-  identifier: isString,
+export const getTokenSchema = (identifier: string): ResponseSchemaType => ({
+  identifier: equals(identifier),
   name: isString,
   ticker: optional(isString),
   decimals: optional(isTokenDecimals),
   assets: optional(isObject)
-};
+});
 
 export const getAccountSchema = (address: string): ResponseSchemaType => ({
   address: equals(address),

@@ -24,6 +24,22 @@ describe('getPersistedTokenDetails', () => {
     expect(result.tokenImageUrl).toBe(testToken.assets.pngUrl);
   });
 
+  it('ignores details returned for a different token', async () => {
+    mockedGetPersistedToken.mockResolvedValueOnce({
+      ...testToken,
+      identifier: 'OTHER-a1b2c3',
+      decimals: 0
+    });
+
+    const result = await getPersistedTokenDetails({
+      tokenId: testToken.identifier
+    });
+
+    expect(result.identifier).toBeUndefined();
+    expect(result.tokenLabel).toBe('');
+    expect(result.error).toBeDefined();
+  });
+
   it('reports a regular token as clean', async () => {
     mockedGetPersistedToken.mockResolvedValueOnce(testToken);
 

@@ -4,6 +4,8 @@ import {
   testNetwork,
   testReceiver
 } from '__mocks__/accountConfig';
+import { testToken } from '__mocks__/data/testToken';
+import { tokenDataStorage } from 'apiCalls/tokens/tokenDataStorage';
 import { Transaction } from 'lib/sdkCore';
 import {
   MultiSignTransactionType,
@@ -359,5 +361,30 @@ describe('when the gas limit is updated', () => {
         usdValue: '= $0.00'
       }
     });
+  });
+
+  it('shows the token the transaction moves when the API describes another one', async () => {
+    await tokenDataStorage.clear();
+    server.use(
+      rest.get(
+        `${testNetwork.apiAddress}/tokens/WEGLD-a28c59`,
+        mockResponse({ ...testToken, identifier: 'OTHER-a1b2c3', decimals: 0 })
+      )
+    );
+
+    const { tokenTransaction } = await getCommonData({
+      ...mockData,
+      currentScreenIndex: 1,
+      gasPriceData: {
+        initialGasPrice: 1000000000,
+        gasPriceOption: 1000000000
+      },
+      allTransactions: updatedTransactions,
+      network: networkWithGasStationMetadata
+    });
+
+    expect(tokenTransaction).toEqual(
+      expect.objectContaining({ identifier: 'WEGLD-a28c59', amount: '1' })
+    );
   });
 });

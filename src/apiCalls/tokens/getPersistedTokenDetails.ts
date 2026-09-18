@@ -1,6 +1,6 @@
 import { NFTS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
 import { getPersistedToken } from 'apiCalls/tokens/getPersistedToken';
-import { tokenSchema } from 'apiCalls/utils/apiResponseSchemas';
+import { getTokenSchema } from 'apiCalls/utils/apiResponseSchemas';
 import { validateApiResponse } from 'apiCalls/utils/validateApiResponse';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
@@ -84,9 +84,16 @@ export async function getPersistedTokenDetails({
 
     validateApiResponse({
       data: selectedToken,
-      schema: tokenSchema,
+      schema: getTokenSchema(tokenIdentifier),
       source: tokenEndpoint
     });
+
+    if (selectedToken?.identifier !== tokenIdentifier) {
+      return {
+        ...noData,
+        error: `No details found for ${tokenIdentifier}`
+      };
+    }
 
     const tokenDecimals = selectedToken
       ? selectedToken?.decimals
