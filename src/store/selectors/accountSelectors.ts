@@ -18,6 +18,10 @@ export const accountInfoSelector = (state: StoreType) => {
 
 export const addressSelector = ({ account: { address } }: StoreType) => address;
 
+export const signerAddressSelector = ({
+  account: { signerAddress }
+}: StoreType) => signerAddress;
+
 export const websocketEventSelector = ({
   account: { websocketEvent }
 }: StoreType) => websocketEvent;

@@ -1,4 +1,5 @@
 import { ScamInfoType } from './account.types';
+import { DisplayRiskEnum } from './displayRisk.types';
 
 export interface TokenRolesType {
   address: string;
@@ -166,6 +167,7 @@ export interface TokenOptionType {
   identifier?: string;
   name?: string;
   isLoading?: boolean;
+  displayRisk?: DisplayRiskEnum;
 }
 
 export interface TokenInfoResponse {

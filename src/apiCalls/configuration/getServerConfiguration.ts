@@ -1,6 +1,18 @@
 import axios from 'axios';
 import { NetworkType } from 'types/network.types';
 import { CONFIG_ENDPOINT } from '../endpoints';
+import { dappConfigSchema } from '../utils/apiResponseSchemas';
+import { validateApiResponse } from '../utils/validateApiResponse';
+
+const withValidation = (networkConfig: NetworkType) => {
+  validateApiResponse({
+    data: networkConfig,
+    schema: dappConfigSchema,
+    source: CONFIG_ENDPOINT
+  });
+
+  return networkConfig;
+};
 
 export async function getServerConfiguration(apiAddress: string) {
   const configUrl = `${apiAddress}/${CONFIG_ENDPOINT}`;
@@ -23,9 +35,9 @@ export async function getServerConfiguration(apiAddress: string) {
           decimals,
           digits
         };
-        return networkConfig;
+        return withValidation(networkConfig);
       }
-      return data;
+      return withValidation(data);
     }
   } catch (_err) {
     console.error('error fetching configuration for ', configUrl);

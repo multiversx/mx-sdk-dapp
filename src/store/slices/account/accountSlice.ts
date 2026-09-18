@@ -11,6 +11,7 @@ export const initialState: AccountSliceType = {
   accounts: { '': emptyAccount },
   ledgerAccount: null,
   publicKey: '',
+  signerAddress: '',
   walletConnectAccount: null
 };
 

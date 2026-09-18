@@ -32,6 +32,13 @@ describe('decodeNativeAuthToken tests', () => {
     const parsed = decodeNativeAuthToken('invalid');
     expect(parsed).toStrictEqual(null);
   });
+  it('decodes a token whose body is not a login token', () => {
+    const [address, , signature] = nativeAuthToken.split('.');
+    const body = Buffer.from('not-a-login-token').toString('base64');
+
+    const parsed = decodeNativeAuthToken([address, body, signature].join('.'));
+    expect(parsed).toStrictEqual(null);
+  });
   it('decodes undefined', () => {
     const parsed = decodeNativeAuthToken(undefined);
     expect(parsed).toStrictEqual(null);

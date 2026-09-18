@@ -14,16 +14,19 @@ export const logoutAction = () =>
 export interface LoginActionPayloadType<T extends ProviderType = ProviderType> {
   address: string;
   providerType: T;
+  signerAddress?: string;
 }
 
 export const loginAction = ({
   address,
-  providerType
+  providerType,
+  signerAddress = address
 }: LoginActionPayloadType) => {
   getStore().setState(
     ({ account, loginInfo }) => {
       account.address = address;
       account.publicKey = new Address(address).toHex();
+      account.signerAddress = signerAddress;
 
       if (loginInfo) {
         loginInfo.providerType = providerType;
@@ -34,7 +37,7 @@ export const loginAction = ({
       type: 'loginAction',
       // @ts-ignore
       payload: {
-        value: { address, providerType }
+        value: { address, providerType, signerAddress }
       }
     }
   );

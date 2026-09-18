@@ -1,6 +1,8 @@
 import { getCleanApiAddress } from 'apiCalls/configuration/getCleanApiAddress';
 import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
+import { getAccountSchema } from 'apiCalls/utils/apiResponseSchemas';
 import { axiosInstance } from 'apiCalls/utils/axiosInstance';
+import { validateApiResponse } from 'apiCalls/utils/validateApiResponse';
 import { TIMEOUT } from 'constants/network.constants';
 import { AccountType } from 'types/account.types';
 
@@ -33,6 +35,13 @@ export const getAccountFromApi = async ({
 
   try {
     const { data } = await accountFetcher({ address, baseURL });
+
+    validateApiResponse({
+      data,
+      schema: getAccountSchema(address),
+      source: ACCOUNTS_ENDPOINT
+    });
+
     return data as AccountType;
   } catch (_err) {
     console.error('error fetching configuration for ', address);

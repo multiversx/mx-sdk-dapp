@@ -1,3 +1,4 @@
+import { DisplayRiskEnum } from 'types/displayRisk.types';
 import {
   TransactionAgeType,
   TransactionIconInfoType,
@@ -31,6 +32,7 @@ type TransactionAccountType = {
 export type TransactionValueType = {
   badge?: string;
   collection?: string;
+  displayRisk?: DisplayRiskEnum;
   egldLabel: string;
   link?: string;
   linkText?: string;

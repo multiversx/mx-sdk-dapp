@@ -34,14 +34,7 @@ export const decodeNativeAuthToken = (
     const parsedInitToken = decodeLoginToken(parsedBody);
 
     if (!parsedInitToken) {
-      return {
-        address: parsedAddress,
-        body: parsedBody,
-        signature,
-        blockHash: '',
-        origin: '',
-        ttl: 0
-      };
+      return null;
     }
 
     const result = {

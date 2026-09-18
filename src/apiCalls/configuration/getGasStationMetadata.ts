@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { getCleanApiAddress } from 'apiCalls/configuration/getCleanApiAddress';
 import { GAS_STATION_ENDPOINT } from 'apiCalls/endpoints';
+import { gasStationSchema } from 'apiCalls/utils/apiResponseSchemas';
+import { validateApiResponse } from 'apiCalls/utils/validateApiResponse';
 import { NetworkType } from 'types/network.types';
 
 interface IGasStationApiResponse {
@@ -20,6 +22,12 @@ export async function getGasStationMetadataFromApi(
     const { data } = await axios.get<IGasStationApiResponse>(gasStationUrl);
 
     if (data) {
+      validateApiResponse({
+        data,
+        schema: gasStationSchema,
+        source: GAS_STATION_ENDPOINT
+      });
+
       return {
         [shard]: {
           lastBlock: data.lastBlock,

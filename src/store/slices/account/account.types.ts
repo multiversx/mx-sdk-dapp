@@ -12,6 +12,7 @@ export type AccountSliceType = {
   address: string;
   accounts: { [address: string]: AccountType };
   publicKey: string;
+  signerAddress: string;
   ledgerAccount: LedgerAccountType | null;
   walletConnectAccount: string | null;
   websocketEvent: {

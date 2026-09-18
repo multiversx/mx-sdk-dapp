@@ -1,9 +1,14 @@
 import { NFTS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
 import { getPersistedToken } from 'apiCalls/tokens/getPersistedToken';
+import { tokenSchema } from 'apiCalls/utils/apiResponseSchemas';
+import { validateApiResponse } from 'apiCalls/utils/validateApiResponse';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 
+import { DisplayRiskEnum } from 'types/displayRisk.types';
 import { NftEnumType } from 'types/tokens.types';
+import { getDisplayRisk } from 'utils/display/getDisplayRisk';
+import { getTokenImageUrl } from 'utils/display/getTokenImageUrl';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
 
 export interface TokenAssets {
@@ -36,6 +41,7 @@ export interface TokenOptionType {
   ticker?: string;
   identifier?: string;
   name?: string;
+  displayRisk?: DisplayRiskEnum;
 }
 
 interface TokenInfoResponse {
@@ -76,13 +82,17 @@ export async function getPersistedTokenDetails({
       `${network.apiAddress}/${tokenEndpoint}/${tokenIdentifier}`
     );
 
+    validateApiResponse({
+      data: selectedToken,
+      schema: tokenSchema,
+      source: tokenEndpoint
+    });
+
     const tokenDecimals = selectedToken
       ? selectedToken?.decimals
       : Number(network.decimals);
     const tokenLabel = selectedToken ? selectedToken?.name : '';
-    const tokenImageUrl = selectedToken
-      ? selectedToken?.assets?.svgUrl ?? selectedToken?.media?.[0]?.thumbnailUrl
-      : '';
+    const tokenImageUrl = selectedToken ? getTokenImageUrl(selectedToken) : '';
 
     return {
       tokenDecimals: tokenDecimals,
@@ -93,7 +103,12 @@ export async function getPersistedTokenDetails({
       assets: selectedToken?.assets,
       esdtPrice: selectedToken?.price,
       ticker: selectedToken?.ticker,
-      name: selectedToken?.name
+      name: selectedToken?.name,
+      displayRisk: getDisplayRisk(
+        tokenLabel,
+        selectedToken?.ticker,
+        selectedToken?.identifier
+      )
     };
   } catch (error) {
     return {

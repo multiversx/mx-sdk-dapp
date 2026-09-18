@@ -18,7 +18,7 @@ const login = () => {
   });
 };
 
-describe('token persistence (F-004)', () => {
+describe('token persistence', () => {
   beforeEach(() => {
     localStorage.clear();
     initStore(() => localStorage);

@@ -4,6 +4,7 @@ import {
   TransactionDirectionEnum
 } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
+import { getDisplayRisk } from 'utils/display/getDisplayRisk';
 import { getExplorerLink } from 'utils/transactions/getExplorerLink';
 import { getInterpretedTransaction } from 'utils/transactions/getInterpretedTransaction/getInterpretedTransaction';
 import { getTransactionValue } from 'utils/transactions/getInterpretedTransaction/getTransactionValue/getTransactionValue';
@@ -85,10 +86,17 @@ export class TransactionsTableController {
           digits: 2
         });
 
+        const name = tokenValueData?.token.name ?? nftValueData?.token.name;
+        const ticker =
+          tokenValueData?.token.ticker ?? nftValueData?.token.ticker;
+        const linkText =
+          tokenValueData?.tokenLinkText ?? nftValueData?.tokenLinkText;
+
         const transactionValue: TransactionValueType = {
           badge: badge ?? undefined,
           collection:
             tokenValueData?.token.collection ?? nftValueData?.token.collection,
+          displayRisk: getDisplayRisk(name, ticker, linkText),
           egldLabel: egldValueData ? egldLabel : '',
           link: getExplorerLink({
             explorerAddress,
@@ -97,16 +105,15 @@ export class TransactionsTableController {
               nftValueData?.tokenExplorerLink ??
               ''
           }),
-          linkText:
-            tokenValueData?.tokenLinkText ?? nftValueData?.tokenLinkText,
-          name: tokenValueData?.token.name ?? nftValueData?.token.name,
+          linkText,
+          name,
           showFormattedAmount: Boolean(
             egldValueData ||
               tokenValueData?.tokenFormattedAmount ||
               nftValueData?.tokenFormattedAmount
           ),
           svgUrl: tokenValueData?.token.svgUrl ?? nftValueData?.token.svgUrl,
-          ticker: tokenValueData?.token.ticker ?? nftValueData?.token.ticker,
+          ticker,
           titleText: tokenValueData?.titleText ?? nftValueData?.titleText,
           valueDecimal: formattedAmount.valueDecimal,
           valueInteger: formattedAmount.valueInteger

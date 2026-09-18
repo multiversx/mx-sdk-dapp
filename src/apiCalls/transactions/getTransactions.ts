@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
+import { transactionSchema } from 'apiCalls/utils/apiResponseSchemas';
+import { validateApiListResponse } from 'apiCalls/utils/validateApiResponse';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 
@@ -53,11 +55,18 @@ export const getTransactions = ({
 
   const timeout = apiTimeout ? { timeout: parseInt(String(apiTimeout)) } : {};
 
-  return axios.get<ServerTransactionType[]>(
-    `${apiAddress}/${TRANSACTIONS_ENDPOINT}`,
-    {
+  return axios
+    .get<ServerTransactionType[]>(`${apiAddress}/${TRANSACTIONS_ENDPOINT}`, {
       params,
       ...timeout
-    }
-  );
+    })
+    .then((response) => {
+      validateApiListResponse({
+        data: response.data,
+        schema: transactionSchema,
+        source: TRANSACTIONS_ENDPOINT
+      });
+
+      return response;
+    });
 };

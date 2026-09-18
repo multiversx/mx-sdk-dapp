@@ -1,12 +1,13 @@
 import { getNetworkConfig } from 'methods/network/getNetworkConfig';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { nativeAuth } from 'services/nativeAuth';
-import { decodeNativeAuthToken } from 'services/nativeAuth/helpers/decodeNativeAuthToken';
+import { buildNativeAuthConfig } from 'services/nativeAuth/methods/buildNativeAuthConfig';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { setTokenLogin } from 'store/actions/loginInfo/loginInfoActions';
 import { accountLogin } from './accountLogin';
 import { extractAddressFromToken } from './extractAddressFromToken';
 import { getMultisigLoginToken } from './getMultisigLoginToken';
+import { isAccessTokenForLogin } from './isAccessTokenForLogin';
 
 export async function loginWithNativeToken({
   provider,
@@ -47,7 +48,18 @@ export async function loginWithNativeToken({
   }
 
   // nativeAuthToken received from hub login
-  const decodedToken = decodeNativeAuthToken(loginResult?.accessToken);
+  const accessToken = loginResult?.accessToken;
+  const isAccessTokenUsable = isAccessTokenForLogin({
+    accessToken,
+    address,
+    origin: buildNativeAuthConfig(nativeAuthConfig).origin
+  });
+
+  if (accessToken && !isAccessTokenUsable) {
+    console.warn(
+      '[sdk-dapp] The accessToken returned by the provider does not match this login'
+    );
+  }
 
   const usedLoginToken = await getMultisigLoginToken({
     loginData,
@@ -55,8 +67,8 @@ export async function loginWithNativeToken({
     loginToken
   });
 
-  const nativeAuthToken = decodedToken
-    ? loginResult.accessToken
+  const nativeAuthToken = isAccessTokenUsable
+    ? accessToken
     : nativeAuthClient.getToken({
         address,
         token: usedLoginToken,
@@ -81,7 +93,8 @@ export async function loginWithNativeToken({
   await accountLogin({
     address: extractedAddress,
     provider,
-    apiAddress
+    apiAddress,
+    signerAddress: address
   });
 
   return {

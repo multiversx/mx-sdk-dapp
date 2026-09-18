@@ -13,12 +13,14 @@ interface IAccountLoginProps {
   address: string;
   provider: IProvider;
   apiAddress: string;
+  signerAddress?: string;
 }
 
 export async function accountLogin({
   address,
   provider,
-  apiAddress
+  apiAddress,
+  signerAddress
 }: IAccountLoginProps) {
   const account = await fetchAccount({
     address,
@@ -31,7 +33,8 @@ export async function accountLogin({
 
   loginAction({
     address,
-    providerType: provider.getType()
+    providerType: provider.getType(),
+    signerAddress
   });
 
   const newAccount: AccountType = {

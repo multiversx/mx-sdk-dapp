@@ -24,5 +24,6 @@ export const account: AccountSliceType = {
   },
   ledgerAccount: null,
   publicKey: '0e857bfcb560fa7c933a30e23509716a240967f70f9bfa1b3aab42457d04f260',
+  signerAddress: testAddress,
   walletConnectAccount: null
 };

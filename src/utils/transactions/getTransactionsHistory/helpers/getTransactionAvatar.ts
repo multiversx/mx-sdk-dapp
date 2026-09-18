@@ -17,17 +17,17 @@ export const getTransactionAvatar = ({
 }: IGetTransactionAvatarParams): string | null => {
   if (userIsReceiver) {
     return (
+      senderAssets?.iconPng ??
       senderAssets?.svgUrl ??
       senderAssets?.iconSvg ??
-      senderAssets?.iconPng ??
       null
     );
   }
 
   return (
+    receiverAssets?.iconPng ??
     receiverAssets?.svgUrl ??
     receiverAssets?.iconSvg ??
-    receiverAssets?.iconPng ??
     null
   );
 };

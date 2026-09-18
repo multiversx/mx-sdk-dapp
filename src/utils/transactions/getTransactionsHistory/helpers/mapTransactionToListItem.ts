@@ -53,8 +53,8 @@ export const mapTransactionToListItem = ({
     }),
     interactor: isIncomingTransaction ? transaction.sender : receiver,
     interactorAsset: isIncomingTransaction
-      ? transaction.senderAssets?.iconSvg ?? transaction.senderAssets?.iconPng
-      : receiverAssets?.iconSvg ?? receiverAssets?.iconPng,
+      ? transaction.senderAssets?.iconPng ?? transaction.senderAssets?.iconSvg
+      : receiverAssets?.iconPng ?? receiverAssets?.iconSvg,
     directionLabel: isIncomingTransaction ? 'From' : 'To',
     action,
     amount: getTransactionAmount({

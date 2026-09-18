@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { getCleanApiAddress } from 'apiCalls/configuration/getCleanApiAddress';
 import { ECONOMICS_ENDPOINT } from 'apiCalls/endpoints';
+import { economicsSchema } from 'apiCalls/utils/apiResponseSchemas';
+import { validateApiResponse } from 'apiCalls/utils/validateApiResponse';
 
 export interface EconomicsInfoType {
   totalSupply: number;
@@ -23,6 +25,13 @@ export async function getEconomics({
   const configUrl = `${apiAddress}/${url}`;
   try {
     const { data } = await axios.get<EconomicsInfoType>(configUrl);
+
+    validateApiResponse({
+      data,
+      schema: economicsSchema,
+      source: url
+    });
+
     return data;
   } catch (err) {
     console.error('err fetching economics info', err);

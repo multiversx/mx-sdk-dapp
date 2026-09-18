@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
+import { transactionSchema } from 'apiCalls/utils/apiResponseSchemas';
+import { validateApiListResponse } from 'apiCalls/utils/validateApiResponse';
 import { apiAddressSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ServerTransactionType } from 'types/serverTransactions.types';
@@ -19,6 +21,12 @@ export const getServerTransactionsByHashes = async (
       }
     }
   );
+
+  validateApiListResponse({
+    data,
+    schema: transactionSchema,
+    source: TRANSACTIONS_ENDPOINT
+  });
 
   return data;
 };
