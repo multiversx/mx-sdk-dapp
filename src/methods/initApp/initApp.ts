@@ -4,12 +4,14 @@ import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 import { ToastManager } from 'managers/ToastManager';
 import { registerCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
+import { validateCustomProviders } from 'providers/helpers/validateCustomProviders';
 import { ProviderFactory } from 'providers/ProviderFactory';
 import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import {
   setNativeAuthConfig,
+  setFlagsConfig,
   setWalletConnectConfig,
   setProviderSettings
 } from 'store/actions/config/configActions';
@@ -19,6 +21,8 @@ import { initStore } from 'store/store';
 import { ThemesEnum } from 'types/theme.types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
+import { resolveFlagsConfig, warnInsecureDefault } from './helpers/flagsConfig';
+import { validateRehydratedSession } from './helpers/validateRehydratedSession';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { setGasStationMetadata } from './gasStationMetadata/setGasStationMetadata';
@@ -107,9 +111,12 @@ export async function initApp({
         : getDefaultNativeAuthConfig(dAppConfig.nativeAuth);
   }
 
+  setFlagsConfig(dAppConfig?.flags);
   setNativeAuthConfig(nativeAuthConfig);
   setWalletConnectConfig(dAppConfig?.providers?.walletConnect ?? null);
   setProviderSettings(dAppConfig?.providers?.settings ?? null);
+
+  validateRehydratedSession({ nativeAuthConfig });
 
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();
@@ -119,9 +126,23 @@ export async function initApp({
       dAppConfig.transactionTracking?.successfulToastLifetime
   });
 
+  const { strictProviderRegistration } = resolveFlagsConfig(dAppConfig?.flags);
+
+  const windowProviders: ICustomProvider[] =
+    (safeWindow as any)?.multiversx?.providers ?? [];
+
+  if (!strictProviderRegistration && windowProviders.length > 0) {
+    warnInsecureDefault(
+      'strictProviderRegistration',
+      `${windowProviders.length} custom provider(s) were registered through the ` +
+        '`window.multiversx.providers` global. Any script running before initApp ' +
+        'can install a provider there and intercept every login and signature.'
+    );
+  }
+
   const usedProviders: ICustomProvider[] = [
-    ...((safeWindow as any)?.multiversx?.providers ?? []),
-    ...(customProviders || [])
+    ...(customProviders || []),
+    ...(strictProviderRegistration ? [] : windowProviders)
   ];
 
   const uniqueProviders = usedProviders.filter(
@@ -129,7 +150,9 @@ export async function initApp({
       index === arr.findIndex((item) => item.type === provider.type)
   );
 
-  ProviderFactory.customProviders = uniqueProviders || [];
+  ProviderFactory.customProviders = strictProviderRegistration
+    ? validateCustomProviders(uniqueProviders)
+    : uniqueProviders;
 
   if (!isAppInitialized) {
     await restoreProvider();

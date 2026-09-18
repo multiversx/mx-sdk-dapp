@@ -1,4 +1,5 @@
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
+import { DEFAULT_FLAGS_CONFIG } from 'methods/initApp/helpers/flagsConfig';
 import { ConfigSliceType } from 'store/slices/config/config.types';
 
 export const config: ConfigSliceType = {
@@ -15,5 +16,6 @@ export const config: ConfigSliceType = {
     walletConnectV2RelayAddress: 'wss://relay.walletconnect.com'
   },
   settings: null,
+  flags: DEFAULT_FLAGS_CONFIG,
   websocketStatus: WebsocketConnectionStatusEnum.PENDING
 };

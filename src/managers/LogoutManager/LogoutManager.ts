@@ -1,8 +1,9 @@
 import BigNumber from 'bignumber.js';
 import { ToastManager } from 'managers/ToastManager';
+import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
+import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
-import { getTokenExpiration } from 'services/nativeAuth/methods/getTokenExpiration';
 import {
   addressSelector,
   isLoggedInSelector
@@ -12,6 +13,7 @@ import { tokenLoginSelector } from 'store/selectors/loginInfoSelectors';
 import { getStore } from 'store/store';
 import { IconNamesEnum } from 'types/enums.types';
 import { getHumanReadableTokenExpirationTime } from './helpers/getHumanReadableTokenExpirationTime';
+import { getSessionExpiration } from './helpers/getSessionExpiration';
 
 export class LogoutManager {
   private static instance: LogoutManager;
@@ -36,13 +38,10 @@ export class LogoutManager {
     }
 
     const state = this.store.getState();
-    const tokenLogin = tokenLoginSelector(state);
 
-    const { isExpired: isNativeAuthTokenExpired } = getTokenExpiration(
-      tokenLogin?.nativeAuthToken
-    );
+    const { isExpired: isSessionExpired } = getSessionExpiration(state);
 
-    if (isNativeAuthTokenExpired) {
+    if (isSessionExpired) {
       const provider = getAccountProvider();
       provider.logout();
     } else {
@@ -63,9 +62,30 @@ export class LogoutManager {
 
   private readonly shouldStart = (): boolean => {
     const state = this.store.getState();
-    const tokenLogin = tokenLoginSelector(state);
     const isLoggedIn = isLoggedInSelector(state);
-    return Boolean(tokenLogin?.nativeAuthToken && isLoggedIn);
+
+    if (!isLoggedIn) {
+      return false;
+    }
+
+    const { enforceSessionExpiry } = getFlagsConfig();
+
+    if (enforceSessionExpiry) {
+      return true;
+    }
+
+    const tokenLogin = tokenLoginSelector(state);
+
+    if (!tokenLogin?.nativeAuthToken) {
+      warnInsecureDefault(
+        'enforceSessionExpiry',
+        'This session has no nativeAuth token, so no expiry is scheduled for it. ' +
+          'The provider session stays usable until the user logs out explicitly.'
+      );
+      return false;
+    }
+
+    return true;
   };
 
   private addPlannedLogout = () => {
@@ -80,10 +100,8 @@ export class LogoutManager {
 
     this.addLogoutWarning();
 
-    const tokenLogin = tokenLoginSelector(this.store.getState());
-
-    const { secondsUntilExpires, expiresAt } = getTokenExpiration(
-      tokenLogin?.nativeAuthToken
+    const { secondsUntilExpires, expiresAt } = getSessionExpiration(
+      this.store.getState()
     );
 
     // Handle the actual logout functionality.
@@ -127,11 +145,8 @@ export class LogoutManager {
     }
 
     const nativeAuthConfig = nativeAuthConfigSelector(this.store.getState());
-    const tokenLogin = tokenLoginSelector(this.store.getState());
 
-    const { secondsUntilExpires } = getTokenExpiration(
-      tokenLogin?.nativeAuthToken
-    );
+    const { secondsUntilExpires } = getSessionExpiration(this.store.getState());
 
     const secondsUntilExpiresBN = new BigNumber(String(secondsUntilExpires));
     const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);

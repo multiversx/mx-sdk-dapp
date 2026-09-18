@@ -1,9 +1,12 @@
 import { getNetworkConfigFromApi } from 'apiCalls/configuration/getNetworkConfigFromApi';
 import { getServerConfiguration } from 'apiCalls/configuration/getServerConfiguration';
 import { fallbackNetworkConfigurations } from 'constants/network.constants';
+import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
+import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
 import { emptyNetwork } from 'store/slices/network/emptyNetwork';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { NetworkType, CustomNetworkType } from 'types/network.types';
+import { validateNetworkUrls } from './helpers/validateNetworkUrls';
 import { initializeNetworkConfig } from './networkActions';
 
 export type InitializeNetworkPropsType = {
@@ -11,10 +14,35 @@ export type InitializeNetworkPropsType = {
   environment?: EnvironmentsEnum;
 };
 
+const hasCustomUrl = (config: CustomNetworkType) =>
+  Boolean(
+    config?.apiAddress ||
+      config?.walletAddress ||
+      config?.iframeWalletAddress ||
+      config?.explorerAddress
+  );
+
 export const initializeNetwork = async ({
   customNetworkConfig = {},
   environment
 }: InitializeNetworkPropsType) => {
+  const { validateNetworkUrls: shouldValidate, unsafeAllowCustomWalletHosts } =
+    getFlagsConfig();
+
+  if (shouldValidate) {
+    validateNetworkUrls({
+      config: customNetworkConfig,
+      unsafeAllowCustomWalletHosts
+    });
+  } else if (hasCustomUrl(customNetworkConfig)) {
+    warnInsecureDefault(
+      'validateNetworkUrls',
+      'A custom network config was supplied without url validation. ' +
+        '`walletAddress` and `iframeWalletAddress` are the origins that receive ' +
+        'transactions for signing.'
+    );
+  }
+
   const fetchConfigFromServer = !customNetworkConfig?.skipFetchFromServer;
   const customNetworkApiAddress = customNetworkConfig?.apiAddress;
 
@@ -56,6 +84,15 @@ export const initializeNetwork = async ({
         ...dappConfig,
         ...customNetworkConfig
       };
+
+      // The server response can carry its own `walletAddress`, so the merged
+      // result is validated too, not just what the consumer passed in.
+      if (shouldValidate) {
+        validateNetworkUrls({
+          config: apiConfig,
+          unsafeAllowCustomWalletHosts
+        });
+      }
 
       initializeNetworkConfig(apiConfig);
       return apiConfig;

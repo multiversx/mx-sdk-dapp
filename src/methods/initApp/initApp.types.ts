@@ -1,7 +1,10 @@
 import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderStrategy/types/walletConnect.types';
 import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
-import { IProviderSettings } from 'store/slices/config/config.types';
+import {
+  IProviderSettings,
+  IFlagsConfig
+} from 'store/slices/config/config.types';
 import { StorageCallback } from 'store/storage';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { CustomNetworkType } from 'types/network.types';
@@ -32,6 +35,21 @@ type BaseDappConfigType = {
    * ```
    */
   theme?: `${ThemesEnum}`;
+  /**
+   * Opt-in hardening flags. Each one defaults to the pre-5.8 behaviour and
+   * logs a one-time warning while it is off; the defaults flip in v6.
+   * @example
+   * ```ts
+   *   flags: {
+   *     strictProviderRegistration: true,
+   *     persistTokenLogin: false,
+   *     strictLogout: true,
+   *     enforceSessionExpiry: true,
+   *     validateNetworkUrls: true
+   *   }
+   * ```
+   */
+  flags?: IFlagsConfig;
 };
 
 export type TransactionTrackingConfigType = {

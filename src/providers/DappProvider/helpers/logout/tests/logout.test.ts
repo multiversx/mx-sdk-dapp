@@ -1,70 +1,99 @@
-import { testAddress } from '__mocks__/accountConfig';
-import { subscriptions } from 'constants/storage.constants';
 import { logout } from '../logout';
 
-jest.mock('constants/window.constants', () => {
-  const localStorageMock = {
-    getItem: jest.fn(),
-    setItem: jest.fn(),
-    removeItem: jest.fn()
-  };
+const mockGetFlagsConfig = jest.fn();
+const mockLogoutAction = jest.fn();
 
-  return {
-    safeWindow: { localStorage: localStorageMock },
-    localStorageMock
-  };
-});
+jest.mock('methods/initApp/helpers/getFlagsConfig', () => ({
+  getFlagsConfig: () => mockGetFlagsConfig()
+}));
+
+jest.mock('store/actions/sharedActions/sharedActions', () => ({
+  logoutAction: () => mockLogoutAction()
+}));
 
 jest.mock('methods/account/getAddress', () => ({
-  getAddress: jest.fn()
+  getAddress: () => 'erd1qqq'
 }));
 
 jest.mock('methods/initApp/websocket/registerWebsocket', () => ({
   websocketManager: { closeConnectionRef: jest.fn() }
 }));
 
-jest.mock('store/actions/sharedActions/sharedActions', () => ({
-  logoutAction: jest.fn()
+jest.mock('constants/window.constants', () => ({
+  safeWindow: { localStorage: undefined }
 }));
 
-const { localStorageMock } = jest.requireMock('constants/window.constants');
+const makeProvider = (logoutImpl: () => Promise<boolean>) =>
+  ({ logout: jest.fn(logoutImpl) }) as any;
 
-const { getAddress } = jest.requireMock('methods/account/getAddress') as {
-  getAddress: jest.Mock;
-};
-
-describe('logout helper', () => {
+describe('logout', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    subscriptions.clear();
-    getAddress.mockReturnValue(testAddress);
-    localStorageMock.getItem.mockReset();
-    localStorageMock.setItem.mockReset();
-    localStorageMock.removeItem.mockReset();
+    jest.spyOn(console, 'error').mockImplementation(() => null);
+    jest.spyOn(console, 'warn').mockImplementation(() => null);
   });
 
-  it('broadcasts logout, clears subscriptions and returns provider status', async () => {
-    const unsubscribe = jest.fn();
-    subscriptions.set('sub' as any, unsubscribe);
-    const provider = { logout: jest.fn().mockResolvedValue(true) } as any;
+  afterEach(() => jest.restoreAllMocks());
 
-    const result = await logout({
-      provider,
-      options: { shouldBroadcastLogoutAcrossTabs: true }
+  describe('default behaviour', () => {
+    beforeEach(() =>
+      mockGetFlagsConfig.mockReturnValue({ strictLogout: false })
+    );
+
+    it('clears local state and returns the provider result', async () => {
+      const result = await logout({
+        provider: makeProvider(async () => true)
+      });
+
+      expect(result).toBe(true);
+      expect(mockLogoutAction).toHaveBeenCalled();
     });
 
-    expect(result).toBe(true);
+    it('swallows a provider failure, leaving state already cleared', async () => {
+      const result = await logout({
+        provider: makeProvider(async () => {
+          throw new Error('cable unplugged');
+        })
+      });
+
+      expect(result).toBe(false);
+      expect(mockLogoutAction).toHaveBeenCalled();
+    });
   });
 
-  it('returns false and logs error when provider logout fails', async () => {
-    const error = new Error('fail');
-    const provider = { logout: jest.fn().mockRejectedValue(error) } as any;
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+  describe('strictLogout on', () => {
+    beforeEach(() =>
+      mockGetFlagsConfig.mockReturnValue({ strictLogout: true })
+    );
 
-    const result = await logout({ provider });
+    it('logs the provider out before clearing local state', async () => {
+      const callOrder: string[] = [];
+      mockLogoutAction.mockImplementation(() => callOrder.push('logoutAction'));
+      const provider = makeProvider(async () => {
+        callOrder.push('provider.logout');
+        return true;
+      });
 
-    expect(consoleSpy).toHaveBeenCalledWith('Logging out error:', error);
-    expect(result).toBe(false);
-    consoleSpy.mockRestore();
+      await expect(logout({ provider })).resolves.toBe(true);
+      expect(callOrder).toEqual(['provider.logout', 'logoutAction']);
+    });
+
+    it('keeps the session when the provider throws', async () => {
+      const provider = makeProvider(async () => {
+        throw new Error('cable unplugged');
+      });
+
+      await expect(logout({ provider })).rejects.toThrow('cable unplugged');
+      expect(mockLogoutAction).not.toHaveBeenCalled();
+    });
+
+    it('keeps the session when the provider reports failure', async () => {
+      const provider = makeProvider(async () => false);
+
+      await expect(logout({ provider })).rejects.toThrow(
+        'Provider logout did not succeed'
+      );
+      expect(mockLogoutAction).not.toHaveBeenCalled();
+    });
   });
 });

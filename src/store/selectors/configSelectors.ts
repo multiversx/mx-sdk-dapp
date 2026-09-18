@@ -12,3 +12,5 @@ export const walletConnectConfigSelector = ({ config }: StoreType) => {
 export const providerSettingsSelector = ({ config }: StoreType) => {
   return config.settings;
 };
+
+export const flagsConfigSelector = ({ config }: StoreType) => config.flags;

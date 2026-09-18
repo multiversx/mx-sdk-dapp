@@ -1,5 +1,7 @@
 import { WritableDraft } from 'immer';
 import { Address } from 'lib/sdkCore';
+import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
+import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
 import {
   addLoginExpiresAt,
   removeLoginExpiresAt
@@ -35,6 +37,25 @@ export function setLoginExpiresAt(expiresAt: number | null) {
   addLoginExpiresAt(expiresAt);
 }
 
+const logoutExpiredProvider = () => {
+  if (!getFlagsConfig().enforceSessionExpiry) {
+    warnInsecureDefault(
+      'enforceSessionExpiry',
+      'A session expired and local state was cleared.'
+    );
+    return;
+  }
+
+  // Imported lazily: `accountProvider` reaches DappProvider -> LogoutManager ->
+  // ToastManager -> store -> middleware, so a top-level import would close a
+  // cycle back onto this module.
+  import('providers/helpers/accountProvider')
+    .then(({ getAccountProvider }) => getAccountProvider()?.logout())
+    .catch((error) =>
+      console.error('Error logging out the expired provider:', error)
+    );
+};
+
 export const logoutMiddleware = (state: StoreType) => {
   const isLoggedIn = isLoggedInSelector(state);
   const loginTimestamp = loginExpiresAtSelector(state);
@@ -66,5 +87,7 @@ export const logoutMiddleware = (state: StoreType) => {
         value: null
       }
     });
+
+    logoutExpiredProvider();
   }
 };

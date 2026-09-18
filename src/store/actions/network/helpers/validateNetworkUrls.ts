@@ -79,7 +79,7 @@ export const validateNetworkUrl = ({
     throw new Error(
       `\`${field}\` points at "${parsed.hostname}", which is not a known MultiversX wallet host. ` +
         'That origin receives transactions for signing. Set ' +
-        '`security.unsafeAllowCustomWalletHosts: true` if this is intended.'
+        '`flags.unsafeAllowCustomWalletHosts: true` if this is intended.'
     );
   }
 };

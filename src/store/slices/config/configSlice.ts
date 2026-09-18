@@ -1,5 +1,6 @@
 import { StateCreator } from 'zustand/vanilla';
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
+import { DEFAULT_FLAGS_CONFIG } from 'methods/initApp/helpers/flagsConfig';
 import { StoreType, MutatorsIn } from 'store/store.types';
 import { ConfigSliceType } from './config.types';
 
@@ -11,6 +12,7 @@ const initialState: ConfigSliceType = {
   nativeAuthConfig: null,
   walletConnectConfig: null,
   settings: null,
+  flags: DEFAULT_FLAGS_CONFIG,
   websocketStatus: WebsocketConnectionStatusEnum.NOT_INITIALIZED
 };
 

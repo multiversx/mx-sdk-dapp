@@ -20,6 +20,7 @@ import {
   setAccountProvider
 } from './helpers/accountProvider';
 import { clearInitiatedLogins } from './helpers/clearInitiatedLogins';
+import { createCustomProvider } from './helpers/createCustomProvider';
 import { WebviewProviderStrategy } from './strategies/WebviewProviderStrategy';
 import {
   ICustomProvider,
@@ -105,14 +106,18 @@ export class ProviderFactory {
       default: {
         const address = getAddress();
 
-        for (const customProvider of this._customProviders) {
-          if (customProvider.type === type) {
-            createdProvider = await customProvider.constructor({
-              address,
-              anchor
-            });
-          }
+        const customProvider = this._customProviders.find(
+          (provider) => provider.type === type
+        );
+
+        if (customProvider) {
+          createdProvider = await createCustomProvider({
+            customProvider,
+            address,
+            anchor
+          });
         }
+
         break;
       }
     }

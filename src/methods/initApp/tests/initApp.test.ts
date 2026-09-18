@@ -26,6 +26,10 @@ jest.mock('constants/window.constants', () => ({
   }
 }));
 
+const { safeWindow: mockSafeWindow } = jest.requireMock(
+  'constants/window.constants'
+) as { safeWindow: { multiversx: { providers: any[] } } };
+
 jest.mock('lib/sdkDappUi', () => ({
   defineCustomElements: jest.fn().mockResolvedValue(undefined)
 }));
@@ -40,13 +44,14 @@ jest.mock('utils/account/refreshAccount', () => ({
 
 jest.mock('store/store', () => {
   const mockStore = {
-    getState: jest.fn(),
+    getState: jest.fn(() => ({})),
     setState: jest.fn(),
     subscribe: jest.fn()
   };
   return {
     initStore: jest.fn().mockReturnValue(mockStore),
-    getStore: jest.fn().mockReturnValue(mockStore)
+    getStore: jest.fn().mockReturnValue(mockStore),
+    getState: jest.fn(() => ({}))
   };
 });
 
@@ -62,6 +67,7 @@ jest.mock('store/actions/network/initializeNetwork', () => ({
 
 jest.mock('store/actions/config/configActions', () => ({
   setNativeAuthConfig: jest.fn(),
+  setFlagsConfig: jest.fn(),
   setWalletConnectConfig: jest.fn(),
   setProviderSettings: jest.fn()
 }));
@@ -135,6 +141,7 @@ describe('initApp tests', () => {
 
     // Reset ProviderFactory state
     ProviderFactory.customProviders = [];
+    mockSafeWindow.multiversx.providers = [];
   });
 
   describe('Scenario 1: isInitializing is true', () => {
@@ -161,6 +168,66 @@ describe('initApp tests', () => {
       // The second call should not have executed any initialization steps
       // We can verify this by checking that defineCustomElements was only called once
       expect(defineCustomElements).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Custom provider registration', () => {
+    const rogueProvider = {
+      name: 'Official Wallet',
+      type: 'official-wallet',
+      iconUrl: 'https://cdn.different.example/logo.png',
+      constructor: jest.fn()
+    };
+
+    const authoredProvider = {
+      name: 'My Wallet',
+      type: 'my-wallet',
+      constructor: jest.fn()
+    };
+
+    it('accepts window.multiversx.providers with warning', async () => {
+      const warnSpy = jest
+        .spyOn(console, 'warn')
+        .mockImplementation(() => null);
+      mockSafeWindow.multiversx.providers = [rogueProvider];
+
+      await initApp({
+        dAppConfig: { environment: EnvironmentsEnum.devnet, nativeAuth: false }
+      });
+
+      expect(ProviderFactory.customProviders).toEqual([rogueProvider]);
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('window.multiversx.providers')
+      );
+
+      warnSpy.mockRestore();
+    });
+
+    it('ignores window.multiversx.providers under strictProviderRegistration', async () => {
+      mockSafeWindow.multiversx.providers = [rogueProvider];
+
+      await initApp({
+        dAppConfig: {
+          environment: EnvironmentsEnum.devnet,
+          nativeAuth: false,
+          flags: { strictProviderRegistration: true }
+        },
+        customProviders: [authoredProvider]
+      });
+
+      expect(ProviderFactory.customProviders).toEqual([authoredProvider]);
+    });
+
+    it('lets the explicitly passed provider win a type collision with the global', async () => {
+      const diff = { ...rogueProvider, type: 'my-wallet' };
+      mockSafeWindow.multiversx.providers = [diff];
+
+      await initApp({
+        dAppConfig: { environment: EnvironmentsEnum.devnet, nativeAuth: false },
+        customProviders: [authoredProvider]
+      });
+
+      expect(ProviderFactory.customProviders).toEqual([authoredProvider]);
     });
   });
 

@@ -45,7 +45,14 @@ export const createDAppStore = (getStorageCallback: StorageCallback) => {
         })),
         {
           name: 'sdk-dapp-store',
-          storage: createJSONStorage(getStorageCallback)
+          storage: createJSONStorage(getStorageCallback),
+          partialize: (state) =>
+            state.config?.flags?.persistTokenLogin === false
+              ? {
+                  ...state,
+                  loginInfo: { ...state.loginInfo, tokenLogin: null }
+                }
+              : state
         }
       ),
       {

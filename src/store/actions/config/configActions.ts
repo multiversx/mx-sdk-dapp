@@ -1,8 +1,12 @@
 import { fallbackWalletConnectConfigurations } from 'constants/walletConnect.constants';
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
+import { resolveFlagsConfig } from 'methods/initApp/helpers/flagsConfig';
 import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderStrategy/types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
-import { IProviderSettings } from 'store/slices/config/config.types';
+import {
+  IFlagsConfig,
+  IProviderSettings
+} from 'store/slices/config/config.types';
 import { getStore } from 'store/store';
 
 export const setNativeAuthConfig = (config: NativeAuthConfigType | null) =>
@@ -94,6 +98,21 @@ export const setIsSigningUiEnabled = (isEnabled: boolean) =>
       // @ts-ignore
       payload: {
         value: isEnabled
+      }
+    }
+  );
+
+export const setFlagsConfig = (flags?: IFlagsConfig | null) =>
+  getStore().setState(
+    ({ config: state }) => {
+      state.flags = resolveFlagsConfig(flags);
+    },
+    false,
+    {
+      type: 'setFlagsConfig',
+      // @ts-ignore
+      payload: {
+        value: flags
       }
     }
   );
