@@ -15,6 +15,7 @@ import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefau
 import { setNativeAuthConfig } from 'store/actions/config/configActions';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { ThemesEnum } from 'types/theme.types';
+import { reconcileAccountNonce } from 'utils/account/reconcileAccountNonce';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
 
@@ -38,6 +39,9 @@ jest.mock('utils/visual/switchTheme', () => ({
   switchTheme: jest.fn()
 }));
 
+jest.mock('utils/account/reconcileAccountNonce', () => ({
+  reconcileAccountNonce: jest.fn().mockResolvedValue(undefined)
+}));
 jest.mock('utils/account/refreshAccount', () => ({
   refreshAccount: jest.fn().mockResolvedValue(undefined)
 }));
@@ -248,6 +252,7 @@ describe('initApp tests', () => {
 
       // Verify logged-in user steps were NOT called
       expect(refreshAccount).not.toHaveBeenCalled();
+      expect(reconcileAccountNonce).not.toHaveBeenCalled();
       expect(registerWebsocketListener).not.toHaveBeenCalled();
       expect(trackTransactions).not.toHaveBeenCalled();
       expect(mockLogoutManagerInit).not.toHaveBeenCalled();
@@ -282,6 +287,7 @@ describe('initApp tests', () => {
 
       // Verify logged-in user steps WERE called
       expect(refreshAccount).toHaveBeenCalled();
+      expect(reconcileAccountNonce).toHaveBeenCalled();
       expect(registerWebsocketListener).toHaveBeenCalledWith(
         mockAccount.address
       );

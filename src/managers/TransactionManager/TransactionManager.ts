@@ -13,6 +13,7 @@ import {
 } from 'types/enums.types';
 import { BatchTransactionsResponseType } from 'types/serverTransactions.types';
 import { SignedTransactionType } from 'types/transactions.types';
+import { reconcileAccountNonce } from 'utils/account/reconcileAccountNonce';
 import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 import { getToastDuration } from './helpers/getToastDuration';
 import { getTransactionsSessionStatus } from './helpers/getTransactionsStatus';
@@ -79,6 +80,9 @@ export class TransactionManager {
 
       return groupedTransactions;
     } catch (error) {
+      // The nonce was advanced when these were signed
+      await reconcileAccountNonce();
+
       const responseData = <{ message: string }>(
         (error as AxiosError).response?.data
       );

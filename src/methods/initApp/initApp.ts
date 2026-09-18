@@ -19,6 +19,7 @@ import { initializeNetwork } from 'store/actions/network/initializeNetwork';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
 import { ThemesEnum } from 'types/theme.types';
+import { reconcileAccountNonce } from 'utils/account/reconcileAccountNonce';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { resolveFlagsConfig, warnInsecureDefault } from './helpers/flagsConfig';
@@ -159,6 +160,7 @@ export async function initApp({
 
     if (isLoggedIn) {
       await refreshAccount();
+      await reconcileAccountNonce();
       await registerWebsocketListener(account.address);
       trackTransactions();
       LogoutManager.getInstance().init();

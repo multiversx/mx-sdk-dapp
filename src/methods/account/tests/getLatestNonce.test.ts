@@ -2,7 +2,7 @@ import { accountNonceSelector } from 'store/selectors/accountSelectors';
 import { transactionsSliceSelector } from 'store/selectors/transactionsSelector';
 import { getState } from 'store/store';
 import { AccountType } from 'types/account.types';
-import { getLatestNonce } from '../getLatestNonce';
+import { getLatestNonce, getReconciledNonce } from '../getLatestNonce';
 
 jest.mock('store/store');
 jest.mock('store/selectors/accountSelectors');
@@ -33,7 +33,11 @@ describe('getLatestNonce', () => {
     const currentAccountNonce = 5;
     const transactionsSessions = {
       1234567890: {
-        transactions: [{ nonce: 10 }, { nonce: 15 }]
+        status: 'sent',
+        transactions: [
+          { nonce: 10, status: 'pending' },
+          { nonce: 15, status: 'pending' }
+        ]
       }
     };
 
@@ -76,7 +80,11 @@ describe('getLatestNonce', () => {
     const currentAccountNonce = 5;
     const transactionsSessions = {
       1234567890: {
-        transactions: [{ nonce: 10 }, { nonce: 15 }]
+        status: 'sent',
+        transactions: [
+          { nonce: 10, status: 'pending' },
+          { nonce: 15, status: 'pending' }
+        ]
       }
     };
     const apiAccount: AccountType = {
@@ -97,5 +105,86 @@ describe('getLatestNonce', () => {
 
     const result = getLatestNonce(apiAccount);
     expect(result).toBe(16);
+  });
+
+  describe('nonces of finished sessions', () => {
+    const apiAccount: AccountType = {
+      nonce: 12,
+      address: '',
+      balance: '',
+      txCount: 0,
+      scrCount: 0,
+      claimableRewards: '',
+      isGuarded: false
+    };
+
+    const mockSessions = (transactionsSessions: Record<string, unknown>) => {
+      (getState as jest.Mock).mockReturnValue({});
+      (accountNonceSelector as jest.Mock).mockReturnValue(0);
+      (transactionsSliceSelector as jest.Mock).mockReturnValue(
+        transactionsSessions
+      );
+    };
+
+    it('counts transactions that executed, even when they failed', () => {
+      mockSessions({
+        1: {
+          status: 'fail',
+          transactions: [
+            { nonce: 12, status: 'success' },
+            { nonce: 13, status: 'fail' }
+          ]
+        }
+      });
+
+      expect(getLatestNonce(apiAccount)).toBe(14);
+    });
+
+    it('ignores transactions of a timed out session that never executed', () => {
+      mockSessions({
+        1: {
+          status: 'timedOut',
+          transactions: [{ nonce: 20, status: 'pending' }]
+        }
+      });
+
+      expect(getLatestNonce(apiAccount)).toBe(apiAccount.nonce);
+    });
+
+    it('ignores transactions that were not executed', () => {
+      mockSessions({
+        1: {
+          status: 'invalid',
+          transactions: [{ nonce: 20, status: 'not executed' }]
+        }
+      });
+
+      expect(getLatestNonce(apiAccount)).toBe(apiAccount.nonce);
+    });
+  });
+
+  describe('getReconciledNonce', () => {
+    it('ignores the nonce advanced locally at signing', () => {
+      (accountNonceSelector as jest.Mock).mockReturnValue(30);
+      (transactionsSliceSelector as jest.Mock).mockReturnValue({});
+
+      const apiAccount = { nonce: 12 } as AccountType;
+
+      expect(getReconciledNonce(apiAccount, {} as any)).toBe(12);
+      expect(getLatestNonce(apiAccount)).toBe(30);
+    });
+
+    it('keeps the nonces of transactions still being tracked', () => {
+      (transactionsSliceSelector as jest.Mock).mockReturnValue({
+        1: {
+          status: 'sent',
+          transactions: [{ nonce: 14, status: 'pending' }]
+        }
+      });
+
+      expect(getReconciledNonce({ nonce: 12 } as AccountType, {} as any)).toBe(
+        15
+      );
+    });
   });
 });
