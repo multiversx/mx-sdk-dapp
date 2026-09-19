@@ -255,6 +255,25 @@ describe('LedgerConnectStateManager tests', () => {
     });
   });
 
+  it('unsubscribes the same disconnect handler it subscribed', () => {
+    const manager = new LedgerConnectStateManager();
+    const handlers = { handleRetry: jest.fn(), handleCancel: jest.fn() };
+    const eventBus = { subscribe: jest.fn(), unsubscribe: jest.fn() };
+    (manager as any).eventBus = eventBus;
+
+    manager.subscribeToProviderInit(handlers);
+    manager.unsubscribeFromProviderInit(handlers);
+
+    const subscribed = eventBus.subscribe.mock.calls.find(
+      ([event]) => event === LedgerConnectEventsEnum.UI_DISCONNECTED
+    )?.[1];
+    const unsubscribed = eventBus.unsubscribe.mock.calls.find(
+      ([event]) => event === LedgerConnectEventsEnum.UI_DISCONNECTED
+    )?.[1];
+
+    expect(unsubscribed).toBe(subscribed);
+  });
+
   describe('auth event subscriptions', () => {
     it('subscribes to auth flow events when eventBus exists', () => {
       const manager = new LedgerConnectStateManager();
@@ -353,7 +372,7 @@ describe('LedgerConnectStateManager tests', () => {
     it('subscribes to close event and wires handleClose handler', async () => {
       const manager = new LedgerConnectStateManager();
       const subscribe = jest.fn();
-      (manager as any).eventBus = { subscribe };
+      (manager as any).eventBus = { subscribe, unsubscribe: jest.fn() };
       const handleCloseSpy = jest
         .spyOn(manager, 'handleClose')
         .mockImplementation(() => {});

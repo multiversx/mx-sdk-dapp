@@ -37,7 +37,7 @@ export async function waitForLedgerSelection({
     provider
   };
 
-  const selectedAccount = await new Promise<ISelectedAccount>(async function (
+  const selectedAccount = await new Promise<ISelectedAccount>(function (
     resolve,
     reject
   ) {
@@ -100,13 +100,16 @@ export async function waitForLedgerSelection({
     }
 
     async function handleCancel() {
-      await updateAccountsList(accountsListProps);
-      manager.unsubscribeFromAuthEvents({
-        handleCancel,
-        handleAccessWallet,
-        handleGoToPage
-      });
-      reject('User cancelled login');
+      try {
+        await updateAccountsList(accountsListProps);
+      } finally {
+        manager.unsubscribeFromAuthEvents({
+          handleCancel,
+          handleAccessWallet,
+          handleGoToPage
+        });
+        reject('User cancelled login');
+      }
     }
 
     manager.subscribeToAuthEvents({

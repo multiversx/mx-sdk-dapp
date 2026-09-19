@@ -42,6 +42,10 @@ export class LedgerConnectStateManager extends UIBaseManager<
 
   public readonly addressesPerPage = 10;
 
+  private readonly handleUiDisconnected = () => this.destroy();
+
+  private readonly handleCloseEvent = () => this.handleClose();
+
   private allAccounts: ILedgerAccount[] = [];
 
   // first screen data
@@ -154,7 +158,7 @@ export class LedgerConnectStateManager extends UIBaseManager<
     this.eventBus.subscribe(LedgerConnectEventsEnum.CLOSE, handleCancel);
     this.eventBus.subscribe(
       LedgerConnectEventsEnum.UI_DISCONNECTED,
-      this.destroy.bind(this)
+      this.handleUiDisconnected
     );
   }
 
@@ -173,7 +177,7 @@ export class LedgerConnectStateManager extends UIBaseManager<
     this.eventBus.unsubscribe(LedgerConnectEventsEnum.CLOSE, handleCancel);
     this.eventBus.unsubscribe(
       LedgerConnectEventsEnum.UI_DISCONNECTED,
-      this.destroy.bind(this)
+      this.handleUiDisconnected
     );
   }
 
@@ -243,9 +247,13 @@ export class LedgerConnectStateManager extends UIBaseManager<
       return;
     }
 
+    this.eventBus.unsubscribe(
+      LedgerConnectEventsEnum.CLOSE,
+      this.handleCloseEvent
+    );
     this.eventBus.subscribe(
       LedgerConnectEventsEnum.CLOSE,
-      this.handleClose.bind(this)
+      this.handleCloseEvent
     );
   }
 }

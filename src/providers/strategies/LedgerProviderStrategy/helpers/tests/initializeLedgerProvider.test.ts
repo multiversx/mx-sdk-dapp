@@ -114,4 +114,33 @@ describe('initializeLedgerProvider tests', () => {
       handleCancel: expect.any(Function)
     });
   });
+
+  it('reuses the same handlers on every retry', async () => {
+    mockGetLedgerProvider.mockRejectedValue(new Error('locked'));
+    mockGetLedgerErrorCodes.mockReturnValue({} as any);
+
+    await startInitializePromise();
+
+    const [firstHandlers] = manager.subscribeToProviderInit.mock.calls[0];
+    await firstHandlers.handleRetry();
+    await new Promise(process.nextTick);
+
+    manager.subscribeToProviderInit.mock.calls.forEach(
+      ([handlers]: [unknown]) => expect(handlers).toBe(firstHandlers)
+    );
+    expect(manager.unsubscribeFromProviderInit).toHaveBeenCalledWith(
+      firstHandlers
+    );
+  });
+
+  it('rejects instead of hanging when the provider fails while logged in', async () => {
+    const error = new Error('Ledger connection failed');
+    mockGetIsLoggedIn.mockReturnValue(true);
+    mockGetLedgerProvider.mockRejectedValue(error);
+
+    await expect(startInitializePromise()).resolves.toBeUndefined();
+
+    expect(reject).toHaveBeenCalledWith(error);
+    expect(resolve).not.toHaveBeenCalled();
+  });
 });

@@ -97,14 +97,14 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
 
     const { ledgerProvider, ledgerConfig } = await new Promise<
       Awaited<ReturnType<typeof getLedgerProvider>>
-    >((resolve, reject) =>
+    >((resolve, reject) => {
       initializeLedgerProvider({
         manager: ledgerConnectManager,
         resolve,
         reject,
         shouldInitProvider: this.options?.shouldInitProvider
-      })
-    );
+      }).catch(reject);
+    });
 
     this.config = ledgerConfig;
     this.provider = ledgerProvider;

@@ -6,7 +6,7 @@ import { getLedgerProvider } from './getLedgerProvider/getLedgerProvider';
 type InitializeLedgerProviderType = {
   manager: LedgerConnectStateManager | null;
   resolve: (value: Awaited<ReturnType<typeof getLedgerProvider>>) => void;
-  reject: (reason?: string) => void;
+  reject: (reason?: unknown) => void;
   shouldInitProvider?: boolean;
 };
 
@@ -20,40 +20,54 @@ export async function initializeLedgerProvider({
 }: InitializeLedgerProviderType) {
   const shouldInitiateLogin = !getIsLoggedIn();
 
-  // Calls itself to handle retry logic if the user needs to reconnect to the Ledger provider.
-  const handleRetry = () =>
-    initializeLedgerProvider({ manager, resolve, reject, shouldInitProvider });
-
-  const handleCancel = () => reject('Device unavailable');
-
-  try {
-    manager?.updateAccountScreen({
-      isLoading: true
-    });
-
-    if (manager && shouldInitiateLogin) {
-      manager.subscribeToProviderInit({ handleRetry, handleCancel });
+  const handlers = {
+    handleRetry: () => {
+      attempt();
+    },
+    handleCancel: () => {
+      unsubscribe();
+      reject('Device unavailable');
     }
+  };
 
-    const data = await getLedgerProvider({ shouldInitProvider });
+  function subscribe() {
+    manager?.unsubscribeFromProviderInit(handlers);
+    manager?.subscribeToProviderInit(handlers);
+  }
 
-    if (manager && shouldInitiateLogin) {
-      manager.unsubscribeFromProviderInit({ handleRetry, handleCancel });
-    }
+  function unsubscribe() {
+    manager?.unsubscribeFromProviderInit(handlers);
+  }
 
-    resolve(data);
-  } catch (err) {
-    if (!shouldInitiateLogin) {
-      throw err;
-    }
+  async function attempt() {
+    try {
+      manager?.updateAccountScreen({
+        isLoading: true
+      });
 
-    const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
-    manager?.updateConnectScreen({
-      error: errorMessage ?? defaultErrorMessage ?? failInitializeErrorText
-    });
+      if (shouldInitiateLogin) {
+        subscribe();
+      }
 
-    if (manager) {
-      manager.subscribeToProviderInit({ handleRetry, handleCancel });
+      const data = await getLedgerProvider({ shouldInitProvider });
+
+      unsubscribe();
+      resolve(data);
+    } catch (err) {
+      if (!shouldInitiateLogin) {
+        unsubscribe();
+        reject(err);
+        return;
+      }
+
+      const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
+      manager?.updateConnectScreen({
+        error: errorMessage ?? defaultErrorMessage ?? failInitializeErrorText
+      });
+
+      subscribe();
     }
   }
+
+  await attempt();
 }

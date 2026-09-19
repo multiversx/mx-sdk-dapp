@@ -181,7 +181,7 @@ describe('LedgerIdleStateManager tests', () => {
       mockState.loginInfo.providerType = ProviderTypeEnum.ledger;
       mockState.account.isLoggedIn = true;
       const createdProvider = {
-        init: jest.fn(),
+        init: jest.fn().mockResolvedValue(true),
         getType: jest.fn()
       };
       LedgerProviderStrategyMock.mockImplementation(() => createdProvider);
@@ -196,6 +196,25 @@ describe('LedgerIdleStateManager tests', () => {
           toastId: 'ledger-provider-idle-warning',
           title: 'Ledger reconnected'
         })
+      );
+    });
+
+    it('does not report a reconnection when the provider fails to initialize', async () => {
+      const manager = LedgerIdleStateManager.getInstance();
+      mockState.loginInfo.providerType = ProviderTypeEnum.ledger;
+      mockState.account.isLoggedIn = true;
+      toastMock.createCustomToast.mockClear();
+      mockSetAccountProvider.mockClear();
+      LedgerProviderStrategyMock.mockImplementation(() => ({
+        init: jest.fn().mockResolvedValue(false),
+        getType: jest.fn()
+      }));
+
+      await (manager as any).reconnectProvider();
+
+      expect(mockSetAccountProvider).not.toHaveBeenCalled();
+      expect(toastMock.createCustomToast).not.toHaveBeenCalledWith(
+        expect.objectContaining({ title: 'Ledger reconnected' })
       );
     });
 

@@ -88,7 +88,11 @@ export class LedgerIdleStateManager {
         shouldInitProvider: true
       });
 
-      await createdProvider.init();
+      const isInitialized = await createdProvider.init();
+
+      if (!isInitialized) {
+        return;
+      }
 
       const dappProvider = new DappProvider(createdProvider);
       createdProvider.getType = () => ProviderTypeEnum.ledger;
