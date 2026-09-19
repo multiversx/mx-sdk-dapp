@@ -51,13 +51,13 @@ export function parseMultiEsdtTransferDataForMultipleTransactions({
         allTransactions.push(newTx);
       });
     } else {
-      const { tokenId, amount } = getTokenFromData(txData);
+      const { tokenId, amount, receiver } = getTokenFromData(txData);
 
       if (tokenId) {
         parsedTransactionsByDataField[txData] = {
           tokenId,
           amount,
-          receiver: transaction.receiver.toBech32()
+          receiver: receiver ?? transaction.receiver.toBech32()
         };
       }
       allTransactions.push({

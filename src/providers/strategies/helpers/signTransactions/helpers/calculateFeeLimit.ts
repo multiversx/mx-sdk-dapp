@@ -5,7 +5,7 @@ import {
   GAS_PRICE
 } from 'constants/mvx.constants';
 import { Transaction, Address, TransactionComputer } from 'lib/sdkCore';
-import { stringIsFloat, stringIsInteger, ZERO } from 'lib/sdkDappUtils';
+import { stringIsFloat, stringIsInteger } from 'lib/sdkDappUtils';
 import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 
 export interface CalculateFeeLimitType {
@@ -42,19 +42,20 @@ export function calculateFeeLimit({
     .toNumber();
 
   const validGasPrice = stringIsFloat(gasPrice) ? gasPrice : defaultGasPrice;
-  const transaction = new Transaction({
-    nonce: BigInt(0),
-    value: BigInt(0),
-    receiver: new Address(to),
-    sender: new Address(from),
-    gasPrice: BigInt(validGasPrice),
-    gasLimit: BigInt(usedGasLimit),
-    data: new Uint8Array(Buffer.from(data.trim())),
-    chainID: chainId,
-    version: 1
-  });
 
   try {
+    const transaction = new Transaction({
+      nonce: BigInt(0),
+      value: BigInt(0),
+      receiver: new Address(to),
+      sender: new Address(from),
+      gasPrice: BigInt(validGasPrice),
+      gasLimit: BigInt(usedGasLimit),
+      data: new Uint8Array(Buffer.from(data)),
+      chainID: chainId,
+      version: 1
+    });
+
     const transactionComputer = new TransactionComputer();
     const bNfee = transactionComputer.computeTransactionFee(transaction, {
       gasPerDataByte: BigInt(gasPerDataByte),
@@ -65,6 +66,6 @@ export function calculateFeeLimit({
     return bNfee.toString(10);
   } catch (err) {
     console.error(err);
-    return ZERO;
+    return null;
   }
 }

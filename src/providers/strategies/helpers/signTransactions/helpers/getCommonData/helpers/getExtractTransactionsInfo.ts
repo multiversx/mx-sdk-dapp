@@ -6,8 +6,8 @@ import {
   MultiSignTransactionType,
   TransactionDataTokenType
 } from 'types/transactions.types';
-import { decodeBase64 } from 'utils/decoders/base64Utils';
 import { checkIsValidSender } from './checkIsValidSender';
+import { getTransactionReceiver } from './getTransactionReceiver';
 import { getTxInfoByDataField } from './getTxInfoByDataField';
 import { isTokenTransfer } from '../../isTokenTransfer';
 
@@ -47,7 +47,7 @@ export function getExtractTransactionsInfo({
           });
 
     const { transaction, multiTxData, transactionIndex } = currentTx;
-    const dataField = decodeBase64(transaction.data.toString() ?? '');
+    const dataField = Buffer.from(transaction.data ?? []).toString();
     const transactionTokenInfo = getTxInfoByDataField({
       data: dataField,
       multiTransactionData: multiTxData,
@@ -55,14 +55,14 @@ export function getExtractTransactionsInfo({
     });
 
     const { tokenId } = transactionTokenInfo;
-    const receiver = transaction.receiver.toBech32();
+    const receiver = getTransactionReceiver(transaction);
 
     if (sender && sender !== address) {
       const isValidSender = checkIsValidSender(senderAccount, address);
 
       if (!isValidSender) {
         console.error(SigningErrorsEnum.senderDifferentThanLoggedInAddress);
-        throw SigningErrorsEnum.senderDifferentThanLoggedInAddress;
+        throw new Error(SigningErrorsEnum.senderDifferentThanLoggedInAddress);
       }
     }
 
@@ -70,14 +70,18 @@ export function getExtractTransactionsInfo({
     const verified = receiver in verifiedAddresses;
 
     if (receiver && notSender && !verified) {
-      const data = await getScamAddressData({
-        addressToVerify: receiver,
-        baseURL: apiAddress
-      });
-      verifiedAddresses = {
-        ...verifiedAddresses,
-        ...(data?.scamInfo ? { [receiver]: data.scamInfo } : {})
-      };
+      try {
+        const data = await getScamAddressData({
+          addressToVerify: receiver,
+          baseURL: apiAddress
+        });
+        verifiedAddresses = {
+          ...verifiedAddresses,
+          ...(data?.scamInfo ? { [receiver]: data.scamInfo } : {})
+        };
+      } catch (error) {
+        console.error('Failed checking the receiver address', error);
+      }
     }
 
     const isTokenTransaction = Boolean(
@@ -86,6 +90,7 @@ export function getExtractTransactionsInfo({
 
     return {
       transaction,
+      receiver,
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,

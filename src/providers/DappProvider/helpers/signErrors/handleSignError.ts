@@ -10,7 +10,7 @@ import {
   SigningWarningsEnum
 } from 'types/enums.types';
 
-const states = {
+const getStates = () => ({
   error: {
     title: SigningErrorsEnum.errorSigning.toString(),
     iconClassName: 'mvx-toast-danger',
@@ -21,13 +21,22 @@ const states = {
     iconClassName: 'mvx-toast-warning',
     toastId: `${CANCEL_TRANSACTION_TOAST_ID}-${Date.now()}`
   }
-};
+});
 
 const errorsMap = {
   extensionResponse: 'Unable to sign transactions', // extension
   'Transaction canceled': 'Transaction canceled', // web wallet
   'cancelled by user': 'Transaction signing cancelled by user', // custom
   'denied by the user': 'Transaction signing denied by the user' // ledger
+};
+
+const getErrorMessage = (error: unknown) => {
+  if (typeof error === 'string') {
+    return error;
+  }
+
+  const message = (error as { message?: unknown } | null)?.message;
+  return typeof message === 'string' ? message : '';
 };
 
 const getUserError = (error: string) => {
@@ -43,12 +52,13 @@ export function handleSignError(
   error: unknown,
   type: 'error' | 'warning' = 'error'
 ) {
-  const originalError = (error as Error)?.message;
-  const errorMessage = getUserError(originalError);
+  const errorMessage = getUserError(getErrorMessage(error));
 
   const isKnownError = errorMessage !== SigningErrorsEnum.errorSigning;
 
   const errorType = isKnownError ? 'warning' : type;
+
+  const states = getStates();
 
   const state = Object.keys(states).includes(errorType)
     ? states[errorType]

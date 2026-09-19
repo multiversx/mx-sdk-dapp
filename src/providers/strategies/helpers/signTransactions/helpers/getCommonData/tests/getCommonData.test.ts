@@ -245,7 +245,7 @@ describe('when the gas limit is updated', () => {
           },
           {
             label: 'Faster',
-            value: 1455441207
+            value: 1487654191
           }
         ],
         providerName: '',
@@ -334,16 +334,16 @@ describe('when the gas limit is updated', () => {
           },
           {
             label: 'Fast',
-            value: 1069322720
+            value: 1091718297
           },
           {
             label: 'Faster',
-            value: 1753812924
+            value: 1790544261
           }
         ],
         providerName: '',
         receiver:
-          'erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
+          'erd1qqqqqqqqqqqqqpgqzw0d0tj25qme9e4ukverjjjqle6xamay0n4s5r0v9g',
         scCall: 'addLiquidity',
         tokenType: 'FungibleESDT',
         transactionsCount: 4,

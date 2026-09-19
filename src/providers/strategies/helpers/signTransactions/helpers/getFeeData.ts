@@ -18,9 +18,13 @@ export const getFeeData = ({
     gasPriceModifier: String(GAS_PRICE_MODIFIER),
     gasLimit: transaction.gasLimit.valueOf().toString(),
     gasPrice: transaction.gasPrice.valueOf().toString(),
-    data: transaction.data.toString(),
+    data: Buffer.from(transaction.data ?? []).toString(),
     chainId: transaction.chainID.valueOf().toString()
   });
+
+  if (feeLimit == null) {
+    return { feeLimitFormatted: '', feeInFiatLimit: null, feeLimit };
+  }
 
   const feeLimitFormatted = formatAmount({
     input: feeLimit,

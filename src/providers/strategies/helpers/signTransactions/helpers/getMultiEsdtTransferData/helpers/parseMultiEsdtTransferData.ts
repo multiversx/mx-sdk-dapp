@@ -18,7 +18,12 @@ export function parseMultiEsdtTransferData(data?: string) {
       if (receiver) {
         const txCount = new BigNumber(encodedTxCount, 16).toNumber();
 
-        if (txCount >= Number.MAX_SAFE_INTEGER) {
+        const hasEveryTransfer =
+          Number.isInteger(txCount) &&
+          txCount > 0 &&
+          rest.length >= txCount * 3;
+
+        if (!hasEveryTransfer) {
           return [];
         }
 
@@ -92,7 +97,7 @@ export function parseMultiEsdtTransferData(data?: string) {
     }
   } catch (err) {
     console.error('failed parsing tx', err);
-    return transactions;
+    return [];
   }
   return transactions;
 }

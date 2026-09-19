@@ -62,6 +62,39 @@ describe('checkIsValidSender tests', () => {
     ).toBe(false);
   });
 
+  describe('wallet origin matching', () => {
+    const mockAccount = {
+      address: 'erd1l5xzvt9qwykn900jyxx7rueywy8nwm5sppeh4de4qukucacr2e6s2n5pk5'
+    };
+    const otherAddress =
+      'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv';
+
+    const setOrigin = (origin: string) =>
+      Object.defineProperty(window, 'location', {
+        value: { origin },
+        writable: true
+      });
+
+    test.each([
+      'https://wallet.multiversx.com',
+      'https://devnet-wallet.multiversx.com',
+      'https://testnet-wallet.multiversx.com'
+    ])('accepts %s', (origin) => {
+      setOrigin(origin);
+      expect(checkIsValidSender(mockAccount, otherAddress)).toBe(true);
+    });
+
+    test.each([
+      'http://wallet.multiversx.com',
+      'https://evilwallet.multiversx.com.example.com',
+      'https://notwallet.multiversx.com',
+      'https://wallet.multiversx.com.example.com'
+    ])('rejects %s', (origin) => {
+      setOrigin(origin);
+      expect(checkIsValidSender(mockAccount, otherAddress)).toBe(false);
+    });
+  });
+
   describe('wallet.multiversx.com origin functionality', () => {
     const mockAccount = {
       address: 'erd1l5xzvt9qwykn900jyxx7rueywy8nwm5sppeh4de4qukucacr2e6s2n5pk5',

@@ -38,8 +38,8 @@ describe('getGasPriceOptions test', () => {
 
     expect(gasPriceOptions).toEqual([
       { label: 'Standard', value: 1000000000 },
-      { label: 'Fast', value: 1065456733 },
-      { label: 'Faster', value: 1747472258 }
+      { label: 'Fast', value: 1088597588 },
+      { label: 'Faster', value: 1785425936 }
     ]);
   });
 });

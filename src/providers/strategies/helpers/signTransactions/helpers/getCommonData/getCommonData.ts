@@ -188,7 +188,7 @@ export async function getCommonData({
   });
 
   const commonData: ISignTransactionsPanelCommonData = {
-    receiver: plainTransaction.receiver.toString(),
+    receiver: txInfo?.receiver ?? plainTransaction.receiver.toString(),
     data,
     decodedData,
     gasPrice: formattedGasPrice,
@@ -210,7 +210,10 @@ export async function getCommonData({
     providerName,
     address,
     username,
-    origin: safeWindow.location?.origin
+    origin: safeWindow.location?.origin,
+    ...(txInfo?.receiverScamInfo
+      ? { receiverScamInfo: txInfo.receiverScamInfo }
+      : {})
   };
 
   return { commonData, tokenTransaction, fungibleTransaction };

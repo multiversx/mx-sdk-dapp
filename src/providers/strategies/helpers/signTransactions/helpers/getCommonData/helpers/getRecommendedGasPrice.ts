@@ -21,7 +21,8 @@ export function getRecommendedGasPrice({
 
   const newGasPrice = ppu
     ? recommendGasPrice({
-        transactionDataLength: String(transaction?.data || '').length,
+        transactionDataLength: Buffer.from(transaction?.data ?? '', 'base64')
+          .length,
         transactionGasLimit: transaction.gasLimit,
         ppu
       })

@@ -186,4 +186,18 @@ describe('parseMultiEsdtTransferData tests', () => {
     const result = parseMultiEsdtTransferData(five.data);
     expect(result).toEqual([]);
   });
+
+  it('rejects a count larger than the transfers supplied', () => {
+    const receiver = '00'.repeat(32);
+    const data = `MultiESDTNFTTransfer@${receiver}@03@544f4b454e2d313233343536@@01`;
+
+    expect(parseMultiEsdtTransferData(data)).toEqual([]);
+  });
+
+  it('rejects a huge count without iterating over it', () => {
+    const receiver = '00'.repeat(32);
+    const data = `MultiESDTNFTTransfer@${receiver}@ffffffffffff@544f4b454e2d313233343536@@01`;
+
+    expect(parseMultiEsdtTransferData(data)).toEqual([]);
+  });
 });
