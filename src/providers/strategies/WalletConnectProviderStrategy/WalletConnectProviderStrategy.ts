@@ -24,14 +24,16 @@ import {
   WalletConnectV2Provider
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { WalletConnectV2Error, WalletConnectConfig } from './types';
-import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
+import {
+  BaseProviderStrategy,
+  LoginOptionsTypes
+} from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
-import { guardTransactions } from '../helpers/signTransactions/helpers/guardTransactions/guardTransactions';
+import { finalizeSignedTransactions } from '../helpers/signTransactions/helpers/finalizeSignedTransactions';
 
-const dappMethods: string[] = [
-  WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
-  WalletConnectOptionalMethodsEnum.SIGN_LOGIN_TOKEN
-];
+const MAX_LOGIN_ATTEMPTS = 3;
+
+type LoginResultType = { address: string; signature: string };
 
 type WalletConnectProviderStrategyConfigType = WalletConnectConfig & {
   anchor?: HTMLElement;
@@ -47,6 +49,8 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
   constructor(config: WalletConnectProviderStrategyConfigType) {
     super();
     this.config = config;
+    this._login = (options?: LoginOptionsTypes) =>
+      this.loginWithApproval({ token: options?.token });
   }
 
   async init(): Promise<boolean> {
@@ -112,13 +116,16 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
       methods: this.methods
     });
 
+    this._approval = approval;
+    this.updatePairingData(uri);
+  }
+
+  private updatePairingData(uri: string) {
     const walletConnectDeepLink =
       this.config.walletConnectDeepLink ??
       fallbackWalletConnectConfigurations.walletConnectDeepLink;
 
-    this._approval = approval;
-    const walletConnectManager = WalletConnectStateManager.getInstance();
-    walletConnectManager.updateData({
+    WalletConnectStateManager.getInstance().updateData({
       wcURI: uri,
       walletConnectDeepLink: `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(uri)}`
     });
@@ -140,9 +147,16 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     const chainId = chainIdSelector(getState());
     const nativeAuthConfig = nativeAuthConfigSelector(getState());
 
-    if (nativeAuthConfig) {
-      dappMethods.push(WalletConnectOptionalMethodsEnum.SIGN_NATIVE_AUTH_TOKEN);
-    }
+    const dappMethods = Array.from(
+      new Set([
+        WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
+        WalletConnectOptionalMethodsEnum.SIGN_LOGIN_TOKEN,
+        ...(nativeAuthConfig
+          ? [WalletConnectOptionalMethodsEnum.SIGN_NATIVE_AUTH_TOKEN]
+          : []),
+        ...(config?.customRequestMethods ?? [])
+      ])
+    );
 
     if (!config?.walletConnectV2ProjectId) {
       throw new Error(WalletConnectV2Error.invalidConfig);
@@ -190,79 +204,93 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     }
   }
 
-  async login(options?: { token?: string }): Promise<{
-    address: string;
-    signature: string;
-  }> {
+  private readonly loginWithApproval = async ({
+    approval = this._approval?.bind(this),
+    token
+  }: {
+    approval?: () => Promise<SessionTypes.Struct>;
+    token?: string;
+  }): Promise<LoginResultType> => {
+    if (!this.provider) {
+      throw new Error(ProviderErrorsEnum.notInitialized);
+    }
+
+    if (!approval) {
+      throw new Error('Approval or login is not initialized');
+    }
+
+    const providerData = await this.provider.login({ approval, token });
+    const { address = '', signature = '' } = providerData ?? {};
+
+    WalletConnectStateManager.getInstance().handleClose({
+      isLoginFinished: Boolean(address)
+    });
+
+    return { address, signature };
+  };
+
+  private readonly createPairing = async () => {
+    if (!this.provider) {
+      throw new Error(ProviderErrorsEnum.notInitialized);
+    }
+
+    await this.provider.init();
+
+    const { uri = '', approval } = await this.provider.connect({
+      methods: this.methods
+    });
+
+    this.updatePairingData(uri);
+
+    return approval;
+  };
+
+  protected override loginOperation = async (
+    options?: LoginOptionsTypes
+  ): Promise<LoginResultType> => {
     if (!this.provider) {
       throw new Error(
         'Provider is not initialized. Call createProvider first.'
       );
     }
 
-    const reconnect = async (): Promise<{
-      address: string;
-      signature: string;
-    }> => {
-      if (!this.provider) {
-        throw new Error(ProviderErrorsEnum.notInitialized);
-      }
-
-      try {
-        await this.provider.init();
-        const walletConnectManager = WalletConnectStateManager.getInstance();
-
-        const { uri = '', approval: wcApproval } = await this.provider.connect({
-          methods: this.methods
-        });
-
-        const walletConnectDeepLink =
-          this.config.walletConnectDeepLink ??
-          fallbackWalletConnectConfigurations.walletConnectDeepLink;
-
-        walletConnectManager.updateData({
-          wcURI: uri,
-          walletConnectDeepLink: `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(uri)}`
-        });
-
-        const providerInfo = await this.provider.login({
-          approval: wcApproval,
-          token: options?.token
-        });
-
-        const { address = '', signature = '' } = providerInfo ?? {};
-
-        walletConnectManager.handleClose({ isLoginFinished: Boolean(address) });
-        return { address, signature };
-      } catch {
-        return await reconnect();
-      }
-    };
-
     if (!this._approval) {
       throw new Error('Approval or login is not initialized');
     }
 
-    try {
-      const providerData = await this.provider.login({
-        approval: this._approval.bind(this),
-        token: options?.token
-      });
+    const signal = this.loginAbortController?.signal;
+    let approval = this._approval.bind(this);
 
-      const { address = '', signature = '' } = providerData ?? {};
+    for (let attempt = 1; ; attempt++) {
+      let result: LoginResultType;
 
-      const walletConnectManager = WalletConnectStateManager.getInstance();
-      walletConnectManager.handleClose({ isLoginFinished: Boolean(address) });
-      return { address, signature };
-    } catch (error) {
-      console.error(WalletConnectV2Error.userRejected, error);
-      return await reconnect();
+      try {
+        result = await this.loginWithApproval({
+          approval,
+          token: options?.token
+        });
+      } catch (error) {
+        if (signal?.aborted || attempt >= MAX_LOGIN_ATTEMPTS) {
+          throw error;
+        }
+
+        console.error(WalletConnectV2Error.userRejected, error);
+        approval = await this.createPairing();
+        continue;
+      }
+
+      if (signal?.aborted) {
+        await this.provider.logout().catch(() => false);
+        throw new Error('Login cancelled');
+      }
+
+      return result;
     }
-  }
+  };
 
   signTransactions = async (
     transactions: Transaction[],
-    _options?: SignTransactionsOptionsType
+    options?: SignTransactionsOptionsType
   ) => {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
@@ -285,10 +313,10 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
         abortPromise
       ]);
 
-      const optionallyGuardedTransactions =
-        await guardTransactions(signedTransactions);
-
-      return optionallyGuardedTransactions;
+      return await finalizeSignedTransactions({
+        signedTransactions,
+        options
+      });
     } catch (error) {
       await onClose({ shouldCancelAction: true });
       throw error;
@@ -325,7 +353,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
         message,
         handleSignMessage: this.provider.signMessage.bind(this.provider),
         cancelAction: this.cancelAction,
-        providerType: providerLabels.extension
+        providerType: providerLabels.walletConnect
       }),
       abortPromise
     ]);

@@ -78,6 +78,13 @@ jest.mock('../../helpers', () => ({
   getPendingTransactionsHandlers: jest.fn()
 }));
 
+jest.mock(
+  '../../helpers/signTransactions/helpers/guardTransactions/guardTransactions',
+  () => ({
+    guardTransactions: jest.fn(async (transactions) => transactions)
+  })
+);
+
 jest.mock('../../helpers/signMessage/signMessage', () => ({
   signMessage: jest.fn()
 }));
@@ -150,7 +157,14 @@ const buildHandlers = () => {
   return { manager, onClose };
 };
 
-const createStrategy = () => new WalletConnectProviderStrategy(defaultConfig);
+const { guardTransactions: mockGuardTransactions } = jest.requireMock(
+  '../../helpers/signTransactions/helpers/guardTransactions/guardTransactions'
+) as {
+  guardTransactions: jest.Mock;
+};
+
+const createStrategy = (config = {}) =>
+  new WalletConnectProviderStrategy({ ...defaultConfig, ...config });
 
 describe('WalletConnectProviderStrategy', () => {
   let approvalMock: jest.Mock<Promise<SessionTypes.Struct | undefined>, []>;
@@ -378,7 +392,7 @@ describe('WalletConnectProviderStrategy', () => {
         message,
         handleSignMessage: expect.any(Function),
         cancelAction: strategy.cancelAction,
-        providerType: providerLabels.extension
+        providerType: providerLabels.walletConnect
       })
     );
     expect(result).toBe('signed-message');
@@ -439,5 +453,103 @@ describe('WalletConnectProviderStrategy', () => {
 
     expect(strategy.isInitialized()).toBe(true);
     await expect(strategy.logout()).resolves.toBe(true);
+  });
+
+  it('stops retrying once the login is cancelled', async () => {
+    const strategy = createStrategy();
+    let rejectLogin: (error: Error) => void = () => {};
+    mockWalletConnectProvider.login.mockImplementation(
+      () =>
+        new Promise((_, reject) => {
+          rejectLogin = reject;
+        })
+    );
+
+    await strategy.init();
+    const loginPromise = strategy.login();
+    await new Promise(process.nextTick);
+
+    strategy.cancelLogin();
+    rejectLogin(new Error('user reject'));
+
+    await expect(loginPromise).rejects.toThrow('Login cancelled');
+    await new Promise(process.nextTick);
+
+    expect(mockWalletConnectProvider.connect).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not finish a login that was cancelled while pending', async () => {
+    const strategy = createStrategy();
+    let resolveLogin: (value: unknown) => void = () => {};
+    mockWalletConnectProvider.login.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveLogin = resolve;
+        })
+    );
+
+    await strategy.init();
+    const loginPromise = strategy.login();
+    await new Promise(process.nextTick);
+
+    strategy.cancelLogin();
+    resolveLogin({ address: 'erd1late', signature: 'sig' });
+
+    await expect(loginPromise).rejects.toThrow('Login cancelled');
+    await new Promise(process.nextTick);
+
+    expect(mockWalletConnectProvider.logout).toHaveBeenCalled();
+  });
+
+  it('gives up after a bounded number of attempts', async () => {
+    const strategy = createStrategy();
+    mockWalletConnectProvider.login.mockRejectedValue(new Error('rejected'));
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    await strategy.init();
+
+    await expect(strategy.login()).rejects.toThrow('rejected');
+    expect(mockWalletConnectProvider.login).toHaveBeenCalledTimes(3);
+
+    consoleSpy.mockRestore();
+  });
+
+  it('requests the configured methods without accumulating them across instances', async () => {
+    mockNativeAuthConfigSelector.mockReturnValue({ origin: 'https://dapp' });
+
+    await createStrategy({ customRequestMethods: ['mvx_custom'] }).init();
+    await createStrategy().init();
+
+    const [firstCall, secondCall] =
+      mockWalletConnectProvider.connect.mock.calls;
+
+    expect(firstCall[0].methods).toEqual([
+      WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
+      WalletConnectOptionalMethodsEnum.SIGN_LOGIN_TOKEN,
+      WalletConnectOptionalMethodsEnum.SIGN_NATIVE_AUTH_TOKEN,
+      'mvx_custom'
+    ]);
+    expect(secondCall[0].methods).toEqual([
+      WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
+      WalletConnectOptionalMethodsEnum.SIGN_LOGIN_TOKEN,
+      WalletConnectOptionalMethodsEnum.SIGN_NATIVE_AUTH_TOKEN
+    ]);
+  });
+
+  it('honours skipGuardian and the callback when signing', async () => {
+    mockGetPendingTransactionsHandlers.mockResolvedValue(buildHandlers());
+    const strategy = createStrategy();
+    (strategy as any).provider = mockWalletConnectProvider;
+    const callback = jest.fn(async (transactions) => transactions);
+
+    await strategy.signTransactions([{ hash: 'tx' } as any], {
+      skipGuardian: true,
+      callback
+    });
+
+    expect(callback).toHaveBeenCalledWith([{ hash: 'signed' }]);
+    expect(mockGuardTransactions).not.toHaveBeenCalled();
   });
 });
