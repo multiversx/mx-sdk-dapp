@@ -13,6 +13,7 @@ import { setIsSidePanelOpen } from 'store/actions/ui/uiActions';
 import { providerSettingsSelector } from 'store/selectors/configSelectors';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
+import { finalizeSignedTransactions } from './helpers/finalizeSignedTransactions';
 import { getCommonData } from './helpers/getCommonData/getCommonData';
 import { getFeeData } from './helpers/getFeeData';
 import { getMultiEsdtTransferData } from './helpers/getMultiEsdtTransferData/getMultiEsdtTransferData';
@@ -31,16 +32,13 @@ export async function signTransactions({
   guardTransactions = getGuardedTransactions,
   options
 }: SignTransactionsParamsType): Promise<Transaction[]> {
+  if (transactions.length === 0) {
+    return [];
+  }
+
   const { address, shard, username } = getAccount();
   const network = networkSelector(getState());
   const providerConfig = providerSettingsSelector(getState());
-
-  const egldLabel = getEgldLabel();
-
-  const { allTransactions, parsedTransactionsByDataField } =
-    getMultiEsdtTransferData(transactions);
-
-  const signedIndexes: number[] = [];
 
   if (providerConfig?.isSigningUiEnabled === false) {
     // Mark signing as in progress so idle state manager doesn't interfere
@@ -49,29 +47,33 @@ export async function signTransactions({
     try {
       const signedTransactions: Transaction[] = [];
 
-      for (const item of allTransactions) {
-        const signedTxs = await handleSign([item.transaction]);
-        if (signedTxs && signedTxs.length > 0) {
-          signedTransactions.push(signedTxs[0]);
+      for (const transaction of transactions) {
+        const [signedTransaction] = (await handleSign([transaction])) ?? [];
+
+        if (signedTransaction) {
+          signedTransactions.push(signedTransaction);
         }
       }
 
-      const optionallyGuardedTransactions = options?.skipGuardian
-        ? signedTransactions
-        : await guardTransactions(signedTransactions);
-
-      return optionallyGuardedTransactions;
+      return await finalizeSignedTransactions({
+        signedTransactions,
+        options,
+        guardTransactions
+      });
     } finally {
       setIsSidePanelOpen(false);
     }
   }
 
+  const egldLabel = getEgldLabel();
+
+  const { allTransactions, parsedTransactionsByDataField } =
+    getMultiEsdtTransferData(transactions);
+
+  const signedIndexes: number[] = [];
+
   const manager = SignTransactionsStateManager.getInstance();
   await manager.openUI();
-
-  if (!manager) {
-    throw new Error('Unable to establish connection with sign screens');
-  }
 
   const handleCancel = async () => {
     await cancelCrossWindowAction();
@@ -80,40 +82,46 @@ export async function signTransactions({
 
   manager.subscribeToEventBus(SignEventsEnum.CLOSE, handleCancel);
 
-  return new Promise<Transaction[]>(async (resolve, reject) => {
+  return new Promise<Transaction[]>((resolve, reject) => {
     const signedTransactions: Transaction[] = [];
-    const economics = await getEconomics({ baseURL: network.apiAddress });
-
-    manager.notifyDataUpdate();
-
-    manager.initializeGasPriceMap(allTransactions.map((tx) => tx.transaction));
-    const price = economics?.price;
-
+    let price: number | undefined;
     let currentScreenIndex = 0;
+    let isSettled = false;
+
+    const fail = (error: unknown) => {
+      if (isSettled) {
+        return;
+      }
+
+      isSettled = true;
+      manager.closeUI();
+      reject(error);
+    };
+
+    const getScreenCommonData = () => {
+      const { transaction } = allTransactions[currentScreenIndex];
+
+      return getCommonData({
+        allTransactions,
+        currentScreenIndex,
+        egldLabel,
+        network,
+        gasPriceData: manager.getGasPriceOptionMap[Number(transaction.nonce)],
+        price,
+        address,
+        username,
+        shard,
+        signedIndexes,
+        parsedTransactionsByDataField
+      });
+    };
 
     const updateScreen = async () => {
-      const currentTransaction = allTransactions[currentScreenIndex];
-      const transaction = currentTransaction?.transaction;
-
-      const currentNonce = Number(transaction.nonce);
-
       try {
         manager.updateIsLoading(true);
 
         const { commonData, tokenTransaction, fungibleTransaction } =
-          await getCommonData({
-            allTransactions,
-            currentScreenIndex,
-            egldLabel,
-            network,
-            gasPriceData: manager.getGasPriceOptionMap[currentNonce],
-            price,
-            address,
-            username,
-            shard,
-            signedIndexes,
-            parsedTransactionsByDataField
-          });
+          await getScreenCommonData();
 
         if (tokenTransaction) {
           manager.updateTokenTransaction(tokenTransaction);
@@ -142,78 +150,78 @@ export async function signTransactions({
     const onBack = () => {
       if (currentScreenIndex > 0) {
         currentScreenIndex--;
-        updateScreen();
+        updateScreen().catch(fail);
       }
     };
 
     const onSetGasPriceOption = (gasPriceOption: number = GAS_PRICE) => {
-      const currentTransaction = allTransactions[currentScreenIndex];
-      const transaction = currentTransaction.transaction;
-      const currentNonce = Number(transaction.nonce);
+      try {
+        const currentTransaction = allTransactions[currentScreenIndex];
+        const transaction = currentTransaction.transaction;
+        const currentNonce = Number(transaction.nonce);
 
-      manager.updateGasPriceMap({
-        nonce: currentNonce,
-        gasPriceOption
-      });
+        manager.updateGasPriceMap({
+          nonce: currentNonce,
+          gasPriceOption
+        });
 
-      const plainTransaction = transaction.toPlainObject();
+        const plainTransaction = transaction.toPlainObject();
 
-      const newTransaction = Transaction.newFromPlainObject({
-        ...plainTransaction,
-        gasPrice: gasPriceOption
-      });
+        const newTransaction = Transaction.newFromPlainObject({
+          ...plainTransaction,
+          gasPrice: gasPriceOption
+        });
 
-      const feeData = getFeeData({
-        transaction: newTransaction,
-        price
-      });
+        const feeData = getFeeData({
+          transaction: newTransaction,
+          price
+        });
 
-      const formattedGasPrice = formatAmount({
-        input: gasPriceOption.toString(),
-        decimals: DECIMALS,
-        addCommas: true,
-        digits: DIGITS
-      });
+        const formattedGasPrice = formatAmount({
+          input: gasPriceOption.toString(),
+          decimals: DECIMALS,
+          addCommas: true,
+          digits: DIGITS
+        });
 
-      manager.updateCommonData({
-        feeLimit: feeData.feeLimitFormatted,
-        feeInFiatLimit: feeData.feeInFiatLimit,
-        gasPrice: formattedGasPrice,
-        gasPriceOption
-      });
+        manager.updateCommonData({
+          feeLimit: feeData.feeLimitFormatted,
+          feeInFiatLimit: feeData.feeInFiatLimit,
+          gasPrice: formattedGasPrice,
+          gasPriceOption
+        });
+      } catch (error) {
+        fail(error);
+      }
     };
 
     const onCancel = async () => {
+      if (isSettled) {
+        return;
+      }
+
+      isSettled = true;
       reject(new Error('Transaction signing cancelled by user'));
-      await cancelCrossWindowAction();
-      manager.closeUI();
+
+      try {
+        await cancelCrossWindowAction();
+      } finally {
+        manager.closeUI();
+      }
     };
 
     const onNext = () => {
       if (currentScreenIndex < manager.transactionsCount - 1) {
         currentScreenIndex++;
-        updateScreen();
+        updateScreen().catch(fail);
       }
     };
 
-    const onSign = async () => {
+    const sign = async () => {
       const currentTransaction = allTransactions[currentScreenIndex];
       const transaction = currentTransaction.transaction;
-      const currentNonce = Number(transaction.nonce);
 
-      const { commonData } = await getCommonData({
-        allTransactions,
-        currentScreenIndex,
-        egldLabel,
-        network,
-        gasPriceData: manager.getGasPriceOptionMap[currentNonce],
-        price,
-        address,
-        username,
-        shard,
-        signedIndexes,
-        parsedTransactionsByDataField
-      });
+      const { commonData } = await getScreenCommonData();
 
       if (!commonData.needsSigning) {
         signedIndexes.push(currentScreenIndex);
@@ -230,41 +238,45 @@ export async function signTransactions({
         gasPrice: gasPriceOption
       });
 
-      try {
-        const signedTxs = await handleSign([transactionToSign]);
-        if (signedTxs) {
-          signedIndexes.push(currentScreenIndex);
-          signedTransactions.push(signedTxs[0]);
-        }
+      const signedTxs = await handleSign([transactionToSign]);
 
-        const isLastScreen = currentScreenIndex === allTransactions.length - 1;
-        const allSignableTransactions = allTransactions.filter(
-          (tx) => tx.needsSigning
-        );
-
-        const areAllTransactionsSigned =
-          signedTransactions.length === allSignableTransactions.length;
-
-        if (isLastScreen && areAllTransactionsSigned) {
-          const finalizedTransactions =
-            (await options?.callback?.(signedTransactions)) ||
-            signedTransactions;
-
-          const optionallyGuardedTransactions = options?.skipGuardian
-            ? finalizedTransactions
-            : await guardTransactions(finalizedTransactions);
-          manager.closeUI();
-          return resolve(optionallyGuardedTransactions);
-        }
-
-        onNext();
-      } catch (error) {
-        manager.closeUI();
-        reject(error);
+      if (signedTxs) {
+        signedIndexes.push(currentScreenIndex);
+        signedTransactions.push(signedTxs[0]);
       }
+
+      const isLastScreen = currentScreenIndex === allTransactions.length - 1;
+      const allSignableTransactions = allTransactions.filter(
+        (tx) => tx.needsSigning
+      );
+
+      const areAllTransactionsSigned =
+        signedTransactions.length === allSignableTransactions.length;
+
+      if (!isLastScreen || !areAllTransactionsSigned) {
+        return onNext();
+      }
+
+      const finalizedTransactions = await finalizeSignedTransactions({
+        signedTransactions,
+        options,
+        guardTransactions
+      });
+
+      if (isSettled) {
+        return;
+      }
+
+      isSettled = true;
+      manager.closeUI();
+      resolve(finalizedTransactions);
     };
 
-    const eventHandlersMap = new Map([
+    const onSign = () => {
+      sign().catch(fail);
+    };
+
+    const eventHandlersMap = new Map<SignEventsEnum, (...args: any[]) => void>([
       [SignEventsEnum.NEXT, onNext],
       [SignEventsEnum.CONFIRM, onSign],
       [SignEventsEnum.CLOSE, onCancel],
@@ -272,21 +284,30 @@ export async function signTransactions({
       [SignEventsEnum.SET_GAS_PRICE_OPTION, onSetGasPriceOption]
     ]);
 
-    function setupEventListeners() {
+    const run = async () => {
+      const economics = await getEconomics({ baseURL: network.apiAddress });
+      price = economics?.price;
+
+      manager.notifyDataUpdate();
+      manager.initializeGasPriceMap(
+        allTransactions.map((tx) => tx.transaction)
+      );
+
+      manager.clearEventHandlers([
+        SignEventsEnum.NEXT,
+        SignEventsEnum.CONFIRM,
+        SignEventsEnum.CLOSE,
+        SignEventsEnum.BACK,
+        SignEventsEnum.SET_GAS_PRICE_OPTION
+      ]);
+
       for (const [event, handler] of eventHandlersMap) {
         manager.subscribeToEventBus(event, handler);
       }
-    }
 
-    manager.clearEventHandlers([
-      SignEventsEnum.NEXT,
-      SignEventsEnum.CONFIRM,
-      SignEventsEnum.CLOSE,
-      SignEventsEnum.BACK,
-      SignEventsEnum.SET_GAS_PRICE_OPTION
-    ]);
+      await updateScreen();
+    };
 
-    setupEventListeners();
-    await updateScreen();
+    run().catch(fail);
   });
 }

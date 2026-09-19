@@ -10,6 +10,7 @@ import {
 import { clearSdkDappStorage } from 'store/storage/clearSdkDappStorage';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
+import { finalizeSignedTransactions } from '../helpers/signTransactions/helpers/finalizeSignedTransactions';
 
 type WebviewProviderProps = {
   address?: string;
@@ -77,7 +78,7 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
 
   signTransactions = async (
     transactions: Transaction[],
-    _options?: SignTransactionsOptionsType
+    options?: SignTransactionsOptionsType
   ) => {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
@@ -85,8 +86,9 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
 
     try {
       const signedTransactions =
-        await this.provider.signTransactions(transactions);
-      return signedTransactions || [];
+        (await this.provider.signTransactions(transactions)) ?? [];
+
+      return await finalizeSignedTransactions({ signedTransactions, options });
     } catch (error) {
       this.cancelAction();
       throw error;
