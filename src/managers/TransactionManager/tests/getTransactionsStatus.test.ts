@@ -1,6 +1,7 @@
 import {
   getIsTransactionFailed,
   getIsTransactionNotExecuted,
+  getIsTransactionPending,
   getIsTransactionSuccessful
 } from 'store/actions/transactions/transactionStateByStatus';
 import {
@@ -72,6 +73,20 @@ describe('getTransactionsSessionStatus', () => {
     (getIsTransactionFailed as jest.Mock).mockReturnValueOnce(true);
     const result = getTransactionsSessionStatus(mockTransactions);
     expect(result).toBe(TransactionBatchStatusesEnum.fail);
+  });
+
+  it('should return null while any transaction is still pending, even if another failed', () => {
+    (getIsTransactionPending as jest.Mock).mockImplementation(
+      (status) => status === TransactionServerStatusesEnum.pending
+    );
+    (getIsTransactionFailed as jest.Mock).mockReturnValue(true);
+
+    const result = getTransactionsSessionStatus([
+      { ...mockTransactions[1] },
+      { ...mockTransactions[0], status: TransactionServerStatusesEnum.pending }
+    ]);
+
+    expect(result).toBeNull();
   });
 
   it('should return invalid if all transactions are not executed', () => {

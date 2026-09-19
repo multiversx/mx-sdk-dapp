@@ -2,6 +2,10 @@ import { accountNonceSelector } from 'store/selectors/accountSelectors';
 import { transactionsSliceSelector } from 'store/selectors/transactionsSelector';
 import { getState } from 'store/store';
 import { AccountType } from 'types/account.types';
+import {
+  clearNonceReservations,
+  reserveNonces
+} from 'utils/account/nonceReservations';
 import { getLatestNonce, getReconciledNonce } from '../getLatestNonce';
 
 jest.mock('store/store');
@@ -164,6 +168,10 @@ describe('getLatestNonce', () => {
   });
 
   describe('getReconciledNonce', () => {
+    afterEach(() => {
+      clearNonceReservations();
+    });
+
     it('ignores the nonce advanced locally at signing', () => {
       (accountNonceSelector as jest.Mock).mockReturnValue(30);
       (transactionsSliceSelector as jest.Mock).mockReturnValue({});
@@ -171,7 +179,16 @@ describe('getLatestNonce', () => {
       const apiAccount = { nonce: 12 } as AccountType;
 
       expect(getReconciledNonce(apiAccount, {} as any)).toBe(12);
-      expect(getLatestNonce(apiAccount)).toBe(30);
+      expect(getLatestNonce(apiAccount)).toBe(12);
+    });
+
+    it('keeps the nonces of signed transactions that are not tracked yet', () => {
+      (transactionsSliceSelector as jest.Mock).mockReturnValue({});
+      reserveNonces('erd1address', [12, 13]);
+
+      const apiAccount = { nonce: 12, address: 'erd1address' } as AccountType;
+
+      expect(getLatestNonce(apiAccount)).toBe(14);
     });
 
     it('keeps the nonces of transactions still being tracked', () => {

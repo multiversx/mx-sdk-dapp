@@ -52,11 +52,13 @@ export const mapServerTransactionsToListItems = async ({
     return sortTransactionsByTimestamp(cachedTransactions);
   }
 
-  const newTransactions: ServerTransactionType[] = transactions.map((tx) => ({
-    // casting is correct since store transaction was replaced with fetched server transaction
-    ...(tx as unknown as ServerTransactionType),
-    txHash: tx.hash
-  }));
+  const newTransactions: ServerTransactionType[] = transactions
+    .filter((tx) => hashesToFetch.includes(tx.hash))
+    .map((tx) => ({
+      // tracking merges the executed transaction's metadata into the stored one
+      ...(tx as unknown as ServerTransactionType),
+      txHash: tx.hash
+    }));
 
   const retrievedHashes = newTransactions.map((tx) => tx.txHash);
   const missingHashes = hashesToFetch.filter(

@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { BATCH_TRANSACTIONS_ID_SEPARATOR } from 'constants/transactions.constants';
-import { Transaction } from 'lib/sdkCore';
+import { Transaction, TransactionComputer } from 'lib/sdkCore';
 import { getAccount } from 'methods/account/getAccount';
 import { TransactionTrackingConfigType } from 'methods/initApp/initApp.types';
 import { addTransactionToast } from 'store/actions/toasts/toastsActions';
@@ -13,7 +13,9 @@ import {
 } from 'types/enums.types';
 import { BatchTransactionsResponseType } from 'types/serverTransactions.types';
 import { SignedTransactionType } from 'types/transactions.types';
+import { releaseTransactionNonces } from 'utils/account/nonceReservations';
 import { reconcileAccountNonce } from 'utils/account/reconcileAccountNonce';
+import { createTimestampId } from 'utils/transactions/createTimestampId';
 import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 import { getToastDuration } from './helpers/getToastDuration';
 import { getTransactionsSessionStatus } from './helpers/getTransactionsStatus';
@@ -81,6 +83,11 @@ export class TransactionManager {
       return groupedTransactions;
     } catch (error) {
       // The nonce was advanced when these were signed
+      releaseTransactionNonces(
+        signedTransactions
+          .flat()
+          .map((transaction) => transaction.toPlainObject())
+      );
       await reconcileAccountNonce();
 
       const responseData = <{ message: string }>(
@@ -126,6 +133,8 @@ export class TransactionManager {
       })
     );
 
+    releaseTransactionNonces(flatTransactions);
+
     const status = getTransactionsSessionStatus(flatTransactions);
 
     const sessionId = createTransactionsSession({
@@ -135,16 +144,16 @@ export class TransactionManager {
       sessionInformation: options.sessionInformation
     });
 
-    if (options.disableToasts === true) {
-      return sessionId;
-    }
-
     if (options.onSuccess) {
       registerCallbacks({ onSuccess: options.onSuccess, sessionId });
     }
 
     if (options.onFail) {
       registerCallbacks({ onFail: options.onFail, sessionId });
+    }
+
+    if (options.disableToasts === true) {
+      return sessionId;
     }
 
     const totalDuration = getToastDuration(sentTransactions);
@@ -161,26 +170,82 @@ export class TransactionManager {
   ): Promise<SignedTransactionType[]> => {
     const { apiAddress, apiTimeout } = networkSelector(getState());
 
-    const mergedTransactions = await Promise.all(
-      signedTransactions.map(async (transaction) => {
-        const response = await axios.post(
-          `${apiAddress}/transactions`,
-          transaction.toPlainObject(),
-          { timeout: Number(apiTimeout) }
-        );
-
-        const txHash = response.data.txHash;
-
-        return {
-          ...transaction.toPlainObject(),
-          ...response.data,
-          status: TransactionServerStatusesEnum.pending,
-          hash: txHash
-        };
-      })
+    const responses = await Promise.allSettled(
+      signedTransactions.map((transaction) =>
+        axios.post(`${apiAddress}/transactions`, transaction.toPlainObject(), {
+          timeout: Number(apiTimeout)
+        })
+      )
     );
 
-    return mergedTransactions;
+    const sentTransactions = responses.map((response, index) => {
+      const transaction = signedTransactions[index];
+
+      if (response.status === 'fulfilled') {
+        return {
+          ...transaction.toPlainObject(),
+          ...response.value.data,
+          status: TransactionServerStatusesEnum.pending,
+          hash: response.value.data.txHash
+        };
+      }
+
+      return this.getUnconfirmedTransaction(transaction, response.reason);
+    });
+
+    releaseTransactionNonces(
+      sentTransactions.filter(
+        ({ status }) => status === TransactionServerStatusesEnum.invalid
+      )
+    );
+
+    const hasSentTransactions = sentTransactions.some(
+      ({ status }) => status === TransactionServerStatusesEnum.pending
+    );
+
+    if (!hasSentTransactions) {
+      const firstRejection = responses.find(
+        (response): response is PromiseRejectedResult =>
+          response.status === 'rejected'
+      );
+
+      throw firstRejection?.reason;
+    }
+
+    return sentTransactions;
+  };
+
+  private readonly getUnconfirmedTransaction = (
+    transaction: Transaction,
+    error: unknown
+  ): SignedTransactionType => {
+    const plainTransaction = transaction.toPlainObject();
+    const hash = this.computeTransactionHash(transaction);
+    const isTimeout = this.getIsTimeoutError(error);
+
+    return {
+      ...plainTransaction,
+      hash: hash ?? '',
+      status:
+        isTimeout && hash
+          ? TransactionServerStatusesEnum.pending
+          : TransactionServerStatusesEnum.invalid
+    };
+  };
+
+  private readonly computeTransactionHash = (transaction: Transaction) => {
+    try {
+      return new TransactionComputer().computeTransactionHash(transaction);
+    } catch {
+      return null;
+    }
+  };
+
+  private readonly getIsTimeoutError = (error: unknown) => {
+    const { code, response } = (error ?? {}) as AxiosError;
+    return (
+      response == null && (code === 'ECONNABORTED' || code === 'ETIMEDOUT')
+    );
   };
 
   private readonly sendSignedBatchTransactions = async (
@@ -190,10 +255,9 @@ export class TransactionManager {
     const { apiAddress, apiTimeout } = networkSelector(getState());
 
     if (!address) {
-      return {
-        error:
-          'Invalid address provided. You need to be logged in to send transactions'
-      };
+      throw new Error(
+        'Invalid address provided. You need to be logged in to send transactions'
+      );
     }
 
     const batchId = this.buildBatchId(address);
@@ -214,6 +278,10 @@ export class TransactionManager {
         timeout: Number(apiTimeout)
       }
     );
+
+    if (data?.error || !Array.isArray(data?.transactions)) {
+      throw new Error(data?.error || 'Failed to send transactions');
+    }
 
     const parsedTransactions = data.transactions.map((group) =>
       group.map((tx) => {
@@ -241,10 +309,9 @@ export class TransactionManager {
     };
   };
 
-  private readonly buildBatchId = (address: string) => {
-    const sessionId = Date.now().toString();
-    return `${sessionId}${BATCH_TRANSACTIONS_ID_SEPARATOR}${address}`;
-  };
+  private readonly buildBatchId = (address: string) =>
+    `${createTimestampId()}${BATCH_TRANSACTIONS_ID_SEPARATOR}${address}`;
+
   private readonly sequentialToFlatArray = (
     transactions: SignedTransactionType[] | SignedTransactionType[][] = []
   ) =>

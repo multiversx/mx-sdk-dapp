@@ -74,6 +74,26 @@ describe('transactionsActions', () => {
     });
   });
 
+  it('gives sessions created in the same millisecond distinct ids', () => {
+    const firstSessionId = createTransactionsSession({
+      transactions: [mockTransaction({ hash: 'first' })],
+      status: TransactionBatchStatusesEnum.sent
+    });
+    const secondSessionId = createTransactionsSession({
+      transactions: [mockTransaction({ hash: 'second' })],
+      status: TransactionBatchStatusesEnum.sent
+    });
+
+    expect(secondSessionId).not.toBe(firstSessionId);
+    expect(Number(secondSessionId)).toBeGreaterThan(Number(firstSessionId));
+    expect(rootState.transactions[firstSessionId].transactions[0].hash).toBe(
+      'first'
+    );
+    expect(rootState.transactions[secondSessionId].transactions[0].hash).toBe(
+      'second'
+    );
+  });
+
   it('updates session status and specific transaction data', () => {
     rootState.transactions['session-1'] = {
       transactions: [mockTransaction(), mockTransaction({ hash: 'tx-2' })],

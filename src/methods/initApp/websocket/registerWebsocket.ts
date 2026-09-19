@@ -1,3 +1,5 @@
+import { networkSelector } from 'store/selectors/networkSelectors';
+import { getState } from 'store/store';
 import { initializeWebsocketConnection } from './initializeWebsocketConnection';
 
 /**
@@ -16,11 +18,31 @@ import { initializeWebsocketConnection } from './initializeWebsocketConnection';
  * ```
  */
 export const websocketManager = {
-  closeConnectionRef: undefined as (() => void) | undefined
+  closeConnectionRef: undefined as (() => void) | undefined,
+  connectionKey: undefined as string | undefined
+};
+
+const getConnectionKey = (address: string) => {
+  const { apiAddress, websocketUrl } = networkSelector(getState());
+  return `${websocketUrl ?? apiAddress}|${address}`;
 };
 
 export async function registerWebsocketListener(address: string) {
+  const connectionKey = getConnectionKey(address);
+
+  if (
+    websocketManager.connectionKey != null &&
+    websocketManager.connectionKey !== connectionKey
+  ) {
+    websocketManager.closeConnectionRef?.();
+  }
+
+  websocketManager.connectionKey = connectionKey;
+
   const { closeConnection } = await initializeWebsocketConnection(address);
 
-  websocketManager.closeConnectionRef = closeConnection;
+  websocketManager.closeConnectionRef = () => {
+    closeConnection();
+    websocketManager.connectionKey = undefined;
+  };
 }

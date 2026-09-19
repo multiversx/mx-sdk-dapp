@@ -7,7 +7,10 @@ import { isTransferNftOrSft } from './isTransferNftOrSft';
 
 export const getAssetAmount = (transactionTransfer: Record<string, string>) => {
   if (isTransferNftOrSft(transactionTransfer)) {
-    return parseFloat(transactionTransfer.value).toLocaleString();
+    const quantity = new BigNumber(transactionTransfer.value);
+    return quantity.isNaN()
+      ? String(transactionTransfer.value)
+      : quantity.toFormat();
   }
 
   const formattedAmount = formatAmount({

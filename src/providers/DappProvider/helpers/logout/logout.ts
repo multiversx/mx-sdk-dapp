@@ -1,3 +1,4 @@
+import { tokenDataStorage } from 'apiCalls/tokens/tokenDataStorage';
 import { subscriptions } from 'constants/storage.constants';
 import { safeWindow } from 'constants/window.constants';
 import { getAddress } from 'methods/account/getAddress';
@@ -6,6 +7,7 @@ import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
 import { websocketManager } from 'methods/initApp/websocket/registerWebsocket';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { logoutAction } from 'store/actions/sharedActions/sharedActions';
+import { clearNonceReservations } from 'utils/account/nonceReservations';
 import { broadcastLogoutAcrossTabs } from './broadcastLogoutAcrossTabs';
 
 export type LogoutPropsType = {
@@ -24,6 +26,8 @@ interface IProviderLogout {
 
 const clearLocalSession = () => {
   logoutAction();
+  clearNonceReservations();
+  tokenDataStorage.clear();
 
   // Clear all active subscriptions on logout
   subscriptions.forEach((unsubscribe) => unsubscribe());

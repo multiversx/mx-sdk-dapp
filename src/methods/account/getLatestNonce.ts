@@ -7,6 +7,7 @@ import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from '../../types/enums.types';
+import { getNextReservedNonce } from '../../utils/account/nonceReservations';
 
 const executedStatuses: Array<string | undefined> = [
   TransactionServerStatusesEnum.success,
@@ -42,16 +43,19 @@ export function getReconciledNonce(
   apiAccount: AccountType,
   state = getState()
 ) {
-  return Math.max(apiAccount.nonce, getNextSessionNonce(state));
+  return Math.max(
+    apiAccount.nonce,
+    getNextSessionNonce(state),
+    getNextReservedNonce(apiAccount.address)
+  );
 }
 
 export function getLatestNonce(apiAccount: AccountType | null) {
   const state = getState();
-  const currentAccountNonce = accountNonceSelector(state);
 
   if (apiAccount == null) {
-    return Math.max(getNextSessionNonce(state), currentAccountNonce);
+    return Math.max(getNextSessionNonce(state), accountNonceSelector(state));
   }
 
-  return Math.max(getReconciledNonce(apiAccount, state), currentAccountNonce);
+  return getReconciledNonce(apiAccount, state);
 }

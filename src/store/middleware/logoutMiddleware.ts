@@ -12,6 +12,7 @@ import {
 } from 'store/selectors/accountSelectors';
 import { loginExpiresAtSelector } from 'store/selectors/loginInfoSelectors';
 import { initialState as initialAccountState } from 'store/slices/account/accountSlice';
+import { initialState as initialCacheState } from 'store/slices/cache/cacheSlice';
 import { initialState as initialLoginInfoState } from 'store/slices/loginInfo/loginInfoSlice';
 import { initialState as initialToastState } from 'store/slices/toast/toastSlice';
 import { initialState as initialTransactionsState } from 'store/slices/transactions/transactionsSlice';
@@ -23,6 +24,7 @@ export const resetStore = (store: WritableDraft<StoreType>) => {
   store.loginInfo = initialLoginInfoState;
   store.transactions = initialTransactionsState;
   store.toasts = initialToastState;
+  store.cache = initialCacheState;
 };
 
 export function getNewLoginExpiresTimestamp() {

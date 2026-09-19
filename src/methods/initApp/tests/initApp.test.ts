@@ -256,7 +256,22 @@ describe('initApp tests', () => {
       expect(registerWebsocketListener).not.toHaveBeenCalled();
       expect(trackTransactions).not.toHaveBeenCalled();
       expect(mockLogoutManagerInit).not.toHaveBeenCalled();
-      expect(registerCallbacks).not.toHaveBeenCalled();
+    });
+
+    it('registers the configured transaction callbacks before any login', async () => {
+      (getIsLoggedIn as jest.Mock).mockReturnValue(false);
+      const onSuccess = jest.fn();
+      const onFail = jest.fn();
+
+      await initApp({
+        dAppConfig: {
+          environment: EnvironmentsEnum.devnet,
+          nativeAuth: false,
+          transactionTracking: { onSuccess, onFail }
+        }
+      });
+
+      expect(registerCallbacks).toHaveBeenCalledWith({ onSuccess, onFail });
     });
   });
 

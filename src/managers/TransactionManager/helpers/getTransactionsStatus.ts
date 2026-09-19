@@ -1,6 +1,7 @@
 import {
   getIsTransactionFailed,
   getIsTransactionNotExecuted,
+  getIsTransactionPending,
   getIsTransactionSuccessful
 } from 'store/actions/transactions/transactionStateByStatus';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
@@ -11,6 +12,15 @@ export function getTransactionsSessionStatus(
 ): TransactionBatchStatusesEnum | null {
   if (!transactions || transactions.length === 0) {
     return TransactionBatchStatusesEnum.invalid;
+  }
+
+  // The session settles only once every transaction in it has settled
+  const areAnyPending = transactions.some((transaction) =>
+    getIsTransactionPending(transaction.status)
+  );
+
+  if (areAnyPending) {
+    return null;
   }
 
   const areAllSuccessful = transactions.every((transaction) =>

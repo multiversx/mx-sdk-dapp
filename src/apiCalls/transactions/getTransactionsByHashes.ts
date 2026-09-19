@@ -9,6 +9,45 @@ import {
 } from 'types/transactions.types';
 import { getServerTransactionsByHashes } from './getServerTransactionsByHashes';
 
+const serverMetadataFields = [
+  'action',
+  'operations',
+  'function',
+  'timestamp',
+  'timestampMs',
+  'fee',
+  'gasUsed',
+  'price',
+  'miniBlockHash',
+  'round',
+  'senderShard',
+  'receiverShard',
+  'senderAssets',
+  'receiverAssets',
+  'logs',
+  'receipt',
+  'type',
+  'tokenValue',
+  'tokenIdentifier',
+  'scamInfo'
+] as const satisfies ReadonlyArray<keyof ServerTransactionType>;
+
+const getServerMetadata = (serverTransaction?: ServerTransactionType) => {
+  const metadata: Partial<ServerTransactionType> = {};
+
+  if (serverTransaction == null) {
+    return metadata;
+  }
+
+  serverMetadataFields.forEach((field) => {
+    if (serverTransaction[field] !== undefined) {
+      Object.assign(metadata, { [field]: serverTransaction[field] });
+    }
+  });
+
+  return metadata;
+};
+
 export const getTransactionsByHashes = async (
   pendingTransactions: SignedTransactionType[]
 ): Promise<TrackedTransactionResultType[]> => {
@@ -24,6 +63,7 @@ export const getTransactionsByHashes = async (
 
     return {
       ...transaction,
+      ...getServerMetadata(txOnNetwork),
       status: txOnNetwork?.status as
         | TransactionServerStatusesEnum
         | TransactionBatchStatusesEnum,

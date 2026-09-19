@@ -13,6 +13,7 @@ interface IGetTransactionAssetsParams {
 export interface ITransactionAsset {
   assetPrefix: string;
   assetTicker: string;
+  assetIdentifier?: string;
   assetAmount: string;
   assetImage?: string;
   assetPrice?: string;
@@ -40,6 +41,7 @@ export const getTransactionAssets = ({
     assetPrefix,
     type: processedEgldLabel,
     assetTicker: processedEgldLabel,
+    assetIdentifier: processedEgldLabel,
     assetAmount: getAssetAmount({
       value: transaction.value,
       decimals: String(DECIMALS)
@@ -51,6 +53,10 @@ export const getTransactionAssets = ({
       assetPrefix,
       type: transactionTransfer.type,
       assetTicker: transactionTransfer.ticker,
+      assetIdentifier:
+        transactionTransfer.identifier ??
+        transactionTransfer.token ??
+        transactionTransfer.ticker,
       assetImage: transactionTransfer.svgUrl,
       assetAmount: getAssetAmount(transactionTransfer),
       assetPrice: getAssetPrice(transactionTransfer)

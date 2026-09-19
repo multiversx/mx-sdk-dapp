@@ -64,4 +64,44 @@ describe('getTransactionsByHashes test', () => {
       })
     );
   });
+
+  it('keeps the metadata the history needs and the locally signed fields', async () => {
+    const pending = { ...mockPendingTransaction };
+    const action = {
+      category: 'esdtNft',
+      name: 'transfer',
+      arguments: { transfers: [{ identifier: 'TEST-123456', value: '1' }] }
+    };
+
+    server.use(
+      rest.get(
+        `${testNetwork.apiAddress}/${TRANSACTIONS_ENDPOINT}`,
+        (_req, res, ctx) =>
+          res(
+            ctx.status(200),
+            ctx.json([
+              {
+                ...mockPendingTransaction,
+                txHash: pending.hash,
+                status: 'success',
+                action,
+                timestamp: 1700000000,
+                value: '999',
+                receiver: 'erd1servervalue'
+              }
+            ])
+          )
+      )
+    );
+
+    const [result] = await getTransactionsByHashes([pending]);
+
+    expect(result).toMatchObject({
+      action,
+      timestamp: 1700000000,
+      value: pending.value,
+      receiver: pending.receiver,
+      hash: pending.hash
+    });
+  });
 });

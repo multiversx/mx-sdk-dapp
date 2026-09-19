@@ -1,5 +1,13 @@
-import { updateSessionStatus } from 'store/actions/transactions/transactionsActions';
-import { getIsTransactionFailed } from 'store/actions/transactions/transactionStateByStatus';
+import {
+  updateSessionStatus,
+  updateTransactionStatus
+} from 'store/actions/transactions/transactionsActions';
+import {
+  getIsTransactionFailed,
+  getIsTransactionPending,
+  isServerTransactionFailed
+} from 'store/actions/transactions/transactionStateByStatus';
+import { getState } from 'store/store';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
 import {
   TrackedTransactionResultType,
@@ -27,6 +35,56 @@ interface RunTransactionStatusUpdateType {
   isSequential?: boolean;
 }
 
+const getIsSessionTracked = (sessionId: string) => {
+  const session = getState()?.transactions?.[sessionId];
+  return session == null || getIsTransactionPending(session.status);
+};
+
+const markTransactionAsTimedOut = async ({
+  sessionId,
+  transaction
+}: {
+  sessionId: string;
+  transaction: TrackedTransactionResultType;
+}) => {
+  updateTransactionStatus({
+    sessionId,
+    transaction: {
+      ...transaction,
+      status: TransactionBatchStatusesEnum.timedOut
+    }
+  });
+
+  const sessionTransactions =
+    getState()?.transactions?.[sessionId]?.transactions ?? [];
+
+  const hasPendingTransactions = sessionTransactions.some(({ status }) =>
+    getIsTransactionPending(status)
+  );
+
+  if (hasPendingTransactions) {
+    return;
+  }
+
+  const hasFailedTransactions = sessionTransactions.some(({ status }) =>
+    isServerTransactionFailed(status)
+  );
+
+  const sessionStatus = hasFailedTransactions
+    ? TransactionBatchStatusesEnum.fail
+    : TransactionBatchStatusesEnum.timedOut;
+
+  updateSessionStatus({
+    sessionId,
+    status: sessionStatus
+  });
+
+  await runSessionCallbacks({
+    sessionId,
+    status: sessionStatus
+  });
+};
+
 export async function runTransactionStatusUpdate({
   serverTransaction: transaction,
   sessionId,
@@ -38,16 +96,8 @@ export async function runTransactionStatusUpdate({
     const retriesForThisHash = retries[hash];
     if (retriesForThisHash > 30) {
       // consider transaction as stuck after 1 minute
-      updateSessionStatus({
-        sessionId,
-        status: TransactionBatchStatusesEnum.timedOut
-      });
-
-      await runSessionCallbacks({
-        sessionId,
-        status: TransactionBatchStatusesEnum.timedOut
-      });
-
+      delete retries[hash];
+      await markTransactionAsTimedOut({ sessionId, transaction });
       return;
     }
 
@@ -58,6 +108,8 @@ export async function runTransactionStatusUpdate({
       retries[hash] = retries[hash] ? retries[hash] + 1 : 1;
       return;
     }
+
+    delete retries[hash];
 
     // The tx is from a sequential batch.
     // If the transactions before this are not successful then it means that no other tx will be processed
@@ -73,6 +125,11 @@ export async function runTransactionStatusUpdate({
       return;
     }
 
+    if (getIsTransactionFailed(status)) {
+      await manageFailedTransactions({ sessionId, transaction });
+      return;
+    }
+
     if (hasStatusChanged) {
       const newStatus = updateTransactionAndSessionStatus({
         sessionId,
@@ -84,12 +141,13 @@ export async function runTransactionStatusUpdate({
         status: newStatus
       });
     }
-
-    if (getIsTransactionFailed(status)) {
-      await manageFailedTransactions({ sessionId, transaction });
-    }
   } catch (error) {
     console.error(error);
+
+    if (!getIsSessionTracked(sessionId)) {
+      return;
+    }
+
     updateSessionStatus({
       sessionId,
       status: TransactionBatchStatusesEnum.timedOut

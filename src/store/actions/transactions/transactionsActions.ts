@@ -8,6 +8,7 @@ import {
   TransactionsDisplayInfoType,
   SignedTransactionType
 } from 'types/transactions.types';
+import { createTimestampId } from 'utils/transactions/createTimestampId';
 
 export type CreateTransactionsSessionType = {
   transactions: SignedTransactionType[];
@@ -22,9 +23,10 @@ export function createTransactionsSession({
   status,
   sessionInformation
 }: CreateTransactionsSessionType) {
-  const sessionId = Date.now().toString();
+  let sessionId = '';
   getStore().setState(
     ({ transactions: state }) => {
+      sessionId = createTimestampId((id) => id in state);
       state[sessionId] = {
         transactions,
         status,

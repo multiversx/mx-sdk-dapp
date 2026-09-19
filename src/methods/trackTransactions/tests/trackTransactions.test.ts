@@ -673,6 +673,55 @@ describe('trackTransactions', () => {
 
       expect(mockUnsubscribe).toHaveBeenCalledTimes(1);
     });
+
+    it('stops the previous polling interval on re-init', async () => {
+      mockGetState.mockReturnValue({
+        account: { address: 'test-address' },
+        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
+      });
+
+      await trackTransactions();
+      expect(mockSetInterval).toHaveBeenCalledTimes(1);
+
+      await trackTransactions();
+
+      expect(mockClearInterval).toHaveBeenCalledWith(123);
+      expect(mockSetInterval).toHaveBeenCalledTimes(2);
+    });
+
+    it('stops polling when the subscriptions are cleared on logout', async () => {
+      mockGetState.mockReturnValue({
+        account: { address: 'test-address' },
+        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
+      });
+
+      await trackTransactions();
+
+      subscriptions.forEach((unsubscribe) => unsubscribe());
+
+      expect(mockClearInterval).toHaveBeenCalledWith(123);
+      expect(mockUnsubscribe).toHaveBeenCalled();
+    });
+
+    it('does not tear down a newer tracker when an older one is stopped', async () => {
+      const unsubscribers: jest.Mock[] = [];
+      mockSubscribe.mockImplementation(() => {
+        const unsubscribe = jest.fn();
+        unsubscribers.push(unsubscribe);
+        return unsubscribe;
+      });
+
+      const { stopTransactionsTracking: stopFirst } = await trackTransactions();
+      await trackTransactions();
+      const [, newerUnsubscribe] = unsubscribers;
+
+      stopFirst();
+
+      expect(newerUnsubscribe).not.toHaveBeenCalled();
+      expect(subscriptions.get(SubscriptionsEnum.websocketStatusChanged)).toBe(
+        newerUnsubscribe
+      );
+    });
   });
 
   describe('edge cases', () => {

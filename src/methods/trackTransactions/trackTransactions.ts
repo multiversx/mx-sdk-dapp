@@ -17,6 +17,12 @@ const isResolvableEvent = (eventName?: string) =>
   eventName === WebsocketTransactionEventsEnum.transactionCompleted ||
   eventName === WebsocketTransactionEventsEnum.batchUpdated;
 
+const trackingSubscriptions = [
+  SubscriptionsEnum.websocketEventReceived,
+  SubscriptionsEnum.websocketStatusChanged,
+  SubscriptionsEnum.transactionsPolling
+];
+
 const getPendingSessionIds = (state: StoreType): string[] =>
   Object.keys(pendingTransactionsSessionsSelector(state));
 
@@ -35,10 +41,20 @@ export async function trackTransactions(): Promise<{
     websocketTransactionEventSelector(store.getState())?.timestamp ?? null;
   let isWebsocketTrackingActive = false;
 
-  subscriptions.get(SubscriptionsEnum.websocketEventReceived)?.();
-  subscriptions.delete(SubscriptionsEnum.websocketEventReceived);
-  subscriptions.get(SubscriptionsEnum.websocketStatusChanged)?.();
-  subscriptions.delete(SubscriptionsEnum.websocketStatusChanged);
+  trackingSubscriptions.forEach((key) => {
+    subscriptions.get(key)?.();
+    subscriptions.delete(key);
+  });
+
+  const ownedSubscriptions = new Map<SubscriptionsEnum, () => void>();
+
+  const registerSubscription = (
+    key: SubscriptionsEnum,
+    unsubscribe: () => void
+  ) => {
+    subscriptions.set(key, unsubscribe);
+    ownedSubscriptions.set(key, unsubscribe);
+  };
 
   let pendingSessionIds = new Set(getPendingSessionIds(store.getState()));
 
@@ -60,6 +76,8 @@ export async function trackTransactions(): Promise<{
       pollingIntervalMs = null;
     }
   };
+
+  registerSubscription(SubscriptionsEnum.transactionsPolling, stopPolling);
 
   const startPolling = (state?: StoreType): void => {
     const isWebsocketHealthy =
@@ -132,7 +150,7 @@ export async function trackTransactions(): Promise<{
       }
     );
 
-    subscriptions.set(
+    registerSubscription(
       SubscriptionsEnum.websocketEventReceived,
       unsubscribeWebsocketEvent
     );
@@ -140,6 +158,15 @@ export async function trackTransactions(): Promise<{
 
   const stopTransactionsTracking = (): void => {
     stopPolling();
+
+    ownedSubscriptions.forEach((unsubscribe, key) => {
+      if (subscriptions.get(key) !== unsubscribe) {
+        return;
+      }
+
+      unsubscribe();
+      subscriptions.delete(key);
+    });
   };
 
   const applyWebsocketStatus = (
@@ -157,7 +184,7 @@ export async function trackTransactions(): Promise<{
         startPolling(state);
         break;
       default:
-        address ? startPolling(state) : stopTransactionsTracking();
+        address ? startPolling(state) : stopPolling();
         break;
     }
   };
@@ -189,7 +216,7 @@ export async function trackTransactions(): Promise<{
     applyWebsocketStatus(websocketStatus, address, state);
   });
 
-  subscriptions.set(
+  registerSubscription(
     SubscriptionsEnum.websocketStatusChanged,
     unsubscribeWebsocketStatus
   );

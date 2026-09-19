@@ -117,6 +117,11 @@ export async function initApp({
   setWalletConnectConfig(dAppConfig?.providers?.walletConnect ?? null);
   setProviderSettings(dAppConfig?.providers?.settings ?? null);
 
+  registerCallbacks({
+    onSuccess: dAppConfig.transactionTracking?.onSuccess,
+    onFail: dAppConfig.transactionTracking?.onFail
+  });
+
   validateRehydratedSession({ nativeAuthConfig });
 
   const isLoggedIn = getIsLoggedIn();
@@ -164,10 +169,6 @@ export async function initApp({
       await registerWebsocketListener(account.address);
       trackTransactions();
       LogoutManager.getInstance().init();
-      registerCallbacks({
-        onSuccess: dAppConfig.transactionTracking?.onSuccess,
-        onFail: dAppConfig.transactionTracking?.onFail
-      });
     }
   }
 

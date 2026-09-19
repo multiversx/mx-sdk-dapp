@@ -11,14 +11,7 @@ export const getTransactionAmount = ({
   isIncomingTransaction
 }: IGetTransactionAmountParams): string => {
   if (transactionAssets.length > 1) {
-    const firstAssetTicker = transactionAssets[0]?.assetTicker;
-    const hasMultipleDifferentAssets = transactionAssets.some(
-      (asset) => asset.assetTicker !== firstAssetTicker
-    );
-
-    if (hasMultipleDifferentAssets) {
-      return '';
-    }
+    return '';
   }
 
   if (!transactionAssets[0]?.assetAmount) {

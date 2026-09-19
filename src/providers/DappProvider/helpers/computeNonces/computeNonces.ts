@@ -12,9 +12,9 @@ export const computeNonces = ({
     return transactions;
   }
 
-  return transactions.map((tx: Transaction, index: number) => {
-    const nextNonce = latestNonce + index;
+  let nextNonce = latestNonce;
 
+  return transactions.map((tx: Transaction) => {
     const transactionNonce = tx.toPlainObject().nonce;
 
     // stop replacing nonce if transaction is configured with a higher nonce than the existing one
@@ -24,6 +24,7 @@ export const computeNonces = ({
     });
 
     tx.nonce = BigInt(computedNonce);
+    nextNonce = computedNonce + 1;
 
     return tx;
   });

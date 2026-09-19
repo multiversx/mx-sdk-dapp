@@ -52,7 +52,10 @@ export const getTransactionAsset = ({
 
   const areMultipleAssetsSameType =
     transactionAssets?.every(
-      (asset) => latestAsset && asset.assetTicker === latestAsset.assetTicker
+      (asset) =>
+        latestAsset &&
+        (asset.assetIdentifier ?? asset.assetTicker) ===
+          (latestAsset.assetIdentifier ?? latestAsset.assetTicker)
     ) ?? false;
 
   const isTransactionFailedOrInvalid = getIsTransactionInvalidOrFailed(status);

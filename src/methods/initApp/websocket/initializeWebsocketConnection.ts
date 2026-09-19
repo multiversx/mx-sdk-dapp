@@ -29,6 +29,7 @@ const TRANSACTION_PENDING_RESULTS_EVENT =
 const CONNECT = 'connect';
 const CONNECT_ERROR = 'connect_error';
 const DISCONNECT = 'disconnect';
+const RECONNECT_FAILED = 'reconnect_failed';
 
 type TimeoutType = ReturnType<typeof setTimeout> | null;
 
@@ -195,6 +196,11 @@ export async function initializeWebsocketConnection(address: string) {
     websocketConnection.instance.on(DISCONNECT, (reason) => {
       console.warn('Websocket disconnected: ', reason);
       updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
+    });
+
+    // Reconnection attempts exhausted: allow a later call to connect again
+    websocketConnection.instance.io?.on?.(RECONNECT_FAILED, () => {
+      updateSocketStatus(WebsocketConnectionStatusEnum.NOT_INITIALIZED);
     });
   };
 

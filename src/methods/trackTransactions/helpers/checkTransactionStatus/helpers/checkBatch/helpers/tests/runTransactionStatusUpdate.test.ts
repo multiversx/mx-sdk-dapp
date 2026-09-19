@@ -3,11 +3,18 @@ import { TransactionBatchStatusesEnum } from 'types/enums.types';
 import { runTransactionStatusUpdate } from '../runTransactionStatusUpdate';
 
 jest.mock('store/actions/transactions/transactionsActions', () => ({
-  updateSessionStatus: jest.fn()
+  updateSessionStatus: jest.fn(),
+  updateTransactionStatus: jest.fn()
 }));
 
 jest.mock('store/actions/transactions/transactionStateByStatus', () => ({
-  getIsTransactionFailed: jest.fn()
+  getIsTransactionFailed: jest.fn(),
+  getIsTransactionPending: jest.fn(),
+  isServerTransactionFailed: jest.fn()
+}));
+
+jest.mock('store/store', () => ({
+  getState: jest.fn()
 }));
 
 jest.mock('../runSessionCallbacks', () => ({
@@ -34,9 +41,12 @@ describe('runTransactionStatusUpdate tests', () => {
     results: []
   };
 
-  const { getIsTransactionFailed } = jest.requireMock(
-    'store/actions/transactions/transactionStateByStatus'
-  );
+  const {
+    getIsTransactionFailed,
+    getIsTransactionPending,
+    isServerTransactionFailed
+  } = jest.requireMock('store/actions/transactions/transactionStateByStatus');
+  const { getState } = jest.requireMock('store/store');
   const { runSessionCallbacks } = jest.requireMock('../runSessionCallbacks');
   const { manageFailedTransactions } = jest.requireMock(
     '../runTransactionFailure'
@@ -44,12 +54,53 @@ describe('runTransactionStatusUpdate tests', () => {
   const { updateTransactionAndSessionStatus } = jest.requireMock(
     '../updateTransactionAndSessionStatus'
   );
-  const { updateSessionStatus } = jest.requireMock(
+  const { updateSessionStatus, updateTransactionStatus } = jest.requireMock(
     'store/actions/transactions/transactionsActions'
   );
 
+  const mockSession = (transactionStatuses: string[], status = 'sent') =>
+    getState.mockReturnValue({
+      transactions: {
+        [sessionId]: {
+          status,
+          transactions: transactionStatuses.map((txStatus, index) => ({
+            ...mockPendingTransaction,
+            hash: `hash-${index}`,
+            status: txStatus
+          }))
+        }
+      }
+    });
+
+  const exhaustRetries = async (stuckTransaction: typeof serverTransaction) => {
+    for (let i = 0; i < 31; i++) {
+      await runTransactionStatusUpdate({
+        serverTransaction: stuckTransaction,
+        sessionId
+      });
+    }
+    jest.clearAllMocks();
+  };
+
+  const getStuckTransaction = (hash: string) => ({
+    ...mockPendingTransaction,
+    hash,
+    txHash: hash,
+    status: TransactionBatchStatusesEnum.sent as any,
+    hasStatusChanged: false,
+    previousStatus: 'pending' as const,
+    invalidTransaction: false,
+    results: []
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
+    getIsTransactionPending.mockImplementation((status: string) =>
+      ['pending', 'sent'].includes(status)
+    );
+    isServerTransactionFailed.mockImplementation((status: string) =>
+      ['fail', 'invalid'].includes(status)
+    );
   });
 
   it('updates transaction and runs session callbacks when status changed to success', async () => {
@@ -78,43 +129,62 @@ describe('runTransactionStatusUpdate tests', () => {
     expect(manageFailedTransactions).not.toHaveBeenCalled();
   });
 
-  it('should mark transaction as timed out and run callbacks when retries exceed 30', async () => {
-    const stuckTransaction = {
-      ...mockPendingTransaction,
-      hash: 'stuck-transaction-hash',
-      txHash: 'stuck-transaction-hash',
-      status: TransactionBatchStatusesEnum.sent,
-      hasStatusChanged: false,
-      invalidTransaction: false
-    };
+  it('marks a stuck transaction as timed out and settles the session once nothing is pending', async () => {
+    const stuckTransaction = getStuckTransaction('stuck-hash-1');
+    await exhaustRetries(stuckTransaction);
+    mockSession(['success', 'timedOut']);
 
-    // Increment retries 31 times by calling with status === sent
-    for (let i = 0; i < 31; i++) {
-      await runTransactionStatusUpdate({
-        serverTransaction: stuckTransaction,
-        sessionId
-      });
-    }
-
-    // Clear mocks before the 32nd call to verify only the timeout logic runs
-    jest.clearAllMocks();
-
-    // 32nd call should trigger timeout
     await runTransactionStatusUpdate({
       serverTransaction: stuckTransaction,
       sessionId
     });
 
-    expect(updateSessionStatus).toHaveBeenCalledTimes(1);
+    expect(updateTransactionStatus).toHaveBeenCalledWith({
+      sessionId,
+      transaction: {
+        ...stuckTransaction,
+        status: TransactionBatchStatusesEnum.timedOut
+      }
+    });
     expect(updateSessionStatus).toHaveBeenCalledWith({
       sessionId,
       status: TransactionBatchStatusesEnum.timedOut
     });
-
     expect(runSessionCallbacks).toHaveBeenCalledTimes(1);
     expect(runSessionCallbacks).toHaveBeenCalledWith({
       sessionId,
       status: TransactionBatchStatusesEnum.timedOut
+    });
+  });
+
+  it('keeps tracking the session when a stuck transaction has pending siblings', async () => {
+    const stuckTransaction = getStuckTransaction('stuck-hash-2');
+    await exhaustRetries(stuckTransaction);
+    mockSession(['pending', 'timedOut']);
+
+    await runTransactionStatusUpdate({
+      serverTransaction: stuckTransaction,
+      sessionId
+    });
+
+    expect(updateTransactionStatus).toHaveBeenCalledTimes(1);
+    expect(updateSessionStatus).not.toHaveBeenCalled();
+    expect(runSessionCallbacks).not.toHaveBeenCalled();
+  });
+
+  it('settles as failed when a sibling of a stuck transaction failed on chain', async () => {
+    const stuckTransaction = getStuckTransaction('stuck-hash-3');
+    await exhaustRetries(stuckTransaction);
+    mockSession(['fail', 'timedOut']);
+
+    await runTransactionStatusUpdate({
+      serverTransaction: stuckTransaction,
+      sessionId
+    });
+
+    expect(updateSessionStatus).toHaveBeenCalledWith({
+      sessionId,
+      status: TransactionBatchStatusesEnum.fail
     });
   });
 
@@ -131,7 +201,7 @@ describe('runTransactionStatusUpdate tests', () => {
     );
 
     await runTransactionStatusUpdate({
-      serverTransaction: sequentialTransaction,
+      serverTransaction: sequentialTransaction as any,
       sessionId,
       isSequential: true
     });
@@ -147,45 +217,43 @@ describe('runTransactionStatusUpdate tests', () => {
     });
   });
 
-  it('should call manageFailedTransactions and handle error in catch block', async () => {
-    const consoleSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
-    const error = new Error('Test error');
-
+  it('leaves a failed transaction to manageFailedTransactions only', async () => {
     const failedTransaction = {
-      ...mockPendingTransaction,
-      status: TransactionBatchStatusesEnum.fail,
-      hasStatusChanged: true,
-      invalidTransaction: false
+      ...serverTransaction,
+      status: 'fail' as any
     };
 
     (getIsTransactionFailed as jest.Mock).mockReturnValue(true);
-    (updateTransactionAndSessionStatus as jest.Mock).mockReturnValue(
-      TransactionBatchStatusesEnum.fail
-    );
-    (manageFailedTransactions as jest.Mock).mockImplementation(() => {
-      throw error;
-    });
 
     await runTransactionStatusUpdate({
       serverTransaction: failedTransaction,
       sessionId
     });
 
-    expect(updateTransactionAndSessionStatus).toHaveBeenCalledWith({
-      sessionId,
-      transaction: failedTransaction
-    });
-
-    expect(runSessionCallbacks).toHaveBeenCalledWith({
-      sessionId,
-      status: TransactionBatchStatusesEnum.fail
-    });
-
+    expect(manageFailedTransactions).toHaveBeenCalledTimes(1);
     expect(manageFailedTransactions).toHaveBeenCalledWith({
       sessionId,
       transaction: failedTransaction
+    });
+    expect(updateTransactionAndSessionStatus).not.toHaveBeenCalled();
+    expect(runSessionCallbacks).not.toHaveBeenCalled();
+  });
+
+  it('times out a session that is still tracked when processing throws', async () => {
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+    const error = new Error('Test error');
+
+    (getIsTransactionFailed as jest.Mock).mockReturnValue(true);
+    (manageFailedTransactions as jest.Mock).mockImplementation(() => {
+      throw error;
+    });
+    mockSession(['pending', 'pending'], 'sent');
+
+    await runTransactionStatusUpdate({
+      serverTransaction: { ...serverTransaction, status: 'fail' as any },
+      sessionId
     });
 
     expect(consoleSpy).toHaveBeenCalledWith(error);
@@ -197,6 +265,28 @@ describe('runTransactionStatusUpdate tests', () => {
       sessionId,
       status: TransactionBatchStatusesEnum.timedOut
     });
+
+    consoleSpy.mockRestore();
+  });
+
+  it('does not rewrite a settled session when processing throws', async () => {
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    (getIsTransactionFailed as jest.Mock).mockReturnValue(false);
+    (updateTransactionAndSessionStatus as jest.Mock).mockImplementation(() => {
+      throw new Error('Test error');
+    });
+    mockSession(['success'], 'success');
+
+    await runTransactionStatusUpdate({
+      serverTransaction,
+      sessionId
+    });
+
+    expect(updateSessionStatus).not.toHaveBeenCalled();
+    expect(runSessionCallbacks).not.toHaveBeenCalled();
 
     consoleSpy.mockRestore();
   });

@@ -10,6 +10,11 @@ import {
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
 import { setAccountNonce } from 'store/actions/account/accountActions';
+import {
+  getNextReservedNonce,
+  releaseNonces,
+  reserveNonces
+} from 'utils/account/nonceReservations';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { computeNonces } from '../computeNonces/computeNonces';
 
@@ -30,13 +35,19 @@ export async function signTransactionsWithProvider({
   options = {}
 }: SignTransactionsType): Promise<Transaction[]> {
   await refreshAccount();
-  const { isGuarded, activeGuardianAddress, nonce } = getAccount();
+  const { address, isGuarded, activeGuardianAddress, nonce } = getAccount();
   const isLedger = provider.getType() === ProviderTypeEnum.ledger;
 
   const transactionsWithComputedNonce = computeNonces({
-    latestNonce: nonce,
+    latestNonce: Math.max(nonce, getNextReservedNonce(address)),
     transactions
   });
+
+  // Hold the nonces while the user signs, so a concurrent signing picks the next ones
+  const computedNonces = transactionsWithComputedNonce.map((transaction) =>
+    Number(transaction.nonce)
+  );
+  reserveNonces(address, computedNonces);
 
   const transactionsToSign =
     activeGuardianAddress && isGuarded && !options.skipGuardian
@@ -53,8 +64,19 @@ export async function signTransactionsWithProvider({
         })
       : transactionsWithComputedNonce;
 
-  const signedTransactions: Transaction[] =
-    (await provider.signTransactions(transactionsToSign, options)) ?? [];
+  let signedTransactions: Transaction[] = [];
+
+  try {
+    signedTransactions =
+      (await provider.signTransactions(transactionsToSign, options)) ?? [];
+  } finally {
+    releaseNonces(address, computedNonces);
+  }
+
+  reserveNonces(
+    address,
+    signedTransactions.map((transaction) => Number(transaction.nonce))
+  );
 
   if (signedTransactions.length > 0) {
     const highestSignedNonce = signedTransactions.reduce(

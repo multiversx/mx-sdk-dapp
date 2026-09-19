@@ -32,4 +32,20 @@ describe('computeNonces tests', () => {
     expect(r1.nonce).toBe(BigInt(20n));
     expect(r2.nonce).toBe(BigInt(21n));
   });
+
+  test('keeps nonces increasing after an explicitly higher nonce', () => {
+    const [r1, r2] = computeNonces({
+      latestNonce: 7,
+      transactions: [
+        Transaction.newFromPlainObject({
+          ...mockPendingTransaction,
+          nonce: 20
+        }),
+        Transaction.newFromPlainObject({ ...mockPendingTransaction, nonce: 0 })
+      ]
+    });
+
+    expect(r1.nonce).toBe(20n);
+    expect(r2.nonce).toBe(21n);
+  });
 });

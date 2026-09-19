@@ -1,5 +1,6 @@
 export enum SubscriptionsEnum {
   websocketStatusChanged = 'websocketStatusChanged',
   websocketEventReceived = 'websocketEventReceived',
-  websocketCleanup = 'websocketCleanup'
+  websocketCleanup = 'websocketCleanup',
+  transactionsPolling = 'transactionsPolling'
 }
