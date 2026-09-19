@@ -22,6 +22,7 @@ export type TokenType = EsdtEnumType | NftEnumType;
 export interface ISignTransactionsPanelCommonData {
   receiver?: string;
   receiverIcon?: string;
+  receiverScamInfo?: string;
   data?: string;
   decodedData?: Partial<Record<DecodeMethodEnum, DecodedDisplayType>>;
   gasPrice?: string; // formatted gas price

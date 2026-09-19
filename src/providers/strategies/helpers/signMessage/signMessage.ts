@@ -46,55 +46,59 @@ export async function signMessage<T>({
     }
   }
 
-  const signedMsg = await new Promise<Awaited<Message>>(
-    async (resolve, reject) => {
-      const { manager, onClose } = await getPendingTransactionsHandlers({
-        cancelAction
-      });
+  const { manager, onClose } = await getPendingTransactionsHandlers({
+    cancelAction
+  });
 
-      const allProviders = Object.values(ProviderFactory.customProviders);
-      const allCustomProviderLabels = allProviders.reduce(
-        (acc, provider) => {
-          acc[provider.type] = provider.name;
-          return acc;
-        },
-        {} as Record<ProviderType, string>
-      );
-
-      const allProviderLabels = {
-        ...providerLabels,
-        ...allCustomProviderLabels
-      };
-
-      const handleClose = async () => {
-        await onClose({ shouldCancelAction: true });
-        reject({ message: SigningWarningsEnum.cancelled });
-      };
-
-      manager.subscribeToEventBus(
-        PendingTransactionsEventsEnum.CLOSE,
-        handleClose
-      );
-
-      const providerKey = isProviderType(allProviders, providerType)
-        ? providerType
-        : ProviderTypeEnum.none;
-
-      manager.updateData({
-        name: allProviderLabels[providerKey],
-        type: providerKey
-      });
-
-      try {
-        const signedMessage = await handleSignMessage(message);
-        resolve(signedMessage);
-      } catch (err) {
-        await onClose({ shouldCancelAction: true });
-        reject(err);
-      } finally {
-        manager.closeUI();
-      }
-    }
+  const allProviders = Object.values(ProviderFactory.customProviders);
+  const allCustomProviderLabels = allProviders.reduce(
+    (acc, provider) => {
+      acc[provider.type] = provider.name;
+      return acc;
+    },
+    {} as Record<ProviderType, string>
   );
-  return signedMsg;
+
+  const allProviderLabels = {
+    ...providerLabels,
+    ...allCustomProviderLabels
+  };
+
+  const closeWithCancel = async () => {
+    try {
+      await onClose({ shouldCancelAction: true });
+    } catch (error) {
+      console.error('Failed cancelling the signing action', error);
+    }
+  };
+
+  return new Promise<Message>((resolve, reject) => {
+    const handleClose = async () => {
+      await closeWithCancel();
+      reject({ message: SigningWarningsEnum.cancelled });
+    };
+
+    manager.subscribeToEventBus(
+      PendingTransactionsEventsEnum.CLOSE,
+      handleClose
+    );
+
+    const providerKey = isProviderType(allProviders, providerType)
+      ? providerType
+      : ProviderTypeEnum.none;
+
+    manager.updateData({
+      name: allProviderLabels[providerKey],
+      type: providerKey
+    });
+
+    Promise.resolve()
+      .then(() => handleSignMessage(message))
+      .then(resolve)
+      .catch(async (error) => {
+        await closeWithCancel();
+        reject(error);
+      })
+      .finally(() => manager.closeUI());
+  });
 }

@@ -12,6 +12,7 @@ import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
+import { finalizeSignedTransactions } from '../helpers/signTransactions/helpers/finalizeSignedTransactions';
 
 type CrossWindowProviderProps = {
   address?: string;
@@ -78,7 +79,7 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
 
   signTransactions = async (
     transactions: Transaction[],
-    _options?: SignTransactionsOptionsType
+    options?: SignTransactionsOptionsType
   ) => {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
@@ -90,7 +91,7 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
       const signedTransactions: Transaction[] =
         (await this.provider.signTransactions(transactions)) ?? [];
 
-      return signedTransactions;
+      return await finalizeSignedTransactions({ signedTransactions, options });
     } catch (error) {
       await onClose({ shouldCancelAction: true });
 

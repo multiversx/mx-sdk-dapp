@@ -84,4 +84,18 @@ describe('handleSignError tests', () => {
       })
     );
   });
+
+  it.each(['Device unavailable', undefined, null, { code: 1 }])(
+    'does not throw for a %p rejection',
+    (error) => {
+      expect(() => handleSignError(error)).not.toThrow();
+      expect(mockCreateCustomToast).toHaveBeenCalled();
+    }
+  );
+
+  it('matches known errors thrown as strings', () => {
+    expect(handleSignError('Transaction signing cancelled by user')).toBe(
+      'Transaction signing cancelled by user'
+    );
+  });
 });

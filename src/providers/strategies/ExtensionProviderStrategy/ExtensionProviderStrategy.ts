@@ -10,6 +10,7 @@ import {
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
+import { finalizeSignedTransactions } from '../helpers/signTransactions/helpers/finalizeSignedTransactions';
 
 export class ExtensionProviderStrategy extends BaseProviderStrategy {
   private readonly provider: ExtensionProvider;
@@ -61,7 +62,7 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
 
   signTransactions = async (
     transactions: Transaction[],
-    _options?: SignTransactionsOptionsType
+    options?: SignTransactionsOptionsType
   ) => {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
@@ -73,7 +74,7 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
       const signedTransactions: Transaction[] =
         (await this.provider.signTransactions(transactions)) ?? [];
 
-      return signedTransactions;
+      return await finalizeSignedTransactions({ signedTransactions, options });
     } catch (error) {
       await onClose({ shouldCancelAction: false });
       throw error;
