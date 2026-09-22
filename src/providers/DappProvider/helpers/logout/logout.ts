@@ -6,6 +6,7 @@ import { getAddress } from 'methods/account/getAddress';
 import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
 import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
 import { websocketManager } from 'methods/initApp/websocket/registerWebsocket';
+import { emptyProvider } from 'providers/helpers/emptyProvider';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { logoutAction } from 'store/actions/sharedActions/sharedActions';
 import { clearNonceReservations } from 'utils/account/nonceReservations';
@@ -53,6 +54,13 @@ export async function logout({
   };
 
   if (strictLogout) {
+    if (provider === emptyProvider) {
+      broadcastLogout();
+      clearLocalSession();
+
+      return true;
+    }
+
     const isLoggedOut = await provider.logout();
 
     if (!isLoggedOut) {

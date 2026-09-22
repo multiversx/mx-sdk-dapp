@@ -17,6 +17,10 @@ jest.mock('store/store', () => ({
   getState: jest.fn()
 }));
 
+jest.mock('utils/account/nonceReservations', () => ({
+  reserveNonces: jest.fn()
+}));
+
 jest.mock('../runSessionCallbacks', () => ({
   runSessionCallbacks: jest.fn()
 }));
@@ -47,6 +51,7 @@ describe('runTransactionStatusUpdate tests', () => {
     isServerTransactionFailed
   } = jest.requireMock('store/actions/transactions/transactionStateByStatus');
   const { getState } = jest.requireMock('store/store');
+  const { reserveNonces } = jest.requireMock('utils/account/nonceReservations');
   const { runSessionCallbacks } = jest.requireMock('../runSessionCallbacks');
   const { manageFailedTransactions } = jest.requireMock(
     '../runTransactionFailure'
@@ -155,6 +160,21 @@ describe('runTransactionStatusUpdate tests', () => {
       sessionId,
       status: TransactionBatchStatusesEnum.timedOut
     });
+  });
+
+  it('keeps holding the nonce of a stuck transaction', async () => {
+    const stuckTransaction = getStuckTransaction('stuck-hash-nonce');
+    await exhaustRetries(stuckTransaction);
+    mockSession(['timedOut']);
+
+    await runTransactionStatusUpdate({
+      serverTransaction: stuckTransaction,
+      sessionId
+    });
+
+    expect(reserveNonces).toHaveBeenCalledWith(stuckTransaction.sender, [
+      Number(stuckTransaction.nonce)
+    ]);
   });
 
   it('keeps tracking the session when a stuck transaction has pending siblings', async () => {

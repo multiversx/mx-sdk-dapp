@@ -36,13 +36,18 @@ export const createCustomProvider = async ({
   address?: string;
   anchor?: HTMLElement;
 }): Promise<IProvider> => {
+  const { strictProviderRegistration } = getFlagsConfig();
+
   let createdProvider: IProvider;
 
   try {
-    createdProvider = await withTimeout(
-      Promise.resolve(customProvider.constructor({ address, anchor })),
-      CUSTOM_PROVIDER_TIMEOUT_MS
+    const provider = Promise.resolve(
+      customProvider.constructor({ address, anchor })
     );
+
+    createdProvider = strictProviderRegistration
+      ? await withTimeout(provider, CUSTOM_PROVIDER_TIMEOUT_MS)
+      : await provider;
   } catch (error) {
     throw new Error(
       `Custom provider "${customProvider.type}" failed to initialize: ${
@@ -50,8 +55,6 @@ export const createCustomProvider = async ({
       }`
     );
   }
-
-  const { strictProviderRegistration } = getFlagsConfig();
 
   if (strictProviderRegistration && !isProviderShapeValid(createdProvider)) {
     throw new Error(

@@ -71,11 +71,11 @@ export async function initializeWebsocketConnection(address: string) {
         return;
       }
 
-      // `transactionCompleted` wins over `transactionPendingResults`
-      const isCompleted =
-        eventName === WebsocketTransactionEventsEnum.transactionCompleted;
+      // `transactionPendingResults` does not resolve a transaction, the others do
+      const isPendingResults =
+        eventName === WebsocketTransactionEventsEnum.transactionPendingResults;
 
-      if (isCompleted || pendingTransactionHashes.size === 0) {
+      if (!isPendingResults || pendingTransactionHashes.size === 0) {
         pendingTransactionEventName = eventName;
       }
 

@@ -26,8 +26,9 @@ export interface IFlagsConfig {
    */
   strictProviderRegistration?: boolean;
   /**
-   * Keeps `loginInfo.tokenLogin` (loginToken, signature, nativeAuthToken) out
-   * of durable storage.
+   * Persists `loginInfo.tokenLogin` (loginToken, signature, nativeAuthToken).
+   * Set it to `false` to keep it out of durable storage, so that a session
+   * does not survive a reload.
    * @default true
    */
   persistTokenLogin?: boolean;

@@ -24,10 +24,15 @@ export const getSessionExpiration = (
       return expiration;
     }
 
-    const isUndecodable =
-      !decodeNativeAuthToken(nativeAuthToken)?.extraInfo?.timestamp;
+    const decodedToken = decodeNativeAuthToken(nativeAuthToken);
 
-    return isUndecodable ? { isExpired: true } : expiration;
+    if (!decodedToken) {
+      return { isExpired: true };
+    }
+
+    if (decodedToken.extraInfo?.timestamp) {
+      return expiration;
+    }
   }
 
   if (!enforceSessionExpiry) {

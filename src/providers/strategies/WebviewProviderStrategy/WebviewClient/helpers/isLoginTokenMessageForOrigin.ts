@@ -14,7 +14,7 @@ export const isLoginTokenMessage = (message: string) => {
 
   const parts = message.split('.');
 
-  return parts.length === 4 && BLOCK_HASH_REGEX.test(parts[1]);
+  return parts.length >= 4 && BLOCK_HASH_REGEX.test(parts[1]);
 };
 
 export const isLoginTokenMessageForOrigin = ({

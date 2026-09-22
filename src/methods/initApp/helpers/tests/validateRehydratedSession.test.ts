@@ -1,3 +1,4 @@
+import { setFlagsConfig } from 'store/actions/config/configActions';
 import { setTokenLogin } from 'store/actions/loginInfo/loginInfoActions';
 import { loginAction } from 'store/actions/sharedActions/sharedActions';
 import { addressSelector } from 'store/selectors/accountSelectors';
@@ -66,7 +67,16 @@ describe('validateRehydratedSession', () => {
     expect(addressSelector(getState())).toEqual(ADDRESS);
   });
 
-  it('clears a session restored without a nativeAuth token', () => {
+  it('keeps a session restored without a nativeAuth token by default', () => {
+    loginAction({ address: ADDRESS, providerType: 'extension' } as any);
+
+    expect(validateRehydratedSession({ nativeAuthConfig })).toBe(false);
+    expect(addressSelector(getState())).toEqual(ADDRESS);
+    expect(console.warn).toHaveBeenCalled();
+  });
+
+  it('clears a session restored without a nativeAuth token when the token is not persisted', () => {
+    setFlagsConfig({ persistTokenLogin: false });
     loginAction({ address: ADDRESS, providerType: 'extension' } as any);
 
     expect(validateRehydratedSession({ nativeAuthConfig })).toBe(true);

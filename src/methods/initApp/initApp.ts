@@ -21,7 +21,6 @@ import { initializeNetwork } from 'store/actions/network/initializeNetwork';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
 import { ThemesEnum } from 'types/theme.types';
-import { reconcileAccountNonce } from 'utils/account/reconcileAccountNonce';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { resolveFlagsConfig, warnInsecureDefault } from './helpers/flagsConfig';
@@ -84,6 +83,20 @@ export function initApp(props: InitAppType): Promise<void> {
   return initPromise;
 }
 
+async function restoreProviderSafely() {
+  try {
+    await restoreProvider();
+    return true;
+  } catch (error) {
+    console.error(
+      '[sdk-dapp] Could not restore the provider of the stored session, clearing it.',
+      error
+    );
+    clearLocalSession();
+    return false;
+  }
+}
+
 async function runInitApp({
   storage = defaultInitAppProps.storage,
   dAppConfig,
@@ -106,6 +119,8 @@ async function runInitApp({
     });
   }
 
+  setFlagsConfig(dAppConfig?.flags);
+
   const { apiAddress } = await initializeNetwork({
     customNetworkConfig: dAppConfig.network,
     environment: dAppConfig.environment
@@ -121,7 +136,6 @@ async function runInitApp({
         : getDefaultNativeAuthConfig(dAppConfig.nativeAuth);
   }
 
-  setFlagsConfig(dAppConfig?.flags);
   setNativeAuthConfig(nativeAuthConfig);
   setWalletConnectConfig(dAppConfig?.providers?.walletConnect ?? null);
   setProviderSettings(dAppConfig?.providers?.settings ?? null);
@@ -171,11 +185,11 @@ async function runInitApp({
 
   if (!isAppInitialized) {
     listenForLogoutAcrossTabs(clearLocalSession);
-    await restoreProvider();
 
-    if (isLoggedIn) {
+    const isProviderRestored = await restoreProviderSafely();
+
+    if (isLoggedIn && isProviderRestored) {
       await refreshAccount();
-      await reconcileAccountNonce();
       await registerWebsocketListener(account.address);
       trackTransactions();
       LogoutManager.getInstance().init();

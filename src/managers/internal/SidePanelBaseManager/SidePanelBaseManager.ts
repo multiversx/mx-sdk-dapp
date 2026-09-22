@@ -48,12 +48,25 @@ export abstract class SidePanelBaseManager<
     const closingElement = this.uiElement;
 
     if (closingElement?.closeWithAnimation) {
-      this.closePromise = Promise.resolve(closingElement.closeWithAnimation())
+      if (this.closePromise) {
+        // already closing this panel
+        return;
+      }
+
+      const closePromise: Promise<void> = Promise.resolve(
+        closingElement.closeWithAnimation()
+      )
         .catch(() => undefined)
         .then(() => {
-          super.destroy();
+          if (this.closePromise !== closePromise) {
+            return;
+          }
+
           this.closePromise = null;
+          super.destroy();
         });
+
+      this.closePromise = closePromise;
       return;
     }
 

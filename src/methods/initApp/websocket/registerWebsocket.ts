@@ -39,10 +39,18 @@ export async function registerWebsocketListener(address: string) {
 
   websocketManager.connectionKey = connectionKey;
 
-  const { closeConnection } = await initializeWebsocketConnection(address);
+  try {
+    const { closeConnection } = await initializeWebsocketConnection(address);
 
-  websocketManager.closeConnectionRef = () => {
-    closeConnection();
+    websocketManager.closeConnectionRef = () => {
+      closeConnection();
+      websocketManager.connectionKey = undefined;
+    };
+  } catch (error) {
+    console.error(
+      'Websocket unavailable, transactions are tracked by polling.',
+      error
+    );
     websocketManager.connectionKey = undefined;
-  };
+  }
 }

@@ -23,6 +23,10 @@ jest.mock('constants/window.constants', () => ({
   safeWindow: { localStorage: undefined }
 }));
 
+jest.mock('providers/helpers/emptyProvider', () => ({
+  emptyProvider: { logout: jest.fn() }
+}));
+
 jest.mock('managers/LogoutManager/LogoutManager', () => ({
   LogoutManager: { getInstance: () => ({ stop: jest.fn() }) }
 }));
@@ -99,5 +103,17 @@ describe('logout', () => {
       );
       expect(mockLogoutAction).not.toHaveBeenCalled();
     });
+  });
+
+  it('clears the session when strict logout runs without an initialized provider', async () => {
+    mockGetFlagsConfig.mockReturnValue({ strictLogout: true });
+    const { emptyProvider } = jest.requireMock(
+      'providers/helpers/emptyProvider'
+    );
+
+    await expect(logout({ provider: emptyProvider })).resolves.toBe(true);
+
+    expect(mockLogoutAction).toHaveBeenCalled();
+    expect(emptyProvider.logout).not.toHaveBeenCalled();
   });
 });

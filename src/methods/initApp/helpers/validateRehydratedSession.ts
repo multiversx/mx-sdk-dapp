@@ -1,9 +1,19 @@
+import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
+import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
 import { decodeNativeAuthToken } from 'services/nativeAuth/helpers/decodeNativeAuthToken';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
-import { resetStore } from 'store/middleware/logoutMiddleware';
+import { logoutAction } from 'store/actions/sharedActions/sharedActions';
 import { addressSelector } from 'store/selectors/accountSelectors';
 import { tokenLoginSelector } from 'store/selectors/loginInfoSelectors';
-import { getState, getStore } from 'store/store';
+import { getState } from 'store/store';
+
+const clearSession = (reason: string) => {
+  console.warn(`[sdk-dapp] Clearing the restored session: ${reason}.`);
+
+  logoutAction();
+
+  return true;
+};
 
 export const validateRehydratedSession = ({
   nativeAuthConfig
@@ -30,23 +40,26 @@ export const validateRehydratedSession = ({
     return false;
   }
 
-  const reason = !nativeAuthToken
-    ? 'the restored session has no nativeAuth token'
-    : decodeNativeAuthToken(nativeAuthToken)?.origin !== nativeAuthConfig.origin
-      ? 'the restored nativeAuth token was issued for a different origin'
-      : null;
+  if (!nativeAuthToken) {
+    if (getFlagsConfig().persistTokenLogin !== false) {
+      warnInsecureDefault(
+        'persistTokenLogin',
+        'A restored session has no nativeAuth token, so it cannot be checked ' +
+          'against this origin. It is kept as it is.'
+      );
+      return false;
+    }
 
-  if (!reason) {
-    return false;
+    return clearSession('the restored session has no nativeAuth token');
   }
 
-  console.warn(`[sdk-dapp] Clearing the restored session: ${reason}.`);
+  if (
+    decodeNativeAuthToken(nativeAuthToken)?.origin !== nativeAuthConfig.origin
+  ) {
+    return clearSession(
+      'the restored nativeAuth token was issued for a different origin'
+    );
+  }
 
-  getStore().setState(resetStore, false, {
-    type: 'validateRehydratedSession',
-    // @ts-ignore
-    payload: { value: null }
-  });
-
-  return true;
+  return false;
 };

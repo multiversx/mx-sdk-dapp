@@ -28,6 +28,12 @@ describe('isLoginTokenMessage', () => {
     ).toBe(true);
   });
 
+  it('detects a login token pre-image with trailing segments', () => {
+    expect(
+      isLoginTokenMessage(`${testAddress}${createLoginToken(CHILD_ORIGIN)}.x`)
+    ).toBe(true);
+  });
+
   it('ignores regular messages', () => {
     expect(isLoginTokenMessage('Hello world')).toBe(false);
     expect(isLoginTokenMessage('Sign in to example.com at 12.5.2024')).toBe(
@@ -90,6 +96,16 @@ describe('isLoginTokenMessageForOrigin', () => {
       isLoginTokenMessageForOrigin({
         address: testAddress,
         message: `${testAddress}not-a-token`,
+        origin: CHILD_ORIGIN
+      })
+    ).toBe(false);
+  });
+
+  it('rejects a token for another origin that carries a trailing segment', () => {
+    expect(
+      isLoginTokenMessageForOrigin({
+        address: testAddress,
+        message: `${testAddress}${createLoginToken(OTHER_ORIGIN)}.x`,
         origin: CHILD_ORIGIN
       })
     ).toBe(false);

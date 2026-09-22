@@ -1,7 +1,9 @@
 import { EventBus } from '@multiversx/sdk-dapp-ui/utils/EventBus';
 import { account, testNetwork } from '__mocks__';
+import { getEconomics } from 'apiCalls/economics/getEconomics';
 import { Address, Transaction } from 'lib/sdkCore';
 import { SignTransactionsStateManager } from 'managers/internal/SignTransactionsStateManager';
+import { SignEventsEnum } from 'managers/internal/SignTransactionsStateManager/types';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { providerSettingsSelector } from 'store/selectors/configSelectors';
 import { ComponentFactory } from 'utils/ComponentFactory';
@@ -134,6 +136,34 @@ describe('signTransactions flow', () => {
   describe('with the signing panel enabled', () => {
     beforeEach(() => {
       (providerSettingsSelector as jest.Mock).mockReturnValue(null);
+    });
+
+    it('rejects when the panel is closed before the first screen is ready', async () => {
+      const manager = SignTransactionsStateManager.getInstance();
+      let releaseEconomics: () => void = () => {};
+      (getEconomics as jest.Mock).mockImplementationOnce(
+        () => new Promise((resolve) => (releaseEconomics = () => resolve({})))
+      );
+      (getCommonData as jest.Mock).mockResolvedValue({
+        commonData: { needsSigning: true }
+      });
+
+      const signPromise = signTransactions({
+        transactions: [createMultiTransfer()],
+        handleSign,
+        guardTransactions
+      });
+
+      await new Promise(process.nextTick);
+      manager
+        .getEventHandlers(SignEventsEnum.CLOSE)
+        .forEach((handler) => handler());
+
+      await expect(signPromise).rejects.toThrow(
+        'Transaction signing cancelled by user'
+      );
+
+      releaseEconomics();
     });
 
     it('rejects and closes the panel when the first screen cannot be loaded', async () => {

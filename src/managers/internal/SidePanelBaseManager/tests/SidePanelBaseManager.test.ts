@@ -65,4 +65,39 @@ describe('SidePanelBaseManager', () => {
     expect(secondElement.remove).not.toHaveBeenCalled();
     expect((manager as any).uiElement).toBe(secondElement);
   });
+
+  it('does not tear down a panel opened after a double close', async () => {
+    const elements: any[] = [];
+    const resolvers: Array<() => void> = [];
+
+    jest.spyOn(ComponentFactory, 'create').mockImplementation(async () => {
+      const element = {
+        getEventBus: async () => new EventBus(),
+        remove: jest.fn(),
+        closeWithAnimation: jest.fn(
+          () => new Promise<void>((resolve) => resolvers.push(resolve))
+        )
+      };
+      elements.push(element);
+      return element as any;
+    });
+
+    const manager = new TestPanelManager();
+    await manager.openUI();
+
+    manager.closeUI();
+    manager.closeUI();
+
+    expect(resolvers).toHaveLength(1);
+
+    const reopen = manager.openUI();
+    resolvers.forEach((resolve) => resolve());
+    await reopen;
+    await new Promise(process.nextTick);
+
+    const [, secondElement] = elements;
+
+    expect(secondElement.remove).not.toHaveBeenCalled();
+    expect((manager as any).uiElement).toBe(secondElement);
+  });
 });

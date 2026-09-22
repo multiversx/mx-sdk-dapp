@@ -80,6 +80,22 @@ describe('createCustomProvider', () => {
     ).rejects.toThrow('did not return a valid provider');
   });
 
+  it('waits for a slow constructor while strict registration is off', async () => {
+    mockGetFlagsConfig.mockReturnValue({ strictProviderRegistration: false });
+    let finishConstructor: (provider: unknown) => void = () => {};
+
+    const promise = createCustomProvider({
+      customProvider: makeCustomProvider(
+        () => new Promise((resolve) => (finishConstructor = resolve))
+      )
+    });
+
+    jest.advanceTimersByTime(CUSTOM_PROVIDER_TIMEOUT_MS * 2);
+    finishConstructor(validProvider);
+
+    await expect(promise).resolves.toBe(validProvider);
+  });
+
   it('skips the shape check while strict registration is off', async () => {
     mockGetFlagsConfig.mockReturnValue({
       strictProviderRegistration: false

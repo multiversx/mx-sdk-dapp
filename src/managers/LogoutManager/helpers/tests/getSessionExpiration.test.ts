@@ -76,6 +76,28 @@ describe('getSessionExpiration', () => {
       ).toBe(true);
     });
 
+    it('uses the login expiry for a decodable token without a timestamp', () => {
+      const encode = (value: string) =>
+        Buffer.from(value, 'utf8')
+          .toString('base64')
+          .replace(/\+/g, '-')
+          .replace(/\//g, '_')
+          .replace(/=+$/, '');
+
+      const body = `${encode('https://dapp.example')}.${'a'.repeat(64)}.86400.${encode('{}')}`;
+      const token = `${encode('erd1address')}.${encode(body)}.a-signature`;
+
+      const result = getSessionExpiration(
+        makeState({
+          nativeAuthToken: token,
+          loginExpiresAt: Date.now() + HOUR_MS
+        })
+      );
+
+      expect(result.isExpired).toBe(false);
+      expect(result.secondsUntilExpires).toBeGreaterThan(3500);
+    });
+
     it('reports no expiry when nothing indicates one', () => {
       expect(getSessionExpiration(makeState())).toEqual({ isExpired: false });
     });

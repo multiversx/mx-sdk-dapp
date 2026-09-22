@@ -13,6 +13,7 @@ import {
   TrackedTransactionResultType,
   SignedTransactionType
 } from 'types/transactions.types';
+import { reserveNonces } from 'utils/account/nonceReservations';
 import { runSessionCallbacks } from './runSessionCallbacks';
 import { manageFailedTransactions } from './runTransactionFailure';
 import { updateTransactionAndSessionStatus } from './updateTransactionAndSessionStatus';
@@ -54,6 +55,9 @@ const markTransactionAsTimedOut = async ({
       status: TransactionBatchStatusesEnum.timedOut
     }
   });
+
+  // it may still execute, so its nonce stays taken
+  reserveNonces(transaction.sender, [Number(transaction.nonce)]);
 
   const sessionTransactions =
     getState()?.transactions?.[sessionId]?.transactions ?? [];

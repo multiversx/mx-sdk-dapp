@@ -9,6 +9,7 @@ import { waitForStoreRehydration } from 'methods/initApp/helpers/waitForStoreReh
 import { initApp, resetInitAppState } from 'methods/initApp/initApp';
 import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
+import { clearLocalSession } from 'providers/DappProvider/helpers/logout/logout';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
@@ -17,7 +18,6 @@ import { initializeNetwork } from 'store/actions/network/initializeNetwork';
 import { initStore } from 'store/store';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { ThemesEnum } from 'types/theme.types';
-import { reconcileAccountNonce } from 'utils/account/reconcileAccountNonce';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
 
@@ -97,6 +97,17 @@ jest.mock('methods/trackTransactions/trackTransactions', () => ({
 jest.mock('providers/helpers/restoreProvider', () => ({
   restoreProvider: jest.fn().mockResolvedValue(undefined)
 }));
+
+jest.mock('providers/DappProvider/helpers/logout/logout', () => ({
+  clearLocalSession: jest.fn()
+}));
+
+jest.mock(
+  'providers/DappProvider/helpers/logout/listenForLogoutAcrossTabs',
+  () => ({
+    listenForLogoutAcrossTabs: jest.fn()
+  })
+);
 
 jest.mock('methods/account/getAccount', () => ({
   getAccount: jest.fn()
@@ -215,6 +226,24 @@ describe('initApp tests', () => {
       expect(restoreProvider).toHaveBeenCalledTimes(1);
     });
 
+    it('clears the session when the stored provider cannot be restored', async () => {
+      const consoleSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+      (getIsLoggedIn as jest.Mock).mockReturnValue(true);
+      (restoreProvider as jest.Mock).mockRejectedValueOnce(
+        new Error('Unable to create provider')
+      );
+
+      await expect(initApp(config)).resolves.toBeUndefined();
+
+      expect(clearLocalSession).toHaveBeenCalled();
+      expect(refreshAccount).not.toHaveBeenCalled();
+      expect(trackTransactions).not.toHaveBeenCalled();
+
+      consoleSpy.mockRestore();
+    });
+
     it('keeps the store on a second initialization', async () => {
       await initApp(config);
       await initApp(config);
@@ -300,7 +329,6 @@ describe('initApp tests', () => {
 
       // Verify logged-in user steps were NOT called
       expect(refreshAccount).not.toHaveBeenCalled();
-      expect(reconcileAccountNonce).not.toHaveBeenCalled();
       expect(registerWebsocketListener).not.toHaveBeenCalled();
       expect(trackTransactions).not.toHaveBeenCalled();
       expect(mockLogoutManagerInit).not.toHaveBeenCalled();
@@ -350,7 +378,6 @@ describe('initApp tests', () => {
 
       // Verify logged-in user steps WERE called
       expect(refreshAccount).toHaveBeenCalled();
-      expect(reconcileAccountNonce).toHaveBeenCalled();
       expect(registerWebsocketListener).toHaveBeenCalledWith(
         mockAccount.address
       );

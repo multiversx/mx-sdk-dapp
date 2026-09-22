@@ -66,4 +66,32 @@ describe('registerWebsocketListener', () => {
 
     expect(closeConnection).not.toHaveBeenCalled();
   });
+
+  it('does not propagate a websocket that cannot be started', async () => {
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+    mockInitializeWebsocketConnection.mockRejectedValue(
+      new Error('Can not get websocket url')
+    );
+
+    await expect(
+      registerWebsocketListener('erd1first')
+    ).resolves.toBeUndefined();
+
+    expect(websocketManager.closeConnectionRef).toBeUndefined();
+    expect(consoleSpy).toHaveBeenCalled();
+
+    consoleSpy.mockRestore();
+  });
+
+  it('connects again after a failed attempt', async () => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    mockInitializeWebsocketConnection.mockRejectedValueOnce(new Error('down'));
+
+    await registerWebsocketListener('erd1first');
+    await registerWebsocketListener('erd1first');
+
+    expect(mockInitializeWebsocketConnection).toHaveBeenCalledTimes(2);
+  });
 });

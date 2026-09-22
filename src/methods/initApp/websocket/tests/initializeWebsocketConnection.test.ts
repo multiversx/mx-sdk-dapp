@@ -228,6 +228,27 @@ describe('initializeWebsocketConnection tests', () => {
     });
   });
 
+  it('should let batchUpdated win over transactionPendingResults in a burst', async () => {
+    await initializeWebsocketConnection(account.address);
+
+    const findHandler = (eventName: string) =>
+      mockSocketInstance.on.mock.calls.find(
+        (call: any[]) => call[0] === eventName
+      )?.[1];
+
+    findHandler('transactionPendingResults')('hash-1');
+    findHandler('batchUpdated')({
+      batchId: 'batch-1',
+      txHashes: ['hash-2', 'hash-3']
+    });
+    jest.advanceTimersByTime(300);
+
+    expect(setWebsocketTransactionEvent).toHaveBeenCalledWith({
+      eventName: 'batchUpdated',
+      hashes: ['hash-1', 'hash-2', 'hash-3']
+    });
+  });
+
   it('should feed batchUpdated hashes into the transaction event', async () => {
     await initializeWebsocketConnection(account.address);
 

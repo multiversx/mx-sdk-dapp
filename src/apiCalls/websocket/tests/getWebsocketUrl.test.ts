@@ -50,4 +50,22 @@ describe('getWebsocketUrl', () => {
       'Can not get websocket url'
     );
   });
+
+  it('accepts a url that already carries the wss scheme', async () => {
+    mockedGet.mockResolvedValue({
+      data: { url: 'wss://socket.example.com' }
+    });
+
+    await expect(
+      getWebsocketUrl('https://api.multiversx.com')
+    ).resolves.toEqual('wss://socket.example.com');
+  });
+
+  it('rejects a url that carries an insecure scheme', async () => {
+    mockedGet.mockResolvedValue({ data: { url: 'ws://socket.example.com' } });
+
+    await expect(
+      getWebsocketUrl('https://api.multiversx.com')
+    ).rejects.toThrow();
+  });
 });

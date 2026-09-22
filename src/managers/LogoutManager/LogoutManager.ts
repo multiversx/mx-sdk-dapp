@@ -48,9 +48,22 @@ export class LogoutManager {
     if (isSessionExpired) {
       this.stop();
       const provider = getAccountProvider();
-      provider.logout();
+      this.logoutProvider(provider);
     } else {
       this.addPlannedLogout();
+    }
+  };
+
+  private readonly logoutProvider = (provider: {
+    logout: () => Promise<boolean>;
+  }) => {
+    const onError = (error: unknown) =>
+      console.error('Failed logging out the session', error);
+
+    try {
+      provider.logout()?.catch?.(onError);
+    } catch (error) {
+      onError(error);
     }
   };
 
@@ -148,7 +161,7 @@ export class LogoutManager {
         return;
       }
 
-      provider.logout();
+      this.logoutProvider(provider);
       this.plannedLogoutTimeoutRef = null;
       this.plannedLogoutKey = null;
     }, millisecondsUntilLogout.toNumber());

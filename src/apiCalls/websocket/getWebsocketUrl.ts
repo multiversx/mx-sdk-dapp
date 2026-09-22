@@ -5,11 +5,17 @@ const buildWebsocketUrl = (host: string): string => {
     throw new Error('Websocket config returned no url');
   }
 
-  if (/[@?#]/.test(host) || host.includes('://')) {
+  if (/[@?#]/.test(host)) {
     throw new Error(`Websocket config returned an unexpected url: "${host}"`);
   }
 
-  const url = new URL(`wss://${host}`);
+  const hasScheme = host.includes('://');
+
+  if (hasScheme && !host.startsWith('wss://')) {
+    throw new Error(`Websocket url must use wss, got "${host}"`);
+  }
+
+  const url = new URL(hasScheme ? host : `wss://${host}`);
 
   if (url.protocol !== 'wss:') {
     throw new Error(`Websocket url must use wss, got "${url.protocol}//"`);

@@ -75,13 +75,6 @@ export async function signTransactions({
   const manager = SignTransactionsStateManager.getInstance();
   await manager.openUI();
 
-  const handleCancel = async () => {
-    await cancelCrossWindowAction();
-    manager.closeUI();
-  };
-
-  manager.subscribeToEventBus(SignEventsEnum.CLOSE, handleCancel);
-
   return new Promise<Transaction[]>((resolve, reject) => {
     const signedTransactions: Transaction[] = [];
     let price: number | undefined;
@@ -275,6 +268,9 @@ export async function signTransactions({
     const onSign = () => {
       sign().catch(fail);
     };
+
+    // the panel can be closed before the first screen is ready
+    manager.subscribeToEventBus(SignEventsEnum.CLOSE, onCancel);
 
     const eventHandlersMap = new Map<SignEventsEnum, (...args: any[]) => void>([
       [SignEventsEnum.NEXT, onNext],
