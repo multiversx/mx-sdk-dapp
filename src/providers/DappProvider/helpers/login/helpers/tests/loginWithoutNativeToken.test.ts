@@ -41,4 +41,15 @@ describe('loginWithoutNativeToken tests', () => {
 
     expect(result).toEqual({ address });
   });
+
+  test('uses the address returned by login when the provider cannot report it', async () => {
+    provider.login.mockResolvedValue({ address, signature: '' });
+    provider.getAddress.mockRejectedValue(new Error('Method not implemented.'));
+    (accountLogin as jest.Mock).mockResolvedValue(undefined);
+
+    const result = await loginWithoutNativeToken(provider);
+
+    expect(provider.getAddress).not.toHaveBeenCalled();
+    expect(result).toEqual({ address });
+  });
 });

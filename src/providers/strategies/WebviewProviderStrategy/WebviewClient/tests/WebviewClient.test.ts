@@ -342,6 +342,28 @@ describe('WebviewClient', () => {
       expect(onLoginCancelled).toHaveBeenCalledTimes(1);
     });
 
+    it('ignores cancel messages from an allowed origin that do not come from a child frame', async () => {
+      const { handleMessage, onLoginCancelled } = createClient([CHILD_ORIGIN]);
+      mockSignMessage.mockImplementation(() => new Promise(() => null));
+
+      await handleMessage(
+        createEvent({
+          type: WindowProviderRequestEnums.loginRequest,
+          payload: { token: createLoginToken(CHILD_ORIGIN) }
+        })
+      );
+
+      await handleMessage(
+        createEvent({
+          type: 'cancelAction',
+          origin: CHILD_ORIGIN,
+          source: { postMessage: jest.fn() }
+        })
+      );
+
+      expect(onLoginCancelled).not.toHaveBeenCalled();
+    });
+
     it('ignores cancel messages from an origin that is neither a child nor a wallet', async () => {
       const { handleMessage, onLoginCancelled } = createClient([CHILD_ORIGIN]);
       mockSignMessage.mockImplementation(() => new Promise(() => null));
@@ -452,6 +474,52 @@ describe('WebviewClient', () => {
         expect.objectContaining({
           type: WindowProviderResponseEnums.signTransactionsResponse
         }),
+        { targetOrigin: CHILD_ORIGIN }
+      );
+    });
+  });
+
+  describe('signing failures', () => {
+    it('answers a failed message signing with an error', async () => {
+      const { handleMessage } = createClient([CHILD_ORIGIN]);
+      mockSignMessage.mockRejectedValue(new Error('rejected'));
+      const event = createEvent({
+        type: WindowProviderRequestEnums.signMessageRequest,
+        payload: { message: 'Hello world' }
+      });
+
+      await handleMessage(event);
+      await flushPromises();
+
+      expect(
+        (event.source as unknown as { postMessage: jest.Mock }).postMessage
+      ).toHaveBeenCalledWith(
+        {
+          type: WindowProviderResponseEnums.signMessageResponse,
+          payload: { error: expect.any(String) }
+        },
+        { targetOrigin: CHILD_ORIGIN }
+      );
+    });
+
+    it('answers a failed transactions signing with an error', async () => {
+      const { handleMessage } = createClient([CHILD_ORIGIN]);
+      mockSignTransactions.mockRejectedValue(new Error('rejected'));
+      const event = createEvent({
+        type: WindowProviderRequestEnums.signTransactionsRequest,
+        payload: [createPlainTransaction()]
+      });
+
+      await handleMessage(event);
+      await flushPromises();
+
+      expect(
+        (event.source as unknown as { postMessage: jest.Mock }).postMessage
+      ).toHaveBeenCalledWith(
+        {
+          type: WindowProviderResponseEnums.signTransactionsResponse,
+          payload: { error: expect.any(String) }
+        },
         { targetOrigin: CHILD_ORIGIN }
       );
     });

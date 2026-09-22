@@ -11,7 +11,8 @@ const mockWebviewProvider = {
   isInitialized: jest.fn(),
   signTransactions: jest.fn(),
   signMessage: jest.fn(),
-  cancelAction: jest.fn()
+  cancelAction: jest.fn(),
+  getAccount: jest.fn()
 };
 
 jest.mock('@multiversx/sdk-webview-provider/out/WebviewProvider', () => ({
@@ -33,6 +34,11 @@ jest.mock('constants/window.constants', () => {
 });
 
 const mockClearSdkDappStorage = jest.fn();
+const mockClearLocalSession = jest.fn();
+
+jest.mock('providers/DappProvider/helpers/logout/logout', () => ({
+  clearLocalSession: () => mockClearLocalSession()
+}));
 
 jest.mock('store/storage/clearSdkDappStorage', () => ({
   clearSdkDappStorage: (...args: unknown[]) => mockClearSdkDappStorage(...args)
@@ -88,6 +94,7 @@ describe('WebviewProviderStrategy tests', () => {
     const { resetStateCallback } = WebviewProvider.getInstance.mock.calls[0][0];
     resetStateCallback();
 
+    expect(mockClearLocalSession).toHaveBeenCalled();
     expect(mockClearSdkDappStorage).toHaveBeenCalledWith({
       clearAllStorage: undefined
     });
@@ -142,10 +149,20 @@ describe('WebviewProviderStrategy tests', () => {
     expect(strategy.getType()).toBe(ProviderTypeEnum.webview);
   });
 
-  it('getAddress throws because method not implemented', () => {
+  it('getAddress returns the logged in account address', async () => {
+    mockWebviewProvider.getAccount.mockReturnValue({
+      address: account.address
+    });
     const strategy = new WebviewProviderStrategy();
 
-    expect(() => strategy.getAddress()).toThrow('Method not implemented.');
+    await expect(strategy.getAddress()).resolves.toBe(account.address);
+  });
+
+  it('getAddress falls back to the address it was created with', async () => {
+    mockWebviewProvider.getAccount.mockReturnValue(null);
+    const strategy = new WebviewProviderStrategy({ address: account.address });
+
+    await expect(strategy.getAddress()).resolves.toBe(account.address);
   });
 
   it('setAccount delegates to provider', () => {

@@ -88,8 +88,9 @@ export class WebviewClient {
     }
   }
 
+  // Embedded dApps cancel through the trusted-sender path; these are the hosts
   private getCancelOrigins(): Set<string> {
-    const origins = new Set<string>(this.allowedOrigins);
+    const origins = new Set<string>();
 
     const ownOrigin = safeWindow.location?.origin;
 
@@ -293,8 +294,12 @@ export class WebviewClient {
           }
         }
       });
-    } catch {
-      throw new Error('Could not sign message');
+    } catch (error) {
+      console.error('Could not sign message', error);
+      this.respond(event, {
+        type: WindowProviderResponseEnums.signMessageResponse,
+        payload: { error: 'Could not sign message' }
+      });
     }
   }
 
@@ -318,8 +323,12 @@ export class WebviewClient {
           data: signedTx.map((tx) => tx.toPlainObject())
         }
       });
-    } catch {
-      throw new Error('Could not sign transactions');
+    } catch (error) {
+      console.error('Could not sign transactions', error);
+      this.respond(event, {
+        type: WindowProviderResponseEnums.signTransactionsResponse,
+        payload: { error: 'Could not sign transactions' }
+      });
     }
   }
 }

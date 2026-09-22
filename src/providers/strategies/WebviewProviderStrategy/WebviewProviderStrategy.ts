@@ -2,6 +2,7 @@ import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewPro
 import { version } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
+import { clearLocalSession } from 'providers/DappProvider/helpers/logout/logout';
 import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
 import {
   ProviderTypeEnum,
@@ -28,6 +29,7 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
           Used in Hub to clear storage when logging out via the hub header.
           Scoped to sdk-dapp keys so that state owned by the host app survives;          
         */
+        clearLocalSession();
         clearSdkDappStorage({
           clearAllStorage: config?.clearAllStorageOnLogout
         });
@@ -51,7 +53,7 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
   }
 
   getAddress(): Promise<string | undefined> {
-    throw new Error('Method not implemented.');
+    return Promise.resolve(this.provider.getAccount()?.address || this.address);
   }
 
   setAccount(account: IDAppProviderAccount): void {

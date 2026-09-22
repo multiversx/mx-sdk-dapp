@@ -7,9 +7,9 @@ export async function loginWithoutNativeToken(provider: IProvider) {
     network: { apiAddress }
   } = getNetworkConfig();
 
-  await provider.login();
+  const loginResult = await provider.login();
 
-  const address = await provider.getAddress();
+  const address = loginResult?.address || (await provider.getAddress());
 
   if (!address) {
     throw new Error('Address not found');
