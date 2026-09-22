@@ -26,6 +26,11 @@ export class DappProvider {
 
   async login(options?: { token?: string }) {
     const data = await login(this.provider, options);
+
+    if (!data) {
+      return data;
+    }
+
     setProviderType(this.provider.getType());
     setAccountProvider(this);
     LogoutManager.getInstance().init();
@@ -48,11 +53,11 @@ export class DappProvider {
 
     this._isLoggingOut = true;
 
-    const isLoggedOut = await logout({ provider: this.provider, options });
-
-    this._isLoggingOut = false;
-
-    return isLoggedOut;
+    try {
+      return await logout({ provider: this.provider, options });
+    } finally {
+      this._isLoggingOut = false;
+    }
   }
 
   getType() {

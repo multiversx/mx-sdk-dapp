@@ -136,10 +136,19 @@ export class UnlockPanelManager extends SidePanelBaseManager<
       if (getIsSimpleLoginCallback(UnlockPanelManager.loginHandler)) {
         const provider = await ProviderFactory.create({ type, anchor });
         const token = UnlockPanelManager.token;
-        await provider.login(token ? { token } : undefined);
+        const loginResult = await provider.login(token ? { token } : undefined);
+
+        if (!loginResult) {
+          this.eventBus?.publish(
+            UnlockPanelEventsEnum.CANCEL_IN_PROVIDER,
+            this.data
+          );
+          return;
+        }
+
         UnlockPanelManager.loginHandler();
       } else {
-        UnlockPanelManager.loginHandler({
+        await UnlockPanelManager.loginHandler({
           type,
           anchor
         });

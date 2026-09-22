@@ -5,6 +5,19 @@ jest.mock('../helpers/logout/logout', () => ({
   logout: jest.fn()
 }));
 
+jest.mock('../helpers/login/login', () => ({
+  login: jest.fn()
+}));
+
+jest.mock('providers/helpers/accountProvider', () => ({
+  setAccountProvider: jest.fn()
+}));
+
+jest.mock('managers/LogoutManager/LogoutManager', () => {
+  const init = jest.fn();
+  return { LogoutManager: { getInstance: () => ({ init }) } };
+});
+
 const { logout: mockLogout } = jest.requireMock('../helpers/logout/logout') as {
   logout: jest.Mock;
 };
@@ -56,6 +69,38 @@ describe('DappProvider tests', () => {
     });
     expect(result).toBe(true);
     expect((dappProvider as any)._isLoggingOut).toBe(false);
+  });
+
+  it('allows a retry after a logout that threw', async () => {
+    const providerMock = {} as IProvider;
+    mockLogout.mockRejectedValueOnce(new Error('provider still active'));
+    mockLogout.mockResolvedValueOnce(true);
+    const dappProvider = new DappProvider(providerMock);
+
+    await expect(dappProvider.logout()).rejects.toThrow(
+      'provider still active'
+    );
+
+    await expect(dappProvider.logout()).resolves.toBe(true);
+    expect(mockLogout).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not register the provider when login returns no account', async () => {
+    const { login: mockLogin } = jest.requireMock('../helpers/login/login');
+    const { setAccountProvider } = jest.requireMock(
+      'providers/helpers/accountProvider'
+    );
+    const { LogoutManager } = jest.requireMock(
+      'managers/LogoutManager/LogoutManager'
+    );
+    mockLogin.mockResolvedValue(null);
+    const providerMock = { getType: jest.fn() } as unknown as IProvider;
+
+    const result = await new DappProvider(providerMock).login();
+
+    expect(result).toBeNull();
+    expect(setAccountProvider).not.toHaveBeenCalled();
+    expect(LogoutManager.getInstance().init).not.toHaveBeenCalled();
   });
 
   it('getProvider returns the same provider instance', () => {

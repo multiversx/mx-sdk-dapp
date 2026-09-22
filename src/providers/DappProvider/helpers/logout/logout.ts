@@ -1,6 +1,7 @@
 import { tokenDataStorage } from 'apiCalls/tokens/tokenDataStorage';
 import { subscriptions } from 'constants/storage.constants';
 import { safeWindow } from 'constants/window.constants';
+import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 import { getAddress } from 'methods/account/getAddress';
 import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
 import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
@@ -24,8 +25,9 @@ interface IProviderLogout {
   options?: LogoutPropsType;
 }
 
-const clearLocalSession = () => {
+export const clearLocalSession = () => {
   logoutAction();
+  LogoutManager.getInstance().stop();
   clearNonceReservations();
   tokenDataStorage.clear();
 
@@ -44,9 +46,11 @@ export async function logout({
   const address = getAddress();
   const { strictLogout } = getFlagsConfig();
 
-  if (options.shouldBroadcastLogoutAcrossTabs && safeWindow.localStorage) {
-    broadcastLogoutAcrossTabs(address, safeWindow.localStorage);
-  }
+  const broadcastLogout = () => {
+    if (options.shouldBroadcastLogoutAcrossTabs && safeWindow.localStorage) {
+      broadcastLogoutAcrossTabs(address, safeWindow.localStorage);
+    }
+  };
 
   if (strictLogout) {
     const isLoggedOut = await provider.logout();
@@ -57,10 +61,13 @@ export async function logout({
       );
     }
 
+    broadcastLogout();
     clearLocalSession();
 
     return true;
   }
+
+  broadcastLogout();
 
   try {
     clearLocalSession();

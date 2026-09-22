@@ -23,6 +23,10 @@ jest.mock('constants/window.constants', () => ({
   safeWindow: { localStorage: undefined }
 }));
 
+jest.mock('managers/LogoutManager/LogoutManager', () => ({
+  LogoutManager: { getInstance: () => ({ stop: jest.fn() }) }
+}));
+
 const makeProvider = (logoutImpl: () => Promise<boolean>) =>
   ({ logout: jest.fn(logoutImpl) }) as any;
 
