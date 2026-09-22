@@ -8,14 +8,15 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
+    environment: npm-publish
     permissions:
       contents: write
-      packages: write
+      id-token: write
     steps:
       - name: Fix permissions
         run: |
@@ -32,7 +33,7 @@ jobs:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
       - name: Setup pnpm
-        run: npm install -g pnpm
+        run: corepack enable && corepack prepare --activate
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -45,14 +46,22 @@ jobs:
 
       - name: Get package info
         id: package
-        uses: andreigiura/action-nodejs-package-info@v1.0.2
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+          if [[ "$version" == *-* ]]; then
+            echo "is-prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is-prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ steps.package.outputs.is-prerelease == 'false' }}
         run: |
-          RELEASE_TAG=v$(node -p "require('./package.json').version")
+          RELEASE_TAG=v${{ steps.package.outputs.version }}
           echo "Creating release for version: $RELEASE_TAG"
 
           changelog_content=$(awk "/^## \[\[?${RELEASE_TAG#v}[^\]]*\]/{flag=1; next} /^## \[/{flag=0} flag" CHANGELOG.md)
@@ -73,10 +82,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.package.outputs.is-prerelease == 'true'}}
-        run: echo ${{ steps.package.outputs.is-prerelease}} && npm publish --tag next
+        run: npm publish --provenance --tag next
 
       - name: Publish to npmjs
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.package.outputs.is-prerelease == 'false' }}
-        run: npm publish
+        run: npm publish --provenance

@@ -8,9 +8,15 @@ on:
       - '**.js'
       - '**.ts'
       - '**.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - '.github/workflows/**'
   repository_dispatch:
     types: run-unit-tests
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -37,10 +43,14 @@ jobs:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
       - name: Setup pnpm
-        run: npm install -g pnpm
+        run: corepack enable && corepack prepare --activate
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
       - name: Build
         run: pnpm build
       - name: Run unit tests
         run: pnpm test --silent
+      - name: Check dependencies
+        run: pnpm audit --prod --audit-level=high
