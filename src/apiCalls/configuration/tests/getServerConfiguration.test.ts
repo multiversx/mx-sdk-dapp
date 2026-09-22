@@ -15,7 +15,7 @@ describe('getServerConfiguration tests', () => {
         walletConnectBridgeAddresses: ['https://bridge.walletconnect.org'],
         walletAddress: 'https://devnet-wallet.multiversx.com',
         apiAddress: 'https://devnet-api.multiversx.com',
-        explorerAddress: 'http://devnet-explorer.multiversx.com',
+        explorerAddress: 'https://devnet-explorer.multiversx.com',
         chainId: 'D',
         decimals: '18',
         digits: '4'

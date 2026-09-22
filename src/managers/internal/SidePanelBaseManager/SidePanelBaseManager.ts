@@ -13,6 +13,7 @@ export abstract class SidePanelBaseManager<
   TEventEnum extends string
 > extends UIBaseManager<TElement, TData, TEventEnum> {
   protected isOpen = false;
+  private closePromise: Promise<void> | null = null;
 
   constructor({
     uiDataUpdateEvent,
@@ -29,6 +30,9 @@ export abstract class SidePanelBaseManager<
   }
 
   public async openUI() {
+    // A panel that is closing has to finish before it can open again
+    await this.closePromise;
+
     if (this.isOpen && this.uiElement) {
       // UI element is already open
       return;
@@ -41,12 +45,18 @@ export abstract class SidePanelBaseManager<
   public destroy() {
     this.setIsSidePanelOpen(false);
 
-    if (this.uiElement?.closeWithAnimation) {
-      this.uiElement?.closeWithAnimation?.().finally(() => {
-        super.destroy();
-      });
+    const closingElement = this.uiElement;
+
+    if (closingElement?.closeWithAnimation) {
+      this.closePromise = Promise.resolve(closingElement.closeWithAnimation())
+        .catch(() => undefined)
+        .then(() => {
+          super.destroy();
+          this.closePromise = null;
+        });
       return;
     }
+
     super.destroy();
   }
 

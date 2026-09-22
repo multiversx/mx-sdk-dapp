@@ -90,6 +90,11 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   /**
    * Close the notifications feed and toggle on the toast manager.
    */
+  private readonly handleCloseEvent = () => this.handleCloseUI();
+
+  private readonly handleClearEvent = () =>
+    this.handleClearNotificationsFeedHistory();
+
   protected async handleCloseUI() {
     const toastManager = ToastManager.getInstance();
     this.closeUI();
@@ -103,12 +108,12 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
 
     this.subscribeToEventBus(
       NotificationsFeedEventsEnum.CLOSE,
-      this.handleCloseUI.bind(this)
+      this.handleCloseEvent
     );
 
     this.subscribeToEventBus(
       NotificationsFeedEventsEnum.CLEAR,
-      this.handleClearNotificationsFeedHistory.bind(this)
+      this.handleClearEvent
     );
   }
 

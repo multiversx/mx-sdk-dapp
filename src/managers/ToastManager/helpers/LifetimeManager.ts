@@ -23,13 +23,15 @@ export class LifetimeManager {
   }
 
   public start = (toastId: string) => {
-    this.stop(toastId);
-
-    if (this.successfulToastLifetime <= 0) {
+    if (
+      this.timeoutIntervals.has(toastId) ||
+      this.successfulToastLifetime <= 0
+    ) {
       return;
     }
 
     const timeout = setTimeout(() => {
+      this.timeoutIntervals.delete(toastId);
       removeTransactionToast(toastId);
     }, this.successfulToastLifetime);
 
@@ -37,15 +39,14 @@ export class LifetimeManager {
   };
 
   public startWithCustomDuration = (toastId: string, duration: number) => {
-    this.stop(toastId);
-
-    if (duration <= 0) {
+    if (this.timeoutIntervals.has(toastId) || duration <= 0) {
       return;
     }
 
     const timeout = setTimeout(() => {
-      removeCustomToast(toastId);
+      this.timeoutIntervals.delete(toastId);
       const handleClose = customToastCloseHandlersDictionary[toastId];
+      removeCustomToast(toastId);
       handleClose?.();
     }, duration);
 

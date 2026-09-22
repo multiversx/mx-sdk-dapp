@@ -8,7 +8,7 @@ export const network = {
   gasPerDataByte: '1500',
   walletAddress: 'https://devnet-wallet.multiversx.com',
   apiAddress: 'https://devnet-api.multiversx.com',
-  explorerAddress: 'http://devnet-explorer.multiversx.com',
+  explorerAddress: 'https://devnet-explorer.multiversx.com',
   apiTimeout: '4000',
   roundDuration: 600,
   iframeWalletAddress: 'https://devnet-iframe-wallet.multiversx.com',

@@ -17,7 +17,7 @@ export class ToastUICoordinator {
   private eventBus: IEventBus<
     ITransactionToast[] | CustomToastType[] | null
   > | null = null;
-  private isCreatingElement = false;
+  private creationPromise: Promise<MvxToastList | null> | null = null;
   private eventBusUnsubscribeFunctions: (() => void)[] = [];
   private readonly notificationsFeedManager: NotificationsFeedManager;
   private readonly store: StoreObjectType;
@@ -80,9 +80,9 @@ export class ToastUICoordinator {
     );
   }
 
-  private handleOpenNotificationsFeed() {
+  private readonly handleOpenNotificationsFeed = () => {
     this.notificationsFeedManager.openNotificationsFeed();
-  }
+  };
 
   public destroy() {
     this.eventBusUnsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
@@ -95,13 +95,15 @@ export class ToastUICoordinator {
       return this.toastsElement;
     }
 
-    if (!this.isCreatingElement) {
-      this.isCreatingElement = true;
-      this.toastsElement = await ComponentFactory.create<MvxToastList>({
+    if (!this.creationPromise) {
+      this.creationPromise = ComponentFactory.create<MvxToastList>({
         name: UITagsEnum.TOAST_LIST
+      }).finally(() => {
+        this.creationPromise = null;
       });
-      this.isCreatingElement = false;
     }
+
+    this.toastsElement = await this.creationPromise;
 
     return this.toastsElement;
   }
@@ -126,13 +128,13 @@ export class ToastUICoordinator {
 
     this.eventBus.subscribe(
       ToastEventsEnum.OPEN_NOTIFICATIONS_FEED,
-      this.handleOpenNotificationsFeed.bind(this)
+      this.handleOpenNotificationsFeed
     );
 
     this.eventBusUnsubscribeFunctions.push(() => {
       this.eventBus?.unsubscribe(
         ToastEventsEnum.OPEN_NOTIFICATIONS_FEED,
-        this.handleOpenNotificationsFeed.bind(this)
+        this.handleOpenNotificationsFeed
       );
     });
   }

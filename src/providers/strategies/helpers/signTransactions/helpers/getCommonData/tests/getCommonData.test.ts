@@ -37,7 +37,7 @@ const mockData: GetCommonDataPropsType = {
 };
 
 jest.mock('methods/network/getExplorerAddress', () => ({
-  getExplorerAddress: jest.fn(() => 'http://devnet-explorer.multiversx.com')
+  getExplorerAddress: jest.fn(() => 'https://devnet-explorer.multiversx.com')
 }));
 
 describe('getCommonData tests', () => {
@@ -110,7 +110,7 @@ describe('getCommonData tests', () => {
         address:
           'erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
         explorerLink:
-          'http://devnet-explorer.multiversx.com/accounts/erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
+          'https://devnet-explorer.multiversx.com/accounts/erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
         origin: 'http://localhost',
         username: undefined
       },
@@ -257,7 +257,7 @@ describe('when the gas limit is updated', () => {
         address:
           'erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
         explorerLink:
-          'http://devnet-explorer.multiversx.com/accounts/erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
+          'https://devnet-explorer.multiversx.com/accounts/erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
         origin: 'http://localhost',
         username: undefined
       },
@@ -350,7 +350,7 @@ describe('when the gas limit is updated', () => {
         address:
           'erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
         explorerLink:
-          'http://devnet-explorer.multiversx.com/accounts/erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
+          'https://devnet-explorer.multiversx.com/accounts/erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
         origin: 'http://localhost',
         username: undefined
       },

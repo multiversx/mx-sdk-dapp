@@ -11,6 +11,8 @@ export class PendingTransactionsStateManager extends SidePanelBaseManager<
 > {
   private static instance: PendingTransactionsStateManager;
 
+  private readonly handleCloseEvent = () => this.closeUI();
+
   protected initialData: IProviderBase | null = null;
 
   public static getInstance(): PendingTransactionsStateManager {
@@ -41,7 +43,7 @@ export class PendingTransactionsStateManager extends SidePanelBaseManager<
 
     this.subscribeToEventBus(
       PendingTransactionsEventsEnum.CLOSE,
-      this.closeUI.bind(this)
+      this.handleCloseEvent
     );
   }
 }

@@ -18,6 +18,8 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
   SignEventsEnum
 > {
   private static instance: SignTransactionsStateManager;
+
+  private readonly handleCloseEvent = () => this.closeUI();
   public readonly addressesPerPage = 10;
 
   private _gasPriceOptionMap: Record<
@@ -168,6 +170,6 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
       return;
     }
 
-    this.subscribeToEventBus(SignEventsEnum.CLOSE, this.closeUI.bind(this));
+    this.subscribeToEventBus(SignEventsEnum.CLOSE, this.handleCloseEvent);
   }
 }

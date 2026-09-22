@@ -13,7 +13,7 @@ export abstract class UIBaseManager<
 > {
   protected eventBus: IEventBus | null = null;
   protected uiElement: TElement | null = null;
-  protected isCreatingElement = false;
+  private creationPromise: Promise<TElement | null> | null = null;
   protected anchor?: HTMLElement;
   protected uiTag: UITagsEnum;
   protected uiDataUpdateEvent: TEventEnum;
@@ -48,6 +48,12 @@ export abstract class UIBaseManager<
   public subscribeToEventBus(event: TEventEnum, callback: Function) {
     if (!this.eventBus) {
       throw new Error(ProviderErrorsEnum.eventBusError);
+    }
+
+    const registeredHandlers = this.eventHandlers.get(event) || [];
+
+    if (registeredHandlers.includes(callback)) {
+      return;
     }
 
     const unsubscribe = this.eventBus?.subscribe(event, callback);
@@ -106,18 +112,20 @@ export abstract class UIBaseManager<
   private async createUIElement(
     anchor: HTMLElement | undefined = this.anchor
   ): Promise<TElement | null> {
-    if (this.isCreatingElement || this.uiElement) {
+    if (this.uiElement) {
       return this.uiElement;
     }
 
-    this.isCreatingElement = true;
+    if (!this.creationPromise) {
+      this.creationPromise = ComponentFactory.create<TElement>({
+        name: this.uiTag,
+        anchor
+      }).finally(() => {
+        this.creationPromise = null;
+      });
+    }
 
-    this.uiElement = await ComponentFactory.create<TElement>({
-      name: this.uiTag,
-      anchor
-    });
-
-    this.isCreatingElement = false;
+    this.uiElement = await this.creationPromise;
 
     if (!this.uiElement) {
       throw new Error(`Failed to create ${this.uiTag} element`);

@@ -61,6 +61,9 @@ export const addCustomToast = (
 };
 
 export const removeCustomToast = (toastId: string) => {
+  delete customToastCloseHandlersDictionary[toastId];
+  delete customToastComponentDictionary[toastId];
+
   getStore().setState(
     ({ toasts: state }) => {
       state.customToasts = state.customToasts.filter(
@@ -79,6 +82,13 @@ export const removeCustomToast = (toastId: string) => {
 };
 
 export const removeAllCustomToasts = () => {
+  Object.keys(customToastCloseHandlersDictionary).forEach(
+    (toastId) => delete customToastCloseHandlersDictionary[toastId]
+  );
+  Object.keys(customToastComponentDictionary).forEach(
+    (toastId) => delete customToastComponentDictionary[toastId]
+  );
+
   getStore().setState(
     ({ toasts: state }) => {
       state.customToasts = [];

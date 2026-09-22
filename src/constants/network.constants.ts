@@ -17,7 +17,7 @@ export const fallbackNetworkConfigurations: Record<
     iframeWalletAddress: 'https://devnet-snap.multiversx.com',
     xAliasAddress: 'https://devnet.xalias.com',
     apiAddress: 'https://devnet-api.multiversx.com',
-    explorerAddress: 'http://devnet-explorer.multiversx.com',
+    explorerAddress: 'https://devnet-explorer.multiversx.com',
     apiTimeout: '4000',
     roundDuration: 600
   },
@@ -33,7 +33,7 @@ export const fallbackNetworkConfigurations: Record<
     iframeWalletAddress: 'https://testnet-snap.multiversx.com',
     xAliasAddress: 'https://testnet.xalias.com',
     apiAddress: 'https://testnet-api.multiversx.com',
-    explorerAddress: 'http://testnet-explorer.multiversx.com',
+    explorerAddress: 'https://testnet-explorer.multiversx.com',
     apiTimeout: '4000',
     roundDuration: 600
   },

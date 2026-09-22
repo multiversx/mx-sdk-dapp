@@ -1,5 +1,6 @@
 import { EventBus } from '@multiversx/sdk-dapp-ui/utils/EventBus';
 import type { NotificationsFeedManager } from 'managers/NotificationsFeedManager/NotificationsFeedManager';
+import { ComponentFactory } from 'utils/ComponentFactory';
 import { ToastUICoordinator } from '../ToastUICoordinator';
 import { ToastEventsEnum } from '../types';
 
@@ -136,5 +137,31 @@ describe('ToastUICoordinator tests', () => {
       remainingUnsubscribers: 0,
       notificationsFeedDestroyed: 1
     });
+  });
+
+  it('stops listening for the notifications feed event when destroyed', async () => {
+    const openNotificationsFeed = jest.fn();
+    const eventBus = new EventBus();
+    const coordinator = new ToastUICoordinator({
+      onCloseToast: jest.fn(),
+      notificationsFeedManager: createNotificationsFeedManagerMock({
+        openNotificationsFeed
+      })
+    });
+
+    jest
+      .spyOn(ComponentFactory, 'create')
+      .mockResolvedValue({ getEventBus: async () => eventBus } as any);
+
+    await coordinator.init();
+    eventBus.publish(ToastEventsEnum.OPEN_NOTIFICATIONS_FEED, null);
+    expect(openNotificationsFeed).toHaveBeenCalledTimes(1);
+
+    coordinator.destroy();
+    eventBus.publish(ToastEventsEnum.OPEN_NOTIFICATIONS_FEED, null);
+
+    expect(openNotificationsFeed).toHaveBeenCalledTimes(1);
+
+    jest.restoreAllMocks();
   });
 });

@@ -92,6 +92,36 @@ describe('toastsActions', () => {
     expect(rootState.toasts.customToasts).toHaveLength(0);
   });
 
+  it('forgets the handlers of a removed custom toast', () => {
+    const onClose = jest.fn();
+    const instantiateToastElement = jest.fn();
+    createCustomToast({
+      toastId: 'component-toast',
+      onClose,
+      instantiateToastElement
+    } as CustomToastType);
+
+    removeCustomToast('component-toast');
+
+    expect(
+      customToastCloseHandlersDictionary['component-toast']
+    ).toBeUndefined();
+    expect(customToastComponentDictionary['component-toast']).toBeUndefined();
+  });
+
+  it('forgets every custom toast handler when all are removed', () => {
+    createCustomToast({
+      toastId: 'component-toast',
+      onClose: jest.fn(),
+      instantiateToastElement: jest.fn()
+    } as CustomToastType);
+
+    removeAllCustomToasts();
+
+    expect(Object.keys(customToastCloseHandlersDictionary)).toHaveLength(0);
+    expect(Object.keys(customToastComponentDictionary)).toHaveLength(0);
+  });
+
   it('manages transaction toasts', () => {
     const toastId = addTransactionToast({
       toastId: 'transaction-toast-1',

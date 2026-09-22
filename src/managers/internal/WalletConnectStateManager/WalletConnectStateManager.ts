@@ -38,6 +38,10 @@ export class WalletConnectStateManager extends UIBaseManager<
     return { ...this.data };
   }
 
+  private readonly handleCloseEvent = () => this.handleClose();
+
+  private readonly handleUiDisconnected = () => this.destroy();
+
   public handleClose(options?: { isLoginFinished?: boolean }) {
     if (options?.isLoginFinished) {
       return;
@@ -62,12 +66,12 @@ export class WalletConnectStateManager extends UIBaseManager<
 
     this.eventBus.subscribe(
       WalletConnectEventsEnum.CLOSE,
-      this.handleClose.bind(this)
+      this.handleCloseEvent
     );
 
     this.eventBus.subscribe(
       WalletConnectEventsEnum.UI_DISCONNECTED,
-      this.destroy.bind(this)
+      this.handleUiDisconnected
     );
   }
 }
