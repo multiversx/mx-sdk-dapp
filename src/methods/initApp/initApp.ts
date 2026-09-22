@@ -3,6 +3,8 @@ import { defineCustomElements } from 'lib/sdkDappUi';
 import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 import { ToastManager } from 'managers/ToastManager';
 import { registerCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
+import { listenForLogoutAcrossTabs } from 'providers/DappProvider/helpers/logout/listenForLogoutAcrossTabs';
+import { clearLocalSession } from 'providers/DappProvider/helpers/logout/logout';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { validateCustomProviders } from 'providers/helpers/validateCustomProviders';
 import { ProviderFactory } from 'providers/ProviderFactory';
@@ -49,7 +51,7 @@ const defaultInitAppProps = {
  * @internal
  */
 let isAppInitialized = false;
-let isInitializing = false;
+let initPromise: Promise<void> | null = null;
 
 /**
  * Reset the initialization state. Used primarily for testing.
@@ -57,7 +59,7 @@ let isInitializing = false;
  */
 export function resetInitAppState() {
   isAppInitialized = false;
-  isInitializing = false;
+  initPromise = null;
 }
 
 /**
@@ -72,17 +74,21 @@ export function resetInitAppState() {
    });
  *  ```
  * */
-export async function initApp({
+export function initApp(props: InitAppType): Promise<void> {
+  if (!initPromise) {
+    initPromise = runInitApp(props).finally(() => {
+      initPromise = null;
+    });
+  }
+
+  return initPromise;
+}
+
+async function runInitApp({
   storage = defaultInitAppProps.storage,
   dAppConfig,
   customProviders
 }: InitAppType) {
-  if (isInitializing) {
-    return;
-  }
-
-  isInitializing = true;
-
   const defaultTheme = dAppConfig?.theme ?? ThemesEnum.dark;
   await defineCustomElements();
 
@@ -90,12 +96,15 @@ export async function initApp({
 
   const { getStorageCallback } = storage;
 
-  const store = initStore(getStorageCallback);
+  // Managers keep the store they subscribed to, so it is created once
+  if (!isAppInitialized) {
+    const store = initStore(getStorageCallback);
 
-  await waitForStoreRehydration({
-    store,
-    getStorageCallback
-  });
+    await waitForStoreRehydration({
+      store,
+      getStorageCallback
+    });
+  }
 
   const { apiAddress } = await initializeNetwork({
     customNetworkConfig: dAppConfig.network,
@@ -161,6 +170,7 @@ export async function initApp({
     : uniqueProviders;
 
   if (!isAppInitialized) {
+    listenForLogoutAcrossTabs(clearLocalSession);
     await restoreProvider();
 
     if (isLoggedIn) {
@@ -180,5 +190,4 @@ export async function initApp({
   }
 
   isAppInitialized = true;
-  isInitializing = false;
 }

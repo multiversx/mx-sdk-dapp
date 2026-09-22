@@ -18,7 +18,10 @@ const RECONNECT_SUCCESS_DURATION = 3000;
 
 export class LedgerIdleStateManager {
   private static instance: LedgerIdleStateManager;
-  private store = getStore();
+  private get store() {
+    return getStore();
+  }
+
   private connectionCheckInterval: ReturnType<typeof setInterval> | null = null;
   private recreateProviderInterval: ReturnType<typeof setInterval> | null =
     null;

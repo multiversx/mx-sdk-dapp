@@ -26,7 +26,11 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   NotificationsFeedEventsEnum | typeof NOTIFICATIONS_FEED_STORE_SUBSCRIBE
 > {
   private static instance: NotificationsFeedManager;
-  private readonly store: ReturnType<typeof getStore>;
+  private readonly injectedStore?: ReturnType<typeof getStore>;
+
+  private get store() {
+    return this.injectedStore ?? getStore();
+  }
 
   protected initialData: INotificationsFeedManagerData = {
     pendingTransactions: [],
@@ -45,7 +49,7 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
       uiDataUpdateEvent: NotificationsFeedEventsEnum.OPEN,
       uiTag: UITagsEnum.NOTIFICATIONS_FEED
     });
-    this.store = store || getStore();
+    this.injectedStore = store;
     this.data = { ...this.initialData };
   }
 

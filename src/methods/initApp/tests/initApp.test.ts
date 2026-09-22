@@ -13,6 +13,8 @@ import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { setNativeAuthConfig } from 'store/actions/config/configActions';
+import { initializeNetwork } from 'store/actions/network/initializeNetwork';
+import { initStore } from 'store/store';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { ThemesEnum } from 'types/theme.types';
 import { reconcileAccountNonce } from 'utils/account/reconcileAccountNonce';
@@ -172,6 +174,52 @@ describe('initApp tests', () => {
       // The second call should not have executed any initialization steps
       // We can verify this by checking that defineCustomElements was only called once
       expect(defineCustomElements).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Repeated and failed initialization', () => {
+    const config = {
+      dAppConfig: { environment: EnvironmentsEnum.devnet }
+    };
+
+    it('makes concurrent callers wait for the same initialization', async () => {
+      let releaseElements: () => void = () => {};
+      (defineCustomElements as jest.Mock).mockImplementationOnce(
+        () => new Promise<void>((resolve) => (releaseElements = resolve))
+      );
+
+      const first = initApp(config);
+      const second = initApp(config);
+      let isSecondDone = false;
+      second.then(() => (isSecondDone = true));
+
+      await new Promise(process.nextTick);
+      expect(isSecondDone).toBe(false);
+
+      releaseElements();
+      await Promise.all([first, second]);
+
+      expect(isSecondDone).toBe(true);
+      expect(defineCustomElements).toHaveBeenCalledTimes(1);
+    });
+
+    it('can be retried after a failure', async () => {
+      (initializeNetwork as jest.Mock).mockRejectedValueOnce(
+        new Error('network down')
+      );
+
+      await expect(initApp(config)).rejects.toThrow('network down');
+      await initApp(config);
+
+      expect(initializeNetwork).toHaveBeenCalledTimes(2);
+      expect(restoreProvider).toHaveBeenCalledTimes(1);
+    });
+
+    it('keeps the store on a second initialization', async () => {
+      await initApp(config);
+      await initApp(config);
+
+      expect(initStore).toHaveBeenCalledTimes(1);
     });
   });
 

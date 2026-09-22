@@ -17,7 +17,10 @@ import { getSessionExpiration } from './helpers/getSessionExpiration';
 
 export class LogoutManager {
   private static instance: LogoutManager;
-  private store = getStore();
+  private get store() {
+    return getStore();
+  }
+
   private warningLogoutTimeoutRef: ReturnType<typeof setInterval> | null = null;
   private actualLogoutTimeoutRef: ReturnType<typeof setInterval> | null = null;
   private plannedLogoutTimeoutRef: ReturnType<typeof setInterval> | null = null;
@@ -34,6 +37,7 @@ export class LogoutManager {
 
   public init = async () => {
     if (!this.shouldStart()) {
+      this.stop();
       return;
     }
 
@@ -42,6 +46,7 @@ export class LogoutManager {
     const { isExpired: isSessionExpired } = getSessionExpiration(state);
 
     if (isSessionExpired) {
+      this.stop();
       const provider = getAccountProvider();
       provider.logout();
     } else {
@@ -95,30 +100,36 @@ export class LogoutManager {
 
     // prevent unexpected logout if webview login
     if (!address || isWebviewLogin) {
+      this.stop();
       return;
     }
-
-    this.addLogoutWarning();
 
     const { secondsUntilExpires, expiresAt } = getSessionExpiration(
       this.store.getState()
     );
 
+    const plannedLogoutKey = `${address}_${expiresAt}`;
+
+    if (this.plannedLogoutKey === plannedLogoutKey) {
+      return;
+    }
+
+    // Timers of a previous session must not fire in this one
+    this.stop();
+    this.addLogoutWarning();
+
     // Handle the actual logout functionality.
     const secondsUntilExpiresBN = new BigNumber(String(secondsUntilExpires));
-    const plannedLogoutKey = `${address}_${expiresAt}`;
-    const plannedLogoutSet = this.plannedLogoutKey === plannedLogoutKey;
 
     const isValidInterval =
       secondsUntilExpires && secondsUntilExpiresBN.isGreaterThan(0);
 
-    if (!isValidInterval || plannedLogoutSet) {
+    if (!isValidInterval) {
       return;
     }
 
     this.plannedLogoutKey = plannedLogoutKey;
 
-    clearTimeout(this.plannedLogoutTimeoutRef ?? 0);
     const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);
 
     this.actualLogoutTimeoutRef = setTimeout(() => {
@@ -133,6 +144,10 @@ export class LogoutManager {
     }, millisecondsUntilLogout.toNumber() - 3000);
 
     this.plannedLogoutTimeoutRef = setTimeout(() => {
+      if (!isLoggedInSelector(this.store.getState())) {
+        return;
+      }
+
       provider.logout();
       this.plannedLogoutTimeoutRef = null;
       this.plannedLogoutKey = null;

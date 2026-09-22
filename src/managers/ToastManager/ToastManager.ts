@@ -28,7 +28,7 @@ interface IToastManager {
 
 export class ToastManager {
   private readonly lifetimeManager: LifetimeManager;
-  private store: ReturnType<typeof getStore>;
+  private readonly injectedStore?: ReturnType<typeof getStore>;
   private static instance: ToastManager;
   private transactionToasts: ITransactionToast[] = [];
   private customToasts: CustomToastType[] = [];
@@ -42,7 +42,7 @@ export class ToastManager {
     uiCoordinator?: ToastUICoordinator;
   }) {
     this.destroy();
-    this.store = props?.store || getStore();
+    this.injectedStore = props?.store;
     this.lifetimeManager = props?.lifetimeManager ?? new LifetimeManager();
     this.uiCoordinator =
       props?.uiCoordinator ??
@@ -51,9 +51,15 @@ export class ToastManager {
       });
   }
 
+  private get store() {
+    return this.injectedStore ?? getStore();
+  }
+
   public async init({
     successfulToastLifetime = DEFAULT_TOAST_LIFETIME
   }: IToastManager = {}) {
+    this.unsubscribeFromStore();
+
     this.successfulToastLifetime = successfulToastLifetime;
 
     this.lifetimeManager.init({ successfulToastLifetime });
