@@ -51,14 +51,16 @@ describe('Native Auth', () => {
         ])
       );
     }),
-    latestBlockGateway: rest.get(
-      `${GATEWAY_URL}/blocks/by-round/${ROUND}`,
-      mockResponse([
-        {
-          hash: BLOCK_HASH
-        }
-      ])
-    ),
+    latestBlockGateway: [
+      rest.get(
+        `${GATEWAY_URL}/network/status/1`,
+        mockResponse({ data: { status: { erd_current_round: ROUND } } })
+      ),
+      rest.get(
+        `${GATEWAY_URL}/blocks/by-round/${ROUND}`,
+        mockResponse({ data: { blocks: [{ shard: 1, hash: BLOCK_HASH }] } })
+      )
+    ],
     serverError: [
       rest.get(`${API_URL}/blocks/latest`, (_, res, ctx) => {
         return res(ctx.status(500));
@@ -84,7 +86,7 @@ describe('Native Auth', () => {
     });
 
     it('Latest block should return signable token - Gateway', async () => {
-      server.use(handlers.latestBlockGateway);
+      server.use(...handlers.latestBlockGateway);
 
       const client = nativeAuth({
         origin: ORIGIN,

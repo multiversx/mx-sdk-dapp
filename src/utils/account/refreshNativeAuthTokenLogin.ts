@@ -1,9 +1,12 @@
 import { Address, Message } from 'lib/sdkCore';
+import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 import { getAccount } from 'methods/account/getAccount';
 import { nativeAuth } from 'services/nativeAuth';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { setTokenLogin } from 'store/actions/loginInfo/loginInfoActions';
+import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
+import { getState } from 'store/store';
 
 /**
  * Use this function if you support multiple networks with network switching
@@ -20,10 +23,11 @@ export const refreshNativeAuthTokenLogin = async ({
   nativeAuthClientConfig?: NativeAuthConfigType;
 }): Promise<string | null> => {
   const { address } = getAccount();
-  const defaultNativeAuthConfig = getDefaultNativeAuthConfig();
 
   const nativeAuthClient = nativeAuth(
-    nativeAuthClientConfig || defaultNativeAuthConfig
+    nativeAuthClientConfig ||
+      nativeAuthConfigSelector(getState()) ||
+      getDefaultNativeAuthConfig()
   );
 
   const loginToken = await nativeAuthClient.initialize({
@@ -45,14 +49,16 @@ export const refreshNativeAuthTokenLogin = async ({
     throw 'Message not signed';
   }
 
-  setTokenLogin({
-    loginToken,
-    signature: Buffer.from(signedMessage.signature).toString('hex')
-  });
+  const signature = Buffer.from(signedMessage.signature).toString('hex');
 
-  return nativeAuthClient.getToken({
+  const nativeAuthToken = nativeAuthClient.getToken({
     address,
     token: loginToken,
-    signature: Buffer.from(signedMessage.signature).toString('hex')
+    signature
   });
+
+  setTokenLogin({ loginToken, signature, nativeAuthToken });
+  LogoutManager.getInstance().init();
+
+  return nativeAuthToken;
 };
