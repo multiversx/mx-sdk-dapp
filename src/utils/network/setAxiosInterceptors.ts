@@ -9,16 +9,10 @@ let requestInterceptorId: number | null = null;
 let responseInterceptorId: number | null = null;
 
 const resolveRequestUrl = (config: InternalAxiosRequestConfig): URL | null => {
-  const url = config.url ?? '';
-
   try {
-    return new URL(url);
+    return new URL(axios.getUri(config));
   } catch {
-    try {
-      return config.baseURL ? new URL(url, config.baseURL) : null;
-    } catch {
-      return null;
-    }
+    return null;
   }
 };
 

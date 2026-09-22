@@ -10,7 +10,19 @@ type RequestInit = {
 
 // Needs to be used because an async call made after cross-window user interaction makes the dapp unresponsive
 
-const fetch = buildAxiosFetch(axios);
+const forwardedConfigKeys = ['timeout', 'params', 'baseURL', 'signal'] as const;
+
+const fetch = buildAxiosFetch(axios, (config, _input, init?: RequestInit) => {
+  const forwardedConfig: Record<string, unknown> = {};
+
+  forwardedConfigKeys.forEach((key) => {
+    if (init?.[key] !== undefined) {
+      forwardedConfig[key] = init[key];
+    }
+  });
+
+  return { ...config, ...forwardedConfig };
+});
 
 const getFormattedAxiosResponse = async <T>(response: Response, config?: T) => {
   if (!response.ok) {

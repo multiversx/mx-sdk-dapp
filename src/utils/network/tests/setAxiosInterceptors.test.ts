@@ -64,6 +64,40 @@ describe('setAxiosInterceptors', () => {
     expect(config.headers.Authorization).toEqual(`Bearer ${TOKEN}`);
   });
 
+  it('checks the path axios actually requests when baseURL has a path', async () => {
+    setAxiosInterceptors({
+      authenticatedDomains: [`${API}/v1`],
+      bearerToken: TOKEN
+    });
+
+    const inside = await runRequestInterceptor({
+      baseURL: `${API}/v1`,
+      url: '/accounts/erd1qqq'
+    });
+    const outside = await runRequestInterceptor({
+      baseURL: `${API}/v2`,
+      url: '/accounts/erd1qqq'
+    });
+
+    expect(inside.headers.Authorization).toEqual(`Bearer ${TOKEN}`);
+    expect(outside.headers.Authorization).toBeUndefined();
+  });
+
+  it('does not attach the token when absolute urls are disabled and baseURL is off-domain', async () => {
+    setAxiosInterceptors({
+      authenticatedDomains: [API],
+      bearerToken: TOKEN
+    });
+
+    const config = await runRequestInterceptor({
+      baseURL: 'https://other.example',
+      url: `${API}/accounts/erd1qqq`,
+      allowAbsoluteUrls: false
+    } as Partial<InternalAxiosRequestConfig>);
+
+    expect(config.headers.Authorization).toBeUndefined();
+  });
+
   it('does not attach anything without a bearer token', async () => {
     setAxiosInterceptors({ authenticatedDomains: [API] });
 
