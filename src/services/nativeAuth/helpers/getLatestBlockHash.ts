@@ -9,16 +9,9 @@ export interface LatestBlockHashType {
 
 const getBlockFromPosition = 4;
 const cachingDurationMs = 30000; // 30 seconds, a block hash is valid for 1 minute from its generation
-//this is an object with .current, so it doesn't get affected by closure and is always a fresh value
-const cachedResponse: Record<string, LatestBlockHashType | null> = {
-  current: null
-};
 
-const requestPromise: {
-  current: Promise<LatestBlockHashType> | null;
-} = {
-  current: null
-};
+const cachedResponses = new Map<string, LatestBlockHashType>();
+const pendingRequests = new Map<string, Promise<LatestBlockHashType>>();
 
 const getLatestBlockHashFromServer = retryMultipleTimes(
   async (
@@ -62,44 +55,51 @@ export async function getLatestBlockHash({
     throw new Error('missing api url');
   }
 
-  const currentTimestampMs = Date.now();
+  const cacheKey = `${apiAddress}|${blockHashShard ?? ''}`;
+  const cachedResponse = cachedResponses.get(cacheKey);
+
   if (
-    cachedResponse.current != null &&
-    currentTimestampMs <
-      cachedResponse.current.timestamp * 1000 + cachingDurationMs &&
-    !noCache
+    !noCache &&
+    cachedResponse != null &&
+    Date.now() < cachedResponse.timestamp * 1000 + cachingDurationMs
   ) {
-    return cachedResponse.current;
-  }
-  //this will prevent multiple calls to this function from generating multiple hashes
-  if (requestPromise.current != null) {
-    //if there is already an await in progress for the API, just return the result of that promise
-    return await requestPromise.current;
+    return cachedResponse;
   }
 
-  //if a promise is not in progress, get a new promise and add it to the promise
-  requestPromise.current = getLatestBlockHashFromServer(
-    apiAddress,
-    blockHashShard,
-    getBlockHash
-  );
+  const pendingRequest = pendingRequests.get(cacheKey);
 
-  try {
-    const response = await requestPromise.current;
+  if (!noCache && pendingRequest != null) {
+    return await pendingRequest;
+  }
+
+  const request = (async () => {
+    const response = await getLatestBlockHashFromServer(
+      apiAddress,
+      blockHashShard,
+      getBlockHash
+    );
+
     if (response == null) {
-      requestPromise.current = null;
       throw new Error('could not get block hash');
     }
-    //set the new response, the new expiry and unlock the regeneration flow for the next expiration period
-    cachedResponse.current = {
+
+    const latestBlockHash = {
       hash: response.hash,
       timestamp: response.timestamp
     };
 
-    requestPromise.current = null;
-    return response;
-  } catch (_error) {
-    requestPromise.current = null;
-    return null as any;
+    cachedResponses.set(cacheKey, latestBlockHash);
+
+    return latestBlockHash;
+  })();
+
+  pendingRequests.set(cacheKey, request);
+
+  try {
+    return await request;
+  } finally {
+    if (pendingRequests.get(cacheKey) === request) {
+      pendingRequests.delete(cacheKey);
+    }
   }
 }
