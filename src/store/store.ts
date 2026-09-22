@@ -29,6 +29,14 @@ export type MutatorsOut = [
   ['zustand/immer', never]
 ];
 
+const getIsDevelopment = () => {
+  try {
+    return process.env.NODE_ENV === 'development';
+  } catch {
+    return false;
+  }
+};
+
 export const createDAppStore = (getStorageCallback: StorageCallback) => {
   const store = createStore<StoreType, MutatorsOut>(
     devtools(
@@ -56,7 +64,8 @@ export const createDAppStore = (getStorageCallback: StorageCallback) => {
         }
       ),
       {
-        name: 'sdk-dapp'
+        name: 'sdk-dapp',
+        enabled: getIsDevelopment()
       }
     )
   );
