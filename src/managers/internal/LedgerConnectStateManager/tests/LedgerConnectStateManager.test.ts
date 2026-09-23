@@ -196,9 +196,6 @@ describe('LedgerConnectStateManager tests', () => {
       const manager = new LedgerConnectStateManager();
       const handleRetry = jest.fn();
       const handleCancel = jest.fn();
-      const destroySpy = jest
-        .spyOn(manager as any, 'destroy')
-        .mockImplementation();
       const eventBus = {
         subscribe: jest.fn()
       };
@@ -206,6 +203,7 @@ describe('LedgerConnectStateManager tests', () => {
 
       manager.subscribeToProviderInit({ handleRetry, handleCancel });
 
+      expect(eventBus.subscribe).toHaveBeenCalledTimes(2);
       expect(eventBus.subscribe).toHaveBeenNthCalledWith(
         1,
         LedgerConnectEventsEnum.CONNECT_DEVICE,
@@ -216,14 +214,6 @@ describe('LedgerConnectStateManager tests', () => {
         LedgerConnectEventsEnum.CLOSE,
         handleCancel
       );
-      const disconnectHandler = eventBus.subscribe.mock.calls[2][1];
-      expect(eventBus.subscribe).toHaveBeenNthCalledWith(
-        3,
-        LedgerConnectEventsEnum.UI_DISCONNECTED,
-        expect.any(Function)
-      );
-      disconnectHandler();
-      expect(destroySpy).toHaveBeenCalledTimes(1);
     });
 
     it('unsubscribes from provider init events', () => {
@@ -237,6 +227,7 @@ describe('LedgerConnectStateManager tests', () => {
 
       manager.unsubscribeFromProviderInit({ handleRetry, handleCancel });
 
+      expect(eventBus.unsubscribe).toHaveBeenCalledTimes(2);
       expect(eventBus.unsubscribe).toHaveBeenNthCalledWith(
         1,
         LedgerConnectEventsEnum.CONNECT_DEVICE,
@@ -247,31 +238,7 @@ describe('LedgerConnectStateManager tests', () => {
         LedgerConnectEventsEnum.CLOSE,
         handleCancel
       );
-      expect(eventBus.unsubscribe).toHaveBeenNthCalledWith(
-        3,
-        LedgerConnectEventsEnum.UI_DISCONNECTED,
-        expect.any(Function)
-      );
     });
-  });
-
-  it('unsubscribes the same disconnect handler it subscribed', () => {
-    const manager = new LedgerConnectStateManager();
-    const handlers = { handleRetry: jest.fn(), handleCancel: jest.fn() };
-    const eventBus = { subscribe: jest.fn(), unsubscribe: jest.fn() };
-    (manager as any).eventBus = eventBus;
-
-    manager.subscribeToProviderInit(handlers);
-    manager.unsubscribeFromProviderInit(handlers);
-
-    const subscribed = eventBus.subscribe.mock.calls.find(
-      ([event]) => event === LedgerConnectEventsEnum.UI_DISCONNECTED
-    )?.[1];
-    const unsubscribed = eventBus.unsubscribe.mock.calls.find(
-      ([event]) => event === LedgerConnectEventsEnum.UI_DISCONNECTED
-    )?.[1];
-
-    expect(unsubscribed).toBe(subscribed);
   });
 
   describe('auth event subscriptions', () => {
@@ -386,6 +353,38 @@ describe('LedgerConnectStateManager tests', () => {
       const [, callback] = subscribe.mock.calls[0];
       callback();
       expect(handleCloseSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('destroys the manager when the element is removed, after provider init has ended', async () => {
+      const manager = new LedgerConnectStateManager();
+      const handlers = new Map<string, Set<Function>>();
+      const eventBus = {
+        subscribe: (event: string, handler: Function) => {
+          handlers.set(event, (handlers.get(event) ?? new Set()).add(handler));
+        },
+        unsubscribe: (event: string, handler: Function) => {
+          handlers.get(event)?.delete(handler);
+        }
+      };
+      (manager as any).eventBus = eventBus;
+      const destroySpy = jest
+        .spyOn(manager as any, 'destroy')
+        .mockImplementation();
+      const providerInitHandlers = {
+        handleRetry: jest.fn(),
+        handleCancel: jest.fn()
+      };
+
+      await (manager as any).setupEventListeners();
+      await (manager as any).setupEventListeners();
+      manager.subscribeToProviderInit(providerInitHandlers);
+      manager.unsubscribeFromProviderInit(providerInitHandlers);
+
+      handlers
+        .get(LedgerConnectEventsEnum.UI_DISCONNECTED)
+        ?.forEach((handler) => handler());
+
+      expect(destroySpy).toHaveBeenCalledTimes(1);
     });
   });
 

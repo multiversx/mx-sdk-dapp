@@ -156,10 +156,6 @@ export class LedgerConnectStateManager extends UIBaseManager<
       handleRetry
     );
     this.eventBus.subscribe(LedgerConnectEventsEnum.CLOSE, handleCancel);
-    this.eventBus.subscribe(
-      LedgerConnectEventsEnum.UI_DISCONNECTED,
-      this.handleUiDisconnected
-    );
   }
 
   public unsubscribeFromProviderInit({
@@ -175,10 +171,6 @@ export class LedgerConnectStateManager extends UIBaseManager<
       handleRetry
     );
     this.eventBus.unsubscribe(LedgerConnectEventsEnum.CLOSE, handleCancel);
-    this.eventBus.unsubscribe(
-      LedgerConnectEventsEnum.UI_DISCONNECTED,
-      this.handleUiDisconnected
-    );
   }
 
   public subscribeToAuthEvents({
@@ -254,6 +246,14 @@ export class LedgerConnectStateManager extends UIBaseManager<
     this.eventBus.subscribe(
       LedgerConnectEventsEnum.CLOSE,
       this.handleCloseEvent
+    );
+    this.eventBus.unsubscribe(
+      LedgerConnectEventsEnum.UI_DISCONNECTED,
+      this.handleUiDisconnected
+    );
+    this.eventBus.subscribe(
+      LedgerConnectEventsEnum.UI_DISCONNECTED,
+      this.handleUiDisconnected
     );
   }
 }
