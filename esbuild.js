@@ -21,7 +21,7 @@ const commonConfig = {
   bundle: false,
   outbase: 'src',
   minify: true,
-  sourcemap: true,
+  sourcemap: 'external',
   target: ['es2021'],
   define: {
     global: 'global',
