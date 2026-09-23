@@ -38,20 +38,26 @@ export async function signTransactionsWithProvider({
   const { address, isGuarded, activeGuardianAddress, nonce } = getAccount();
   const isLedger = provider.getType() === ProviderTypeEnum.ledger;
 
-  const transactionsWithComputedNonce = computeNonces({
+  const getOwnTransactions = (transactionList: Transaction[]) =>
+    transactionList.filter(
+      (transaction) => transaction.sender.toBech32() === address
+    );
+
+  const getNonces = (transactionList: Transaction[]) =>
+    transactionList.map((transaction) => Number(transaction.nonce));
+
+  const ownTransactions = computeNonces({
     latestNonce: Math.max(nonce, getNextReservedNonce(address)),
-    transactions
+    transactions: getOwnTransactions(transactions)
   });
 
   // Hold the nonces while the user signs, so a concurrent signing picks the next ones
-  const computedNonces = transactionsWithComputedNonce.map((transaction) =>
-    Number(transaction.nonce)
-  );
+  const computedNonces = getNonces(ownTransactions);
   reserveNonces(address, computedNonces);
 
   const transactionsToSign =
     activeGuardianAddress && isGuarded && !options.skipGuardian
-      ? transactionsWithComputedNonce?.map((transaction) => {
+      ? transactions.map((transaction) => {
           transaction.version = TransactionVersion.withTxOptions().valueOf();
           transaction.options = TransactionOptions.withOptions({
             guarded: true,
@@ -62,7 +68,7 @@ export async function signTransactionsWithProvider({
 
           return transaction;
         })
-      : transactionsWithComputedNonce;
+      : transactions;
 
   let signedTransactions: Transaction[] = [];
 
@@ -73,19 +79,11 @@ export async function signTransactionsWithProvider({
     releaseNonces(address, computedNonces);
   }
 
-  reserveNonces(
-    address,
-    signedTransactions.map((transaction) => Number(transaction.nonce))
-  );
+  const signedNonces = getNonces(getOwnTransactions(signedTransactions));
+  reserveNonces(address, signedNonces);
 
-  if (signedTransactions.length > 0) {
-    const highestSignedNonce = signedTransactions.reduce(
-      (highest, transaction) =>
-        transaction.nonce > highest ? transaction.nonce : highest,
-      BigInt(nonce)
-    );
-
-    setAccountNonce(Number(highestSignedNonce) + 1);
+  if (signedNonces.length > 0) {
+    setAccountNonce(Math.max(nonce, ...signedNonces) + 1);
   }
 
   return signedTransactions;

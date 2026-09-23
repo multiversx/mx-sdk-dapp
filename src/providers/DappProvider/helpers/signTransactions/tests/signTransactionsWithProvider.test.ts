@@ -2,6 +2,7 @@ import { testAddress } from '__mocks__';
 import { Address, Transaction } from 'lib/sdkCore';
 import { getAccount } from 'methods/account/getAccount';
 import { IProvider } from 'providers/types/providerFactory.types';
+import { setAccountNonce } from 'store/actions/account/accountActions';
 import {
   clearNonceReservations,
   getNextReservedNonce
@@ -16,11 +17,14 @@ jest.mock('store/actions/account/accountActions', () => ({
   setAccountNonce: jest.fn()
 }));
 
-const createTransaction = () =>
+const otherSender =
+  'erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx';
+
+const createTransaction = ({ sender = testAddress, nonce = 0n } = {}) =>
   new Transaction({
-    nonce: 0n,
+    nonce,
     value: 0n,
-    sender: Address.newFromBech32(testAddress),
+    sender: Address.newFromBech32(sender),
     receiver: Address.newFromBech32(testAddress),
     gasLimit: 50_000n,
     chainID: 'D'
@@ -46,6 +50,7 @@ const createDeferredProvider = () => {
 
 describe('signTransactionsWithProvider', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     clearNonceReservations();
     (getAccount as jest.Mock).mockReturnValue({
       address: testAddress,
@@ -103,5 +108,41 @@ describe('signTransactionsWithProvider', () => {
     ).rejects.toThrow('cancelled');
 
     expect(getNextReservedNonce(testAddress)).toBe(0);
+  });
+
+  it('leaves the nonce of another sender alone when co-signing', async () => {
+    const provider = {
+      getType: () => 'extension',
+      signTransactions: jest.fn(async (transactions) => transactions)
+    } as unknown as IProvider;
+
+    const [coSigned, own] = await signTransactionsWithProvider({
+      provider,
+      transactions: [
+        createTransaction({ sender: otherSender, nonce: 2n }),
+        createTransaction()
+      ]
+    });
+
+    expect(coSigned.nonce).toBe(2n);
+    expect(own.nonce).toBe(7n);
+    expect(getNextReservedNonce(testAddress)).toBe(8);
+    expect(getNextReservedNonce(otherSender)).toBe(0);
+    expect(setAccountNonce).toHaveBeenCalledWith(8);
+  });
+
+  it('does not advance the account nonce past a co-signed transaction', async () => {
+    const provider = {
+      getType: () => 'extension',
+      signTransactions: jest.fn(async (transactions) => transactions)
+    } as unknown as IProvider;
+
+    await signTransactionsWithProvider({
+      provider,
+      transactions: [createTransaction({ sender: otherSender, nonce: 500n })]
+    });
+
+    expect(getNextReservedNonce(testAddress)).toBe(0);
+    expect(setAccountNonce).not.toHaveBeenCalled();
   });
 });
