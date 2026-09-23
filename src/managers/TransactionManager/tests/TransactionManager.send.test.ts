@@ -1,12 +1,19 @@
 import axios from 'axios';
 import { testAddress } from '__mocks__';
 import { Address, Transaction, TransactionComputer } from 'lib/sdkCore';
+import { getAccount } from 'methods/account/getAccount';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { SignedTransactionType } from 'types/transactions.types';
+import {
+  clearNonceReservations,
+  getNextReservedNonce,
+  reserveNonces
+} from 'utils/account/nonceReservations';
 import { reconcileAccountNonce } from 'utils/account/reconcileAccountNonce';
 import { TransactionManager } from '../TransactionManager';
 
 jest.mock('axios');
+jest.mock('methods/account/getAccount');
 jest.mock('utils/account/reconcileAccountNonce', () => ({
   reconcileAccountNonce: jest.fn().mockResolvedValue(undefined)
 }));
@@ -121,5 +128,87 @@ describe('TransactionManager.send', () => {
     await expect(
       TransactionManager.getInstance().send([createTransaction(7)])
     ).rejects.toBe('Network Error');
+  });
+});
+
+describe('TransactionManager.send with grouped transactions', () => {
+  const groups = () => [
+    [createTransaction(7)],
+    [createTransaction(8), createTransaction(9)]
+  ];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    clearNonceReservations();
+    (getAccount as jest.Mock).mockReturnValue({ address: testAddress });
+  });
+
+  it('returns the sent groups as pending', async () => {
+    const [[first], [second, third]] = groups();
+    (axios.post as jest.Mock).mockResolvedValue({
+      data: {
+        id: 'batch-id',
+        status: 'sent',
+        transactions: [
+          [{ ...first.toPlainObject(), hash: 'hash-7' }],
+          [
+            { ...second.toPlainObject(), hash: 'hash-8' },
+            { ...third.toPlainObject(), hash: 'hash-9' }
+          ]
+        ]
+      }
+    });
+
+    const sentGroups = await TransactionManager.getInstance().send(groups());
+
+    expect(sentGroups).toMatchObject([
+      [{ hash: 'hash-7', nonce: 7, status: 'pending' }],
+      [
+        { hash: 'hash-8', nonce: 8, status: 'pending' },
+        { hash: 'hash-9', nonce: 9, status: 'pending' }
+      ]
+    ]);
+    expect(reconcileAccountNonce).not.toHaveBeenCalled();
+  });
+
+  it('rejects without sending when nobody is logged in', async () => {
+    (getAccount as jest.Mock).mockReturnValue({ address: '' });
+    reserveNonces(testAddress, [7, 8, 9]);
+
+    await expect(TransactionManager.getInstance().send(groups())).rejects.toBe(
+      'Invalid address provided. You need to be logged in to send transactions'
+    );
+
+    expect(axios.post).not.toHaveBeenCalled();
+    expect(getNextReservedNonce(testAddress)).toBe(0);
+    expect(reconcileAccountNonce).toHaveBeenCalledTimes(1);
+  });
+
+  it('rejects with the error returned by the batch endpoint', async () => {
+    (axios.post as jest.Mock).mockResolvedValue({
+      data: { id: 'batch-id', error: 'batch rejected' }
+    });
+    reserveNonces(testAddress, [7, 8, 9]);
+
+    await expect(TransactionManager.getInstance().send(groups())).rejects.toBe(
+      'batch rejected'
+    );
+
+    expect(getNextReservedNonce(testAddress)).toBe(0);
+    expect(reconcileAccountNonce).toHaveBeenCalledTimes(1);
+  });
+
+  it('rejects a response without transactions', async () => {
+    (axios.post as jest.Mock).mockResolvedValue({
+      data: { id: 'batch-id', status: 'sent' }
+    });
+    reserveNonces(testAddress, [7, 8, 9]);
+
+    await expect(TransactionManager.getInstance().send(groups())).rejects.toBe(
+      'Failed to send transactions'
+    );
+
+    expect(getNextReservedNonce(testAddress)).toBe(0);
+    expect(reconcileAccountNonce).toHaveBeenCalledTimes(1);
   });
 });

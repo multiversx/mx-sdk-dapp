@@ -69,18 +69,7 @@ export class TransactionManager {
         return flatTransactions;
       }
 
-      const sentTransactions =
-        await this.sendSignedBatchTransactions(signedTransactions);
-
-      if (!sentTransactions.data || sentTransactions.data.error) {
-        throw new Error(
-          sentTransactions.data?.error ?? 'Failed to send transactions'
-        );
-      }
-
-      const groupedTransactions = sentTransactions.data.transactions;
-
-      return groupedTransactions;
+      return await this.sendSignedBatchTransactions(signedTransactions);
     } catch (error) {
       // The nonce was advanced when these were signed
       releaseTransactionNonces(
@@ -283,7 +272,7 @@ export class TransactionManager {
       throw new Error(data?.error || 'Failed to send transactions');
     }
 
-    const parsedTransactions = data.transactions.map((group) =>
+    return data.transactions.map((group) =>
       group.map((tx) => {
         const parsedTx: SignedTransactionType = {
           ...tx,
@@ -300,13 +289,6 @@ export class TransactionManager {
         return parsedTx;
       })
     );
-
-    return {
-      data: {
-        ...data,
-        transactions: parsedTransactions
-      }
-    };
   };
 
   private readonly buildBatchId = (address: string) =>
