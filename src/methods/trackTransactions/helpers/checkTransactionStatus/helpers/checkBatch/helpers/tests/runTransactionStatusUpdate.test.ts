@@ -106,6 +106,7 @@ describe('runTransactionStatusUpdate tests', () => {
     isServerTransactionFailed.mockImplementation((status: string) =>
       ['fail', 'invalid'].includes(status)
     );
+    mockSession(['pending']);
   });
 
   it('updates transaction and runs session callbacks when status changed to success', async () => {
@@ -299,6 +300,42 @@ describe('runTransactionStatusUpdate tests', () => {
       throw new Error('Test error');
     });
     mockSession(['success'], 'success');
+
+    await runTransactionStatusUpdate({
+      serverTransaction,
+      sessionId
+    });
+
+    expect(updateSessionStatus).not.toHaveBeenCalled();
+    expect(runSessionCallbacks).not.toHaveBeenCalled();
+
+    consoleSpy.mockRestore();
+  });
+
+  it('ignores a result for a session cleared while the request was in flight', async () => {
+    getState.mockReturnValue({ transactions: {} });
+    (getIsTransactionFailed as jest.Mock).mockReturnValue(false);
+
+    await runTransactionStatusUpdate({
+      serverTransaction,
+      sessionId
+    });
+
+    expect(updateTransactionAndSessionStatus).not.toHaveBeenCalled();
+    expect(updateSessionStatus).not.toHaveBeenCalled();
+    expect(runSessionCallbacks).not.toHaveBeenCalled();
+  });
+
+  it('does not report a session that was cleared while processing threw', async () => {
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    (getIsTransactionFailed as jest.Mock).mockReturnValue(false);
+    (updateTransactionAndSessionStatus as jest.Mock).mockImplementation(() => {
+      getState.mockReturnValue({ transactions: {} });
+      throw new TypeError('Cannot read properties of undefined');
+    });
 
     await runTransactionStatusUpdate({
       serverTransaction,

@@ -36,9 +36,11 @@ interface RunTransactionStatusUpdateType {
   isSequential?: boolean;
 }
 
+const getSession = (sessionId: string) => getState()?.transactions?.[sessionId];
+
 const getIsSessionTracked = (sessionId: string) => {
-  const session = getState()?.transactions?.[sessionId];
-  return session == null || getIsTransactionPending(session.status);
+  const session = getSession(sessionId);
+  return session != null && getIsTransactionPending(session.status);
 };
 
 const markTransactionAsTimedOut = async ({
@@ -59,8 +61,7 @@ const markTransactionAsTimedOut = async ({
   // it may still execute, so its nonce stays taken
   reserveNonces(transaction.sender, [Number(transaction.nonce)]);
 
-  const sessionTransactions =
-    getState()?.transactions?.[sessionId]?.transactions ?? [];
+  const sessionTransactions = getSession(sessionId)?.transactions ?? [];
 
   const hasPendingTransactions = sessionTransactions.some(({ status }) =>
     getIsTransactionPending(status)
@@ -95,6 +96,11 @@ export async function runTransactionStatusUpdate({
   isSequential
 }: RunTransactionStatusUpdateType) {
   const { hash, status, invalidTransaction, hasStatusChanged } = transaction;
+
+  if (getSession(sessionId) == null) {
+    delete retries[hash];
+    return;
+  }
 
   try {
     const retriesForThisHash = retries[hash];
