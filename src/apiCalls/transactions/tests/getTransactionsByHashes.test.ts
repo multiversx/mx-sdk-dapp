@@ -86,6 +86,9 @@ describe('getTransactionsByHashes test', () => {
                 status: 'success',
                 action,
                 timestamp: 1700000000,
+                logs: {
+                  events: [{ identifier: 'ESDTTransfer', data: 'AAAA' }]
+                },
                 value: '999',
                 receiver: 'erd1servervalue'
               }
@@ -103,5 +106,6 @@ describe('getTransactionsByHashes test', () => {
       receiver: pending.receiver,
       hash: pending.hash
     });
+    expect(result).not.toHaveProperty('logs');
   });
 });

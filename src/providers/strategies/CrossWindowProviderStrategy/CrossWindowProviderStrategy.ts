@@ -3,6 +3,7 @@ import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
+import { finalizeSignedTransactions } from 'providers/strategies/helpers/signTransactions/helpers/finalizeSignedTransactions';
 import {
   ProviderTypeEnum,
   ProviderType
@@ -12,7 +13,6 @@ import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
-import { finalizeSignedTransactions } from '../helpers/signTransactions/helpers/finalizeSignedTransactions';
 
 type CrossWindowProviderProps = {
   address?: string;

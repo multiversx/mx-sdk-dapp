@@ -47,7 +47,9 @@ describe('reconcileAccountNonce', () => {
     setAccountNonce(20);
     createTransactionsSession({
       status: TransactionBatchStatusesEnum.sent,
-      transactions: [{ nonce: 14, status: 'pending', hash: 'a' } as any]
+      transactions: [
+        { sender: address, nonce: 14, status: 'pending', hash: 'a' } as any
+      ]
     });
     (fetchAccount as jest.Mock).mockResolvedValue(chainAccount(12));
 

@@ -24,7 +24,6 @@ const serverMetadataFields = [
   'receiverShard',
   'senderAssets',
   'receiverAssets',
-  'logs',
   'receipt',
   'type',
   'tokenValue',

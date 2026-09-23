@@ -41,7 +41,7 @@ export const warnInsecureDefault = (
 
   console.warn(
     `[sdk-dapp] ${message}\n` +
-      `Set \`dAppConfig.flags.${flag}: true\` in initApp to opt in. ` +
+      `Set \`dAppConfig.flags.${flag}: ${!DEFAULT_FLAGS_CONFIG[flag]}\` in initApp to opt in. ` +
       'This becomes the default in v6.'
   );
 };

@@ -1,4 +1,4 @@
-const RESERVATION_LIFETIME_MS = 10 * 60 * 1000;
+export const NONCE_RESERVATION_LIFETIME_MS = 10 * 60 * 1000;
 
 type NonceReservationType = {
   address: string;
@@ -26,7 +26,7 @@ export const releaseNonces = (address: string, nonces: number[]) => {
  * transactions are never sent.
  */
 export const reserveNonces = (address: string, nonces: number[]) => {
-  const expiresAt = Date.now() + RESERVATION_LIFETIME_MS;
+  const expiresAt = Date.now() + NONCE_RESERVATION_LIFETIME_MS;
 
   releaseNonces(address, nonces);
   reservations.push(...nonces.map((nonce) => ({ address, nonce, expiresAt })));

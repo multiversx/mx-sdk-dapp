@@ -10,6 +10,7 @@ import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { WalletConnectStateManager } from 'managers/internal/WalletConnectStateManager/WalletConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
+import { finalizeSignedTransactions } from 'providers/strategies/helpers/signTransactions/helpers/finalizeSignedTransactions';
 import {
   ProviderTypeEnum,
   ProviderType
@@ -29,7 +30,6 @@ import {
   LoginOptionsTypes
 } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
-import { finalizeSignedTransactions } from '../helpers/signTransactions/helpers/finalizeSignedTransactions';
 
 const MAX_LOGIN_ATTEMPTS = 3;
 

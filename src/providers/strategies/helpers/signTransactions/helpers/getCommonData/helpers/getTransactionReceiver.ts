@@ -1,18 +1,5 @@
 import { Address, Transaction } from 'lib/sdkCore';
-import { TransactionTypesEnum } from 'types/enums.types';
-
-const getEmbeddedReceiver = (data: string) => {
-  const [functionName, ...args] = data.split('@');
-
-  switch (functionName) {
-    case TransactionTypesEnum.ESDTNFTTransfer:
-      return args[3];
-    case TransactionTypesEnum.MultiESDTNFTTransfer:
-      return args[0];
-    default:
-      return undefined;
-  }
-};
+import { getAddressIndex } from 'utils/validation/isContract';
 
 // ESDTNFTTransfer and MultiESDTNFTTransfer are sent to self, with the destination in their data
 export const getTransactionReceiver = (transaction: Transaction) => {
@@ -23,7 +10,9 @@ export const getTransactionReceiver = (transaction: Transaction) => {
   }
 
   const data = Buffer.from(transaction.data ?? []).toString();
-  const embeddedReceiver = getEmbeddedReceiver(data);
+  const addressIndex = getAddressIndex(data);
+  const embeddedReceiver =
+    addressIndex > -1 ? data.split('@')[addressIndex] : undefined;
 
   if (!embeddedReceiver || !/^[0-9a-f]{64}$/i.test(embeddedReceiver)) {
     return receiver;

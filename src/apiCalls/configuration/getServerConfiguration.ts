@@ -1,8 +1,8 @@
 import axios from 'axios';
+import { dappConfigSchema } from 'apiCalls/utils/apiResponseSchemas';
+import { validateApiResponse } from 'apiCalls/utils/validateApiResponse';
 import { NetworkType } from 'types/network.types';
 import { CONFIG_ENDPOINT } from '../endpoints';
-import { dappConfigSchema } from '../utils/apiResponseSchemas';
-import { validateApiResponse } from '../utils/validateApiResponse';
 
 const withValidation = (networkConfig: NetworkType) => {
   validateApiResponse({

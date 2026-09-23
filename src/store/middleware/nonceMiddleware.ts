@@ -1,5 +1,5 @@
+import { StoreType } from 'store/store.types';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
-import { StoreType } from '../store.types';
 
 const unsuccessfulSessionStatuses: Array<string | undefined> = [
   TransactionBatchStatusesEnum.fail,

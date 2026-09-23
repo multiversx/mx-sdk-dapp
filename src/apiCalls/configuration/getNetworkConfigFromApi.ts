@@ -1,8 +1,8 @@
 import axios from 'axios';
+import { networkConfigSchema } from 'apiCalls/utils/apiResponseSchemas';
+import { validateApiResponse } from 'apiCalls/utils/validateApiResponse';
 import { ApiNetworkConfigType } from 'types/network.types';
 import { NETWORK_CONFIG_ENDPOINT } from '../endpoints';
-import { networkConfigSchema } from '../utils/apiResponseSchemas';
-import { validateApiResponse } from '../utils/validateApiResponse';
 
 const urlIsValid = (url: string) => {
   try {
