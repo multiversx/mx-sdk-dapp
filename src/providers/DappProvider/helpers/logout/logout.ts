@@ -38,6 +38,14 @@ export const clearLocalSession = () => {
   websocketManager.closeConnectionRef?.();
 };
 
+const getIsProviderInitialized = (provider: IProvider) => {
+  try {
+    return provider.isInitialized();
+  } catch {
+    return false;
+  }
+};
+
 export async function logout({
   provider,
   options = {
@@ -61,7 +69,19 @@ export async function logout({
       return true;
     }
 
-    const isLoggedOut = await provider.logout();
+    let isLoggedOut = false;
+
+    try {
+      isLoggedOut = await provider.logout();
+    } catch (err) {
+      // a provider that never initialized holds no session to end
+      if (getIsProviderInitialized(provider)) {
+        throw err;
+      }
+
+      console.warn('Provider logout failed:', err);
+      isLoggedOut = true;
+    }
 
     if (!isLoggedOut) {
       throw new Error(

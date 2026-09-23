@@ -31,8 +31,10 @@ jest.mock('managers/LogoutManager/LogoutManager', () => ({
   LogoutManager: { getInstance: () => ({ stop: jest.fn() }) }
 }));
 
-const makeProvider = (logoutImpl: () => Promise<boolean>) =>
-  ({ logout: jest.fn(logoutImpl) }) as any;
+const makeProvider = (
+  logoutImpl: () => Promise<boolean>,
+  isInitialized: () => boolean = () => true
+) => ({ logout: jest.fn(logoutImpl), isInitialized }) as any;
 
 describe('logout', () => {
   beforeEach(() => {
@@ -93,6 +95,32 @@ describe('logout', () => {
 
       await expect(logout({ provider })).rejects.toThrow('cable unplugged');
       expect(mockLogoutAction).not.toHaveBeenCalled();
+    });
+
+    it('clears the session when a provider that never initialized fails to log out', async () => {
+      const provider = makeProvider(
+        async () => {
+          throw new Error('Extension provider is not initialised');
+        },
+        () => false
+      );
+
+      await expect(logout({ provider })).resolves.toBe(true);
+      expect(mockLogoutAction).toHaveBeenCalled();
+    });
+
+    it('clears the session when the provider throws before it has an instance', async () => {
+      const provider = {
+        logout: jest.fn(() => {
+          throw new Error('Provider is not initialized');
+        }),
+        isInitialized: () => {
+          throw new Error('Provider is not initialized');
+        }
+      } as any;
+
+      await expect(logout({ provider })).resolves.toBe(true);
+      expect(mockLogoutAction).toHaveBeenCalled();
     });
 
     it('keeps the session when the provider reports failure', async () => {
