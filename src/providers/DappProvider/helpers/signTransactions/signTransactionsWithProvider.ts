@@ -5,6 +5,7 @@ import {
   TransactionVersion
 } from 'lib/sdkCore';
 import { getAccount } from 'methods/account/getAccount';
+import { getUsesAccountGuardian } from 'providers/strategies/helpers/signTransactions/helpers/guardTransactions/getUsesAccountGuardian';
 import {
   IProvider,
   ProviderTypeEnum
@@ -58,6 +59,10 @@ export async function signTransactionsWithProvider({
   const transactionsToSign =
     activeGuardianAddress && isGuarded && !options.skipGuardian
       ? transactions.map((transaction) => {
+          if (!getUsesAccountGuardian(transaction, address)) {
+            return transaction;
+          }
+
           transaction.version = TransactionVersion.withTxOptions().valueOf();
           transaction.options = TransactionOptions.withOptions({
             guarded: true,

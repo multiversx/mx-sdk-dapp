@@ -1,4 +1,4 @@
-import { testAddress } from '__mocks__';
+import { testAddress, testReceiver } from '__mocks__';
 import { Address, Transaction } from 'lib/sdkCore';
 import { getAccount } from 'methods/account/getAccount';
 import { IProvider } from 'providers/types/providerFactory.types';
@@ -144,5 +144,58 @@ describe('signTransactionsWithProvider', () => {
 
     expect(getNextReservedNonce(testAddress)).toBe(0);
     expect(setAccountNonce).not.toHaveBeenCalled();
+  });
+
+  describe('guarded account', () => {
+    const accountGuardian =
+      'erd1pu4ru4qu8jt2qmk8vh9xdp8wj234t3mhfwp4zu2fmkmvg8j4hqfqqzw7ud';
+
+    const provider = {
+      getType: () => 'extension',
+      signTransactions: jest.fn(async (transactions) => transactions)
+    } as unknown as IProvider;
+
+    beforeEach(() => {
+      (getAccount as jest.Mock).mockReturnValue({
+        address: testAddress,
+        nonce: 7,
+        isGuarded: true,
+        activeGuardianAddress: accountGuardian
+      });
+    });
+
+    it('guards its own transactions with its guardian', async () => {
+      const [own] = await signTransactionsWithProvider({
+        provider,
+        transactions: [createTransaction()]
+      });
+
+      expect(own.guardian.toBech32()).toBe(accountGuardian);
+      expect(own.options).toBe(2);
+    });
+
+    it('leaves the guardian of another sender it co-signs for', async () => {
+      const coSigned = createTransaction({ sender: otherSender, nonce: 2n });
+      coSigned.guardian = Address.newFromBech32(testAddress);
+      coSigned.version = 2;
+      coSigned.options = 2;
+
+      const [signed] = await signTransactionsWithProvider({
+        provider,
+        transactions: [coSigned]
+      });
+
+      expect(signed.guardian.toBech32()).toBe(testAddress);
+      expect(signed.options).toBe(2);
+    });
+
+    it('still guards a transaction sent by a contract', async () => {
+      const [signed] = await signTransactionsWithProvider({
+        provider,
+        transactions: [createTransaction({ sender: testReceiver })]
+      });
+
+      expect(signed.guardian.toBech32()).toBe(accountGuardian);
+    });
   });
 });

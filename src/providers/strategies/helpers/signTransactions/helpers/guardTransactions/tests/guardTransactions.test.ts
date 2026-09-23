@@ -85,7 +85,7 @@ describe('guardTransactions helpers', () => {
     mockedGetTransactionsNeedGuardianSigning.mockReset();
     networkSelector.mockReturnValue(network);
     getState.mockReturnValue({ store: true });
-    getAccount.mockReturnValue({ address: account.address, isGuarded: true });
+    getAccount.mockReturnValue({ address: testAddress, isGuarded: true });
   });
 
   describe('getTransactionsNeedGuardianSigning', () => {
@@ -216,6 +216,46 @@ describe('guardTransactions helpers', () => {
       });
       expect(guardFn).toHaveBeenCalledWith([txUnsigned]);
       expect(result).toEqual(guarded);
+    });
+
+    describe('with a transaction of another sender', () => {
+      const coSigned = Transaction.newFromPlainObject({
+        ...mockPendingTransaction,
+        sender: account.address
+      });
+      (coSigned as any).guardianSignature = { toString: () => '' };
+
+      beforeEach(() => {
+        mockedGetTransactionsNeedGuardianSigning.mockImplementation(
+          actualGetTransactionsNeedGuardianSigning
+        );
+      });
+
+      it('guards only the account transactions and keeps the order', async () => {
+        const guardedOwn = Transaction.newFromPlainObject(
+          mockPendingTransaction
+        );
+        const guardFn = jest.fn().mockResolvedValue([guardedOwn]);
+        mockedGetCrossWindowProvider.mockResolvedValue({
+          guardTransactions: guardFn
+        });
+
+        const result = await guardTransactions([coSigned, txUnsigned]);
+
+        expect(mockedGetCrossWindowProvider).toHaveBeenCalledWith({
+          address: testAddress,
+          walletUrl: network.walletAddress
+        });
+        expect(guardFn).toHaveBeenCalledWith([txUnsigned]);
+        expect(result).toEqual([coSigned, guardedOwn]);
+      });
+
+      it('does not open the guardian flow when only another sender is signed', async () => {
+        const result = await guardTransactions([coSigned]);
+
+        expect(result).toEqual([coSigned]);
+        expect(mockedGetCrossWindowProvider).not.toHaveBeenCalled();
+      });
     });
   });
 });
