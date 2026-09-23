@@ -91,4 +91,38 @@ describe('runSessionCallbacks tests', () => {
     expect(onSuccess).toHaveBeenCalledTimes(1);
     consoleSpy.mockRestore();
   });
+
+  it('keeps callbacks set on the manager when initApp registers its own again', async () => {
+    // the callback maps are module state, so start from empty ones
+    await jest.isolateModulesAsync(async () => {
+      const callbacks = await import(
+        'managers/TransactionManager/helpers/sessionCallbacks'
+      );
+      const { runSessionCallbacks: run } = await import(
+        '../runSessionCallbacks'
+      );
+      const managerOnSuccess = jest.fn().mockResolvedValue(undefined);
+      const initAppOnSuccess = jest.fn().mockResolvedValue(undefined);
+      const initAppOnFail = jest.fn().mockResolvedValue(undefined);
+
+      callbacks.registerCallbacks({ onSuccess: managerOnSuccess });
+      callbacks.registerDefaultCallbacks({
+        onSuccess: initAppOnSuccess,
+        onFail: initAppOnFail
+      });
+
+      await run({
+        sessionId: 'succeeded',
+        status: TransactionBatchStatusesEnum.success
+      });
+      await run({
+        sessionId: 'failed',
+        status: TransactionBatchStatusesEnum.fail
+      });
+
+      expect(managerOnSuccess).toHaveBeenCalledWith('succeeded');
+      expect(initAppOnSuccess).not.toHaveBeenCalled();
+      expect(initAppOnFail).toHaveBeenCalledWith('failed');
+    });
+  });
 });

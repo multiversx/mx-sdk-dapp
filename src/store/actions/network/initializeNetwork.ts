@@ -37,9 +37,7 @@ export const initializeNetwork = async ({
   } else if (hasCustomUrl(customNetworkConfig)) {
     warnInsecureDefault(
       'validateNetworkUrls',
-      'A custom network config was supplied without url validation. ' +
-        '`walletAddress` and `iframeWalletAddress` are the origins that receive ' +
-        'transactions for signing.'
+      'A custom network config was supplied without url validation.'
     );
   }
 

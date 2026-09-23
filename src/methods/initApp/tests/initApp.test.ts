@@ -1,7 +1,7 @@
 import { account as mockAccount } from '__mocks__/data/account';
 import { network } from '__mocks__/data/storeData/network';
 import { defineCustomElements } from 'lib/sdkDappUi';
-import { registerCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
+import { registerDefaultCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { getAccount } from 'methods/account/getAccount';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { setGasStationMetadata } from 'methods/initApp/gasStationMetadata/setGasStationMetadata';
@@ -87,7 +87,7 @@ jest.mock('services/nativeAuth/methods/getDefaultNativeAuthConfig', () => ({
 }));
 
 jest.mock('managers/TransactionManager/helpers/sessionCallbacks', () => ({
-  registerCallbacks: jest.fn()
+  registerDefaultCallbacks: jest.fn()
 }));
 
 jest.mock('methods/trackTransactions/trackTransactions', () => ({
@@ -347,7 +347,10 @@ describe('initApp tests', () => {
         }
       });
 
-      expect(registerCallbacks).toHaveBeenCalledWith({ onSuccess, onFail });
+      expect(registerDefaultCallbacks).toHaveBeenCalledWith({
+        onSuccess,
+        onFail
+      });
     });
   });
 
@@ -383,7 +386,7 @@ describe('initApp tests', () => {
       );
       expect(trackTransactions).toHaveBeenCalled();
       expect(mockLogoutManagerInit).toHaveBeenCalled();
-      expect(registerCallbacks).toHaveBeenCalledWith({
+      expect(registerDefaultCallbacks).toHaveBeenCalledWith({
         onSuccess: undefined,
         onFail: undefined
       });

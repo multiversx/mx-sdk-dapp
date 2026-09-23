@@ -2,7 +2,7 @@ import { safeWindow } from 'constants/window.constants';
 import { defineCustomElements } from 'lib/sdkDappUi';
 import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 import { ToastManager } from 'managers/ToastManager';
-import { registerCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
+import { registerDefaultCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { listenForLogoutAcrossTabs } from 'providers/DappProvider/helpers/logout/listenForLogoutAcrossTabs';
 import { clearLocalSession } from 'providers/DappProvider/helpers/logout/logout';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
@@ -140,7 +140,7 @@ async function runInitApp({
   setWalletConnectConfig(dAppConfig?.providers?.walletConnect ?? null);
   setProviderSettings(dAppConfig?.providers?.settings ?? null);
 
-  registerCallbacks({
+  registerDefaultCallbacks({
     onSuccess: dAppConfig.transactionTracking?.onSuccess,
     onFail: dAppConfig.transactionTracking?.onFail
   });
@@ -164,8 +164,8 @@ async function runInitApp({
     warnInsecureDefault(
       'strictProviderRegistration',
       `${windowProviders.length} custom provider(s) were registered through the ` +
-        '`window.multiversx.providers` global. Any script running before initApp ' +
-        'can install a provider there and intercept every login and signature.'
+        '`window.multiversx.providers` global, which is ignored once this flag is ' +
+        'on. Pass them in `customProviders` instead.'
     );
   }
 

@@ -2,6 +2,9 @@ const sessionCallbacksMap: Record<string, SessionCallbacksType> = {};
 
 const genericCallbacksMap: SessionCallbacksType = {};
 
+// set by initApp; setCallbacks and session callbacks take precedence
+const defaultCallbacksMap: SessionCallbacksType = {};
+
 const settledSessionIds = new Set<string>();
 
 export type SessionCallbacksType = {
@@ -10,10 +13,12 @@ export type SessionCallbacksType = {
 };
 
 export const getCallbacks = (sessionId?: string): SessionCallbacksType => {
+  const globalCallbacks = { ...defaultCallbacksMap, ...genericCallbacksMap };
+
   if (sessionId != null && sessionId in sessionCallbacksMap) {
-    return { ...genericCallbacksMap, ...sessionCallbacksMap[sessionId] };
+    return { ...globalCallbacks, ...sessionCallbacksMap[sessionId] };
   }
-  return { ...genericCallbacksMap };
+  return globalCallbacks;
 };
 
 export const takeCallbacks = (
@@ -30,6 +35,18 @@ export const takeCallbacks = (
   return callbacks;
 };
 
+const setCallbacks = (
+  map: SessionCallbacksType,
+  { onSuccess, onFail }: SessionCallbacksType
+) => {
+  if (onSuccess != null) {
+    map.onSuccess = onSuccess;
+  }
+  if (onFail != null) {
+    map.onFail = onFail;
+  }
+};
+
 export const registerCallbacks = ({
   onSuccess,
   onFail,
@@ -42,10 +59,8 @@ export const registerCallbacks = ({
     map = sessionCallbacksMap[sessionId];
   }
 
-  if (onSuccess != null) {
-    map.onSuccess = onSuccess;
-  }
-  if (onFail != null) {
-    map.onFail = onFail;
-  }
+  setCallbacks(map, { onSuccess, onFail });
 };
+
+export const registerDefaultCallbacks = (callbacks: SessionCallbacksType) =>
+  setCallbacks(defaultCallbacksMap, callbacks);

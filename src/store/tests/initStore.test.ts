@@ -10,4 +10,24 @@ describe('initStore tests', () => {
     expect(store.setState).toBeDefined();
     expect(store.subscribe).toBeDefined();
   });
+
+  it('keeps updating state when the storage rejects a write', () => {
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => null);
+    const storage = new InMemoryStorage();
+    jest.spyOn(storage, 'setItem').mockImplementation(() => {
+      throw new DOMException('quota exceeded', 'QuotaExceededError');
+    });
+    const store = initStore(() => storage);
+
+    expect(() =>
+      store.setState((state) => {
+        state.ui.isSidePanelOpen = true;
+      })
+    ).not.toThrow();
+    expect(store.getState().ui.isSidePanelOpen).toBe(true);
+
+    consoleSpy.mockRestore();
+  });
 });
