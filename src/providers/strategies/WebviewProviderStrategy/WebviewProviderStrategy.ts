@@ -4,18 +4,19 @@ import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { clearLocalSession } from 'providers/DappProvider/helpers/logout/logout';
 import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
+import { finalizeSignedTransactions } from 'providers/strategies/helpers/signTransactions/helpers/finalizeSignedTransactions';
 import {
   ProviderTypeEnum,
   ProviderType
 } from 'providers/types/providerFactory.types';
+import { providerSettingsSelector } from 'store/selectors/configSelectors';
 import { clearSdkDappStorage } from 'store/storage/clearSdkDappStorage';
+import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
-import { finalizeSignedTransactions } from '../helpers/signTransactions/helpers/finalizeSignedTransactions';
 
 type WebviewProviderProps = {
   address?: string;
-  clearAllStorageOnLogout?: boolean;
 };
 
 export class WebviewProviderStrategy extends BaseProviderStrategy {
@@ -27,11 +28,13 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
       resetStateCallback: () => {
         /*
           Used in Hub to clear storage when logging out via the hub header.
-          Scoped to sdk-dapp keys so that state owned by the host app survives;          
+          Scoped to sdk-dapp keys unless the dApp opts into clearing everything.
         */
+        const settings = providerSettingsSelector(getState());
+
         clearLocalSession();
         clearSdkDappStorage({
-          clearAllStorage: config?.clearAllStorageOnLogout
+          clearAllStorage: settings?.clearAllStorageOnWebviewLogout
         });
       }
     });

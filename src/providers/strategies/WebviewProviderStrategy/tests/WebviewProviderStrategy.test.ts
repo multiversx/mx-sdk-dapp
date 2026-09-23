@@ -44,6 +44,12 @@ jest.mock('store/storage/clearSdkDappStorage', () => ({
   clearSdkDappStorage: (...args: unknown[]) => mockClearSdkDappStorage(...args)
 }));
 
+const mockProviderSettings = jest.fn();
+
+jest.mock('store/selectors/configSelectors', () => ({
+  providerSettingsSelector: () => mockProviderSettings()
+}));
+
 const { WebviewProvider } = jest.requireMock(
   '@multiversx/sdk-webview-provider/out/WebviewProvider'
 ) as {
@@ -58,7 +64,6 @@ const { version: mockedVersion } = jest.requireMock(
 
 type StrategyConfig = {
   address?: string;
-  clearAllStorageOnLogout?: boolean;
 };
 
 const createStrategy = (config?: StrategyConfig) =>
@@ -72,6 +77,7 @@ describe('WebviewProviderStrategy tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
+    mockProviderSettings.mockReturnValue(null);
     mockWebviewProvider.init.mockResolvedValue(true);
     mockWebviewProvider.logout.mockResolvedValue(true);
     mockWebviewProvider.isInitialized.mockReturnValue(false);
@@ -103,8 +109,11 @@ describe('WebviewProviderStrategy tests', () => {
     expect(mockWebviewProvider.login).toHaveBeenCalledWith({ token: 'abc' });
   });
 
-  it('wipes all storage when the host opts in', () => {
-    createStrategy({ clearAllStorageOnLogout: true });
+  it('wipes all storage when the dApp opts in, even after the provider was created', () => {
+    createStrategy();
+    mockProviderSettings.mockReturnValue({
+      clearAllStorageOnWebviewLogout: true
+    });
 
     const { resetStateCallback } = WebviewProvider.getInstance.mock.calls[0][0];
     resetStateCallback();
