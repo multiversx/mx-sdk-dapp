@@ -83,12 +83,16 @@ export function getAddressFromDataField({
   }
 }
 
-function getAddressIndex(data: string) {
-  if (data.includes(TypesOfSmartContractCallsEnum.MultiESDTNFTTransfer)) {
-    return 1;
+// index in `data.split('@')` of the destination of an (Multi)ESDTNFTTransfer
+export function getAddressIndex(data: string) {
+  const [functionName] = data.split('@');
+
+  switch (functionName) {
+    case TypesOfSmartContractCallsEnum.MultiESDTNFTTransfer:
+      return 1;
+    case TypesOfSmartContractCallsEnum.ESDTNFTTransfer:
+      return 4;
+    default:
+      return -1;
   }
-  if (data.includes(TypesOfSmartContractCallsEnum.ESDTNFTTransfer)) {
-    return 4;
-  }
-  return -1;
 }

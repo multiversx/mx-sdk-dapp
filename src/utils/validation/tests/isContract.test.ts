@@ -1,4 +1,4 @@
-import { isContract } from '../isContract';
+import { getAddressFromDataField, isContract } from '../isContract';
 
 const userAddress =
   'erd1a07ey0xj28u90mtk8858zsavs0cj7s3cy74ufgxdmcq3nslr0y2st2aaax';
@@ -25,5 +25,22 @@ describe('isContract tests', () => {
       'MultiESDTNFTTransfer@0000000000000000050061506400f3e0c5ea560192716d0daefa0b9587017ceb@02@5745474c442d383836303061@@8ac7230489e80000@555344432d613332393036@@464e61d6@6164644c6971756964697479@8963dd8c2c5e0000@459a65fa'
     );
     expect(valid).toBe(true);
+  });
+
+  it('reads the destination only from a transfer call', () => {
+    const destination = '00'.repeat(32);
+
+    expect(
+      getAddressFromDataField({
+        receiver: userAddress,
+        data: `MultiESDTNFTTransfer@${destination}@01`
+      })
+    ).toBe(destination);
+    expect(
+      getAddressFromDataField({
+        receiver: userAddress,
+        data: `claimESDTNFTTransferRewards@${destination}@01`
+      })
+    ).toBe(userAddress);
   });
 });
