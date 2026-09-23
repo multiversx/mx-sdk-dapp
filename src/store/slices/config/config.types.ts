@@ -8,6 +8,12 @@ export interface IProviderSettings {
    * @default true
    */
   isSigningUiEnabled?: boolean;
+  /**
+   * Webview only: when the host app ends the session, clears all of
+   * `localStorage` and `sessionStorage` instead of only the sdk-dapp keys
+   * @default false
+   */
+  clearAllStorageOnWebviewLogout?: boolean;
 }
 
 /**
