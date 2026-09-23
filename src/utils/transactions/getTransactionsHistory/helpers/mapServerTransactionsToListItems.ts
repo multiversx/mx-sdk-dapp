@@ -10,7 +10,6 @@ import { StoreType } from 'store/store.types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { SignedTransactionType } from 'types/transactions.types';
-import { getUnixTimestampMs } from 'utils/dateTime';
 import { getTransactionTimestampMs } from 'utils/transactions/getTransactionTimestampMs';
 import { getCachedTransactionListItem } from './getCachedTransactionListItem';
 import { mapTransactionToListItem } from './mapTransactionToListItem';
@@ -59,40 +58,6 @@ export const mapServerTransactionsToListItems = async ({
       ...(tx as unknown as ServerTransactionType),
       txHash: tx.hash
     }));
-
-  const retrievedHashes = newTransactions.map((tx) => tx.txHash);
-  const missingHashes = hashesToFetch.filter(
-    (hash) => !retrievedHashes.includes(hash)
-  );
-
-  if (missingHashes.length > 0) {
-    const filteredTransactions = transactions.filter((transaction) =>
-      missingHashes.includes(transaction.hash)
-    );
-
-    // In case the transactions were not found, we create a dummy transaction with the pending status
-    // until all pending transactions are returned from the API
-    const nowMs = getUnixTimestampMs();
-
-    const pendingDummyTransactions = filteredTransactions.map(
-      (transaction) =>
-        ({
-          ...transaction,
-          txHash: transaction.hash,
-          price: 0,
-          status: TransactionServerStatusesEnum.pending,
-          gasUsed: 0,
-          miniBlockHash: '',
-          receiverShard: 0,
-          round: 0,
-          senderShard: 0,
-          timestamp: Math.floor(nowMs / 1000),
-          timestampMs: nowMs
-        }) as ServerTransactionType
-    );
-
-    newTransactions.push(...pendingDummyTransactions);
-  }
 
   const uniqueTransactionsMap = new Map<string, ITransactionListItem>();
 
