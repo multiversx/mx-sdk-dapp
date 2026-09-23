@@ -176,6 +176,52 @@ describe('ToastManager custom toasts subscription', () => {
   });
 });
 
+describe('ToastManager custom toast lifetime', () => {
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('gives a custom toast shown again under the same id its full duration', async () => {
+    jest.useFakeTimers();
+    const toast = {
+      toastId: 'custom-toast',
+      message: 'hello',
+      duration: 10_000
+    };
+    const { store, manager } = createToastManagerTestContext({
+      storeState: {
+        ...mockStore,
+        toasts: { customToasts: [toast], transactionToasts: [] }
+      }
+    });
+    const setToasts = (customToasts: (typeof toast)[]) =>
+      store.setState({
+        toasts: { ...store.getState().toasts, customToasts }
+      });
+
+    // the lifetime timer removes toasts through the global store actions
+    const removeCustomToast = jest.spyOn(
+      jest.requireMock('store/actions/toasts/toastsActions'),
+      'removeCustomToast'
+    );
+
+    await manager.init();
+
+    jest.advanceTimersByTime(2_000);
+    setToasts([]);
+    setToasts([toast]);
+    jest.advanceTimersByTime(9_000);
+
+    expect(removeCustomToast).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(1_000);
+
+    expect(removeCustomToast).toHaveBeenCalledWith(toast.toastId);
+
+    manager.destroy();
+  });
+});
+
 describe('ToastManager createTransactionToast', () => {
   beforeEach(() => {
     jest.clearAllMocks();

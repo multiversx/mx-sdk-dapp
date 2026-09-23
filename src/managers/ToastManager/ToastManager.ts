@@ -171,6 +171,13 @@ export class ToastManager {
 
   private async updateCustomToastList() {
     const { toasts: toastList } = this.store.getState();
+    const toastIds = toastList.customToasts.map(({ toastId }) => toastId);
+
+    // removed without closeToast (e.g. removeCustomToast): drop its timer too
+    this.customToasts
+      .filter(({ toastId }) => !toastIds.includes(toastId))
+      .forEach(({ toastId }) => this.lifetimeManager.stop(toastId));
+
     this.customToasts = [];
 
     for (const toast of toastList.customToasts) {
