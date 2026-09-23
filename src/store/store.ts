@@ -37,6 +37,25 @@ const getIsDevelopment = () => {
   }
 };
 
+// a failed write (e.g. a full storage quota) must not abort the state update
+const withSafeWrites =
+  (getStorageCallback: StorageCallback): StorageCallback =>
+  () => {
+    const storage = getStorageCallback();
+
+    return {
+      getItem: (name) => storage.getItem(name),
+      setItem: (name, value) => {
+        try {
+          return storage.setItem(name, value);
+        } catch (error) {
+          console.error('Unable to persist the sdk-dapp store:', error);
+        }
+      },
+      removeItem: (name) => storage.removeItem(name)
+    };
+  };
+
 export const createDAppStore = (getStorageCallback: StorageCallback) => {
   const store = createStore<StoreType, MutatorsOut>(
     devtools(
@@ -53,7 +72,7 @@ export const createDAppStore = (getStorageCallback: StorageCallback) => {
         })),
         {
           name: 'sdk-dapp-store',
-          storage: createJSONStorage(getStorageCallback),
+          storage: createJSONStorage(withSafeWrites(getStorageCallback)),
           partialize: (state) =>
             state.config?.flags?.persistTokenLogin === false
               ? {
