@@ -1,3 +1,4 @@
+import { safeWindow } from 'constants/window.constants';
 import {
   ICustomProvider,
   ProviderType,
@@ -17,6 +18,20 @@ const REQUIRED_PROVIDER_METHODS = [
 ] as const;
 
 const builtInProviderTypes = new Set<string>(Object.values(ProviderTypeEnum));
+
+const getIsIconUrlAllowed = (iconUrl: string) => {
+  try {
+    const url = new URL(iconUrl, safeWindow.location?.href);
+
+    return (
+      url.protocol === 'https:' ||
+      (url.protocol === 'data:' && url.pathname.startsWith('image/')) ||
+      url.origin === safeWindow.location?.origin
+    );
+  } catch {
+    return false;
+  }
+};
 
 export const validateCustomProviders = (
   providers: ICustomProvider[]
@@ -43,7 +58,10 @@ export const validateCustomProviders = (
       return false;
     }
 
-    if (typeof provider.constructor !== 'function') {
+    if (
+      !Object.prototype.hasOwnProperty.call(provider, 'constructor') ||
+      typeof provider.constructor !== 'function'
+    ) {
       console.warn(
         `[sdk-dapp] Ignoring custom provider "${type}": \`constructor\` is not a function`
       );
@@ -57,21 +75,11 @@ export const validateCustomProviders = (
       return false;
     }
 
-    if (provider.iconUrl != null) {
-      let isHttps = false;
-
-      try {
-        isHttps = new URL(provider.iconUrl).protocol === 'https:';
-      } catch {
-        isHttps = false;
-      }
-
-      if (!isHttps) {
-        console.warn(
-          `[sdk-dapp] Ignoring custom provider "${type}": \`iconUrl\` must be an https url`
-        );
-        return false;
-      }
+    if (provider.iconUrl != null && !getIsIconUrlAllowed(provider.iconUrl)) {
+      console.warn(
+        `[sdk-dapp] Ignoring custom provider "${type}": \`iconUrl\` must be an https, same-origin or data:image url`
+      );
+      return false;
     }
 
     return true;

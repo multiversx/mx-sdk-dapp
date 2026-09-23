@@ -43,10 +43,19 @@ describe('validateCustomProviders', () => {
   );
 
   it.each([
+    '/icons/wallet.svg',
+    `${window.location.origin}/multiversx-white.svg`,
+    'data:image/svg+xml;base64,PHN2Zz48L3N2Zz4='
+  ])('keeps a provider whose iconUrl is %s', (iconUrl) => {
+    const provider = makeProvider({ iconUrl });
+
+    expect(validateCustomProviders([provider])).toEqual([provider]);
+  });
+
+  it.each([
     'http://cdn.example/logo.png',
     'javascript:alert(1)',
-    'data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=',
-    'not-a-url'
+    'data:text/html,<p>wallet</p>'
   ])('rejects a provider whose iconUrl is %s', (iconUrl) => {
     expect(validateCustomProviders([makeProvider({ iconUrl })])).toEqual([]);
   });
@@ -54,6 +63,14 @@ describe('validateCustomProviders', () => {
   it('rejects a provider whose constructor is not a function', () => {
     expect(
       validateCustomProviders([makeProvider({ constructor: 'nope' })])
+    ).toEqual([]);
+  });
+
+  it('rejects a provider without its own constructor', () => {
+    const { constructor: _constructor, ...provider } = makeProvider();
+
+    expect(
+      validateCustomProviders([provider as unknown as ICustomProvider])
     ).toEqual([]);
   });
 
