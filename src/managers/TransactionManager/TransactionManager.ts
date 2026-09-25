@@ -77,7 +77,7 @@ export class TransactionManager {
           .flat()
           .map((transaction) => transaction.toPlainObject())
       );
-      await reconcileAccountNonce();
+      reconcileAccountNonce();
 
       const responseData = <{ message: string }>(
         (error as AxiosError).response?.data
@@ -260,13 +260,34 @@ export class TransactionManager {
       id: batchId
     };
 
-    const { data } = await axios.post<BatchTransactionsResponseType>(
-      `${apiAddress}/batch`,
-      payload,
-      {
-        timeout: Number(apiTimeout)
+    let data: BatchTransactionsResponseType;
+
+    try {
+      ({ data } = await axios.post<BatchTransactionsResponseType>(
+        `${apiAddress}/batch`,
+        payload,
+        {
+          timeout: Number(apiTimeout)
+        }
+      ));
+    } catch (error) {
+      // a timed out batch may still have been accepted
+      const unconfirmedGroups = signedTransactions.map((group) =>
+        group.map((tx) => this.getUnconfirmedTransaction(tx, error))
+      );
+
+      const isEveryTransactionPending = unconfirmedGroups
+        .flat()
+        .every(
+          ({ status }) => status === TransactionServerStatusesEnum.pending
+        );
+
+      if (!isEveryTransactionPending) {
+        throw error;
       }
-    );
+
+      return unconfirmedGroups;
+    }
 
     if (data?.error || !Array.isArray(data?.transactions)) {
       throw new Error(data?.error || 'Failed to send transactions');

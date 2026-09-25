@@ -211,4 +211,59 @@ describe('TransactionManager.send with grouped transactions', () => {
     expect(getNextReservedNonce(testAddress)).toBe(0);
     expect(reconcileAccountNonce).toHaveBeenCalledTimes(1);
   });
+
+  it('keeps a timed out batch as pending and its nonces held', async () => {
+    (axios.post as jest.Mock).mockRejectedValue(timeoutError);
+    reserveNonces(testAddress, [7, 8, 9]);
+
+    const sentGroups = groups();
+    const computer = new TransactionComputer();
+
+    const result = await TransactionManager.getInstance().send(sentGroups);
+
+    expect(result).toMatchObject(
+      sentGroups.map((group) =>
+        group.map((transaction) => ({
+          hash: computer.computeTransactionHash(transaction),
+          nonce: Number(transaction.nonce),
+          status: TransactionServerStatusesEnum.pending
+        }))
+      )
+    );
+    expect(getNextReservedNonce(testAddress)).toBe(10);
+    expect(reconcileAccountNonce).not.toHaveBeenCalled();
+  });
+
+  it('releases the nonces of a batch lost to a network error', async () => {
+    (axios.post as jest.Mock).mockRejectedValue({
+      code: 'ERR_NETWORK',
+      message: 'Network Error'
+    });
+    reserveNonces(testAddress, [7, 8, 9]);
+
+    await expect(TransactionManager.getInstance().send(groups())).rejects.toBe(
+      'Network Error'
+    );
+
+    expect(getNextReservedNonce(testAddress)).toBe(0);
+  });
+});
+
+describe('TransactionManager.send error path', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('rethrows without waiting for the nonce to be reconciled', async () => {
+    (reconcileAccountNonce as jest.Mock).mockReturnValueOnce(
+      new Promise(() => undefined)
+    );
+    (axios.post as jest.Mock).mockRejectedValue(httpError('rejected'));
+
+    await expect(
+      TransactionManager.getInstance().send([createTransaction(7)])
+    ).rejects.toBe('rejected');
+
+    expect(reconcileAccountNonce).toHaveBeenCalledTimes(1);
+  });
 });
