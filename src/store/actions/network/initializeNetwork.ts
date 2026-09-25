@@ -68,11 +68,12 @@ export const initializeNetwork = async ({
     const apiAddress = customNetworkApiAddress || fallbackApiAddress;
     const dappConfig = await getServerConfiguration(apiAddress);
 
-    const networkConfig = !localConfig.roundDuration
+    // emptyNetwork always carries a roundDuration, so check what was configured
+    const networkConfig = !customNetworkConfig.roundDuration
       ? await getNetworkConfigFromApi(apiAddress)
       : null;
 
-    if (networkConfig != null) {
+    if (networkConfig?.erd_round_duration) {
       localConfig.roundDuration = networkConfig.erd_round_duration;
     }
 
