@@ -2,6 +2,7 @@ import { WritableDraft } from 'immer';
 import { Address } from 'lib/sdkCore';
 import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
 import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
+import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import {
   addLoginExpiresAt,
   removeLoginExpiresAt
@@ -52,7 +53,16 @@ const logoutExpiredProvider = () => {
   // ToastManager -> store -> middleware, so a top-level import would close a
   // cycle back onto this module.
   import('providers/helpers/accountProvider')
-    .then(({ getAccountProvider }) => getAccountProvider()?.logout())
+    .then(({ getAccountProvider }) => {
+      const provider = getAccountProvider();
+
+      // the host app owns a webview session
+      if (provider?.getType?.() === ProviderTypeEnum.webview) {
+        return;
+      }
+
+      return provider?.logout();
+    })
     .catch((error) =>
       console.error('Error logging out the expired provider:', error)
     );

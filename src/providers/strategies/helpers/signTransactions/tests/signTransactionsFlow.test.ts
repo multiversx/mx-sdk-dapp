@@ -187,5 +187,64 @@ describe('signTransactions flow', () => {
 
       consoleSpy.mockRestore();
     });
+
+    it('stops when the panel is closed while the provider signs', async () => {
+      const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
+      const manager = SignTransactionsStateManager.getInstance();
+      const callback = jest.fn(async (transactions: Transaction[]) => [
+        ...transactions
+      ]);
+      let releaseSigning: () => void = () => {};
+      const pendingSign = jest.fn(
+        (transactions: Transaction[]) =>
+          new Promise<Transaction[]>(
+            (resolve) => (releaseSigning = () => resolve(transactions))
+          )
+      );
+      (getCommonData as jest.Mock).mockResolvedValue({
+        commonData: { needsSigning: true }
+      });
+
+      const signPromise = signTransactions({
+        transactions: [
+          new Transaction({
+            nonce: 10n,
+            value: 1n,
+            sender: self,
+            receiver: destination,
+            gasLimit: 50_000n,
+            gasPrice: 1_000_000_000n,
+            chainID: 'D'
+          })
+        ],
+        handleSign: pendingSign,
+        guardTransactions,
+        options: { callback }
+      });
+
+      await flush();
+      manager
+        .getEventHandlers(SignEventsEnum.CONFIRM)
+        .forEach((handler) => handler());
+      await flush();
+
+      expect(pendingSign).toHaveBeenCalledTimes(1);
+
+      manager
+        .getEventHandlers(SignEventsEnum.CLOSE)
+        .forEach((handler) => handler());
+
+      await expect(signPromise).rejects.toThrow(
+        'Transaction signing cancelled by user'
+      );
+
+      const commonDataCalls = (getCommonData as jest.Mock).mock.calls.length;
+      releaseSigning();
+      await flush();
+
+      expect(callback).not.toHaveBeenCalled();
+      expect(guardTransactions).not.toHaveBeenCalled();
+      expect(getCommonData).toHaveBeenCalledTimes(commonDataCalls);
+    });
   });
 });

@@ -233,6 +233,11 @@ export async function signTransactions({
 
       const signedTxs = await handleSign([transactionToSign]);
 
+      // cancelled while the provider was signing
+      if (isSettled) {
+        return;
+      }
+
       if (signedTxs) {
         signedIndexes.push(currentScreenIndex);
         signedTransactions.push(signedTxs[0]);
