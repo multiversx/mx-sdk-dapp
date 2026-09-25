@@ -7,7 +7,7 @@ import {
   TransactionDataTokenType
 } from 'types/transactions.types';
 import { checkIsValidSender } from './checkIsValidSender';
-import { getTransactionReceiver } from './getTransactionReceiver';
+import { getEffectiveReceiver } from './getEffectiveReceiver';
 import { getTxInfoByDataField } from './getTxInfoByDataField';
 import { isTokenTransfer } from '../../isTokenTransfer';
 
@@ -55,7 +55,7 @@ export function getExtractTransactionsInfo({
     });
 
     const { tokenId } = transactionTokenInfo;
-    const receiver = getTransactionReceiver(transaction);
+    const receiver = getEffectiveReceiver(transaction);
 
     if (sender && sender !== address) {
       const isValidSender = checkIsValidSender(senderAccount, address);

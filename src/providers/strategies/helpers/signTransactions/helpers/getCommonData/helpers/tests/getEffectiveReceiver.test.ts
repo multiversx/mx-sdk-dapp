@@ -1,5 +1,5 @@
 import { Address, Transaction } from 'lib/sdkCore';
-import { getTransactionReceiver } from '../getTransactionReceiver';
+import { getEffectiveReceiver } from '../getEffectiveReceiver';
 
 const sender = Address.newFromHex('11'.repeat(32));
 const destination = Address.newFromHex('22'.repeat(32));
@@ -16,9 +16,9 @@ const createTransaction = (receiver: Address, data: string) =>
     data: new Uint8Array(Buffer.from(data))
   });
 
-describe('getTransactionReceiver', () => {
+describe('getEffectiveReceiver', () => {
   it('returns the receiver of a plain transfer', () => {
-    expect(getTransactionReceiver(createTransaction(other, ''))).toBe(
+    expect(getEffectiveReceiver(createTransaction(other, ''))).toBe(
       other.toBech32()
     );
   });
@@ -26,7 +26,7 @@ describe('getTransactionReceiver', () => {
   it('returns the destination of a MultiESDTNFTTransfer sent to self', () => {
     const data = `MultiESDTNFTTransfer@${destination.toHex()}@02@544f4b454e2d313233343536@@01@544f4b454e2d616263646566@@02`;
 
-    expect(getTransactionReceiver(createTransaction(sender, data))).toBe(
+    expect(getEffectiveReceiver(createTransaction(sender, data))).toBe(
       destination.toBech32()
     );
   });
@@ -34,7 +34,7 @@ describe('getTransactionReceiver', () => {
   it('returns the destination of an ESDTNFTTransfer sent to self', () => {
     const data = `ESDTNFTTransfer@4e46542d313233343536@01@01@${destination.toHex()}`;
 
-    expect(getTransactionReceiver(createTransaction(sender, data))).toBe(
+    expect(getEffectiveReceiver(createTransaction(sender, data))).toBe(
       destination.toBech32()
     );
   });
@@ -45,13 +45,13 @@ describe('getTransactionReceiver', () => {
       Buffer.from(`ESDTNFTTransfer@4e4654@01@01@${destination.toHex()}`)
     );
 
-    expect(getTransactionReceiver(transaction)).toBe(destination.toBech32());
+    expect(getEffectiveReceiver(transaction)).toBe(destination.toBech32());
   });
 
   it('keeps the receiver when the embedded address is malformed', () => {
     const data = 'MultiESDTNFTTransfer@0g@01@544f4b454e@@01';
 
-    expect(getTransactionReceiver(createTransaction(sender, data))).toBe(
+    expect(getEffectiveReceiver(createTransaction(sender, data))).toBe(
       sender.toBech32()
     );
   });
@@ -59,7 +59,7 @@ describe('getTransactionReceiver', () => {
   it('keeps the receiver when the transfer is not sent to self', () => {
     const data = `MultiESDTNFTTransfer@${destination.toHex()}@01@544f4b454e@@01`;
 
-    expect(getTransactionReceiver(createTransaction(other, data))).toBe(
+    expect(getEffectiveReceiver(createTransaction(other, data))).toBe(
       other.toBech32()
     );
   });

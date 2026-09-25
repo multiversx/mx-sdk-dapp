@@ -1,8 +1,8 @@
 import { Address, Transaction } from 'lib/sdkCore';
-import { getAddressIndex } from 'utils/validation/isContract';
+import { getTransferDestination } from 'utils/validation/isContract';
 
 // ESDTNFTTransfer and MultiESDTNFTTransfer are sent to self, with the destination in their data
-export const getTransactionReceiver = (transaction: Transaction) => {
+export const getEffectiveReceiver = (transaction: Transaction) => {
   const receiver = transaction.receiver.toBech32();
 
   if (receiver !== transaction.sender.toBech32()) {
@@ -10,16 +10,14 @@ export const getTransactionReceiver = (transaction: Transaction) => {
   }
 
   const data = Buffer.from(transaction.data ?? []).toString();
-  const addressIndex = getAddressIndex(data);
-  const embeddedReceiver =
-    addressIndex > -1 ? data.split('@')[addressIndex] : undefined;
+  const destination = getTransferDestination(data);
 
-  if (!embeddedReceiver || !/^[0-9a-f]{64}$/i.test(embeddedReceiver)) {
+  if (!destination || !/^[0-9a-f]{64}$/i.test(destination)) {
     return receiver;
   }
 
   return Address.newFromHex(
-    embeddedReceiver,
+    destination,
     transaction.receiver.getHrp()
   ).toBech32();
 };
