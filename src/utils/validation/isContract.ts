@@ -73,14 +73,20 @@ export function getAddressFromDataField({
     }
     const parsedData = isStringBase64(data) ? decodeBase64(data) : data;
 
-    const addressIndex = getAddressIndex(parsedData);
-
-    const parts = parsedData.split('@');
-    return addressIndex > -1 ? parts[addressIndex] : receiver;
+    return getAddressIndex(parsedData) > -1
+      ? getTransferDestination(parsedData)
+      : receiver;
   } catch (err) {
     console.log(err);
     return;
   }
+}
+
+// the destination written in the data of an (Multi)ESDTNFTTransfer
+export function getTransferDestination(data: string): string | undefined {
+  const addressIndex = getAddressIndex(data);
+
+  return addressIndex > -1 ? data.split('@')[addressIndex] : undefined;
 }
 
 // index in `data.split('@')` of the destination of an (Multi)ESDTNFTTransfer
