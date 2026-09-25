@@ -41,7 +41,10 @@ export type WebviewClientPropsType = {
 
 export class WebviewClient {
   private readonly handlers: Map<string, MessageHandler> = new Map();
-  private readonly store = getStore();
+  private get store() {
+    return getStore();
+  }
+
   private isLoginInitiated = false;
   private readonly handleLoginCancelled: () => Promise<void>;
   private readonly allowedOrigins: Set<string>;
