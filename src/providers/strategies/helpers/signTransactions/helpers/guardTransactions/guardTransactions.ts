@@ -29,11 +29,11 @@ export const guardTransactions = async (transactions: Transaction[]) => {
     return transactions;
   }
 
-  const sender = accountTransactions[0].sender.toBech32();
   const { walletAddress } = networkSelector(getState());
 
+  // the guarded account, also for transactions sent by a contract on its behalf
   const provider = await getCrossWindowProvider({
-    address: sender,
+    address,
     walletUrl: walletAddress
   });
 

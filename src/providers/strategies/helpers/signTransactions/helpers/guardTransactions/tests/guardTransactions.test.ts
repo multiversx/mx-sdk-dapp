@@ -1,7 +1,7 @@
 import { account, testAddress } from '__mocks__';
 import { mockPendingTransaction } from '__mocks__/data/mockPendingTransaction';
 import { network } from '__mocks__/data/storeData/network';
-import { Transaction } from 'lib/sdkCore';
+import { Address, Transaction } from 'lib/sdkCore';
 import { guardTransactions } from '../guardTransactions';
 
 jest.mock('../getCrossWindowProvider', () => ({
@@ -248,6 +248,31 @@ describe('guardTransactions helpers', () => {
         });
         expect(guardFn).toHaveBeenCalledWith([txUnsigned]);
         expect(result).toEqual([coSigned, guardedOwn]);
+      });
+
+      it('opens the guardian flow for the account when a contract transaction comes first', async () => {
+        const contractTransaction = Transaction.newFromPlainObject({
+          ...mockPendingTransaction,
+          sender: Address.newFromHex(
+            `${'00'.repeat(8)}0500${'11'.repeat(22)}`,
+            'erd'
+          ).toBech32()
+        });
+        (contractTransaction as any).guardianSignature = { toString: () => '' };
+        const guardFn = jest
+          .fn()
+          .mockResolvedValue([contractTransaction, txSigned]);
+        mockedGetCrossWindowProvider.mockResolvedValue({
+          guardTransactions: guardFn
+        });
+
+        await guardTransactions([contractTransaction, txUnsigned]);
+
+        expect(mockedGetCrossWindowProvider).toHaveBeenCalledWith({
+          address: testAddress,
+          walletUrl: network.walletAddress
+        });
+        expect(guardFn).toHaveBeenCalledWith([contractTransaction, txUnsigned]);
       });
 
       it('does not open the guardian flow when only another sender is signed', async () => {
