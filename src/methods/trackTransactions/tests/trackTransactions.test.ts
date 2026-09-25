@@ -115,6 +115,48 @@ describe('trackTransactions', () => {
     });
   });
 
+  describe('status checks', () => {
+    const connectedState = {
+      account: { address: 'test-address' },
+      config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
+    };
+
+    it('checks once on start when the websocket is already connected', async () => {
+      mockGetState.mockReturnValue(connectedState);
+
+      await trackTransactions();
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
+    });
+
+    it('checks again when the websocket reconnects', async () => {
+      await trackTransactions();
+      mockCheckTransactionStatus.mockClear();
+
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+      subscribeCallback(connectedState, {
+        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
+      });
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
+    });
+
+    it('checks once when a new session is pending and the websocket reconnects', async () => {
+      await trackTransactions();
+      mockCheckTransactionStatus.mockClear();
+      mockPendingTransactionsSessionsSelector.mockReturnValue({
+        'session-1': {} as any
+      });
+
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+      subscribeCallback(connectedState, {
+        config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
+      });
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('websocket status subscription', () => {
     it('should subscribe to websocket status changes', async () => {
       await trackTransactions();

@@ -97,9 +97,12 @@ export async function trackTransactions(): Promise<{
     pollingIntervalRef = setInterval(recheckStatus, nextIntervalMs);
   };
 
-  const syncPolling = (state?: StoreType): void => {
+  const syncPolling = (
+    state?: StoreType,
+    sessionIds = getPendingSessionIds(state ?? store.getState())
+  ): void => {
     const currentState = state ?? store.getState();
-    const hasPendingSessions = getPendingSessionIds(currentState).length > 0;
+    const hasPendingSessions = sessionIds.length > 0;
 
     if (hasPendingSessions) {
       startPolling(currentState);
@@ -177,7 +180,6 @@ export async function trackTransactions(): Promise<{
     switch (websocketStatus) {
       case WebsocketConnectionStatusEnum.COMPLETED:
         setupWebSocketTracking();
-        recheckStatus();
         syncPolling(state);
         break;
       case WebsocketConnectionStatusEnum.PENDING:
@@ -203,13 +205,21 @@ export async function trackTransactions(): Promise<{
     );
     pendingSessionIds = new Set(nextPendingSessionIds);
 
-    if (hasNewPendingSession) {
+    const isStatusChanged =
+      prevState.config.websocketStatus !== websocketStatus;
+
+    // events sent while the websocket was not connected were missed
+    const isReconnected =
+      isStatusChanged &&
+      websocketStatus === WebsocketConnectionStatusEnum.COMPLETED;
+
+    if (hasNewPendingSession || isReconnected) {
       recheckStatus();
     }
 
-    syncPolling(state);
+    syncPolling(state, nextPendingSessionIds);
 
-    if (prevState.config.websocketStatus === websocketStatus) {
+    if (!isStatusChanged) {
       return;
     }
 

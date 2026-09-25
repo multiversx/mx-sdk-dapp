@@ -42,8 +42,32 @@ describe('createWebsocketHashResolver tests', () => {
     await expect(second).resolves.toEqual([]);
     expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
 
+    mockCheckTransactionStatus.mockResolvedValue(undefined);
     releaseCheck();
     await first;
+  });
+
+  it('checks a hash received during its check again once that check ends', async () => {
+    let releaseCheck: () => void = () => undefined;
+    mockCheckTransactionStatus.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolvePromise) => {
+          releaseCheck = resolvePromise;
+        })
+    );
+
+    const { resolve } = createWebsocketHashResolver();
+
+    const first = resolve(['hash-1']);
+    await resolve(['hash-1']);
+
+    releaseCheck();
+    await first;
+
+    expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
+    expect(mockCheckTransactionStatus).toHaveBeenLastCalledWith({
+      hashes: ['hash-1']
+    });
   });
 
   it('resolves only the hashes that are not in flight', async () => {
@@ -64,6 +88,7 @@ describe('createWebsocketHashResolver tests', () => {
       hashes: ['hash-2']
     });
 
+    mockCheckTransactionStatus.mockResolvedValue(undefined);
     releaseChecks.forEach((releaseCheck) => releaseCheck());
     await Promise.all([first, second]);
   });
