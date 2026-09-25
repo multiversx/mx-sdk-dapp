@@ -1,4 +1,9 @@
-import { createJSONStorage, devtools, persist } from 'zustand/middleware';
+import {
+  createJSONStorage,
+  devtools,
+  persist,
+  PersistStorage
+} from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { createStore } from 'zustand/vanilla';
 import { applyMiddlewares } from './middleware';
@@ -37,23 +42,24 @@ const getIsDevelopment = () => {
   }
 };
 
-// a failed write (e.g. a full storage quota) must not abort the state update
-const withSafeWrites =
-  (getStorageCallback: StorageCallback): StorageCallback =>
-  () => {
-    const storage = getStorageCallback();
+const logWriteError = (error: unknown) =>
+  console.error('Unable to persist the sdk-dapp store:', error);
 
-    return {
-      getItem: (name) => storage.getItem(name),
-      setItem: (name, value) => {
-        try {
-          return storage.setItem(name, value);
-        } catch (error) {
-          console.error('Unable to persist the sdk-dapp store:', error);
-        }
-      },
-      removeItem: (name) => storage.removeItem(name)
-    };
+// a failed write (e.g. a full storage quota) must not abort the state update
+const withSafeWrites = <S>(
+  storage?: PersistStorage<S>
+): PersistStorage<S> | undefined =>
+  storage && {
+    ...storage,
+    setItem: (name, value) => {
+      try {
+        return Promise.resolve(storage.setItem(name, value)).catch(
+          logWriteError
+        );
+      } catch (error) {
+        logWriteError(error);
+      }
+    }
   };
 
 export const createDAppStore = (getStorageCallback: StorageCallback) => {
@@ -72,7 +78,7 @@ export const createDAppStore = (getStorageCallback: StorageCallback) => {
         })),
         {
           name: 'sdk-dapp-store',
-          storage: createJSONStorage(withSafeWrites(getStorageCallback)),
+          storage: withSafeWrites(createJSONStorage(getStorageCallback)),
           partialize: (state) =>
             state.config?.flags?.persistTokenLogin === false
               ? {

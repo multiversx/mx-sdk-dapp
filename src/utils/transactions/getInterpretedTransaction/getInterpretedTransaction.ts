@@ -6,11 +6,11 @@ import {
 } from 'types/serverTransactions.types';
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { timeAgo } from 'utils/operations/timeRemaining';
+import { getTransactionTimestampMs } from 'utils/transactions/getTransactionTimestampMs';
 import { isContract } from 'utils/validation/isContract';
 import { explorerUrlBuilder } from '../explorerUrlBuilder';
 import { getExplorerLink } from '../getExplorerLink';
 import { getHumanReadableTimeFormat } from '../getHumanReadableTimeFormat';
-import { getTransactionTimestampMs } from '../getTransactionTimestampMs';
 import { getTransactionTokens } from './getTransactionValue/helpers/getTransactionTokens';
 import { getTokenFromData } from './helpers/getTokenFromData';
 import { getTransactionIconInfo } from './helpers/getTransactionIconInfo';
