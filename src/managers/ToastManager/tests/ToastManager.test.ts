@@ -220,6 +220,65 @@ describe('ToastManager custom toast lifetime', () => {
 
     manager.destroy();
   });
+
+  describe('with a timed custom toast', () => {
+    const toast = {
+      toastId: 'custom-toast',
+      message: 'hello',
+      duration: 10_000
+    };
+
+    const setup = async () => {
+      jest.useFakeTimers();
+      const { store, manager } = createToastManagerTestContext({
+        storeState: {
+          ...mockStore,
+          toasts: { customToasts: [toast], transactionToasts: [] }
+        }
+      });
+      const setToasts = (customToasts: (typeof toast)[]) =>
+        store.setState({
+          toasts: { ...store.getState().toasts, customToasts }
+        });
+      const removeCustomToast = jest.spyOn(
+        jest.requireMock('store/actions/toasts/toastsActions'),
+        'removeCustomToast'
+      );
+      removeCustomToast.mockClear();
+
+      await manager.init();
+
+      return { manager, setToasts, removeCustomToast };
+    };
+
+    it('restarts its lifetime when it is created again under the same id', async () => {
+      const { manager, setToasts, removeCustomToast } = await setup();
+
+      jest.advanceTimersByTime(8_000);
+      setToasts([{ ...toast, message: 'updated' }]);
+      jest.advanceTimersByTime(9_000);
+
+      expect(removeCustomToast).not.toHaveBeenCalled();
+
+      jest.advanceTimersByTime(1_000);
+
+      expect(removeCustomToast).toHaveBeenCalledWith(toast.toastId);
+
+      manager.destroy();
+    });
+
+    it('keeps its lifetime when another toast is added', async () => {
+      const { manager, setToasts, removeCustomToast } = await setup();
+
+      jest.advanceTimersByTime(8_000);
+      setToasts([toast, { toastId: 'other-toast', message: 'other' } as any]);
+      jest.advanceTimersByTime(2_000);
+
+      expect(removeCustomToast).toHaveBeenCalledWith(toast.toastId);
+
+      manager.destroy();
+    });
+  });
 });
 
 describe('ToastManager createTransactionToast', () => {

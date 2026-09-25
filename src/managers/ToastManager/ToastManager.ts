@@ -32,6 +32,8 @@ export class ToastManager {
   private static instance: ToastManager;
   private transactionToasts: ITransactionToast[] = [];
   private customToasts: CustomToastType[] = [];
+  // as read from the store, to tell a toast created again from an unchanged one
+  private storedCustomToasts: CustomToastType[] = [];
   private successfulToastLifetime?: number;
   private unsubscribeFromStore: () => void = () => null;
   private uiCoordinator: ToastUICoordinator | null = null;
@@ -192,6 +194,11 @@ export class ToastManager {
           };
       this.customToasts.push(newToast);
 
+      // created again under the same id: its lifetime starts over
+      if (!this.storedCustomToasts.includes(toast)) {
+        this.lifetimeManager.stop(toast.toastId);
+      }
+
       if (toast.duration) {
         this.lifetimeManager.startWithCustomDuration(
           toast.toastId,
@@ -199,6 +206,8 @@ export class ToastManager {
         );
       }
     }
+
+    this.storedCustomToasts = toastList.customToasts;
     await this.uiCoordinator?.publishCustomToasts(this.customToasts);
   }
 
@@ -245,6 +254,7 @@ export class ToastManager {
 
   public destroy() {
     this.unsubscribeFromStore();
+    this.storedCustomToasts = [];
     this.lifetimeManager?.destroy();
     this.uiCoordinator?.destroy();
     removeAllCustomToasts();
