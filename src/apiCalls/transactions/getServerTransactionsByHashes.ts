@@ -18,7 +18,8 @@ export const getServerTransactionsByHashes = async (
       params: {
         hashes: hashes.join(','),
         withScResults: true
-      }
+      },
+      timeout: 10000 // 10sec
     }
   );
 

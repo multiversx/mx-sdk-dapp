@@ -40,6 +40,19 @@ const mockGetPollingInterval = getPollingInterval as jest.MockedFunction<
   typeof getPollingInterval
 >;
 
+const flushPromises = async () => {
+  for (let i = 0; i < 10; i++) {
+    await Promise.resolve();
+  }
+};
+
+// lets the initial status check finish
+const startTracking = async () => {
+  const result = await trackTransactions();
+  await flushPromises();
+  return result;
+};
+
 describe('trackTransactions', () => {
   let mockStore: any;
   let mockSubscribe: jest.Mock;
@@ -94,7 +107,7 @@ describe('trackTransactions', () => {
 
   describe('initial execution', () => {
     it('should not resolve a polling interval before polling starts', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // The interval is read at each polling start, so that a network config
       // hydrated after tracking begins is picked up.
@@ -105,7 +118,7 @@ describe('trackTransactions', () => {
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
       mockCheckTransactionStatus.mockRejectedValue(new Error('Test error'));
 
-      await trackTransactions();
+      await startTracking();
 
       expect(consoleSpy).toHaveBeenCalledWith(
         '[trackTransactions] Error checking transaction status:',
@@ -124,13 +137,13 @@ describe('trackTransactions', () => {
     it('checks once on start when the websocket is already connected', async () => {
       mockGetState.mockReturnValue(connectedState);
 
-      await trackTransactions();
+      await startTracking();
 
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
     });
 
     it('checks again when the websocket reconnects', async () => {
-      await trackTransactions();
+      await startTracking();
       mockCheckTransactionStatus.mockClear();
 
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -142,7 +155,7 @@ describe('trackTransactions', () => {
     });
 
     it('checks once when a new session is pending and the websocket reconnects', async () => {
-      await trackTransactions();
+      await startTracking();
       mockCheckTransactionStatus.mockClear();
       mockPendingTransactionsSessionsSelector.mockReturnValue({
         'session-1': {} as any
@@ -157,15 +170,88 @@ describe('trackTransactions', () => {
     });
   });
 
+  describe('overlapping status checks', () => {
+    const pendingState = {
+      account: { address: 'test-address' },
+      config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
+    };
+
+    const holdChecks = () => {
+      const resolvers: (() => void)[] = [];
+      mockCheckTransactionStatus.mockImplementation(
+        () =>
+          new Promise<void>((resolve) => {
+            resolvers.push(resolve);
+          })
+      );
+      return resolvers;
+    };
+
+    it('skips polling ticks while a check is in flight', async () => {
+      mockGetState.mockReturnValue(pendingState);
+      const resolvers = holdChecks();
+
+      await trackTransactions();
+      const [pollingCallback] = mockSetInterval.mock.calls[0];
+
+      pollingCallback();
+      pollingCallback();
+      pollingCallback();
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
+
+      resolvers[0]();
+      await flushPromises();
+
+      pollingCallback();
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
+    });
+
+    it('checks once more after the in-flight check when a session appears during it', async () => {
+      mockGetState.mockReturnValue(pendingState);
+      const resolvers = holdChecks();
+
+      await trackTransactions();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+
+      mockPendingTransactionsSessionsSelector.mockReturnValue({
+        'session-1': {} as any
+      });
+      subscribeCallback(
+        { ...pendingState, transactions: { 'session-1': {} } },
+        { ...pendingState, transactions: {} }
+      );
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
+
+      resolvers[0]();
+      await flushPromises();
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
+    });
+
+    it('does not scan sessions when the transactions did not change', async () => {
+      await startTracking();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+      mockPendingTransactionsSessionsSelector.mockClear();
+
+      const transactions = {};
+      subscribeCallback(
+        { ...pendingState, transactions },
+        { ...pendingState, transactions }
+      );
+
+      expect(mockPendingTransactionsSessionsSelector).not.toHaveBeenCalled();
+    });
+  });
+
   describe('websocket status subscription', () => {
     it('should subscribe to websocket status changes', async () => {
-      await trackTransactions();
+      await startTracking();
 
       expect(mockSubscribe).toHaveBeenCalledWith(expect.any(Function));
     });
 
     it('should setup websocket tracking when status is COMPLETED', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Simulate websocket status change to COMPLETED
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -187,7 +273,7 @@ describe('trackTransactions', () => {
     });
 
     it('should start polling when status is PENDING', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Simulate websocket status change to PENDING
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -210,7 +296,7 @@ describe('trackTransactions', () => {
     });
 
     it('should start polling when address exists and status is default', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Simulate websocket status change to default with address
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -233,7 +319,7 @@ describe('trackTransactions', () => {
     });
 
     it('should stop tracking when no address and status is default', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Simulate websocket status change to default without address
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -257,7 +343,7 @@ describe('trackTransactions', () => {
 
   describe('websocket event tracking', () => {
     it('should setup websocket event subscription when websocket is ready', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Simulate websocket status change to COMPLETED
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -278,7 +364,7 @@ describe('trackTransactions', () => {
     });
 
     it('should call checkTransactionStatus when websocket event timestamp changes', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Setup websocket tracking
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -313,7 +399,7 @@ describe('trackTransactions', () => {
     });
 
     it('should not call checkTransactionStatus when websocket event timestamp is same', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Setup websocket tracking
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -345,7 +431,7 @@ describe('trackTransactions', () => {
     });
 
     it('should handle websocket event with null timestamp', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Setup websocket tracking
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -377,7 +463,7 @@ describe('trackTransactions', () => {
     });
 
     it('should not resolve hashes for transactionPendingResults', async () => {
-      await trackTransactions();
+      await startTracking();
 
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
       subscribeCallback(
@@ -415,7 +501,7 @@ describe('trackTransactions', () => {
           })
       );
 
-      await trackTransactions();
+      await startTracking();
 
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
       subscribeCallback(
@@ -456,7 +542,7 @@ describe('trackTransactions', () => {
     it('should start polling with correct interval', async () => {
       mockGetPollingInterval.mockReturnValue(3000);
 
-      await trackTransactions();
+      await startTracking();
 
       // Simulate websocket status change to PENDING
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -477,7 +563,7 @@ describe('trackTransactions', () => {
     });
 
     it('should downgrade to the watchdog interval once the socket connects', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Start polling first
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -520,7 +606,7 @@ describe('trackTransactions', () => {
 
   describe('subscription management', () => {
     it('should register websocket status subscription', async () => {
-      await trackTransactions();
+      await startTracking();
 
       expect(subscriptions.has(SubscriptionsEnum.websocketStatusChanged)).toBe(
         true
@@ -528,7 +614,7 @@ describe('trackTransactions', () => {
     });
 
     it('should register websocket event subscription when websocket tracking is setup', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Initially no websocket event subscription
       expect(subscriptions.has(SubscriptionsEnum.websocketEventReceived)).toBe(
@@ -554,7 +640,7 @@ describe('trackTransactions', () => {
     });
 
     it('should return stopTransactionsTracking function', async () => {
-      const result = await trackTransactions();
+      const result = await startTracking();
 
       expect(typeof result.stopTransactionsTracking).toBe('function');
     });
@@ -562,7 +648,7 @@ describe('trackTransactions', () => {
 
   describe('stopTransactionsTracking', () => {
     it('should clear polling interval', async () => {
-      const { stopTransactionsTracking } = await trackTransactions();
+      const { stopTransactionsTracking } = await startTracking();
 
       // Start polling
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -597,13 +683,14 @@ describe('trackTransactions', () => {
       subscribeCallback(
         {
           account: { address: 'test-address' },
-          config: { websocketStatus }
+          config: { websocketStatus },
+          transactions: {}
         },
-        { config: { websocketStatus } }
+        { config: { websocketStatus }, transactions: {} }
       );
 
     it('should check transaction status when a new pending session appears', async () => {
-      await trackTransactions();
+      await startTracking();
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
 
       mockPendingTransactionsSessionsSelector.mockReturnValue({
@@ -615,7 +702,7 @@ describe('trackTransactions', () => {
     });
 
     it('should not re-check for an already known pending session', async () => {
-      await trackTransactions();
+      await startTracking();
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
 
       mockPendingTransactionsSessionsSelector.mockReturnValue({
@@ -628,7 +715,7 @@ describe('trackTransactions', () => {
     });
 
     it('should run a slow watchdog while sessions are pending and websocket is COMPLETED', async () => {
-      await trackTransactions();
+      await startTracking();
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
 
       mockPendingTransactionsSessionsSelector.mockReturnValue({
@@ -641,13 +728,14 @@ describe('trackTransactions', () => {
       expect(mockSetInterval).toHaveBeenCalledWith(expect.any(Function), 9000);
       expect(mockGetPollingInterval).not.toHaveBeenCalled();
 
+      await flushPromises();
       const [pollingCallback] = mockSetInterval.mock.calls[0];
       pollingCallback();
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(3);
     });
 
     it('should poll at the fast interval when the websocket is unavailable', async () => {
-      await trackTransactions();
+      await startTracking();
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
 
       mockPendingTransactionsSessionsSelector.mockReturnValue({
@@ -662,7 +750,7 @@ describe('trackTransactions', () => {
     });
 
     it('should stop polling once no session is pending anymore', async () => {
-      await trackTransactions();
+      await startTracking();
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
 
       mockPendingTransactionsSessionsSelector.mockReturnValue({
@@ -684,7 +772,7 @@ describe('trackTransactions', () => {
         config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
       });
 
-      await trackTransactions();
+      await startTracking();
 
       expect(subscriptions.has(SubscriptionsEnum.websocketEventReceived)).toBe(
         true
@@ -692,7 +780,7 @@ describe('trackTransactions', () => {
     });
 
     it('should setup websocket tracking only once', async () => {
-      await trackTransactions();
+      await startTracking();
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
 
       const completedState = {
@@ -710,8 +798,8 @@ describe('trackTransactions', () => {
     });
 
     it('should unsubscribe previously registered subscriptions on re-init', async () => {
-      await trackTransactions();
-      await trackTransactions();
+      await startTracking();
+      await startTracking();
 
       expect(mockUnsubscribe).toHaveBeenCalledTimes(1);
     });
@@ -722,10 +810,10 @@ describe('trackTransactions', () => {
         config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
       });
 
-      await trackTransactions();
+      await startTracking();
       expect(mockSetInterval).toHaveBeenCalledTimes(1);
 
-      await trackTransactions();
+      await startTracking();
 
       expect(mockClearInterval).toHaveBeenCalledWith(123);
       expect(mockSetInterval).toHaveBeenCalledTimes(2);
@@ -737,7 +825,7 @@ describe('trackTransactions', () => {
         config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
       });
 
-      await trackTransactions();
+      await startTracking();
 
       subscriptions.forEach((unsubscribe) => unsubscribe());
 
@@ -753,8 +841,8 @@ describe('trackTransactions', () => {
         return unsubscribe;
       });
 
-      const { stopTransactionsTracking: stopFirst } = await trackTransactions();
-      await trackTransactions();
+      const { stopTransactionsTracking: stopFirst } = await startTracking();
+      await startTracking();
       const [, newerUnsubscribe] = unsubscribers;
 
       stopFirst();
@@ -770,14 +858,14 @@ describe('trackTransactions', () => {
     it('should handle missing websocket event in selector', async () => {
       mockWebsocketTransactionEventSelector.mockReturnValue(null);
 
-      await trackTransactions();
+      await startTracking();
 
       // Should not throw error
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
     });
 
     it('should handle websocket event without hashes', async () => {
-      await trackTransactions();
+      await startTracking();
 
       // Setup websocket tracking
       const [subscribeCallback] = mockSubscribe.mock.calls[0];

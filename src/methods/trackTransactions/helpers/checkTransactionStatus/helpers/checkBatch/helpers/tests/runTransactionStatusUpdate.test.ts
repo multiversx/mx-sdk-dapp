@@ -1,4 +1,5 @@
 import { mockPendingTransaction } from '__mocks__';
+import { TRANSACTIONS_STATUS_NOT_FOUND_TIMEOUT_MS } from 'constants/transactions.constants';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
 import { runTransactionStatusUpdate } from '../runTransactionStatusUpdate';
 
@@ -77,13 +78,18 @@ describe('runTransactionStatusUpdate tests', () => {
       }
     });
 
+  let now = 1_000_000;
+
+  const advanceTime = (ms: number) => {
+    now += ms;
+  };
+
   const exhaustRetries = async (stuckTransaction: typeof serverTransaction) => {
-    for (let i = 0; i < 31; i++) {
-      await runTransactionStatusUpdate({
-        serverTransaction: stuckTransaction,
-        sessionId
-      });
-    }
+    await runTransactionStatusUpdate({
+      serverTransaction: stuckTransaction,
+      sessionId
+    });
+    advanceTime(TRANSACTIONS_STATUS_NOT_FOUND_TIMEOUT_MS);
     jest.clearAllMocks();
   };
 
@@ -98,8 +104,15 @@ describe('runTransactionStatusUpdate tests', () => {
     results: []
   });
 
+  let dateNowSpy: jest.SpyInstance;
+
+  afterEach(() => {
+    dateNowSpy.mockRestore();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
+    dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => now);
     getIsTransactionPending.mockImplementation((status: string) =>
       ['pending', 'sent'].includes(status)
     );
@@ -161,6 +174,38 @@ describe('runTransactionStatusUpdate tests', () => {
       sessionId,
       status: TransactionBatchStatusesEnum.timedOut
     });
+  });
+
+  it('does not time out a transaction checked often within the time limit', async () => {
+    const stuckTransaction = getStuckTransaction('frequent-hash');
+
+    for (let i = 0; i < 100; i++) {
+      await runTransactionStatusUpdate({
+        serverTransaction: stuckTransaction,
+        sessionId
+      });
+      advanceTime(100);
+    }
+
+    expect(updateTransactionStatus).not.toHaveBeenCalled();
+    expect(updateSessionStatus).not.toHaveBeenCalled();
+  });
+
+  it('does not time out a transaction that is found after the time limit', async () => {
+    (getIsTransactionFailed as jest.Mock).mockReturnValue(false);
+    (updateTransactionAndSessionStatus as jest.Mock).mockReturnValue(
+      TransactionBatchStatusesEnum.success
+    );
+    const hash = 'late-hash';
+    await exhaustRetries(getStuckTransaction(hash));
+
+    await runTransactionStatusUpdate({
+      serverTransaction: { ...serverTransaction, hash },
+      sessionId
+    });
+
+    expect(updateTransactionStatus).not.toHaveBeenCalled();
+    expect(updateTransactionAndSessionStatus).toHaveBeenCalledTimes(1);
   });
 
   it('keeps holding the nonce of a stuck transaction', async () => {

@@ -1,3 +1,4 @@
+import { TRANSACTIONS_STATUS_NOT_FOUND_TIMEOUT_MS } from 'constants/transactions.constants';
 import {
   updateSessionStatus,
   updateTransactionStatus
@@ -24,11 +25,8 @@ export interface TransactionStatusTrackerPropsType {
   isSequential?: boolean;
 }
 
-interface RetriesType {
-  [hash: string]: number;
-}
-
-const retries: RetriesType = {};
+// when each hash was first reported as not found
+const notFoundSince: Record<string, number> = {};
 
 interface RunTransactionStatusUpdateType {
   serverTransaction: TrackedTransactionResultType;
@@ -98,28 +96,31 @@ export async function runTransactionStatusUpdate({
   const { hash, status, invalidTransaction, hasStatusChanged } = transaction;
 
   if (getSession(sessionId) == null) {
-    delete retries[hash];
+    delete notFoundSince[hash];
     return;
   }
 
   try {
-    const retriesForThisHash = retries[hash];
-    if (retriesForThisHash > 30) {
-      // consider transaction as stuck after 1 minute
-      delete retries[hash];
-      await markTransactionAsTimedOut({ sessionId, transaction });
-      return;
-    }
-
-    if (
+    const isNotFound =
       (invalidTransaction && !isSequential) ||
-      status === TransactionBatchStatusesEnum.sent
-    ) {
-      retries[hash] = retries[hash] ? retries[hash] + 1 : 1;
+      status === TransactionBatchStatusesEnum.sent;
+
+    if (isNotFound) {
+      const now = Date.now();
+      notFoundSince[hash] = notFoundSince[hash] ?? now;
+
+      const isStuck =
+        now - notFoundSince[hash] >= TRANSACTIONS_STATUS_NOT_FOUND_TIMEOUT_MS;
+
+      if (isStuck) {
+        delete notFoundSince[hash];
+        await markTransactionAsTimedOut({ sessionId, transaction });
+      }
+
       return;
     }
 
-    delete retries[hash];
+    delete notFoundSince[hash];
 
     // The tx is from a sequential batch.
     // If the transactions before this are not successful then it means that no other tx will be processed

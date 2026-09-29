@@ -57,8 +57,10 @@ export async function trackTransactions(): Promise<{
   };
 
   let pendingSessionIds = new Set(getPendingSessionIds(store.getState()));
+  let isChecking = false;
+  let isRecheckQueued = false;
 
-  const recheckStatus = async (): Promise<void> => {
+  const runStatusCheck = async (): Promise<void> => {
     try {
       await checkTransactionStatus();
     } catch (error) {
@@ -66,6 +68,30 @@ export async function trackTransactions(): Promise<{
         '[trackTransactions] Error checking transaction status:',
         error
       );
+    }
+  };
+
+  const recheckStatus = async (): Promise<void> => {
+    if (isChecking) {
+      isRecheckQueued = true;
+      return;
+    }
+
+    isChecking = true;
+
+    try {
+      do {
+        isRecheckQueued = false;
+        await runStatusCheck();
+      } while (isRecheckQueued);
+    } finally {
+      isChecking = false;
+    }
+  };
+
+  const pollStatus = (): void => {
+    if (!isChecking) {
+      recheckStatus();
     }
   };
 
@@ -94,15 +120,15 @@ export async function trackTransactions(): Promise<{
 
     stopPolling();
     pollingIntervalMs = nextIntervalMs;
-    pollingIntervalRef = setInterval(recheckStatus, nextIntervalMs);
+    pollingIntervalRef = setInterval(pollStatus, nextIntervalMs);
   };
 
   const syncPolling = (
     state?: StoreType,
-    sessionIds = getPendingSessionIds(state ?? store.getState())
+    hasPendingSessions = getPendingSessionIds(state ?? store.getState())
+      .length > 0
   ): void => {
     const currentState = state ?? store.getState();
-    const hasPendingSessions = sessionIds.length > 0;
 
     if (hasPendingSessions) {
       startPolling(currentState);
@@ -199,11 +225,15 @@ export async function trackTransactions(): Promise<{
       config: { websocketStatus }
     } = state;
 
-    const nextPendingSessionIds = getPendingSessionIds(state);
-    const hasNewPendingSession = nextPendingSessionIds.some(
-      (sessionId) => !pendingSessionIds.has(sessionId)
-    );
-    pendingSessionIds = new Set(nextPendingSessionIds);
+    let hasNewPendingSession = false;
+
+    if (state.transactions !== prevState.transactions) {
+      const nextPendingSessionIds = getPendingSessionIds(state);
+      hasNewPendingSession = nextPendingSessionIds.some(
+        (sessionId) => !pendingSessionIds.has(sessionId)
+      );
+      pendingSessionIds = new Set(nextPendingSessionIds);
+    }
 
     const isStatusChanged =
       prevState.config.websocketStatus !== websocketStatus;
@@ -217,7 +247,7 @@ export async function trackTransactions(): Promise<{
       recheckStatus();
     }
 
-    syncPolling(state, nextPendingSessionIds);
+    syncPolling(state, pendingSessionIds.size > 0);
 
     if (!isStatusChanged) {
       return;
