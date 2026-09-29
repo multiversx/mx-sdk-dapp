@@ -42,6 +42,10 @@ export const getAccountFromApi = async ({
       source: ACCOUNTS_ENDPOINT
     });
 
+    if (data?.address !== address) {
+      return null;
+    }
+
     return data as AccountType;
   } catch (_err) {
     console.error('error fetching configuration for ', address);

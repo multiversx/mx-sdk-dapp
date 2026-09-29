@@ -1,18 +1,13 @@
-import { MULTIVERSX_WALLET_ORIGIN } from 'constants/mvx.constants';
 import { AccountType } from 'types/account.types';
 import { isContract } from 'utils/validation/isContract';
+import { isMultiversxWalletHost } from 'utils/validation/multiversxHosts';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 
 const isMultiversxWalletOrigin = (origin?: string) => {
   try {
     const { protocol, hostname } = new URL(origin ?? '');
 
-    return (
-      protocol === 'https:' &&
-      (hostname === MULTIVERSX_WALLET_ORIGIN ||
-        hostname.endsWith(`-${MULTIVERSX_WALLET_ORIGIN}`) ||
-        hostname.endsWith(`.${MULTIVERSX_WALLET_ORIGIN}`))
-    );
+    return protocol === 'https:' && isMultiversxWalletHost(hostname);
   } catch {
     return false;
   }
