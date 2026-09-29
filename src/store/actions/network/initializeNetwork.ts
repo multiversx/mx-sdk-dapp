@@ -3,10 +3,10 @@ import { getServerConfiguration } from 'apiCalls/configuration/getServerConfigur
 import { fallbackNetworkConfigurations } from 'constants/network.constants';
 import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
 import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
+import { validateNetworkUrls } from 'store/actions/network/helpers/validateNetworkUrls';
 import { emptyNetwork } from 'store/slices/network/emptyNetwork';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { NetworkType, CustomNetworkType } from 'types/network.types';
-import { validateNetworkUrls } from './helpers/validateNetworkUrls';
 import { initializeNetworkConfig } from './networkActions';
 
 export type InitializeNetworkPropsType = {
@@ -19,7 +19,8 @@ const hasCustomUrl = (config: CustomNetworkType) =>
     config?.apiAddress ||
       config?.walletAddress ||
       config?.iframeWalletAddress ||
-      config?.explorerAddress
+      config?.explorerAddress ||
+      config?.websocketUrl
   );
 
 export const initializeNetwork = async ({
