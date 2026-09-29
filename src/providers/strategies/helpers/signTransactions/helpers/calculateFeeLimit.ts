@@ -11,7 +11,7 @@ import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 export interface CalculateFeeLimitType {
   gasLimit: string;
   gasPrice: string;
-  data: string;
+  data: string | Uint8Array;
   gasPerDataByte: string;
   gasPriceModifier: string;
   chainId: string;
@@ -32,7 +32,12 @@ export function calculateFeeLimit({
   defaultGasPrice = String(GAS_PRICE),
   chainId
 }: CalculateFeeLimitType) {
-  const data = inputData || '';
+  // bytes are used as they are, so that the data length is not re-encoded
+  const dataBytes =
+    typeof inputData === 'string' || inputData == null
+      ? new Uint8Array(Buffer.from(inputData || ''))
+      : inputData;
+  const data = Buffer.from(dataBytes).toString();
   const validGasLimit = stringIsInteger(gasLimit) ? gasLimit : minGasLimit;
 
   // We need to add extra gas fee for guardian transactions
@@ -51,7 +56,7 @@ export function calculateFeeLimit({
       sender: new Address(from),
       gasPrice: BigInt(validGasPrice),
       gasLimit: BigInt(usedGasLimit),
-      data: new Uint8Array(Buffer.from(data)),
+      data: dataBytes,
       chainID: chainId,
       version: 1
     });

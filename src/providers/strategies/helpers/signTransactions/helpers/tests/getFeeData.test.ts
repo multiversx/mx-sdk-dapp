@@ -35,6 +35,25 @@ describe('getFeeData', () => {
     expect(getFeeData({ transaction }).feeLimit).toBe(expectedFee.toString());
   });
 
+  it('computes the fee of binary data from its bytes', () => {
+    const transaction = createTransaction(
+      Uint8Array.from([0xff, 0xfe, 0x00, 0x80]),
+      200_000n
+    );
+
+    const expectedFee = new TransactionComputer().computeTransactionFee(
+      transaction,
+      {
+        gasPerDataByte: BigInt(GAS_PER_DATA_BYTE),
+        minGasLimit: 50_000n,
+        gasPriceModifier: GAS_PRICE_MODIFIER,
+        chainID: 'D'
+      }
+    );
+
+    expect(getFeeData({ transaction }).feeLimit).toBe(expectedFee.toString());
+  });
+
   it('does not report a zero fee when the fee cannot be computed', () => {
     const consoleSpy = jest
       .spyOn(console, 'error')

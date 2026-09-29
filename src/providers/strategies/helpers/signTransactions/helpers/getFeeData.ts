@@ -18,7 +18,7 @@ export const getFeeData = ({
     gasPriceModifier: String(GAS_PRICE_MODIFIER),
     gasLimit: transaction.gasLimit.valueOf().toString(),
     gasPrice: transaction.gasPrice.valueOf().toString(),
-    data: Buffer.from(transaction.data ?? []).toString(),
+    data: transaction.data ?? new Uint8Array(),
     chainId: transaction.chainID.valueOf().toString()
   });
 
