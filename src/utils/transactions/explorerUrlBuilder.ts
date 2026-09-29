@@ -17,7 +17,17 @@ import {
   TRANSACTIONS_ENDPOINT
 } from 'apiCalls/endpoints';
 
-const encode = (value: number | string) => encodeURIComponent(String(value));
+// a `#` anchor (e.g. `${originalTxHash}#${scResultHash}`) is kept as a fragment
+const encode = (value: number | string) => {
+  const [segment, ...fragment] = String(value).split('#');
+  const encodedSegment = encodeURIComponent(segment);
+
+  if (fragment.length === 0) {
+    return encodedSegment;
+  }
+
+  return `${encodedSegment}#${encodeURIComponent(fragment.join('#'))}`;
+};
 
 export const explorerUrlBuilder = {
   shard: (shard: number | string) =>
