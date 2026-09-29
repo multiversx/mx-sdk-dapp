@@ -279,6 +279,9 @@ describe('LogoutManager tests', () => {
 
       // Logout should be called immediately, not scheduled
       expect(mockProvider.logout).toHaveBeenCalledTimes(1);
+      expect(mockProvider.logout).toHaveBeenCalledWith(
+        expect.objectContaining({ clearLocalSessionFirst: true })
+      );
       expect(mockGetAccountProvider).toHaveBeenCalledTimes(1);
 
       // Should not schedule any timeouts
@@ -294,6 +297,10 @@ describe('LogoutManager tests', () => {
       jest.advanceTimersByTime(mockSecondsUntilExpires * 1000);
 
       expect(mockProvider.logout).toHaveBeenCalledTimes(1);
+      expect(mockProvider.logout).toHaveBeenCalledWith({
+        shouldBroadcastLogoutAcrossTabs: true,
+        clearLocalSessionFirst: true
+      });
     });
   });
 

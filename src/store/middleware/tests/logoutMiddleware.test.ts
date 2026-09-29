@@ -5,9 +5,13 @@ import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { setAccount } from 'store/actions/account/accountActions';
 import { setFlagsConfig } from 'store/actions/config/configActions';
 import { loginAction } from 'store/actions/sharedActions/sharedActions';
-import { getState, initStore } from 'store/store';
+import { getState, getStore, initStore } from 'store/store';
 import { AccountType } from 'types/account.types';
-import { logoutMiddleware } from '../logoutMiddleware';
+import {
+  deferSessionExpiryCheck,
+  logoutMiddleware,
+  resumeSessionExpiryCheck
+} from '../logoutMiddleware';
 
 jest.mock('providers/helpers/accountProvider', () => ({
   getAccountProvider: jest.fn()
@@ -59,6 +63,35 @@ describe('logoutMiddleware', () => {
     await flush();
 
     expect(provider.logout).toHaveBeenCalledTimes(1);
+  });
+
+  it('logs out an expired session only once the check is resumed', async () => {
+    const provider = {
+      getType: () => ProviderTypeEnum.extension,
+      logout: jest.fn().mockResolvedValue(true)
+    };
+    (getAccountProvider as jest.Mock).mockReturnValue(provider);
+
+    const expiredState = expireSession();
+    deferSessionExpiryCheck();
+    getStore().setState((state) => {
+      state.loginInfo.loginExpiresAt = expiredState.loginInfo.loginExpiresAt;
+    });
+
+    logoutMiddleware(getState());
+    await flush();
+
+    expect(getState().account.address).toBe(testAddress);
+    expect(provider.logout).not.toHaveBeenCalled();
+
+    resumeSessionExpiryCheck();
+    await flush();
+
+    expect(getState().account.address).toBe('');
+    expect(provider.logout).toHaveBeenCalledWith({
+      shouldBroadcastLogoutAcrossTabs: true,
+      clearLocalSessionFirst: true
+    });
   });
 
   it('does not log out a webview provider when its session expires', async () => {

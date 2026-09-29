@@ -15,6 +15,10 @@ import { ProviderFactory } from 'providers/ProviderFactory';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { setNativeAuthConfig } from 'store/actions/config/configActions';
 import { initializeNetwork } from 'store/actions/network/initializeNetwork';
+import {
+  deferSessionExpiryCheck,
+  resumeSessionExpiryCheck
+} from 'store/middleware/logoutMiddleware';
 import { initStore } from 'store/store';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { ThemesEnum } from 'types/theme.types';
@@ -84,6 +88,11 @@ jest.mock('services/nativeAuth/methods/getDefaultNativeAuthConfig', () => ({
     origin: network.walletAddress,
     expirySeconds: 86400
   })
+}));
+
+jest.mock('store/middleware/logoutMiddleware', () => ({
+  deferSessionExpiryCheck: jest.fn(),
+  resumeSessionExpiryCheck: jest.fn()
 }));
 
 jest.mock('managers/TransactionManager/helpers/sessionCallbacks', () => ({
@@ -249,6 +258,78 @@ describe('initApp tests', () => {
       await initApp(config);
 
       expect(initStore).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Stored session expiry', () => {
+    const configWithExpiry = {
+      dAppConfig: {
+        environment: EnvironmentsEnum.devnet,
+        nativeAuth: false,
+        flags: { enforceSessionExpiry: true }
+      }
+    };
+
+    afterEach(() => {
+      (deferSessionExpiryCheck as jest.Mock).mockReset();
+      (resumeSessionExpiryCheck as jest.Mock).mockReset();
+    });
+
+    it('checks the stored session expiry only after the provider is restored', async () => {
+      const callOrder: string[] = [];
+      (deferSessionExpiryCheck as jest.Mock).mockImplementation(() =>
+        callOrder.push('defer')
+      );
+      (initStore as jest.Mock).mockImplementationOnce(() => {
+        callOrder.push('initStore');
+        return jest.requireMock('store/store').getStore();
+      });
+      (restoreProvider as jest.Mock).mockImplementationOnce(async () => {
+        callOrder.push('restoreProvider');
+      });
+      (resumeSessionExpiryCheck as jest.Mock).mockImplementation(() =>
+        callOrder.push('resume')
+      );
+
+      await initApp(configWithExpiry);
+
+      expect(callOrder.slice(0, 4)).toEqual([
+        'defer',
+        'initStore',
+        'restoreProvider',
+        'resume'
+      ]);
+    });
+
+    it('skips the logged-in steps when the restored session has expired', async () => {
+      (getIsLoggedIn as jest.Mock).mockReturnValue(true);
+      (resumeSessionExpiryCheck as jest.Mock).mockImplementation(() =>
+        (getIsLoggedIn as jest.Mock).mockReturnValue(false)
+      );
+
+      await initApp(configWithExpiry);
+
+      expect(refreshAccount).not.toHaveBeenCalled();
+      expect(trackTransactions).not.toHaveBeenCalled();
+      expect(mockLogoutManagerInit).not.toHaveBeenCalled();
+    });
+
+    it('does not defer the check without enforceSessionExpiry', async () => {
+      await initApp({
+        dAppConfig: { environment: EnvironmentsEnum.devnet, nativeAuth: false }
+      });
+
+      expect(deferSessionExpiryCheck).not.toHaveBeenCalled();
+    });
+
+    it('resumes the check when initialization fails', async () => {
+      (initializeNetwork as jest.Mock).mockRejectedValueOnce(
+        new Error('network down')
+      );
+
+      await expect(initApp(configWithExpiry)).rejects.toThrow('network down');
+
+      expect(resumeSessionExpiryCheck).toHaveBeenCalled();
     });
   });
 

@@ -6,11 +6,11 @@ import { getAddress } from 'methods/account/getAddress';
 import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
 import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
 import { websocketManager } from 'methods/initApp/websocket/registerWebsocket';
+import { broadcastLogoutAcrossTabs } from 'providers/DappProvider/helpers/logout/broadcastLogoutAcrossTabs';
 import { emptyProvider } from 'providers/helpers/emptyProvider';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { logoutAction } from 'store/actions/sharedActions/sharedActions';
 import { clearNonceReservations } from 'utils/account/nonceReservations';
-import { broadcastLogoutAcrossTabs } from './broadcastLogoutAcrossTabs';
 
 export type LogoutPropsType = {
   shouldAttemptReLogin?: boolean;
@@ -19,6 +19,10 @@ export type LogoutPropsType = {
    * Only used for web-wallet crossWindow login
    */
   hasConsentPopup?: boolean;
+  /*
+   * Clears local state before `provider.logout()`, even with `strictLogout`
+   */
+  clearLocalSessionFirst?: boolean;
 };
 
 interface IProviderLogout {
@@ -61,7 +65,7 @@ export async function logout({
     }
   };
 
-  if (strictLogout) {
+  if (strictLogout && !options.clearLocalSessionFirst) {
     if (provider === emptyProvider) {
       broadcastLogout();
       clearLocalSession();
@@ -103,10 +107,12 @@ export async function logout({
     const isLoggedOut = await provider.logout();
     return isLoggedOut;
   } catch (err) {
-    warnInsecureDefault(
-      'strictLogout',
-      'Local session state was cleared before `provider.logout()` failed.'
-    );
+    if (!strictLogout) {
+      warnInsecureDefault(
+        'strictLogout',
+        'Local session state was cleared before `provider.logout()` failed.'
+      );
+    }
     console.error('Logging out error:', err);
     return false;
   }

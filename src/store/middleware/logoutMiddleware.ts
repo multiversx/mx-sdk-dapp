@@ -18,7 +18,7 @@ import { initialState as initialLoginInfoState } from 'store/slices/loginInfo/lo
 import { initialState as initialToastState } from 'store/slices/toast/toastSlice';
 import { initialState as initialTransactionsState } from 'store/slices/transactions/transactionsSlice';
 import { getStore } from 'store/store';
-import { StoreType } from '../store.types';
+import { StoreType } from 'store/store.types';
 
 export const resetStore = (store: WritableDraft<StoreType>) => {
   store.account = initialAccountState;
@@ -61,11 +61,20 @@ const logoutExpiredProvider = () => {
         return;
       }
 
-      return provider?.logout();
+      return provider?.logout({
+        shouldBroadcastLogoutAcrossTabs: true,
+        clearLocalSessionFirst: true
+      });
     })
     .catch((error) =>
       console.error('Error logging out the expired provider:', error)
     );
+};
+
+let isExpiryCheckDeferred = false;
+
+export const deferSessionExpiryCheck = () => {
+  isExpiryCheckDeferred = true;
 };
 
 export const logoutMiddleware = (state: StoreType) => {
@@ -77,7 +86,7 @@ export const logoutMiddleware = (state: StoreType) => {
     resetStore(state);
   }
 
-  if (!isLoggedIn) {
+  if (!isLoggedIn || isExpiryCheckDeferred) {
     return;
   }
 
@@ -102,4 +111,13 @@ export const logoutMiddleware = (state: StoreType) => {
 
     logoutExpiredProvider();
   }
+};
+
+export const resumeSessionExpiryCheck = () => {
+  if (!isExpiryCheckDeferred) {
+    return;
+  }
+
+  isExpiryCheckDeferred = false;
+  logoutMiddleware(getStore().getState());
 };

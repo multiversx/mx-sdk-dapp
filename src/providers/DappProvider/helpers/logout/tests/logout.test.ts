@@ -131,6 +131,23 @@ describe('logout', () => {
       );
       expect(mockLogoutAction).not.toHaveBeenCalled();
     });
+
+    it('clears local state first when asked, while the provider is still pending', async () => {
+      // e.g. a wallet popup waiting for a click that never comes
+      const provider = makeProvider(() => new Promise<boolean>(() => null));
+
+      logout({
+        provider,
+        options: {
+          shouldBroadcastLogoutAcrossTabs: true,
+          clearLocalSessionFirst: true
+        }
+      });
+      await Promise.resolve();
+
+      expect(mockLogoutAction).toHaveBeenCalled();
+      expect(provider.logout).toHaveBeenCalled();
+    });
   });
 
   it('clears the session when strict logout runs without an initialized provider', async () => {

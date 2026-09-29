@@ -3,6 +3,11 @@ import { defineCustomElements } from 'lib/sdkDappUi';
 import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 import { ToastManager } from 'managers/ToastManager';
 import { registerDefaultCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
+import {
+  resolveFlagsConfig,
+  warnInsecureDefault
+} from 'methods/initApp/helpers/flagsConfig';
+import { validateRehydratedSession } from 'methods/initApp/helpers/validateRehydratedSession';
 import { listenForLogoutAcrossTabs } from 'providers/DappProvider/helpers/logout/listenForLogoutAcrossTabs';
 import { clearLocalSession } from 'providers/DappProvider/helpers/logout/logout';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
@@ -18,13 +23,15 @@ import {
   setProviderSettings
 } from 'store/actions/config/configActions';
 import { initializeNetwork } from 'store/actions/network/initializeNetwork';
+import {
+  deferSessionExpiryCheck,
+  resumeSessionExpiryCheck
+} from 'store/middleware/logoutMiddleware';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
 import { ThemesEnum } from 'types/theme.types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { switchTheme } from 'utils/visual/switchTheme';
-import { resolveFlagsConfig, warnInsecureDefault } from './helpers/flagsConfig';
-import { validateRehydratedSession } from './helpers/validateRehydratedSession';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { setGasStationMetadata } from './gasStationMetadata/setGasStationMetadata';
@@ -76,6 +83,7 @@ export function resetInitAppState() {
 export function initApp(props: InitAppType): Promise<void> {
   if (!initPromise) {
     initPromise = runInitApp(props).finally(() => {
+      resumeSessionExpiryCheck();
       initPromise = null;
     });
   }
@@ -108,9 +116,15 @@ async function runInitApp({
   switchTheme(defaultTheme);
 
   const { getStorageCallback } = storage;
+  const flags = resolveFlagsConfig(dAppConfig?.flags);
 
   // Managers keep the store they subscribed to, so it is created once
   if (!isAppInitialized) {
+    // an expired stored session is logged out once its provider is restored
+    if (flags.enforceSessionExpiry) {
+      deferSessionExpiryCheck();
+    }
+
     const store = initStore(getStorageCallback);
 
     await waitForStoreRehydration({
@@ -155,7 +169,7 @@ async function runInitApp({
       dAppConfig.transactionTracking?.successfulToastLifetime
   });
 
-  const { strictProviderRegistration } = resolveFlagsConfig(dAppConfig?.flags);
+  const { strictProviderRegistration } = flags;
 
   const windowProviders: ICustomProvider[] =
     (safeWindow as any)?.multiversx?.providers ?? [];
@@ -187,8 +201,9 @@ async function runInitApp({
     listenForLogoutAcrossTabs(clearLocalSession);
 
     const isProviderRestored = await restoreProviderSafely();
+    resumeSessionExpiryCheck();
 
-    if (isLoggedIn && isProviderRestored) {
+    if (isLoggedIn && isProviderRestored && getIsLoggedIn()) {
       await refreshAccount();
       await registerWebsocketListener(account.address);
       trackTransactions();

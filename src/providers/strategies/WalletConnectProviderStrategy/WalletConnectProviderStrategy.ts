@@ -9,13 +9,17 @@ import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { WalletConnectStateManager } from 'managers/internal/WalletConnectStateManager/WalletConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
+import { clearLocalSession } from 'providers/DappProvider/helpers/logout/logout';
 import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
+import {
+  BaseProviderStrategy,
+  LoginOptionsTypes
+} from 'providers/strategies/BaseProviderStrategy/BaseProviderStrategy';
 import { finalizeSignedTransactions } from 'providers/strategies/helpers/signTransactions/helpers/finalizeSignedTransactions';
 import {
   ProviderTypeEnum,
   ProviderType
 } from 'providers/types/providerFactory.types';
-import { logoutAction } from 'store/actions/sharedActions/sharedActions';
 import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
 import { chainIdSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
@@ -25,10 +29,6 @@ import {
   WalletConnectV2Provider
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { WalletConnectV2Error, WalletConnectConfig } from './types';
-import {
-  BaseProviderStrategy,
-  LoginOptionsTypes
-} from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
 const MAX_LOGIN_ATTEMPTS = 3;
@@ -165,7 +165,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     const handleOnLogin = () => {};
 
     const handleOnLogout = () => {
-      logoutAction();
+      clearLocalSession();
     };
 
     const handleOnEvent = (_event: SessionEventTypes['event']) => {};

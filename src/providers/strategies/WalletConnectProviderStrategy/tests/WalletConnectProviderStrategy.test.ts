@@ -66,8 +66,8 @@ jest.mock('store/store', () => ({
   getState: jest.fn()
 }));
 
-jest.mock('store/actions/sharedActions/sharedActions', () => ({
-  logoutAction: jest.fn()
+jest.mock('providers/DappProvider/helpers/logout/logout', () => ({
+  clearLocalSession: jest.fn()
 }));
 
 jest.mock('methods/account/getAccount', () => ({
@@ -118,10 +118,10 @@ const { getState: mockGetState } = jest.requireMock('store/store') as {
   getState: jest.Mock;
 };
 
-const { logoutAction: mockLogoutAction } = jest.requireMock(
-  'store/actions/sharedActions/sharedActions'
+const { clearLocalSession: mockClearLocalSession } = jest.requireMock(
+  'providers/DappProvider/helpers/logout/logout'
 ) as {
-  logoutAction: jest.Mock;
+  clearLocalSession: jest.Mock;
 };
 
 const { getAccount: mockGetAccount } = jest.requireMock(
@@ -208,7 +208,7 @@ describe('WalletConnectProviderStrategy', () => {
     mockNativeAuthConfigSelector.mockReturnValue(undefined);
     mockProviderSettingsSelector.mockReturnValue({});
     mockGetState.mockReturnValue({ state: 'test' });
-    mockLogoutAction.mockReset();
+    mockClearLocalSession.mockReset();
     mockGetAccount.mockReturnValue({
       address: storeAccount.address,
       isGuarded: false,
@@ -218,6 +218,16 @@ describe('WalletConnectProviderStrategy', () => {
     mockGetPendingTransactionsHandlers.mockResolvedValue(buildHandlers());
     mockSignMessageHelper.mockReset();
     mockSignMessageHelper.mockResolvedValue('signed-message');
+  });
+
+  it('clears the whole local session when the wallet disconnects', async () => {
+    const strategy = createStrategy();
+    await strategy.init();
+
+    const [{ onClientLogout }] = MockWalletConnectV2Provider.mock.calls[0];
+    onClientLogout();
+
+    expect(mockClearLocalSession).toHaveBeenCalledTimes(1);
   });
 
   it('initializes provider and updates WalletConnect manager data', async () => {

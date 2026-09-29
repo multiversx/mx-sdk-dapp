@@ -1,7 +1,9 @@
 import BigNumber from 'bignumber.js';
+import { getSessionExpiration } from 'managers/LogoutManager/helpers/getSessionExpiration';
 import { ToastManager } from 'managers/ToastManager';
 import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
 import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
+import { LogoutPropsType } from 'providers/DappProvider/helpers/logout/logout';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import {
@@ -13,7 +15,6 @@ import { tokenLoginSelector } from 'store/selectors/loginInfoSelectors';
 import { getStore } from 'store/store';
 import { IconNamesEnum } from 'types/enums.types';
 import { getHumanReadableTokenExpirationTime } from './helpers/getHumanReadableTokenExpirationTime';
-import { getSessionExpiration } from './helpers/getSessionExpiration';
 
 export class LogoutManager {
   private static instance: LogoutManager;
@@ -55,13 +56,18 @@ export class LogoutManager {
   };
 
   private readonly logoutProvider = (provider: {
-    logout: () => Promise<boolean>;
+    logout: (options?: LogoutPropsType) => Promise<boolean>;
   }) => {
     const onError = (error: unknown) =>
       console.error('Failed logging out the session', error);
 
     try {
-      provider.logout()?.catch?.(onError);
+      provider
+        .logout({
+          shouldBroadcastLogoutAcrossTabs: true,
+          clearLocalSessionFirst: true
+        })
+        ?.catch?.(onError);
     } catch (error) {
       onError(error);
     }
