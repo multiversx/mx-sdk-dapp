@@ -1,10 +1,13 @@
 import { Message, Transaction } from 'lib/sdkCore';
 import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
+import {
+  logout,
+  LogoutPropsType
+} from 'providers/DappProvider/helpers/logout/logout';
 import { setAccountProvider } from 'providers/helpers/accountProvider';
 import { setProviderType } from 'store/actions/loginInfo/loginInfoActions';
 import { IProvider } from '../types/providerFactory.types';
 import { login } from './helpers/login/login';
-import { logout } from './helpers/logout/logout';
 import { handleSignError } from './helpers/signErrors/handleSignError';
 import { signMessageWithProvider } from './helpers/signMessage/signMessageWithProvider';
 import {
@@ -42,7 +45,7 @@ export class DappProvider {
   }
 
   async logout(
-    options = {
+    options: LogoutPropsType = {
       shouldBroadcastLogoutAcrossTabs: true
     }
   ): Promise<boolean> {

@@ -2,6 +2,7 @@ import { PROVIDER_SEARCH_PARAM } from 'constants/providerFactory.constants';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { LedgerIdleStateManager } from 'managers/internal/LedgerIdleStateManager/LedgerIdleStateManager';
 import { getAddress } from 'methods/account/getAddress';
+import { createCustomProvider } from 'providers/helpers/createCustomProvider';
 import { CrossWindowProviderStrategy } from 'providers/strategies/CrossWindowProviderStrategy';
 import { ExtensionProviderStrategy } from 'providers/strategies/ExtensionProviderStrategy';
 import { IframeProviderStrategy } from 'providers/strategies/IframeProviderStrategy';
@@ -20,7 +21,6 @@ import {
   setAccountProvider
 } from './helpers/accountProvider';
 import { clearInitiatedLogins } from './helpers/clearInitiatedLogins';
-import { createCustomProvider } from './helpers/createCustomProvider';
 import { WebviewProviderStrategy } from './strategies/WebviewProviderStrategy';
 import {
   ICustomProvider,

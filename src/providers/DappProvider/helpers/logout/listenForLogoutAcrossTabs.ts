@@ -3,7 +3,7 @@ import { getAddress } from 'methods/account/getAddress';
 import {
   LOGOUT_EVENT_KEY_PREFIX,
   LogoutBroadcastPayload
-} from './broadcastLogoutAcrossTabs';
+} from 'providers/DappProvider/helpers/logout/broadcastLogoutAcrossTabs';
 
 const MAX_BROADCAST_AGE_MS = 60_000;
 

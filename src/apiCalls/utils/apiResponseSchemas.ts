@@ -8,7 +8,7 @@ import {
   isObject,
   isString,
   optional
-} from './validateApiResponse';
+} from 'apiCalls/utils/validateApiResponse';
 
 const MAX_TOKEN_DECIMALS = 18;
 

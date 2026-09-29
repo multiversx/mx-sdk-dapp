@@ -1,9 +1,9 @@
 import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
+import { isProviderShapeValid } from 'providers/helpers/validateCustomProviders';
 import {
   ICustomProvider,
   IProvider
 } from 'providers/types/providerFactory.types';
-import { isProviderShapeValid } from './validateCustomProviders';
 
 export const CUSTOM_PROVIDER_TIMEOUT_MS = 5000;
 

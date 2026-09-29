@@ -7,10 +7,10 @@ import {
   RequestPayloadType
 } from 'lib/sdkWebWalletCrossWindowProvider';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
+import { createHandshakeSession } from 'providers/strategies/WebviewProviderStrategy/WebviewClient/helpers/createHandshakeSession';
 import { accountSelector } from 'store/selectors/accountSelectors';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getStore } from 'store/store';
-import { createHandshakeSession } from './helpers/createHandshakeSession';
 import {
   isLoginTokenMessage,
   isLoginTokenMessageForOrigin

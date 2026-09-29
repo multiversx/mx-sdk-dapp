@@ -40,7 +40,8 @@ export interface IFlagsConfig {
   persistTokenLogin?: boolean;
   /**
    * Awaits `provider.logout()` before clearing local state, and surfaces the
-   * error instead of leaving the UI and the provider out of sync.
+   * error instead of leaving the UI and the provider out of sync. An expired
+   * session is still cleared locally first.
    * @default false
    */
   strictLogout?: boolean;
@@ -56,8 +57,8 @@ export interface IFlagsConfig {
    */
   validateNetworkUrls?: boolean;
   /**
-   * Allows `walletAddress` / `iframeWalletAddress` to point at a host that is
-   * not a known MultiversX wallet.
+   * Allows `walletAddress` / `iframeWalletAddress` to point at a host outside
+   * `multiversx.com`.
    * @default false
    */
   unsafeAllowCustomWalletHosts?: boolean;

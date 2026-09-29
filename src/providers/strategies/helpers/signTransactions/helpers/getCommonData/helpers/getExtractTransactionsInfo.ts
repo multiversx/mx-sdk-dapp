@@ -1,5 +1,6 @@
 import { getAccountFromApi } from 'apiCalls/account/getAccountFromApi';
 import { getScamAddressData } from 'apiCalls/account/getScamAddressData';
+import { getEffectiveReceiver } from 'providers/strategies/helpers/signTransactions/helpers/getCommonData/helpers/getEffectiveReceiver';
 import { SigningErrorsEnum } from 'types/enums.types';
 
 import {
@@ -7,7 +8,6 @@ import {
   TransactionDataTokenType
 } from 'types/transactions.types';
 import { checkIsValidSender } from './checkIsValidSender';
-import { getEffectiveReceiver } from './getEffectiveReceiver';
 import { getTxInfoByDataField } from './getTxInfoByDataField';
 import { isTokenTransfer } from '../../isTokenTransfer';
 

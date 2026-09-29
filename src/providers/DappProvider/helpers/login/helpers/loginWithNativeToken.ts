@@ -1,4 +1,5 @@
 import { getNetworkConfig } from 'methods/network/getNetworkConfig';
+import { isAccessTokenForLogin } from 'providers/DappProvider/helpers/login/helpers/isAccessTokenForLogin';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { nativeAuth } from 'services/nativeAuth';
 import { buildNativeAuthConfig } from 'services/nativeAuth/methods/buildNativeAuthConfig';
@@ -7,7 +8,6 @@ import { setTokenLogin } from 'store/actions/loginInfo/loginInfoActions';
 import { accountLogin } from './accountLogin';
 import { extractAddressFromToken } from './extractAddressFromToken';
 import { getMultisigLoginToken } from './getMultisigLoginToken';
-import { isAccessTokenForLogin } from './isAccessTokenForLogin';
 
 export async function loginWithNativeToken({
   provider,

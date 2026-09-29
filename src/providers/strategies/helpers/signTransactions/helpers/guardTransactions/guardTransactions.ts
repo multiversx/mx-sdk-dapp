@@ -1,10 +1,10 @@
 import { Transaction } from 'lib/sdkCore';
 import { getAccount } from 'methods/account/getAccount';
+import { getUsesAccountGuardian } from 'providers/strategies/helpers/signTransactions/helpers/guardTransactions/getUsesAccountGuardian';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { getCrossWindowProvider } from './getCrossWindowProvider';
 import { getTransactionsNeedGuardianSigning } from './getTransactionsNeedGuardianSigning';
-import { getUsesAccountGuardian } from './getUsesAccountGuardian';
 
 /*
   Performs guard transactions if needed

@@ -1,7 +1,7 @@
+import { DEFAULT_FLAGS_CONFIG } from 'methods/initApp/helpers/flagsConfig';
 import { flagsConfigSelector } from 'store/selectors/configSelectors';
 import { ResolvedFlagsConfig } from 'store/slices/config/config.types';
 import { getState } from 'store/store';
-import { DEFAULT_FLAGS_CONFIG } from './flagsConfig';
 
 export const getFlagsConfig = (): ResolvedFlagsConfig => {
   try {

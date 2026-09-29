@@ -1,4 +1,4 @@
 export {
   sanitizeCallbackUrl,
   stripCallbackUrlParams
-} from './stripCallbackUrlParams';
+} from 'utils/window/stripCallbackUrlParams';

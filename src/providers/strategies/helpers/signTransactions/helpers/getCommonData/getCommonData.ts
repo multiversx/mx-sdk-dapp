@@ -10,6 +10,7 @@ import {
 } from 'managers/internal/SignTransactionsStateManager/types';
 import { getExplorerAddress } from 'methods/network/getExplorerAddress';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
+import { getTokenIdentifier } from 'providers/strategies/helpers/signTransactions/helpers/getCommonData/helpers/getTokenIdentifier';
 import { NetworkType } from 'types/network.types';
 import { NftEnumType } from 'types/tokens.types';
 import {
@@ -26,7 +27,6 @@ import { getExtractTransactionsInfo } from './helpers/getExtractTransactionsInfo
 import { getGasPriceOptions } from './helpers/getGasPriceOptions';
 import { getHighlight } from './helpers/getHighlight';
 import { getScCall } from './helpers/getScCall';
-import { getTokenIdentifier } from './helpers/getTokenIdentifier';
 import { getTokenType } from './helpers/getTokenType';
 
 export type GetCommonDataPropsType = {

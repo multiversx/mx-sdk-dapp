@@ -1,6 +1,6 @@
 import { Transaction } from 'lib/sdkCore';
 import { SignTransactionsOptionsType } from 'providers/DappProvider/helpers/signTransactions/signTransactionsWithProvider';
-import { guardTransactions as getGuardedTransactions } from './guardTransactions/guardTransactions';
+import { guardTransactions as getGuardedTransactions } from 'providers/strategies/helpers/signTransactions/helpers/guardTransactions/guardTransactions';
 
 type FinalizeSignedTransactionsType = {
   signedTransactions: Transaction[];

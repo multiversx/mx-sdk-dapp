@@ -1,5 +1,5 @@
+import { DisplayRiskEnum } from 'types/displayRisk.types';
 import { ScamInfoType } from './account.types';
-import { DisplayRiskEnum } from './displayRisk.types';
 
 export interface TokenRolesType {
   address: string;

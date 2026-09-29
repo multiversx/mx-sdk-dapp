@@ -3,7 +3,7 @@ import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { getReconciledNonce } from 'methods/account/getLatestNonce';
 import { getNetworkConfig } from 'methods/network/getNetworkConfig';
 import { setAccountNonce } from 'store/actions/account/accountActions';
-import { fetchAccount } from './fetchAccount';
+import { fetchAccount } from 'utils/account/fetchAccount';
 
 export async function reconcileAccountNonce() {
   try {
