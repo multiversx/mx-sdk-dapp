@@ -22,13 +22,13 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
   private readonly handleCloseEvent = () => this.closeUI();
   public readonly addressesPerPage = 10;
 
-  private _gasPriceOptionMap: Record<
-    number, // nonce
+  private readonly _gasPriceOptionMap = new WeakMap<
+    Transaction,
     {
       initialGasPrice: number;
       gasPriceOption: number;
     }
-  > = {};
+  >();
 
   protected initialData: ISignTransactionsPanelData = {
     commonData: {
@@ -77,7 +77,7 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
         // creates a snapshot of the initial gas prices for each transaction
         // so user can revert to the initial gas price if they modify it
         this.updateGasPriceMap({
-          nonce: Number(transaction.nonce),
+          transaction,
           gasPriceOption: initialGasPrice,
           initialGasPrice
         });
@@ -89,24 +89,31 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
   }
 
   public updateGasPriceMap({
-    nonce,
+    transaction,
     gasPriceOption,
     initialGasPrice
   }: {
-    nonce: number;
+    transaction: Transaction;
     initialGasPrice?: number;
     gasPriceOption: number;
   }) {
-    this._gasPriceOptionMap[nonce] = {
-      ...this._gasPriceOptionMap[nonce],
+    const current = this.getGasPriceData(transaction);
+
+    this._gasPriceOptionMap.set(transaction, {
+      initialGasPrice: initialGasPrice || current.initialGasPrice,
       gasPriceOption
-    };
+    });
+  }
 
-    if (!initialGasPrice) {
-      return;
-    }
+  public getGasPriceData(transaction: Transaction) {
+    const gasPrice = Number(transaction.gasPrice) || GAS_PRICE;
 
-    this._gasPriceOptionMap[nonce].initialGasPrice = initialGasPrice;
+    return (
+      this._gasPriceOptionMap.get(transaction) ?? {
+        initialGasPrice: gasPrice,
+        gasPriceOption: gasPrice
+      }
+    );
   }
 
   public updateCommonData(
@@ -159,10 +166,6 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
 
   public get currentScreenIndex() {
     return this.data.commonData.currentIndex;
-  }
-
-  public get getGasPriceOptionMap() {
-    return this._gasPriceOptionMap;
   }
 
   protected async setupEventListeners() {

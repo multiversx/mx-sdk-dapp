@@ -99,7 +99,7 @@ export async function signTransactions({
         currentScreenIndex,
         egldLabel,
         network,
-        gasPriceData: manager.getGasPriceOptionMap[Number(transaction.nonce)],
+        gasPriceData: manager.getGasPriceData(transaction),
         price,
         address,
         username,
@@ -151,10 +151,9 @@ export async function signTransactions({
       try {
         const currentTransaction = allTransactions[currentScreenIndex];
         const transaction = currentTransaction.transaction;
-        const currentNonce = Number(transaction.nonce);
 
         manager.updateGasPriceMap({
-          nonce: currentNonce,
+          transaction,
           gasPriceOption
         });
 
@@ -222,9 +221,8 @@ export async function signTransactions({
       }
 
       const plainTransaction = transaction.toPlainObject();
-      const txNonce = plainTransaction.nonce;
 
-      const { gasPriceOption } = manager.getGasPriceOptionMap[txNonce];
+      const { gasPriceOption } = manager.getGasPriceData(transaction);
 
       const transactionToSign = Transaction.newFromPlainObject({
         ...plainTransaction,
