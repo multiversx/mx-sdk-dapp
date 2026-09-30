@@ -30,6 +30,8 @@ export const loginAction = ({
 
       if (loginInfo) {
         loginInfo.providerType = providerType;
+        // a new login starts a new expiry window
+        loginInfo.loginExpiresAt = null;
       }
     },
     false,

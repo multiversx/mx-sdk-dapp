@@ -1,3 +1,4 @@
+import { resetInsecureDefaultWarnings } from 'methods/initApp/helpers/flagsConfig';
 import { setFlagsConfig } from 'store/actions/config/configActions';
 import { setTokenLogin } from 'store/actions/loginInfo/loginInfoActions';
 import { loginAction } from 'store/actions/sharedActions/sharedActions';
@@ -38,6 +39,7 @@ describe('validateRehydratedSession', () => {
   beforeEach(() => {
     localStorage.clear();
     initStore(() => localStorage);
+    resetInsecureDefaultWarnings();
     jest.spyOn(console, 'warn').mockImplementation(() => null);
   });
 
@@ -83,11 +85,24 @@ describe('validateRehydratedSession', () => {
     expect(addressSelector(getState())).toBeFalsy();
   });
 
-  it('clears a session whose token was issued for another origin', () => {
+  it('keeps a session whose token was issued for another origin by default', () => {
     loginAction({ address: ADDRESS, providerType: 'extension' } as any);
     setTokenLogin({
       loginToken: 'a-login-token',
-      nativeAuthToken: makeToken('https://attacker.example')
+      nativeAuthToken: makeToken('https://other.example')
+    });
+
+    expect(validateRehydratedSession({ nativeAuthConfig })).toBe(false);
+    expect(addressSelector(getState())).toEqual(ADDRESS);
+    expect(console.warn).toHaveBeenCalled();
+  });
+
+  it('clears a session whose token was issued for another origin when the token is not persisted', () => {
+    setFlagsConfig({ persistTokenLogin: false });
+    loginAction({ address: ADDRESS, providerType: 'extension' } as any);
+    setTokenLogin({
+      loginToken: 'a-login-token',
+      nativeAuthToken: makeToken('https://other.example')
     });
 
     expect(validateRehydratedSession({ nativeAuthConfig })).toBe(true);

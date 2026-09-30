@@ -83,7 +83,6 @@ export function resetInitAppState() {
 export function initApp(props: InitAppType): Promise<void> {
   if (!initPromise) {
     initPromise = runInitApp(props).finally(() => {
-      resumeSessionExpiryCheck();
       initPromise = null;
     });
   }
@@ -120,7 +119,8 @@ async function runInitApp({
 
   // Managers keep the store they subscribed to, so it is created once
   if (!isAppInitialized) {
-    // an expired stored session is logged out once its provider is restored
+    // an expired stored session is logged out once its provider is restored;
+    // if init fails before that, the check waits for the next initApp call
     if (flags.enforceSessionExpiry) {
       deferSessionExpiryCheck();
     }
@@ -159,7 +159,9 @@ async function runInitApp({
     onFail: dAppConfig.transactionTracking?.onFail
   });
 
-  validateRehydratedSession({ nativeAuthConfig });
+  if (!isAppInitialized) {
+    validateRehydratedSession({ nativeAuthConfig });
+  }
 
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();

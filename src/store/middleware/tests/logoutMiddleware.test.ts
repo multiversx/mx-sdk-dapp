@@ -89,9 +89,50 @@ describe('logoutMiddleware', () => {
 
     expect(getState().account.address).toBe('');
     expect(provider.logout).toHaveBeenCalledWith({
-      shouldBroadcastLogoutAcrossTabs: true,
+      shouldBroadcastLogoutAcrossTabs: false,
       clearLocalSessionFirst: true
     });
+  });
+
+  it('tells other tabs which address was logged out', async () => {
+    const provider = {
+      getType: () => ProviderTypeEnum.extension,
+      logout: jest.fn().mockResolvedValue(true)
+    };
+    (getAccountProvider as jest.Mock).mockReturnValue(provider);
+    const setItem = jest.spyOn(Storage.prototype, 'setItem');
+
+    logoutMiddleware(expireSession());
+    await flush();
+
+    expect(setItem).toHaveBeenCalledWith(
+      `sdk-dapp-logout-event-${testAddress}`,
+      expect.stringContaining(testAddress)
+    );
+  });
+
+  it('keeps a session that logged in again while the check was deferred', async () => {
+    const provider = {
+      getType: () => ProviderTypeEnum.webview,
+      logout: jest.fn().mockResolvedValue(true)
+    };
+    (getAccountProvider as jest.Mock).mockReturnValue(provider);
+
+    const expiredState = expireSession();
+    deferSessionExpiryCheck();
+    getStore().setState((state) => {
+      state.loginInfo.loginExpiresAt = expiredState.loginInfo.loginExpiresAt;
+    });
+
+    loginAction({
+      address: testAddress,
+      providerType: ProviderTypeEnum.webview
+    } as any);
+    resumeSessionExpiryCheck();
+    await flush();
+
+    expect(getState().account.address).toBe(testAddress);
+    expect(getState().loginInfo.loginExpiresAt).toBeGreaterThan(Date.now());
   });
 
   it('does not log out a webview provider when its session expires', async () => {

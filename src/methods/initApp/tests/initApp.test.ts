@@ -5,6 +5,7 @@ import { registerDefaultCallbacks } from 'managers/TransactionManager/helpers/se
 import { getAccount } from 'methods/account/getAccount';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { setGasStationMetadata } from 'methods/initApp/gasStationMetadata/setGasStationMetadata';
+import { validateRehydratedSession } from 'methods/initApp/helpers/validateRehydratedSession';
 import { waitForStoreRehydration } from 'methods/initApp/helpers/waitForStoreRehydration';
 import { initApp, resetInitAppState } from 'methods/initApp/initApp';
 import { registerWebsocketListener } from 'methods/initApp/websocket/registerWebsocket';
@@ -64,6 +65,10 @@ jest.mock('store/store', () => {
     getState: jest.fn(() => ({}))
   };
 });
+
+jest.mock('methods/initApp/helpers/validateRehydratedSession', () => ({
+  validateRehydratedSession: jest.fn().mockReturnValue(false)
+}));
 
 jest.mock('methods/initApp/helpers/waitForStoreRehydration', () => ({
   waitForStoreRehydration: jest.fn().mockResolvedValue(undefined)
@@ -259,6 +264,13 @@ describe('initApp tests', () => {
 
       expect(initStore).toHaveBeenCalledTimes(1);
     });
+
+    it('checks the restored session on the first initialization only', async () => {
+      await initApp(config);
+      await initApp(config);
+
+      expect(validateRehydratedSession).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('Stored session expiry', () => {
@@ -322,14 +334,34 @@ describe('initApp tests', () => {
       expect(deferSessionExpiryCheck).not.toHaveBeenCalled();
     });
 
-    it('resumes the check when initialization fails', async () => {
+    it('keeps the check deferred when initialization fails before the provider is restored', async () => {
       (initializeNetwork as jest.Mock).mockRejectedValueOnce(
         new Error('network down')
       );
 
       await expect(initApp(configWithExpiry)).rejects.toThrow('network down');
 
-      expect(resumeSessionExpiryCheck).toHaveBeenCalled();
+      expect(resumeSessionExpiryCheck).not.toHaveBeenCalled();
+
+      await initApp(configWithExpiry);
+
+      expect(resumeSessionExpiryCheck).toHaveBeenCalledTimes(1);
+    });
+
+    it('can be retried when the resumed check throws', async () => {
+      const throwBadState = () => {
+        throw new Error('bad state');
+      };
+      (resumeSessionExpiryCheck as jest.Mock)
+        .mockImplementationOnce(throwBadState)
+        .mockImplementationOnce(throwBadState);
+
+      await expect(initApp(configWithExpiry)).rejects.toThrow('bad state');
+      (initializeNetwork as jest.Mock).mockClear();
+
+      await initApp(configWithExpiry).catch(() => undefined);
+
+      expect(initializeNetwork).toHaveBeenCalledTimes(1);
     });
   });
 

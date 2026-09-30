@@ -1,7 +1,9 @@
 import { WritableDraft } from 'immer';
+import { safeWindow } from 'constants/window.constants';
 import { Address } from 'lib/sdkCore';
 import { warnInsecureDefault } from 'methods/initApp/helpers/flagsConfig';
 import { getFlagsConfig } from 'methods/initApp/helpers/getFlagsConfig';
+import { broadcastLogoutAcrossTabs } from 'providers/DappProvider/helpers/logout/broadcastLogoutAcrossTabs';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import {
   addLoginExpiresAt,
@@ -40,7 +42,7 @@ export function setLoginExpiresAt(expiresAt: number | null) {
   addLoginExpiresAt(expiresAt);
 }
 
-const logoutExpiredProvider = () => {
+const logoutExpiredProvider = (address: string) => {
   if (!getFlagsConfig().enforceSessionExpiry) {
     warnInsecureDefault(
       'enforceSessionExpiry',
@@ -61,8 +63,12 @@ const logoutExpiredProvider = () => {
         return;
       }
 
+      if (address && safeWindow.localStorage) {
+        broadcastLogoutAcrossTabs(address, safeWindow.localStorage);
+      }
+
       return provider?.logout({
-        shouldBroadcastLogoutAcrossTabs: true,
+        shouldBroadcastLogoutAcrossTabs: false,
         clearLocalSessionFirst: true
       });
     })
@@ -109,7 +115,7 @@ export const logoutMiddleware = (state: StoreType) => {
       }
     });
 
-    logoutExpiredProvider();
+    logoutExpiredProvider(address);
   }
 };
 

@@ -7,12 +7,22 @@ import { addressSelector } from 'store/selectors/accountSelectors';
 import { tokenLoginSelector } from 'store/selectors/loginInfoSelectors';
 import { getState } from 'store/store';
 
-const clearSession = (reason: string) => {
-  console.warn(`[sdk-dapp] Clearing the restored session: ${reason}.`);
+const getMismatchReason = ({
+  nativeAuthToken,
+  origin
+}: {
+  nativeAuthToken?: string;
+  origin?: string;
+}) => {
+  if (!nativeAuthToken) {
+    return 'the restored session has no nativeAuth token';
+  }
 
-  logoutAction();
+  if (decodeNativeAuthToken(nativeAuthToken)?.origin !== origin) {
+    return 'the restored nativeAuth token was issued for a different origin';
+  }
 
-  return true;
+  return null;
 };
 
 export const validateRehydratedSession = ({
@@ -40,26 +50,25 @@ export const validateRehydratedSession = ({
     return false;
   }
 
-  if (!nativeAuthToken) {
-    if (getFlagsConfig().persistTokenLogin !== false) {
-      warnInsecureDefault(
-        'persistTokenLogin',
-        'A restored session has no nativeAuth token, so it cannot be checked ' +
-          'against this origin. It is kept as it is.'
-      );
-      return false;
-    }
+  const reason = getMismatchReason({
+    nativeAuthToken,
+    origin: nativeAuthConfig.origin
+  });
 
-    return clearSession('the restored session has no nativeAuth token');
+  if (!reason) {
+    return false;
   }
 
-  if (
-    decodeNativeAuthToken(nativeAuthToken)?.origin !== nativeAuthConfig.origin
-  ) {
-    return clearSession(
-      'the restored nativeAuth token was issued for a different origin'
+  if (getFlagsConfig().persistTokenLogin !== false) {
+    warnInsecureDefault(
+      'persistTokenLogin',
+      `A restored session was kept as it is: ${reason}.`
     );
+    return false;
   }
 
-  return false;
+  console.warn(`[sdk-dapp] Clearing the restored session: ${reason}.`);
+  logoutAction();
+
+  return true;
 };

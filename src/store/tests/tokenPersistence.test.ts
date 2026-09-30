@@ -1,4 +1,7 @@
-import { setFlagsConfig } from 'store/actions/config/configActions';
+import {
+  setFlagsConfig,
+  setNativeAuthConfig
+} from 'store/actions/config/configActions';
 import { setTokenLogin } from 'store/actions/loginInfo/loginInfoActions';
 import { loginAction } from 'store/actions/sharedActions/sharedActions';
 import { initStore } from 'store/store';
@@ -47,6 +50,25 @@ describe('token persistence', () => {
     expect(raw).not.toContain('a-native-auth-token');
     expect(raw).not.toContain('a-login-token');
     expect(raw).not.toContain('a-signature');
+  });
+
+  it('does not store the nativeAuth request headers', async () => {
+    setNativeAuthConfig({
+      origin: 'https://dapp.example',
+      gatewayUrl: 'https://gateway.example',
+      extraRequestHeaders: { 'x-api-key': 'a-secret-key' }
+    });
+
+    const raw = localStorage.getItem(STORE_KEY) ?? '';
+    const { getState } = await import('store/store');
+
+    expect(raw).not.toContain('a-secret-key');
+    expect(readPersisted().state.config.nativeAuthConfig.gatewayUrl).toBe(
+      'https://gateway.example'
+    );
+    expect(getState().config.nativeAuthConfig?.extraRequestHeaders).toEqual({
+      'x-api-key': 'a-secret-key'
+    });
   });
 
   it('still exposes the token in memory when it is not persisted', async () => {
