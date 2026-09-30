@@ -11,8 +11,9 @@ export const buildNativeAuthConfig = (config?: NativeAuthConfigType) => {
       config?.expirySeconds ?? defaultNativeAuthConfig.expirySeconds,
     apiAddress: config?.apiAddress ?? defaultNativeAuthConfig.apiAddress,
     tokenExpirationToastWarningSeconds:
-      config?.tokenExpirationToastWarningSeconds ??
-      defaultNativeAuthConfig.tokenExpirationToastWarningSeconds,
+      config?.tokenExpirationToastWarningSeconds === undefined
+        ? defaultNativeAuthConfig.tokenExpirationToastWarningSeconds
+        : config.tokenExpirationToastWarningSeconds,
     extraInfo: config?.extraInfo ?? {},
     gatewayUrl: config?.gatewayUrl,
     extraRequestHeaders: config?.extraRequestHeaders ?? {}

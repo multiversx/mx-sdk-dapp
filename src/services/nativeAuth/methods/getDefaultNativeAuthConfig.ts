@@ -8,15 +8,19 @@ const DEFAULT_API_ADDRESS = 'https://api.multiversx.com';
 const DEFAULT_EXPIRY_SECONDS = 60 * 60 * 24; // one day
 const DEFAULT_TOKEN_EXPIRATION_TOAST_WARNING_SECONDS = 5 * 60; // five minutes
 
-export const getDefaultNativeAuthConfig = (config?: NativeAuthConfigType) => {
+export const getDefaultNativeAuthConfig = (
+  config?: NativeAuthConfigType
+): NativeAuthConfigType => {
   const network = networkSelector(getState());
 
   return {
+    ...config,
     origin: config?.origin || getWindowLocation().origin,
     apiAddress: config?.apiAddress || network.apiAddress || DEFAULT_API_ADDRESS,
     expirySeconds: config?.expirySeconds || DEFAULT_EXPIRY_SECONDS,
     tokenExpirationToastWarningSeconds:
-      config?.tokenExpirationToastWarningSeconds ||
-      DEFAULT_TOKEN_EXPIRATION_TOAST_WARNING_SECONDS
+      config?.tokenExpirationToastWarningSeconds === undefined
+        ? DEFAULT_TOKEN_EXPIRATION_TOAST_WARNING_SECONDS
+        : config.tokenExpirationToastWarningSeconds
   };
 };

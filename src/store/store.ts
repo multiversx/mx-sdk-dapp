@@ -79,13 +79,22 @@ export const createDAppStore = (getStorageCallback: StorageCallback) => {
         {
           name: 'sdk-dapp-store',
           storage: withSafeWrites(createJSONStorage(getStorageCallback)),
-          partialize: (state) =>
-            state.config?.flags?.persistTokenLogin === false
-              ? {
-                  ...state,
-                  loginInfo: { ...state.loginInfo, tokenLogin: null }
-                }
-              : state
+          partialize: (state) => {
+            const { persistTokenLogin } = state.config?.flags ?? {};
+            const { extraRequestHeaders: _headers, ...nativeAuthConfig } =
+              state.config?.nativeAuthConfig ?? {};
+
+            return {
+              ...state,
+              config: state.config?.nativeAuthConfig
+                ? { ...state.config, nativeAuthConfig }
+                : state.config,
+              loginInfo:
+                persistTokenLogin === false
+                  ? { ...state.loginInfo, tokenLogin: null }
+                  : state.loginInfo
+            };
+          }
         }
       ),
       {

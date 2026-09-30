@@ -31,4 +31,22 @@ describe('getDefaultNativeAuthConfig tests', () => {
       tokenExpirationToastWarningSeconds: 300
     });
   });
+
+  it('keeps the other configured fields', () => {
+    const config = {
+      gatewayUrl: 'https://gateway.example',
+      blockHashShard: 1,
+      extraRequestHeaders: { 'x-api-key': 'key' },
+      extraInfo: { app: 'dapp' }
+    };
+
+    expect(getDefaultNativeAuthConfig(config)).toMatchObject(config);
+  });
+
+  it('keeps a disabled expiration warning disabled', () => {
+    expect(
+      getDefaultNativeAuthConfig({ tokenExpirationToastWarningSeconds: null })
+        .tokenExpirationToastWarningSeconds
+    ).toBeNull();
+  });
 });
