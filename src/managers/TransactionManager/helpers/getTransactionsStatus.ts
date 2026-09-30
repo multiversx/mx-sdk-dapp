@@ -2,7 +2,9 @@ import {
   getIsTransactionFailed,
   getIsTransactionNotExecuted,
   getIsTransactionPending,
-  getIsTransactionSuccessful
+  getIsTransactionSuccessful,
+  getIsTransactionTimedOut,
+  isServerTransactionFailed
 } from 'store/actions/transactions/transactionStateByStatus';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
 import { SignedTransactionType } from 'types/transactions.types';
@@ -29,6 +31,22 @@ export function getTransactionsSessionStatus(
 
   if (areAllSuccessful) {
     return TransactionBatchStatusesEnum.success;
+  }
+
+  const areAnyFailedOnChain = transactions.some((transaction) =>
+    isServerTransactionFailed(transaction.status)
+  );
+
+  if (areAnyFailedOnChain) {
+    return TransactionBatchStatusesEnum.fail;
+  }
+
+  const areAnyTimedOut = transactions.some((transaction) =>
+    getIsTransactionTimedOut(transaction.status)
+  );
+
+  if (areAnyTimedOut) {
+    return TransactionBatchStatusesEnum.timedOut;
   }
 
   const areAnyFailed = transactions.some((transaction) =>

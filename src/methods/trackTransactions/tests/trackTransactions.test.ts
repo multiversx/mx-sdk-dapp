@@ -46,6 +46,19 @@ const flushPromises = async () => {
   }
 };
 
+// checks left pending by a test; the queue is shared, so they are released after it
+let heldChecks: (() => void)[] = [];
+
+const holdChecks = () => {
+  mockCheckTransactionStatus.mockImplementation(
+    () =>
+      new Promise<void>((resolve) => {
+        heldChecks.push(resolve);
+      })
+  );
+  return heldChecks;
+};
+
 // lets the initial status check finish
 const startTracking = async () => {
   const result = await trackTransactions();
@@ -100,7 +113,16 @@ describe('trackTransactions', () => {
     mockCheckTransactionStatus.mockResolvedValue(undefined);
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    mockCheckTransactionStatus.mockResolvedValue(undefined);
+
+    while (heldChecks.length > 0) {
+      const checks = heldChecks;
+      heldChecks = [];
+      checks.forEach((release) => release());
+      await flushPromises();
+    }
+
     jest.useRealTimers();
     subscriptions.clear();
   });
@@ -176,17 +198,6 @@ describe('trackTransactions', () => {
       config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING }
     };
 
-    const holdChecks = () => {
-      const resolvers: (() => void)[] = [];
-      mockCheckTransactionStatus.mockImplementation(
-        () =>
-          new Promise<void>((resolve) => {
-            resolvers.push(resolve);
-          })
-      );
-      return resolvers;
-    };
-
     it('skips polling ticks while a check is in flight', async () => {
       mockGetState.mockReturnValue(pendingState);
       const resolvers = holdChecks();
@@ -226,6 +237,136 @@ describe('trackTransactions', () => {
       await flushPromises();
 
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
+    });
+
+    it('queues a check requested while another one is starting', async () => {
+      mockGetState.mockReturnValue(pendingState);
+      await startTracking();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+      const [pollingCallback] = mockSetInterval.mock.calls[0];
+
+      const resolvers = holdChecks();
+      mockCheckTransactionStatus.mockClear();
+      mockCheckTransactionStatus.mockImplementationOnce(() => {
+        mockPendingTransactionsSessionsSelector.mockReturnValue({
+          'session-1': {} as any
+        });
+        subscribeCallback(
+          { ...pendingState, transactions: { 'session-1': {} } },
+          { ...pendingState, transactions: {} }
+        );
+        return new Promise<void>((resolve) => {
+          resolvers.push(resolve);
+        });
+      });
+
+      pollingCallback();
+      await flushPromises();
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
+
+      resolvers[0]();
+      await flushPromises();
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
+    });
+
+    it('starts the checks of a new tracker after those of the one it replaced', async () => {
+      mockGetState.mockReturnValue(pendingState);
+      const resolvers = holdChecks();
+
+      await trackTransactions();
+      await trackTransactions();
+      await flushPromises();
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
+
+      resolvers[0]();
+      await flushPromises();
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
+    });
+
+    it('checks websocket hashes only after the in-flight check', async () => {
+      const resolvers = holdChecks();
+
+      await trackTransactions();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+      subscribeCallback(
+        {
+          account: { address: 'test-address' },
+          config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED }
+        },
+        { config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING } }
+      );
+
+      const [websocketEventCallback] = mockSubscribe.mock.calls[1];
+      websocketEventCallback({
+        account: {
+          websocketTransactionEvent: {
+            eventName: 'transactionCompleted',
+            hashes: ['hash-2'],
+            timestamp: 1234567899
+          }
+        }
+      });
+      await flushPromises();
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
+
+      resolvers[0]();
+      await flushPromises();
+      resolvers[1]();
+      await flushPromises();
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(3);
+      expect(mockCheckTransactionStatus).toHaveBeenLastCalledWith({
+        hashes: ['hash-2']
+      });
+    });
+
+    it('still runs the full scan when a poll lands during a websocket check', async () => {
+      mockPendingTransactionsSessionsSelector.mockReturnValue({
+        'session-1': {} as any
+      });
+      await startTracking();
+      const [subscribeCallback] = mockSubscribe.mock.calls[0];
+      subscribeCallback(
+        {
+          account: { address: 'test-address' },
+          config: { websocketStatus: WebsocketConnectionStatusEnum.COMPLETED },
+          transactions: {}
+        },
+        {
+          config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING },
+          transactions: {}
+        }
+      );
+      await flushPromises();
+
+      const resolvers = holdChecks();
+      mockCheckTransactionStatus.mockClear();
+
+      const [websocketEventCallback] = mockSubscribe.mock.calls[1];
+      websocketEventCallback({
+        account: {
+          websocketTransactionEvent: {
+            eventName: 'transactionCompleted',
+            hashes: ['hash-3'],
+            timestamp: 1234567898
+          }
+        }
+      });
+      await flushPromises();
+
+      const [pollingCallback] = mockSetInterval.mock.calls.at(-1);
+      pollingCallback();
+
+      resolvers[0]();
+      await flushPromises();
+
+      expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
+      expect(mockCheckTransactionStatus).toHaveBeenLastCalledWith();
     });
 
     it('does not scan sessions when the transactions did not change', async () => {
@@ -390,6 +531,7 @@ describe('trackTransactions', () => {
           }
         }
       });
+      await flushPromises();
 
       // Initial + reconcile on connect + websocket event
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(3);
@@ -493,14 +635,6 @@ describe('trackTransactions', () => {
     });
 
     it('should resolve each hash once across a burst of repeated events', async () => {
-      let resolveCheck: () => void = () => undefined;
-      mockCheckTransactionStatus.mockImplementation(
-        () =>
-          new Promise<void>((resolvePromise) => {
-            resolveCheck = resolvePromise;
-          })
-      );
-
       await startTracking();
 
       const [subscribeCallback] = mockSubscribe.mock.calls[0];
@@ -511,7 +645,9 @@ describe('trackTransactions', () => {
         },
         { config: { websocketStatus: WebsocketConnectionStatusEnum.PENDING } }
       );
+      await flushPromises();
 
+      holdChecks();
       mockCheckTransactionStatus.mockClear();
 
       const [websocketEventCallback] = mockSubscribe.mock.calls[1];
@@ -529,12 +665,11 @@ describe('trackTransactions', () => {
       emit(1234567891);
       emit(1234567892);
       emit(1234567893);
+      await flushPromises();
 
       // The API repeats batchUpdated per processed block; only the first
       // reaches the network while that hash is still resolving.
       expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
-
-      resolveCheck();
     });
   });
 

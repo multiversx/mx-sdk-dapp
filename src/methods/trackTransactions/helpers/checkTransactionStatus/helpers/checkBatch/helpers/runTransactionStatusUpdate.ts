@@ -1,12 +1,12 @@
 import { TRANSACTIONS_STATUS_NOT_FOUND_TIMEOUT_MS } from 'constants/transactions.constants';
+import { getTransactionsSessionStatus } from 'managers/TransactionManager/helpers/getTransactionsStatus';
 import {
   updateSessionStatus,
   updateTransactionStatus
 } from 'store/actions/transactions/transactionsActions';
 import {
   getIsTransactionFailed,
-  getIsTransactionPending,
-  isServerTransactionFailed
+  getIsTransactionPending
 } from 'store/actions/transactions/transactionStateByStatus';
 import { getState } from 'store/store';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
@@ -59,23 +59,13 @@ const markTransactionAsTimedOut = async ({
   // it may still execute, so its nonce stays taken
   reserveNonces(transaction.sender, [Number(transaction.nonce)]);
 
-  const sessionTransactions = getSession(sessionId)?.transactions ?? [];
-
-  const hasPendingTransactions = sessionTransactions.some(({ status }) =>
-    getIsTransactionPending(status)
+  const sessionStatus = getTransactionsSessionStatus(
+    getSession(sessionId)?.transactions ?? []
   );
 
-  if (hasPendingTransactions) {
+  if (!sessionStatus) {
     return;
   }
-
-  const hasFailedTransactions = sessionTransactions.some(({ status }) =>
-    isServerTransactionFailed(status)
-  );
-
-  const sessionStatus = hasFailedTransactions
-    ? TransactionBatchStatusesEnum.fail
-    : TransactionBatchStatusesEnum.timedOut;
 
   updateSessionStatus({
     sessionId,

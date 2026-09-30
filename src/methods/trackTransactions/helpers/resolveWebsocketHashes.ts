@@ -1,12 +1,29 @@
-import { checkTransactionStatus } from './checkTransactionStatus';
+import {
+  checkTransactionStatus,
+  CheckTransactionStatusPropsType
+} from 'methods/trackTransactions/helpers/checkTransactionStatus';
 
-export const createWebsocketHashResolver = () => {
+type StatusCheckType = (
+  props: CheckTransactionStatusPropsType,
+  onStart: () => void
+) => Promise<void>;
+
+const checkNow: StatusCheckType = (props, onStart) => {
+  onStart();
+  return checkTransactionStatus(props);
+};
+
+export const createWebsocketHashResolver = (
+  check: StatusCheckType = checkNow
+) => {
+  const waitingHashes = new Set<string>();
   const inFlightHashes = new Set<string>();
-  // received again while being checked: the check may predate the event
   const queuedHashes = new Set<string>();
 
   const resolve = async (hashes: string[]): Promise<string[]> => {
-    const validHashes = hashes.filter(Boolean);
+    const validHashes = hashes.filter(
+      (hash) => Boolean(hash) && !waitingHashes.has(hash)
+    );
 
     validHashes
       .filter((hash) => inFlightHashes.has(hash))
@@ -20,13 +37,21 @@ export const createWebsocketHashResolver = () => {
       return [];
     }
 
-    hashesToResolve.forEach((hash) => inFlightHashes.add(hash));
+    hashesToResolve.forEach((hash) => waitingHashes.add(hash));
     let requeuedHashes: string[] = [];
 
     try {
-      await checkTransactionStatus({ hashes: hashesToResolve });
+      await check({ hashes: hashesToResolve }, () =>
+        hashesToResolve.forEach((hash) => {
+          waitingHashes.delete(hash);
+          inFlightHashes.add(hash);
+        })
+      );
     } finally {
-      hashesToResolve.forEach((hash) => inFlightHashes.delete(hash));
+      hashesToResolve.forEach((hash) => {
+        waitingHashes.delete(hash);
+        inFlightHashes.delete(hash);
+      });
       requeuedHashes = hashesToResolve.filter((hash) =>
         queuedHashes.delete(hash)
       );

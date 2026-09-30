@@ -26,6 +26,30 @@ const trackingSubscriptions = [
 const getPendingSessionIds = (state: StoreType): string[] =>
   Object.keys(pendingTransactionsSessionsSelector(state));
 
+let checkQueue: Promise<void> = Promise.resolve();
+let queuedChecks = 0;
+
+const runExclusively = (check: () => Promise<void>): Promise<void> => {
+  const previousCheck = queuedChecks > 0 ? checkQueue : null;
+  let releaseQueue: () => void = () => undefined;
+
+  checkQueue = new Promise<void>((resolve) => {
+    releaseQueue = resolve;
+  });
+  queuedChecks++;
+
+  return (async () => {
+    if (previousCheck) {
+      await previousCheck;
+    }
+
+    await check();
+  })().finally(() => {
+    queuedChecks--;
+    releaseQueue();
+  });
+};
+
 /**
  * Tracks transactions using websocket or polling
  * @returns stopTransactionsTracking function
@@ -34,7 +58,6 @@ export async function trackTransactions(): Promise<{
   stopTransactionsTracking: () => void;
 }> {
   const store = getStore();
-  const { resolve: resolveWebsocketHashes } = createWebsocketHashResolver();
   let pollingIntervalRef: ReturnType<typeof setTimeout> | null = null;
   let pollingIntervalMs: number | null = null;
   let timestamp =
@@ -57,8 +80,8 @@ export async function trackTransactions(): Promise<{
   };
 
   let pendingSessionIds = new Set(getPendingSessionIds(store.getState()));
-  let isChecking = false;
   let isRecheckQueued = false;
+  let isFullCheckRunning = false;
 
   const runStatusCheck = async (): Promise<void> => {
     try {
@@ -71,29 +94,38 @@ export async function trackTransactions(): Promise<{
     }
   };
 
-  const recheckStatus = async (): Promise<void> => {
-    if (isChecking) {
-      isRecheckQueued = true;
+  const recheckStatus = (): void => {
+    if (isRecheckQueued) {
       return;
     }
 
-    isChecking = true;
+    isRecheckQueued = true;
 
-    try {
-      do {
-        isRecheckQueued = false;
+    runExclusively(async () => {
+      isRecheckQueued = false;
+      isFullCheckRunning = true;
+
+      try {
         await runStatusCheck();
-      } while (isRecheckQueued);
-    } finally {
-      isChecking = false;
-    }
+      } finally {
+        isFullCheckRunning = false;
+      }
+    });
   };
 
   const pollStatus = (): void => {
-    if (!isChecking) {
+    if (!isFullCheckRunning) {
       recheckStatus();
     }
   };
+
+  const { resolve: resolveWebsocketHashes } = createWebsocketHashResolver(
+    (props, onStart) =>
+      runExclusively(() => {
+        onStart();
+        return checkTransactionStatus(props);
+      })
+  );
 
   const stopPolling = (): void => {
     if (pollingIntervalRef) {

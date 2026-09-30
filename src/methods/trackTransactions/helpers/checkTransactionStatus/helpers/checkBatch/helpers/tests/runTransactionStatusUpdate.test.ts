@@ -9,6 +9,7 @@ jest.mock('store/actions/transactions/transactionsActions', () => ({
 }));
 
 jest.mock('store/actions/transactions/transactionStateByStatus', () => ({
+  ...jest.requireActual('store/actions/transactions/transactionStateByStatus'),
   getIsTransactionFailed: jest.fn(),
   getIsTransactionPending: jest.fn(),
   isServerTransactionFailed: jest.fn()

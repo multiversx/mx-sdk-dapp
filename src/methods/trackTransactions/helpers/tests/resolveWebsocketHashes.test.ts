@@ -115,6 +115,29 @@ describe('createWebsocketHashResolver tests', () => {
     expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(2);
   });
 
+  it('does not check a hash again when it arrives before its queued check starts', async () => {
+    let startCheck: () => void = () => undefined;
+    const queuedCheck = jest.fn(
+      (props, onStart: () => void) =>
+        new Promise<void>((resolvePromise) => {
+          startCheck = () => {
+            onStart();
+            mockCheckTransactionStatus(props).then(resolvePromise);
+          };
+        })
+    );
+
+    const { resolve } = createWebsocketHashResolver(queuedCheck);
+
+    const first = resolve(['hash-1']);
+    await expect(resolve(['hash-1'])).resolves.toEqual([]);
+
+    startCheck();
+    await first;
+
+    expect(mockCheckTransactionStatus).toHaveBeenCalledTimes(1);
+  });
+
   it('ignores empty input', async () => {
     const { resolve } = createWebsocketHashResolver();
 

@@ -1,5 +1,6 @@
 import { mockPendingTransaction } from '__mocks__';
 import { getServerTransactionsByHashes } from 'apiCalls/transactions/getServerTransactionsByHashes';
+import { TRANSACTIONS_STATUS_NOT_FOUND_TIMEOUT_MS } from 'constants/transactions.constants';
 import { TransactionManager } from 'managers/TransactionManager';
 import { getStore } from 'store/store';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
@@ -27,6 +28,21 @@ const mockServerTransactions = (
         txHash: hash,
         status: statuses[hash]
       }))
+  );
+
+// a hash left out of the response is not found on the network
+const mockFoundTransactions = (
+  statuses: Record<string, `${TransactionServerStatusesEnum}`>
+) =>
+  (getServerTransactionsByHashes as jest.Mock).mockImplementation(
+    async (hashes: string[]) =>
+      hashes
+        .filter((hash) => statuses[hash] != null)
+        .map((hash) => ({
+          ...mockPendingTransaction,
+          txHash: hash,
+          status: statuses[hash]
+        }))
   );
 
 const createTransaction = (hash: string, nonce: number) =>
@@ -86,6 +102,53 @@ describe('transaction session settlement', () => {
 
     expect(getSession(sessionId).status).toBe('fail');
     expect(onFail).toHaveBeenCalledTimes(1);
+  });
+
+  describe('a session with a timed-out transaction', () => {
+    let now = Date.now();
+    let dateNowSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => now);
+    });
+
+    afterEach(() => {
+      dateNowSpy.mockRestore();
+    });
+
+    const timeOut = async (
+      statuses: Record<string, `${TransactionServerStatusesEnum}`>
+    ) => {
+      mockFoundTransactions(statuses);
+      await checkTransactionStatus();
+      now += TRANSACTIONS_STATUS_NOT_FOUND_TIMEOUT_MS;
+      await checkTransactionStatus();
+    };
+
+    it('settles as timed out when the other transaction succeeds afterwards', async () => {
+      const sessionId = await TransactionManager.getInstance().track(
+        [createTransaction('hash-e', 5), createTransaction('hash-f', 6)],
+        { disableToasts: true }
+      );
+
+      await timeOut({ 'hash-f': 'pending' });
+
+      mockFoundTransactions({ 'hash-f': 'success' });
+      await checkTransactionStatus();
+
+      expect(getSession(sessionId).status).toBe('timedOut');
+    });
+
+    it('settles as timed out when the other transaction succeeded before', async () => {
+      const sessionId = await TransactionManager.getInstance().track(
+        [createTransaction('hash-g', 7), createTransaction('hash-h', 8)],
+        { disableToasts: true }
+      );
+
+      await timeOut({ 'hash-h': 'success' });
+
+      expect(getSession(sessionId).status).toBe('timedOut');
+    });
   });
 
   it('keeps a successful session successful when onSuccess throws', async () => {
