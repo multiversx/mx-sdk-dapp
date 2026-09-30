@@ -42,7 +42,7 @@ export const getAccountFromApi = async ({
       source: ACCOUNTS_ENDPOINT
     });
 
-    if (data?.address !== address) {
+    if (data?.address?.toLowerCase() !== address.toLowerCase()) {
       return null;
     }
 

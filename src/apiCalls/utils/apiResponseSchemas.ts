@@ -48,8 +48,13 @@ export const getTokenSchema = (identifier: string): ResponseSchemaType => ({
   assets: optional(isObject)
 });
 
+const isSameAddress =
+  (address: string): FieldCheckType =>
+  (value) =>
+    typeof value === 'string' && value.toLowerCase() === address.toLowerCase();
+
 export const getAccountSchema = (address: string): ResponseSchemaType => ({
-  address: equals(address),
+  address: isSameAddress(address),
   balance: isNumeric,
   nonce: isNonNegativeInteger
 });

@@ -22,6 +22,33 @@ describe('getAccountFromApi tests', () => {
     expect(account?.address).toBe(testAddress);
   });
 
+  it('accepts an uppercase address', async () => {
+    const uppercaseAddress = testAddress.toUpperCase();
+    const warnSpy = jest
+      .spyOn(console, 'warn')
+      .mockImplementation(() => undefined);
+
+    server.use(
+      rest.get(
+        `${testNetwork.apiAddress}/${ACCOUNTS_ENDPOINT}/${uppercaseAddress}`,
+        (_req, res, ctx) =>
+          res(
+            ctx.status(200),
+            ctx.json({ address: testAddress, balance: '1', nonce: 1 })
+          )
+      )
+    );
+
+    const account = await getAccountFromApi({
+      address: uppercaseAddress,
+      baseURL: testNetwork.apiAddress
+    });
+
+    expect(account?.address).toBe(testAddress);
+    expect(warnSpy).not.toHaveBeenCalled();
+    warnSpy.mockRestore();
+  });
+
   it('returns null when the response is for another address', async () => {
     const otherAddress =
       'erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx';
