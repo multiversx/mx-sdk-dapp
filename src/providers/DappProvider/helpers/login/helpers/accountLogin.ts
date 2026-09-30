@@ -5,6 +5,7 @@ import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { setAccount } from 'store/actions/account';
 import { loginAction } from 'store/actions/sharedActions/sharedActions';
+import { resumeSessionExpiryCheck } from 'store/middleware/logoutMiddleware';
 import { AccountType } from 'types/account.types';
 import { fetchAccount } from 'utils/account/fetchAccount';
 import { trimUsernameDomain } from 'utils/account/trimUsernameDomain';
@@ -17,11 +18,14 @@ interface IAccountLoginProps {
 }
 
 export async function accountLogin({
-  address,
+  address: loginAddress,
   provider,
   apiAddress,
-  signerAddress
+  signerAddress: loginSignerAddress
 }: IAccountLoginProps) {
+  const address = loginAddress.toLowerCase();
+  const signerAddress = loginSignerAddress?.toLowerCase();
+
   const account = await fetchAccount({
     address,
     baseURL: apiAddress
@@ -36,6 +40,8 @@ export async function accountLogin({
     providerType: provider.getType(),
     signerAddress
   });
+
+  resumeSessionExpiryCheck();
 
   const newAccount: AccountType = {
     ...account,
