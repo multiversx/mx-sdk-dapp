@@ -115,6 +115,36 @@ initApp(config).then(() => {
 });
 ```
 
+#### Flags
+
+`dAppConfig.flags` opts into hardened behaviour. Each flag defaults to the
+pre-5.8 behaviour so that upgrading changes nothing on its own;
+**These defaults flip in v6**, so enabling them now is also how you check that
+your dApp is ready for it.
+
+```ts
+const config = {
+  dAppConfig: {
+    environment: EnvironmentsEnum.devnet,
+    flags: {
+      strictProviderRegistration: true,
+      persistTokenLogin: false,
+      strictLogout: true,
+      enforceSessionExpiry: true,
+      validateNetworkUrls: true
+    }
+  }
+};
+```
+
+| Flag                         | Default | What it does                                                                                                                                                                                             |
+| ---------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `strictProviderRegistration` | `false` | Ignores the writable `window.multiversx.providers` global and accepts only the `customProviders` you pass.                                                                                               |
+| `persistTokenLogin`          | `true`  | **Turning it off** keeps `loginInfo.tokenLogin` (login token, signature, nativeAuth token) out of durable storage.                                                                                       |
+| `strictLogout`               | `false` | Awaits `provider.logout()` **before** clearing local state, and throws instead of leaving a logged-out UI in front of a live provider session.                                                           |
+| `enforceSessionExpiry`       | `false` | Schedules expiry for every login type, not only nativeAuth ones.                                                                                                                                         |
+| `validateNetworkUrls`        | `false` | Requires network urls to be `https` (`websocketUrl` may also use `wss`). `walletAddress` and `iframeWalletAddress` must be on `multiversx.com` unless you also set `unsafeAllowCustomWalletHosts: true`. |
+
 ### 2. Provider interaction
 
 Once your dApp has loaded, the first user action is logging in with a chosen provider. There are two ways to perform a login: using the `UnlockPanelManager` and programmatic login using the `ProviderFactory`.
@@ -487,7 +517,7 @@ An existing provider is initialized on app load (this is take care of by `initAp
 
 #### Creating a custom provider
 
-If you need to create a custom signing provider, make sure to extend the `IProvider` interface and implement all required methods (see example [here](https://github.com/multiversx/mx-template-dapp/tree/main/src/provider)). Next step would be to include it in the `customProviders` array in the `initApp` method or add it to the [window object](https://github.com/multiversx/mx-template-dapp/tree/main/src/initConfig). Last step is to login using the custom provider.
+If you need to create a custom signing provider, make sure to extend the `IProvider` interface and implement all required methods (see example [here](https://github.com/multiversx/mx-template-dapp/tree/main/src/provider)). Next step would be to include it in the `customProviders` array in the `initApp` method. Last step is to login using the custom provider.
 
 ```typescript
 const provider = await ProviderFactory.create({
@@ -514,6 +544,7 @@ Once the user logs in, a call is made to the API for fetching the account data. 
 | 2 | `getAddress()` | returns just the user's public key | `useGetAddress()`|
 | 3 | `getIsLoggedIn()` | returns a login status boolean | `useGetIsLoggedIn()` |
 | 4 | `getLatestNonce()` | returns the account nonce | `useGetLatestNonce()`
+| 5 | `getSignerAddress()` | returns the address that signed the login (multisig) | `useGetSignerAddress()`
 
 #### Nonce management
 
