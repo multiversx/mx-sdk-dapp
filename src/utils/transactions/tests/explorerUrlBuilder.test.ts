@@ -7,6 +7,15 @@ describe('explorerUrlBuilder', () => {
     );
   });
 
+  it('keeps the path segment after the value in front of the anchor', () => {
+    expect(explorerUrlBuilder.transactionDetailsLogs('tx#scr')).toBe(
+      '/transactions/tx/logs#scr'
+    );
+    expect(explorerUrlBuilder.transactionDetailsScResults('tx')).toBe(
+      '/transactions/tx/sc-results'
+    );
+  });
+
   it('encodes characters that would leave the path segment', () => {
     expect(explorerUrlBuilder.accountDetails('../tokens?x=1')).toBe(
       '/accounts/..%2Ftokens%3Fx%3D1'
