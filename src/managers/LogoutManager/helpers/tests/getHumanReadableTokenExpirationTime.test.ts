@@ -56,4 +56,16 @@ describe('Test the "getHumanReadableTokenExpirationTime" helper functionality.',
     expect(typeof output).toBe('string');
     expect(output).toBe('3 hours');
   });
+
+  test('The remaining time is exactly one hour.', () => {
+    const output = getHumanReadableTokenExpirationTime(3600000);
+
+    expect(output).toBe('60 minutes');
+  });
+
+  test('The remaining time is 61 hours.', () => {
+    const output = getHumanReadableTokenExpirationTime(61 * 3600000);
+
+    expect(output).toBe('61 hours');
+  });
 });

@@ -183,7 +183,6 @@ export class LogoutManager {
     const { secondsUntilExpires } = getSessionExpiration(this.store.getState());
 
     const secondsUntilExpiresBN = new BigNumber(String(secondsUntilExpires));
-    const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);
 
     if (
       !secondsUntilExpires ||
@@ -204,10 +203,6 @@ export class LogoutManager {
       .times(1000)
       .minus(logoutWarningOffsetMilliseconds);
 
-    const readableMinutesUntilLogout = getHumanReadableTokenExpirationTime(
-      millisecondsUntilLogout.toNumber()
-    );
-
     const timeoutUntilLogoutWarning =
       millisecondsUntilLogoutWarning.isLessThanOrEqualTo(0)
         ? 0
@@ -216,12 +211,20 @@ export class LogoutManager {
     clearTimeout(this.warningLogoutTimeoutRef ?? 0);
 
     this.warningLogoutTimeoutRef = setTimeout(() => {
+      const { secondsUntilExpires: secondsLeft = 0 } = getSessionExpiration(
+        this.store.getState()
+      );
+
+      const readableTimeUntilLogout = getHumanReadableTokenExpirationTime(
+        Math.max(secondsLeft, 0) * 1000
+      );
+
       ToastManager.getInstance().createCustomToast({
         toastId: 'native-auth-expired',
         iconClassName: 'mvx-toast-warning',
         title: 'Session Expiration Warning',
         icon: IconNamesEnum.hourglass,
-        message: `Your session will expire in ${readableMinutesUntilLogout}!`
+        message: `Your session will expire in ${readableTimeUntilLogout}!`
       });
       this.warningLogoutTimeoutRef = null;
     }, timeoutUntilLogoutWarning);

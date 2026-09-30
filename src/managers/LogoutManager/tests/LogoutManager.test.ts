@@ -329,4 +329,34 @@ describe('LogoutManager tests', () => {
       );
     });
   });
+
+  describe('Expiration warning', () => {
+    const DAY_SECONDS = 24 * 60 * 60;
+
+    const expireIn = (secondsUntilExpires: number) =>
+      mockGetTokenExpiration.mockReturnValue({
+        isExpired: false,
+        expiresAt: mockExpiresAt,
+        secondsUntilExpires
+      });
+
+    it('shows the time left when the warning is displayed', async () => {
+      expireIn(DAY_SECONDS);
+      mockNativeAuthConfigSelector.mockReturnValue({
+        tokenExpirationToastWarningSeconds: 300
+      } as any);
+
+      await LogoutManager.getInstance().init();
+
+      expireIn(300);
+      jest.advanceTimersByTime((DAY_SECONDS - 300) * 1000);
+
+      expect(mockToastManager.createCustomToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          toastId: 'native-auth-expired',
+          message: 'Your session will expire in 5 minutes!'
+        })
+      );
+    });
+  });
 });
