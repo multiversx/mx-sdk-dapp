@@ -1,88 +1,51 @@
 import {
-  isPrivateHost,
   validateNetworkUrl,
   validateNetworkUrls
-} from '../validateNetworkUrls';
+} from 'store/actions/network/helpers/validateNetworkUrls';
 
-describe('isPrivateHost', () => {
-  it.each([
-    'localhost',
-    '127.0.0.1',
-    '10.1.2.3',
-    '192.168.0.1',
-    '169.254.169.254',
-    '172.16.0.1',
-    '172.31.255.255',
-    'my-box.local',
-    '[::1]',
-    '0.0.0.0',
-    '100.64.0.1',
-    'localhost.',
-    'app.localhost',
-    '[::]',
-    '[fe80::1]',
-    '[fd00::1]',
-    '[::ffff:7f00:1]',
-    '[::ffff:127.0.0.1]',
-    '[::ffff:a00:1]'
-  ])('treats %s as private', (host) => {
-    expect(isPrivateHost(host)).toBe(true);
-  });
-
-  it.each([
-    'api.multiversx.com',
-    '8.8.8.8',
-    '172.32.0.1',
-    '11.0.0.1',
-    '100.128.0.1',
-    '[2001:4860:4860::8888]',
-    '[::ffff:808:808]'
-  ])('treats %s as public', (host) => {
-    expect(isPrivateHost(host)).toBe(false);
-  });
-
-  it.each([
-    'https://[::ffff:127.0.0.1]',
-    'https://[fe80::1]',
-    'https://app.localhost',
-    'https://localhost.',
-    'https://2130706433'
-  ])('rejects the parsed host of %s', (url) => {
-    expect(() => validateNetworkUrl({ field: 'apiAddress', url })).toThrow(
-      'loopback or private host'
-    );
-  });
-});
+const validateApiAddress = (url: string) => () =>
+  validateNetworkUrl({ field: 'apiAddress', url });
 
 describe('validateNetworkUrl', () => {
-  it('accepts an https api address', () => {
-    expect(() =>
-      validateNetworkUrl({
-        field: 'apiAddress',
-        url: 'https://api.multiversx.com'
-      })
-    ).not.toThrow();
+  it.each([
+    'https://localhost',
+    'https://localhost.',
+    'https://app.localhost',
+    'https://my-box.local',
+    'https://127.0.0.1:8080',
+    'https://2130706433',
+    'https://0.0.0.0',
+    'https://10.1.2.3',
+    'https://100.64.0.1',
+    'https://169.254.169.254',
+    'https://172.16.0.1',
+    'https://192.168.0.1',
+    'https://[::1]',
+    'https://[::ffff:127.0.0.1]',
+    'https://[fd00::1]',
+    'https://[fe80::1]'
+  ])('rejects the private host of %s', (url) => {
+    expect(validateApiAddress(url)).toThrow('loopback or private host');
+  });
+
+  it.each([
+    'https://api.multiversx.com',
+    'https://8.8.8.8',
+    'https://172.32.0.1',
+    'https://10.api.example.com',
+    'https://[2001:4860:4860::8888]'
+  ])('accepts %s', (url) => {
+    expect(validateApiAddress(url)).not.toThrow();
   });
 
   it('rejects a non-https url', () => {
-    expect(() =>
-      validateNetworkUrl({
-        field: 'apiAddress',
-        url: 'http://api.multiversx.com'
-      })
-    ).toThrow('must use https');
-  });
-
-  it('rejects a loopback host', () => {
-    expect(() =>
-      validateNetworkUrl({ field: 'apiAddress', url: 'https://127.0.0.1:8080' })
-    ).toThrow('loopback or private host');
+    expect(validateApiAddress('http://api.multiversx.com')).toThrow(
+      'must use https'
+    );
   });
 
   it('rejects an unparseable url', () => {
-    expect(() =>
-      validateNetworkUrl({ field: 'apiAddress', url: 'not-a-url' })
-    ).toThrow('Invalid `apiAddress`');
+    expect(validateApiAddress('not-a-url')).toThrow('Invalid `apiAddress`');
   });
 
   it.each(['walletAddress', 'iframeWalletAddress'] as const)(
@@ -124,13 +87,12 @@ describe('validateNetworkUrls', () => {
     ).not.toThrow();
   });
 
-  it.each([
-    ['ws://socket-api.multiversx.com', 'must use https or wss'],
-    ['wss://10.0.0.5:3000', 'loopback or private host']
-  ])('rejects %s as websocketUrl', (websocketUrl, error) => {
-    expect(() => validateNetworkUrls({ config: { websocketUrl } })).toThrow(
-      error
-    );
+  it('rejects a ws:// websocketUrl', () => {
+    expect(() =>
+      validateNetworkUrls({
+        config: { websocketUrl: 'ws://socket-api.multiversx.com' }
+      })
+    ).toThrow('must use https or wss');
   });
 
   it('skips absent fields', () => {

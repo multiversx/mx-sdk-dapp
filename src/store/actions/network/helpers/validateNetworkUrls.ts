@@ -1,17 +1,5 @@
 import { isMultiversxHost } from 'utils/validation/multiversxHosts';
 
-const PRIVATE_IPV4_PATTERNS = [
-  /^0\./,
-  /^127\./,
-  /^10\./,
-  /^192\.168\./,
-  /^169\.254\./,
-  /^172\.(1[6-9]|2\d|3[01])\./,
-  /^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./
-];
-
-const LOCAL_HOSTNAME_SUFFIXES = ['localhost', 'local'];
-
 export type NetworkUrlField =
   | 'apiAddress'
   | 'walletAddress'
@@ -30,64 +18,35 @@ const NETWORK_URL_FIELDS: NetworkUrlField[] = [
 const getAllowedProtocols = (field: NetworkUrlField) =>
   field === 'websocketUrl' ? ['https:', 'wss:'] : ['https:'];
 
-const isPrivateIpv4 = (host: string) =>
-  PRIVATE_IPV4_PATTERNS.some((pattern) => pattern.test(host));
-
-// `::ffff:7f00:1` and `::7f00:1` carry an IPv4 address in the last 32 bits
-const getEmbeddedIpv4 = (ipv6: string) => {
-  const dotted = /^::(?:ffff:)?(\d+\.\d+\.\d+\.\d+)$/.exec(ipv6);
-
-  if (dotted) {
-    return dotted[1];
+// `hostname` comes from `new URL`, which already writes IPv4 as a dotted quad
+// and IPv6 in lowercase, `::`-compressed, in brackets
+const isPrivateIpv4 = (hostname: string) => {
+  if (!/^\d+(\.\d+){3}$/.test(hostname)) {
+    return false;
   }
 
-  const match = /^::(?:ffff:)?([0-9a-f]{1,4}):([0-9a-f]{1,4})$/.exec(ipv6);
+  const [a, b] = hostname.split('.').map(Number);
 
-  if (!match) {
-    return null;
-  }
-
-  const [high, low] = [match[1], match[2]].map((group) => parseInt(group, 16));
-
-  return [high >> 8, high & 0xff, low >> 8, low & 0xff].join('.');
+  return (
+    a === 0 ||
+    a === 10 ||
+    a === 127 ||
+    (a === 100 && b >= 64 && b <= 127) ||
+    (a === 169 && b === 254) ||
+    (a === 172 && b >= 16 && b <= 31) ||
+    (a === 192 && b === 168)
+  );
 };
 
-const isPrivateIpv6 = (ipv6: string) => {
-  if (ipv6 === '::' || ipv6 === '::1') {
-    return true;
-  }
+// `::…` (unspecified, loopback, IPv4-mapped), unique local fc00::/7, link-local fe80::/10
+const PRIVATE_IPV6_PATTERN = /^\[(::|f[cd]|fe[89ab])/;
 
-  // unique local fc00::/7, link-local fe80::/10
-  if (/^f[cd]/.test(ipv6) || /^fe[89ab]/.test(ipv6)) {
-    return true;
-  }
+const LOCAL_HOSTNAME_PATTERN = /(^|\.)local(host)?\.?$/;
 
-  const embeddedIpv4 = getEmbeddedIpv4(ipv6);
-
-  return embeddedIpv4 != null && isPrivateIpv4(embeddedIpv4);
-};
-
-export const isPrivateHost = (hostname: string): boolean => {
-  const host = hostname.toLowerCase().replace(/\.+$/, '');
-
-  if (host.startsWith('[') && host.endsWith(']')) {
-    return isPrivateIpv6(host.slice(1, -1));
-  }
-
-  if (host.includes(':')) {
-    return isPrivateIpv6(host);
-  }
-
-  if (
-    LOCAL_HOSTNAME_SUFFIXES.some(
-      (suffix) => host === suffix || host.endsWith(`.${suffix}`)
-    )
-  ) {
-    return true;
-  }
-
-  return isPrivateIpv4(host);
-};
+const isPrivateHost = (hostname: string) =>
+  LOCAL_HOSTNAME_PATTERN.test(hostname) ||
+  PRIVATE_IPV6_PATTERN.test(hostname) ||
+  isPrivateIpv4(hostname);
 
 export const validateNetworkUrl = ({
   field,
