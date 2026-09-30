@@ -34,11 +34,18 @@ export async function runSessionCallbacks({
     return;
   }
 
-  const callbacks = takeCallbacks(sessionId);
+  const callback = takeCallbacks(sessionId)?.[callbackName];
+
+  if (!callback) {
+    return;
+  }
+
+  const logError = (error: unknown) =>
+    console.error(`Error in ${callbackName} callback:`, error);
 
   try {
-    await callbacks?.[callbackName]?.(sessionId);
+    Promise.resolve(callback(sessionId)).catch(logError);
   } catch (error) {
-    console.error(`Error in ${callbackName} callback:`, error);
+    logError(error);
   }
 }

@@ -92,6 +92,21 @@ describe('runSessionCallbacks tests', () => {
     consoleSpy.mockRestore();
   });
 
+  it('does not wait for a callback that is still running', async () => {
+    const sessionId = nextSessionId();
+    const onSuccess = jest.fn(() => new Promise<void>(() => undefined));
+    registerCallbacks({ onSuccess, sessionId });
+
+    await expect(
+      runSessionCallbacks({
+        sessionId,
+        status: TransactionBatchStatusesEnum.success
+      })
+    ).resolves.toBeUndefined();
+
+    expect(onSuccess).toHaveBeenCalledWith(sessionId);
+  });
+
   it('keeps callbacks set on the manager when initApp registers its own again', async () => {
     // the callback maps are module state, so start from empty ones
     await jest.isolateModulesAsync(async () => {
