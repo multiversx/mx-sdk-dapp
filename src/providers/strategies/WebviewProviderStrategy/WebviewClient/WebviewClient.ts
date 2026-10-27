@@ -195,7 +195,7 @@ export class WebviewClient {
   }: MessageEventType & { payload: RequestPayloadType['LOGIN_REQUEST'] }) {
     const loginToken = payload?.token;
 
-    if (!loginToken) {
+    if (!loginToken || typeof loginToken !== 'string') {
       return;
     }
 
@@ -265,7 +265,15 @@ export class WebviewClient {
     payload: RequestPayloadType['SIGN_MESSAGE_REQUEST'];
   }) {
     const { address } = accountSelector(this.store.getState());
-    const { message } = payload;
+    const message = payload?.message;
+
+    if (typeof message !== 'string') {
+      this.respond(event, {
+        type: WindowProviderResponseEnums.signMessageResponse,
+        payload: { error: 'Could not sign message' }
+      });
+      return;
+    }
 
     if (
       isLoginTokenMessage(message) &&

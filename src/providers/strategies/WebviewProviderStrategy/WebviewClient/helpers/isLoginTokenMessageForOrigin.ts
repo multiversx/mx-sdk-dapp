@@ -7,7 +7,7 @@ const encodeOrigin = (origin: string) =>
     .replace(/\//g, '_')
     .replace(/=/g, '');
 
-export const isLoginTokenMessage = (message: string) => {
+export const isLoginTokenMessage = (message: unknown): message is string => {
   if (typeof message !== 'string') {
     return false;
   }
@@ -23,7 +23,7 @@ export const isLoginTokenMessageForOrigin = ({
   origin
 }: {
   address: string;
-  message: string;
+  message: unknown;
   origin: string;
 }) => {
   if (!isLoginTokenMessage(message)) {

@@ -454,6 +454,20 @@ describe('WebviewClient', () => {
 
       expect(mockSignMessage).toHaveBeenCalledTimes(1);
     });
+
+    it('refuses a login request whose token is not a string', async () => {
+      const { handleMessage } = createClient([CHILD_ORIGIN]);
+
+      await handleMessage(
+        createEvent({
+          type: WindowProviderRequestEnums.loginRequest,
+          payload: { token: [createLoginToken(CHILD_ORIGIN)] }
+        })
+      );
+      await flushPromises();
+
+      expect(mockSignMessage).not.toHaveBeenCalled();
+    });
   });
 
   describe('signTransactions', () => {
