@@ -49,9 +49,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
   private async initializeProvider() {
     await this.provider.init();
 
-    if (this.address) {
-      this.setAccount({ address: this.address });
-    }
+    this.setAccount({ address: this.address ?? '' });
 
     this.provider.setWalletUrl(this.walletUrl);
 

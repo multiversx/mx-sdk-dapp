@@ -38,6 +38,10 @@ jest.mock('store/store', () => ({
   getState: jest.fn()
 }));
 
+jest.mock('methods/account/getAddress', () => ({
+  getAddress: () => ''
+}));
+
 const { getState: mockGetState } = jest.requireMock('store/store') as {
   getState: jest.Mock;
 };

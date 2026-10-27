@@ -114,6 +114,20 @@ describe('IframeProviderStrategy tests', () => {
       const result = await strategy.init();
 
       expect(result).toBe(true);
+      expect(mockIframeProvider.setAccount).toHaveBeenCalledWith({
+        address: account.address
+      });
+    });
+
+    it('clears the account kept by the provider when nobody is logged in', async () => {
+      mockIframeProvider.init.mockResolvedValue(true);
+      const strategy = new IframeProviderStrategy();
+
+      await strategy.init();
+
+      expect(mockIframeProvider.setAccount).toHaveBeenCalledWith({
+        address: ''
+      });
     });
 
     it('throws when iframe wallet url is missing', () => {

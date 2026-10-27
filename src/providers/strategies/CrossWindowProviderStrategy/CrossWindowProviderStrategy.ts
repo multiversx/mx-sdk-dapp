@@ -44,6 +44,8 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
 
     if (this.address) {
       this.provider.setAddress(this.address);
+    } else {
+      this.provider.setAccount({ address: '' });
     }
 
     return isProviderInitialized;
