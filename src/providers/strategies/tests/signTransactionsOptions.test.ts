@@ -26,7 +26,8 @@ describe.each(strategies)('%s signTransactions options', (_, create) => {
     const options = { skipGuardian: true, callback: jest.fn() };
 
     (strategy as any).provider = {
-      signTransactions: jest.fn().mockResolvedValue(signed)
+      signTransactions: jest.fn().mockResolvedValue(signed),
+      getAccount: () => ({ address: '' })
     };
     jest.spyOn(strategy as any, 'initSignState').mockResolvedValue({
       manager: { closeUI: jest.fn() },

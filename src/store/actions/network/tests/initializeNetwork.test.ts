@@ -1,7 +1,11 @@
 import { getNetworkConfigFromApi } from 'apiCalls/configuration/getNetworkConfigFromApi';
 import { getServerConfiguration } from 'apiCalls/configuration/getServerConfiguration';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { emptyNetwork } from 'store/slices/network/emptyNetwork';
+import { getState } from 'store/store';
+import { EnvironmentsEnum } from 'types/enums.types';
 import { initializeNetwork } from '../initializeNetwork';
+import { initializeNetworkConfig } from '../networkActions';
 
 jest.mock('apiCalls/configuration/getNetworkConfigFromApi', () => ({
   getNetworkConfigFromApi: jest.fn()

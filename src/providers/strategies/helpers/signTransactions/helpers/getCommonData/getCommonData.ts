@@ -3,6 +3,7 @@ import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
 import { getPersistedTokenDetails } from 'apiCalls/tokens/getPersistedTokenDetails';
 import { MULTI_TRANSFER_EGLD_TOKEN } from 'constants/mvx.constants';
 import { safeWindow } from 'constants/window.constants';
+import { Transaction } from 'lib/sdkCore';
 import { DECIMALS, DIGITS, formatAmount } from 'lib/sdkDappUtils';
 import {
   FungibleTransactionType,
@@ -141,7 +142,10 @@ export async function getCommonData({
   }
 
   const { feeLimitFormatted, feeInFiatLimit } = getFeeData({
-    transaction,
+    transaction: Transaction.newFromPlainObject({
+      ...plainTransaction,
+      gasPrice: gasPriceData.gasPriceOption
+    }),
     price
   });
 

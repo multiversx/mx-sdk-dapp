@@ -7,7 +7,7 @@ import { validateNetworkUrls } from 'store/actions/network/helpers/validateNetwo
 import { emptyNetwork } from 'store/slices/network/emptyNetwork';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { NetworkType, CustomNetworkType } from 'types/network.types';
-import { initializeNetworkConfig } from './networkActions';
+import { setNetworkConfig } from './networkActions';
 
 export type InitializeNetworkPropsType = {
   customNetworkConfig?: CustomNetworkType;
@@ -94,11 +94,11 @@ export const initializeNetwork = async ({
         });
       }
 
-      initializeNetworkConfig(apiConfig);
+      setNetworkConfig(apiConfig);
       return apiConfig;
     }
   }
 
-  initializeNetworkConfig(localConfig);
+  setNetworkConfig(localConfig);
   return localConfig;
 };

@@ -88,7 +88,7 @@ describe('getCommonData tests', () => {
             validationWarnings: []
           },
           smart: {
-            displayValue: '',
+            displayValue: 'wrapEgld',
             highlight: null,
             validationWarnings: []
           },
@@ -215,7 +215,7 @@ describe('when the gas limit is updated', () => {
             validationWarnings: []
           },
           smart: {
-            displayValue: '',
+            displayValue: 'wrapEgld',
             highlight: null,
             validationWarnings: []
           },
@@ -226,8 +226,8 @@ describe('when the gas limit is updated', () => {
           }
         },
         egldLabel: 'xEGLD',
-        feeInFiatLimit: '$0.0048',
-        feeLimit: '0.00026838',
+        feeInFiatLimit: '$0.0001',
+        feeLimit: '0.000005555466',
         gasLimit: '20,700,000',
         gasPrice: '0.0000000000207',
         highlight: null,
@@ -315,7 +315,7 @@ describe('when the gas limit is updated', () => {
           },
           smart: {
             displayValue:
-              'MultiESDTNFTTransfer@erd1qqqqqqqqqqqqqpgqzw0d0tj25qme9e4ukverjjjqle6xamay0n4s5r0v9g@\u0002@WEGLD-a28c59@@1000000000000000000@MEX-a659d0@@1064735712967374589014278@addLiquidity@990000000000000000@1054088355837700843124135',
+              'MultiESDTNFTTransfer@erd1qqqqqqqqqqqqqpgqzw0d0tj25qme9e4ukverjjjqle6xamay0n4s5r0v9g@2@WEGLD-a28c59@@1000000000000000000@MEX-a659d0@@1064735712967374589014278@addLiquidity@990000000000000000@1054088355837700843124135',
             validationWarnings: [],
             highlight:
               'addLiquidity@990000000000000000@1054088355837700843124135'

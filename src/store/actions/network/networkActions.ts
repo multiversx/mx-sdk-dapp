@@ -19,4 +19,19 @@ export const initializeNetworkConfig = (newNetwork: NetworkType) =>
     }
   );
 
+export const setNetworkConfig = (newNetwork: NetworkType) =>
+  getStore().setState(
+    ({ network: state }) => {
+      state.network = newNetwork;
+    },
+    false,
+    {
+      type: 'setNetworkConfig',
+      // @ts-ignore
+      payload: {
+        value: newNetwork
+      }
+    }
+  );
+
 export { initializeNetwork } from './initializeNetwork';

@@ -5,8 +5,11 @@ import {
   DecodeMethodEnum,
   TransactionTokensType
 } from 'types/serverTransactions.types';
-import { isUtf8 } from 'utils/decoders/isUtf8';
 import { addressIsValid } from 'utils/validation/addressIsValid';
+
+const PRINTABLE_ASCII_REGEX = /^[\x20-\x7e]+$/;
+
+const isPrintableAscii = (value: string) => PRINTABLE_ASCII_REGEX.test(value);
 
 interface IDecodeByMethod {
   data: string;
@@ -30,6 +33,10 @@ export const decodeByMethod = ({
     case DecodeMethodEnum.decimal:
       return data !== '' ? new BigNumber(data, 16).toString(10) : '';
     case DecodeMethodEnum.smart:
+      if (data === '') {
+        return data;
+      }
+
       try {
         const bech32Encoded = Address.newFromHex(data).toString();
 
@@ -43,7 +50,7 @@ export const decodeByMethod = ({
       try {
         const decoded = Buffer.from(data, 'hex').toString('utf8');
 
-        if (!isUtf8(decoded)) {
+        if (!isPrintableAscii(decoded)) {
           if (transactionTokens) {
             const tokens = [
               ...transactionTokens.esdts,

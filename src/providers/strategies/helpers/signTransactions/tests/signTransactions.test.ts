@@ -2,9 +2,13 @@ import { EventBus } from '@multiversx/sdk-dapp-ui/utils/EventBus';
 import { account, testNetwork } from '__mocks__';
 import { Transaction } from 'lib/sdkCore';
 import { SignTransactionsStateManager } from 'managers/internal/SignTransactionsStateManager';
-import { SignEventsEnum } from 'managers/internal/SignTransactionsStateManager/types';
+import {
+  ISignTransactionsPanelData,
+  SignEventsEnum
+} from 'managers/internal/SignTransactionsStateManager/types';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { ComponentFactory } from 'utils/ComponentFactory';
+import { getFeeData } from '../helpers/getFeeData';
 import { signTransactions } from '../signTransactions';
 import {
   mockPlainTransactionObject,
@@ -143,6 +147,44 @@ describe('signTransactions tests', () => {
     secondTxConfirm();
     const signedTransactions = await signPromise;
     expect(signedTransactions.length).toBe(2);
+  });
+
+  it('keeps showing the fee of the chosen gas price after going back', async () => {
+    const fastGasPrice = 1050000000;
+    const { signPromise } = await startSigning([
+      Transaction.newFromPlainObject(mockPlainTransactionObject),
+      Transaction.newFromPlainObject({
+        ...mockPlainTransactionObject,
+        nonce: 1346
+      })
+    ]);
+
+    const getCommonData = () =>
+      (manager as unknown as { data: ISignTransactionsPanelData }).data
+        .commonData;
+
+    const [setGasPriceOptionHandler] = manager.getEventHandlers(
+      SignEventsEnum.SET_GAS_PRICE_OPTION
+    );
+    setGasPriceOptionHandler(fastGasPrice);
+    const feeAfterChoice = getCommonData().feeLimit;
+
+    await executeHandler(manager.getEventHandlers(SignEventsEnum.NEXT)[0]);
+    await executeHandler(manager.getEventHandlers(SignEventsEnum.BACK)[0]);
+
+    expect(manager.currentScreenIndex).toBe(0);
+    expect(getCommonData().gasPriceOption).toBe(fastGasPrice);
+    expect(getCommonData().feeLimit).toBe(feeAfterChoice);
+
+    await executeHandler(manager.getEventHandlers(SignEventsEnum.CONFIRM)[0]);
+    manager.getEventHandlers(SignEventsEnum.CONFIRM)[0]();
+    await signPromise;
+
+    const [[[signedFirst]]] = mockHandleSign.mock.calls;
+    expect(Number(signedFirst.gasPrice)).toBe(fastGasPrice);
+    expect(getFeeData({ transaction: signedFirst }).feeLimitFormatted).toBe(
+      feeAfterChoice
+    );
   });
 
   it('cancels cross-window provider when closing signing modal', async () => {
