@@ -10,6 +10,7 @@ import {
 } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
+import { withExtensionReply } from './helpers/withExtensionReply';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
 export class ExtensionProviderStrategy extends BaseProviderStrategy {
@@ -18,7 +19,18 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
   constructor(address?: string) {
     super(address);
     this.provider = ExtensionProvider.getInstance();
-    this._login = this.provider.login.bind(this.provider);
+    this._login = (options) =>
+      this.withExtensionReply(() => this.provider.login(options));
+  }
+
+  private withExtensionReply<T>(operation: () => Promise<T>) {
+    const previousAccount = { ...this.provider.getAccount() };
+
+    return withExtensionReply({
+      operation,
+      onRefused: () =>
+        this.provider.setAccount({ address: '', ...previousAccount })
+    });
   }
 
   async init(): Promise<boolean> {
@@ -72,7 +84,9 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
 
     try {
       const signedTransactions: Transaction[] =
-        (await this.provider.signTransactions(transactions)) ?? [];
+        (await this.withExtensionReply(() =>
+          this.provider.signTransactions(transactions)
+        )) ?? [];
 
       return await finalizeSignedTransactions({ signedTransactions, options });
     } catch (error) {
@@ -90,7 +104,8 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
 
     const signedMessage = await signMessage({
       message,
-      handleSignMessage: this.provider.signMessage.bind(this.provider),
+      handleSignMessage: (messageToSign: Message) =>
+        this.withExtensionReply(() => this.provider.signMessage(messageToSign)),
       cancelAction: this.cancelAction,
       providerType: providerLabels.extension
     });

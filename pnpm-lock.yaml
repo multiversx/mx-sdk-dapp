@@ -17,8 +17,8 @@ importers:
         specifier: 3.1.0
         version: 3.1.0
       '@multiversx/sdk-extension-provider':
-        specifier: 5.1.2
-        version: 5.1.2(@multiversx/sdk-core@15.4.1(bignumber.js@9.3.1)(protobufjs@7.6.5))
+        specifier: 5.2.0-alpha.0
+        version: 5.2.0-alpha.0(@multiversx/sdk-core@15.4.1(bignumber.js@9.3.1)(protobufjs@7.6.5))
       '@multiversx/sdk-hw-provider':
         specifier: 8.2.0
         version: 8.2.0(@multiversx/sdk-core@15.4.1(bignumber.js@9.3.1)(protobufjs@7.6.5))
@@ -828,8 +828,8 @@ packages:
       '@multiversx/sdk-core': ^14.0.0 || ^15.0.0
       bignumber.js: ^9.x
 
-  '@multiversx/sdk-extension-provider@5.1.2':
-    resolution: {integrity: sha512-jxu18WKnc8ZLaLdl6ePcLStG2aZB1f9W0m2wPJt2UbHnPMhnk/okoYZYWlHfiF/L8WZGzQn8VXwcmras/vdwlw==}
+  '@multiversx/sdk-extension-provider@5.2.0-alpha.0':
+    resolution: {integrity: sha512-DHG9uBCE/ki2pznTmLgGp70pQ7/vN0ckj7fxSYYvJpVyUCEO/BbnuVXuid31I9BgFU4P1k2SonYeCL7JONB/aA==}
     peerDependencies:
       '@multiversx/sdk-core': ^14.0.0 || ^15.0.0
 
@@ -5379,7 +5379,7 @@ snapshots:
       '@multiversx/sdk-core': 15.4.1(bignumber.js@9.3.1)(protobufjs@7.6.5)
       bignumber.js: 9.3.1
 
-  '@multiversx/sdk-extension-provider@5.1.2(@multiversx/sdk-core@15.4.1(bignumber.js@9.3.1)(protobufjs@7.6.5))':
+  '@multiversx/sdk-extension-provider@5.2.0-alpha.0(@multiversx/sdk-core@15.4.1(bignumber.js@9.3.1)(protobufjs@7.6.5))':
     dependencies:
       '@multiversx/sdk-core': 15.4.1(bignumber.js@9.3.1)(protobufjs@7.6.5)
 

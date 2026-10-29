@@ -5,6 +5,7 @@ import { Address, Message } from 'lib/sdkCore';
 import { initApp } from 'methods/initApp/initApp';
 import { ProviderFactory } from 'providers/ProviderFactory';
 import { ExtensionProviderStrategy } from 'providers/strategies/ExtensionProviderStrategy/ExtensionProviderStrategy';
+import { EXTENSION_REPLY_ERROR } from 'providers/strategies/ExtensionProviderStrategy/helpers/withExtensionReply';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { EnvironmentsEnum } from 'types/enums.types';
 
@@ -16,6 +17,7 @@ const extensionProviderMock = {
   isInitialized: jest.fn().mockReturnValue(true),
   setAddress: jest.fn().mockReturnThis(),
   setAccount: jest.fn(),
+  getAccount: jest.fn(() => ({ address: '' })),
   getAddress: jest.fn(async () => testAddress),
   logout: jest.fn().mockResolvedValue(true),
   cancelAction: jest.fn(),
@@ -90,6 +92,54 @@ describe('ExtensionProviderStrategy tests', () => {
     ]);
 
     expect(result).toEqual(expectedSigned);
+  });
+
+  describe('replies that do not come from the extension', () => {
+    const postOtherReply = () =>
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          data: { target: 'erdw-contentScript', type: '', data: {} }
+        })
+      );
+
+    it('refuses the login result and restores the previous account', async () => {
+      extensionProviderMock.login.mockImplementationOnce(async () => {
+        postOtherReply();
+        return { address: 'erd1other' };
+      });
+
+      const strategy = new ExtensionProviderStrategy();
+
+      await expect(
+        (strategy as unknown as { _login: () => Promise<unknown> })._login()
+      ).rejects.toThrow(EXTENSION_REPLY_ERROR);
+
+      expect(extensionProviderMock.setAccount).toHaveBeenLastCalledWith({
+        address: ''
+      });
+    });
+
+    it('refuses signed transactions', async () => {
+      jest
+        .spyOn(ExtensionProviderStrategy.prototype as any, 'initSignState')
+        .mockResolvedValue({
+          manager: { closeUI: jest.fn() },
+          onClose: jest.fn()
+        });
+
+      mockSignTransactions.mockImplementationOnce(async (transactions) => {
+        postOtherReply();
+        return transactions;
+      });
+
+      const strategy = new ExtensionProviderStrategy();
+
+      await expect(
+        strategy.signTransactions([
+          Transaction.newFromPlainObject(mockPendingTransaction)
+        ])
+      ).rejects.toThrow(EXTENSION_REPLY_ERROR);
+    });
   });
 
   describe('signMessage', () => {
