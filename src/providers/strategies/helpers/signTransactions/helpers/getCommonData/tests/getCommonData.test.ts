@@ -11,6 +11,7 @@ import {
   MultiSignTransactionType,
   TransactionDataTokenType
 } from 'types/transactions.types';
+import { getMultiEsdtTransferData } from '../../getMultiEsdtTransferData/getMultiEsdtTransferData';
 import { getCommonData, GetCommonDataPropsType } from '../getCommonData';
 import { mockGetCommonDataInput } from './mockGetCommonDataInput';
 
@@ -385,6 +386,85 @@ describe('when the gas limit is updated', () => {
 
     expect(tokenTransaction).toEqual(
       expect.objectContaining({ identifier: 'WEGLD-a28c59', amount: '1' })
+    );
+  });
+});
+
+describe('EGLD value on token screens', () => {
+  const tokenHex = Buffer.from('WEGLD-a28c59').toString('hex');
+  const fiveEgld = '5000000000000000000';
+
+  const getScreens = (transactions: { data: string; value: string }[]) =>
+    getMultiEsdtTransferData(
+      transactions.map(({ data, value }, index) =>
+        Transaction.newFromPlainObject({
+          ...mockGetCommonDataInput.allTransactions[0].transaction,
+          nonce: 598 + index,
+          value,
+          data: Buffer.from(data).toString('base64')
+        })
+      )
+    );
+
+  const getScreenData = async (
+    transactions: { data: string; value: string }[],
+    currentScreenIndex = 0
+  ) => {
+    return getCommonData({
+      ...mockData,
+      ...getScreens(transactions),
+      currentScreenIndex
+    });
+  };
+
+  it('shows the value as EGLD when the function only starts like a token transfer', async () => {
+    const { tokenTransaction, commonData } = await getScreenData([
+      { data: `ESDTTransferFoo@${tokenHex}@01`, value: fiveEgld }
+    ]);
+
+    expect(tokenTransaction).toEqual(
+      expect.objectContaining({ identifier: 'xEGLD', amount: '5' })
+    );
+    expect(commonData.egldValue).toBeUndefined();
+  });
+
+  it('shows a non-zero value next to the token amount', async () => {
+    const { tokenTransaction, commonData } = await getScreenData([
+      { data: `ESDTTransfer@${tokenHex}@01`, value: fiveEgld }
+    ]);
+
+    expect(tokenTransaction?.identifier).toBe('WEGLD-a28c59');
+    expect(commonData.egldValue).toEqual({
+      amount: '5',
+      usdValue: '≈ $89.10'
+    });
+  });
+
+  it('does not add a value field when the value is zero', async () => {
+    const { commonData } = await getScreenData([
+      { data: `ESDTTransfer@${tokenHex}@01`, value: '0' }
+    ]);
+
+    expect(commonData.egldValue).toBeUndefined();
+  });
+
+  it('does not use token info parsed from another transaction in the batch', async () => {
+    const receiverHex = 'ab'.repeat(32);
+    const transferData = `${tokenHex}@@01`;
+
+    const { tokenTransaction } = await getScreenData(
+      [
+        {
+          data: `MultiESDTNFTTransfer@${receiverHex}@01@${transferData}`,
+          value: '0'
+        },
+        { data: transferData, value: fiveEgld }
+      ],
+      1
+    );
+
+    expect(tokenTransaction).toEqual(
+      expect.objectContaining({ identifier: 'xEGLD', amount: '5' })
     );
   });
 });

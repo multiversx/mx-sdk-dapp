@@ -30,11 +30,14 @@ export function getTokenFromData(data?: string): {
     return noData;
   }
 
-  const isTokenTransfer = data.startsWith(TransactionTypesEnum.ESDTTransfer);
+  const [functionName] = data.split('@');
+  const hasArguments = data.includes('@');
+
+  const isTokenTransfer = functionName === TransactionTypesEnum.ESDTTransfer;
   const isNftTransfer =
-    data.startsWith(TransactionTypesEnum.ESDTNFTTransfer) && data.includes('@');
+    functionName === TransactionTypesEnum.ESDTNFTTransfer && hasArguments;
   const isNftBurn =
-    data.startsWith(TransactionTypesEnum.ESDTNFTBurn) && data.includes('@');
+    functionName === TransactionTypesEnum.ESDTNFTBurn && hasArguments;
 
   try {
     if (isTokenTransfer) {

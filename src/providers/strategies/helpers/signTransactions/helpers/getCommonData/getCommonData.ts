@@ -24,6 +24,7 @@ import { getUsdValue } from 'utils/operations/getUsdValue';
 import { getExplorerLink } from 'utils/transactions/getExplorerLink';
 import { getFeeData } from '../getFeeData';
 import { getAllDecodedFormats } from './helpers/decodeDataField';
+import { getEgldValue } from './helpers/getEgldValue';
 import { getExtractTransactionsInfo } from './helpers/getExtractTransactionsInfo';
 import { getGasPriceOptions } from './helpers/getGasPriceOptions';
 import { getHighlight } from './helpers/getHighlight';
@@ -141,6 +142,14 @@ export async function getCommonData({
     };
   }
 
+  const egldValue = getEgldValue({
+    isEgld,
+    value: transaction.value.toString(),
+    decimals: Number(network.decimals),
+    digits: Number(network.digits),
+    price
+  });
+
   const { feeLimitFormatted, feeInFiatLimit } = getFeeData({
     transaction: Transaction.newFromPlainObject({
       ...plainTransaction,
@@ -217,7 +226,8 @@ export async function getCommonData({
     origin: safeWindow.location?.origin,
     ...(txInfo?.receiverScamInfo
       ? { receiverScamInfo: txInfo.receiverScamInfo }
-      : {})
+      : {}),
+    ...(egldValue ? { egldValue } : {})
   };
 
   return { commonData, tokenTransaction, fungibleTransaction };

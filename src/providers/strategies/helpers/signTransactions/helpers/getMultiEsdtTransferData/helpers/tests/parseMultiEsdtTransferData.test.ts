@@ -200,4 +200,11 @@ describe('parseMultiEsdtTransferData tests', () => {
 
     expect(parseMultiEsdtTransferData(data)).toEqual([]);
   });
+
+  it('ignores a function that only starts like a multi-transfer', () => {
+    const receiver = '00'.repeat(32);
+    const data = `MultiESDTNFTTransferFoo@${receiver}@01@544f4b454e2d313233343536@@01`;
+
+    expect(parseMultiEsdtTransferData(data)).toEqual([]);
+  });
 });

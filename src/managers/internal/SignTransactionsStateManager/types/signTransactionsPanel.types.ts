@@ -49,6 +49,10 @@ export interface ISignTransactionsPanelCommonData {
   username?: string;
   origin?: string;
   explorerLink?: string;
+  egldValue?: {
+    amount: string;
+    usdValue: string;
+  };
 }
 
 export interface ISignTransactionsPanelData {

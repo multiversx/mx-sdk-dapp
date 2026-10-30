@@ -46,4 +46,18 @@ describe('getTokenFromData tests', () => {
       amount: '1'
     });
   });
+
+  it.each([
+    ['ESDTTransferFoo', '@544f4b454e2d313233343536@01'],
+    [
+      'ESDTNFTTransferFoo',
+      '@4554484f532d643735383863@015a@01@' + 'ab'.repeat(32)
+    ],
+    ['ESDTNFTBurnFoo', '@4554484f532d643735383863@015a@01']
+  ])('ignores the %s function', (functionName, args) => {
+    expect(getTokenFromData(`${functionName}${args}`)).toStrictEqual({
+      tokenId: '',
+      amount: ''
+    });
+  });
 });

@@ -10,8 +10,8 @@ export function parseMultiEsdtTransferData(data?: string) {
   let contractCallDataIndex = 0;
   try {
     if (
-      data?.startsWith(TransactionTypesEnum.MultiESDTNFTTransfer) &&
-      data?.includes('@')
+      data?.split('@')[0] === TransactionTypesEnum.MultiESDTNFTTransfer &&
+      data.includes('@')
     ) {
       const [, receiver, encodedTxCount, ...rest] = data.split('@');
 
